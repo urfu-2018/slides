@@ -1,0 +1,164 @@
+.black
+{
+    color: #eee;
+    background: #000;
+}
+
+.black .reveal a
+{
+    color: rgb(0, 134, 179);
+}
+
+.black .reveal a:hover
+{
+    color: #d36363;
+}
+
+.black h2 strong,
+.black p strong,
+.black li strong
+{
+    color: #fcc28c;
+}
+
+.black .reveal pre code
+{
+    background: #000;
+}
+
+.black .reveal .slides .grey,
+.black .reveal .slides .grey *
+{
+    color: #999;
+}
+
+.black .reveal .slides .red,
+.black .reveal .slides .red *
+{
+    color: #d36363;
+}
+
+.black .reveal .slides .green,
+.black .reveal .slides .green *
+{
+    color: #a2fca2 !important;
+}
+
+.black .reveal .slides .magenta,
+.black .reveal .slides .magenta *
+{
+    color: #b963d3;
+}
+
+.black .cli code
+{
+    border-left: 5px solid #343434 !important;
+    background: #232323 !important
+}
+
+/* Modified Agate highlightjs theme */
+.black .hljs
+{
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    background: #333;
+    color: white;
+}
+
+.black .hljs-name,
+.black .hljs-strong
+{
+    font-weight: bold;
+}
+
+.black .hljs-code,
+.black .hljs-emphasis
+{
+    font-style: italic;
+}
+
+.black .hljs-tag
+{
+    color: #62c8f3;
+}
+
+.black .hljs-variable,
+.black .hljs-template-variable,
+.black .hljs-selector-id,
+.black .hljs-selector-class
+{
+    color: #ade5fc;
+}
+
+.black .hljs-string,
+.black .hljs-bullet
+{
+    color: #a2fca2;
+}
+
+.black .hljs-attr,
+.black .hljs-type,
+.black .hljs-title,
+.black .hljs-section,
+.black .hljs-attribute,
+.black .hljs-quote
+{
+    color: #ffa;
+}
+
+.black .hljs-number,
+.black .hljs-symbol,
+.black .hljs-bullet
+{
+    color: #d36363;
+}
+
+.black .hljs-keyword,
+.black .hljs-selector-tag,
+.black .hljs-literal
+{
+    color: #fcc28c;
+}
+
+.black .hljs-comment,
+.black .hljs-deletion,
+.black .hljs-code
+{
+    color: #888;
+}
+
+.black .hljs-regexp,
+.black .hljs-link
+{
+    color: #c6b4f0;
+}
+
+.black .hljs-meta
+{
+    color: #fc9b9b;
+}
+
+.black .hljs-deletion
+{
+    background-color: #fc9b9b;
+    color: #333;
+}
+
+.black .hljs-addition
+{
+    background-color: #a2fca2;
+    color: #333;
+}
+
+.black .hljs a
+{
+    color: inherit;
+}
+
+.black .hljs a:focus,
+.black .hljs a:hover
+{
+    color: inherit;
+    text-decoration: underline;
+}
