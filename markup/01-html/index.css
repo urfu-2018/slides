@@ -1,0 +1,16 @@
+.code-two-columns
+{
+    display: flex;
+}
+
+.code-two-columns pre
+{
+    flex: 1 1 auto;
+}
+
+.code-center
+{
+    display: flex;
+
+    justify-content: center;
+}
