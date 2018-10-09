@@ -1,0 +1,15 @@
+body
+{
+    font-size: 25px;
+}
+
+body
+{
+    background: #000;
+    color: #fff;
+}
+body table td,
+body table th
+{
+    border-color: #fff !important;
+}

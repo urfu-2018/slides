@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>01-HTML</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .example
+        {
+            border: 1px solid #999 !important;
+            border-radius: 10px;
+            position: relative !important;
+        }
+
+        .example code
+        {
+            border-radius: 10px;
+        }
+
+        .example .example__link
+        {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: url('./icons/one-new-tab.svg') no-repeat 50%;
+            opacity: .6;
+            transition: opacity .3s ease-in-out;
+            padding: 10px;
+        }
+
+        .black .example .example__link
+        {
+            background-image: url(./icons/one-new-tab-white.svg);
+        }
+
+        .example .example__link:hover
+        {
+            opacity: 1;
+        }
+
+    </style>
+</head>
+<body class="white">
+<div class="reveal">
+    <div class="slides">
+
+        <section class="center">
+            <h1>Разметка</h1>
+            <p style="font-size: 20px">Артем Кувалдин</p>
+        </section>
+
+        <section>
+            <h2>index.html</h2>
+            <pre class="example"><code>&lt;!DOCTYPE html>
+&lt;html>
+    &lt;head>
+        <meta name="description" content="...">
+        &lt;title>CERN&lt;/title>
+    &lt;/head>
+&lt;body>
+    <p>
+        <a href="http://home.web.cern.ch/">CERN</a>
+        is a European research organization
+        ...
+    </p>
+&lt;/body>
+&lt;/html>
+</code><a class="example__link" href="examples/index.html" target="_blank"></a></pre>
+        </section>
+        <section>
+            <h2>Теги</h2>
+&lt;a href="http://home.web.cern.ch">CERN&lt;/a>
+        </section>
+        <section>
+            <h2>Открывающий тег</h2>
+<mark>&lt;a</mark> href="http://home.web.cern.ch">CERN&lt;/a>
+        </section>
+        <section>
+            <h2>Закрывающий тег</h2>
+&lt;a href="http://home.web.cern.ch">CERN<mark>&lt;/a></mark>
+        </section>
+        <section>
+            <h2>Атрибут</h2>
+&lt;a <mark>href="http://home.web.cern.ch"</mark>>CERN&lt;/a>
+        </section>
+        <section>
+            <h2>Содержимое</h2>
+&lt;a href="http://home.web.cern.ch"><mark>CERN</mark>&lt;/a>
+        </section>
+        <section>
+            <h2>Виды тегов</h2>
+<pre class="fragment"><code>&lt;!--Без содержимого-->
+<img src="../funny/cats.png" alt="Котики">
+</code></pre>
+<pre class="fragment"><code>&lt;!--Только текст-->
+&lt;title>HTML Лекция&lt;/title>
+</code></pre>
+<pre class="fragment"><code>&lt;!--Обычные теги-->
+<p>
+    <a href="http://home.web.cern.ch/">CERN</a>
+    is a European research organization
+    that operates the largest particle
+    physics laboratory in the world.
+</p>
+</code></pre>
+        </section>
+
+        <section>
+            <h2>Что будет, если тег не закрыть?</h2>
+<pre><code>&lt;ul>
+    &lt;li>Молоко
+    &lt;li>Хлеб
+    &lt;li>Яблоки
+    &lt;li>Audi TT
+&lt;/ul>
+</code></pre>
+        </section>
+        <section>
+            <h2>Закроются сами</h2>
+<pre><code>&lt;ul>
+    &lt;li>Молоко&lt;/li>
+    &lt;li>Хлеб&lt;/li>
+    &lt;li>Яблоки&lt;/li>
+    &lt;li>Audi TT&lt;/li>
+&lt;/ul>
+</code></pre>
+            <p class="fragment">
+                Но, есть фиксированный <a href="https://www.w3.org/TR/html5/syntax.html#optional-tags">список</a>
+            </p>
+        </section>
+
+        <section>
+            <h2>Атрибуты</h2>
+            <pre class="fragment"><code>&lt;!--Их может быть несколько-->
+&lt;input type="button" value="Click me">
+            </code></pre>
+            <pre class="fragment"><code>&lt;!--Кавычки необязательны-->
+&lt;input type=button value=Click>
+            </code></pre>
+            <pre class="fragment"><code>&lt;!--Бывают одиночные атрибуты-->
+&lt;input disabled>
+&lt;!--Тоже самое:-->
+&lt;input disabled="sometext">
+            </code></pre>
+        </section>
+
+        <section class="center">
+            <h1>Универсальные атрибуты</h1>
+        </section>
+
+        <section class="center">
+            <p>id – задаёт <strong>уникальный</strong> идентификатор элемента</p>
+        </section>
+
+        <section>
+            <h2>id</h2>
+            <pre><code>&lt;input type="email" id="email_input">
+            </code></pre>
+
+            <pre><code>/*В стилях*/
+#email_input { width: 100px }
+            </code></pre>
+
+            <pre><code>//  Получаем доступ к элементу как к JS объекту по id
+var email = document.getElementById('email_input');
+            </code></pre>
+        </section>
+
+        <section class="center">
+            <p>class – задаёт <strong>класс</strong> элементов, позволяя группировать их</p>
+        </section>
+
+        <section>
+            <h2>class</h2>
+            <pre class="example"><code>Список покупок:<br>
+&lt;ul class="list">
+    &lt;li class="food">Молоко&lt;/li>
+    &lt;li class="food">Хлеб&lt;/li>
+    &lt;li class="car">Audi TT&lt;/li>
+    &lt;li class="car">Audi Q5&lt;/li>
+    &lt;li class="food">Яблоки&lt;/li>
+&lt;/ul></code><a class="example__link" href="examples/classes.html" target="_blank"></a></pre>
+<pre class="example"><code>.food { color: blue }
+.car { color: red }</code></pre>
+        </section>
+
+        <section class="center">
+            <p>title – добавляет пояснение к содержимому элемента, которое появляется при наведении</p>
+        </section>
+
+        <section>
+            <h2>title</h2>
+<pre class="example"><code><abbr title="World Wide Web">www</abbr>
+
+<p title="application programming interface">API</p></code><a class="example__link" href="examples/title.html" target="_blank"></a></pre>
+        </section>
+
+        <section class="center">
+            <h1>Как в виде текста отобразить тег?</h1>
+            <p><img src="images/question.jpg" width="200"></p>
+        </section>
+
+        <section class="center">
+            <h1>HTML Entity</h1>
+        </section>
+
+        <section>
+            <a href="https://www.w3.org/TR/html5/syntax.html#named-character-references"><h2>HTML Entity</h2></a>
+<pre><code><p>&amp;copy;</p>  &lt;!-- © -->
+<p>&amp;amp;</p>   &lt;!-- & -->
+<p>&amp;pound;</p> &lt;!-- £ -->
+<p>&amp;forall;</p>&lt;!-- &forall; -->
+<p>&amp;lt;</p>    &lt;!-- &lt; -->
+<p>&amp;gimel;</p> &lt;!-- &gimel; -->
+<p>&amp;nbsp;</p>  &lt;!-- Неразрывный пробел(no-break space) --></code></pre>
+        </section>
+
+        <section class="center">
+            <h1>HTML–элементы</h1>
+        </section>
+
+        <section>
+            <h2>index.html</h2>
+            <pre class="example"><code>&lt;!DOCTYPE html>
+&lt;html>
+    &lt;head>
+        <meta name="description" content="...">
+        &lt;title>CERN&lt;/title>
+    &lt;/head>
+&lt;body>
+    <p>
+        <a href="http://home.web.cern.ch/">CERN</a>
+        is a European research organization
+        ...
+    </p>
+&lt;/body>
+&lt;/html>
+</code><a class="example__link" href="examples/index.html" target="_blank"></a></pre>
+        </section>
+
+        <section class="center">
+            <p>!DOCTYPE – директива, которая указывает на спецификацию, по которой был создан документ</p>
+        </section>
+
+        <section>
+            <h2>DOCTYPE</h2>
+
+<pre><code>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+&lt;html xmlns="http://www.w3.org/1999/xhtml">
+    ...
+&lt;/html></code></pre>
+        </section>
+
+        <section>
+            <h2>DOCTYPE для HTML5</h2>
+            <pre><code>&lt;!DOCTYPE html>
+&lt;title>My awesome HTML page&lt;/title></code></pre>
+            <p class="fragment">Минимально <a href="https://validator.w3.org/">возможный</a> html-документ.</p>
+        </section>
+
+        <section class="center">
+            <h1>head</h1>
+        </section>
+
+        <section>
+            <h2>link</h2>
+<pre><code>&lt;link href="styles.css">
+    
+&lt;!--media="all/screen/print/speech/braille"-->
+&lt;link href="print-styles.css" media="print">
+&lt;link href="favicon.ico">
+
+&lt;!--rel – описывает тип связи-->
+&lt;link rel="alternate" type="application/rss+xml" href="rss.xml"></code></pre>
+        </section>
+
+        <section>
+            <h2>script/style</h2>
+<pre class="example"><code>&lt;html lang="en">
+&lt;head>
+    <script src="path/jquery-plugin.js"></script>
+    <style>
+        p {
+            color: red;
+        } 
+    </style>
+&lt;/head>
+&lt;body>
+    <script>
+        console.log('Hello!');
+    </script>
+&lt;/body>&lt;/html></code><a class="example__link" target="_blank" href="examples/script-style.html"></a></pre>
+        </section>
+
+        <section>
+            <h2>meta</h2>
+            <pre><code>&lt;meta charset="utf-8">
+&lt;!--  name="название" content="значение"-->
+&lt;meta name="description" content="CERN, the European">
+&lt;meta name="author" content="Tim Berners-Lee"></code></pre>
+        </section>
+
+        <section class="center">
+            <p><a href="http://fbdevwiki.com/wiki/Open_Graph_protocol" target="_blank">Open Graph</a> – возможность связывать свой контент с социальными сетями и правильно его там представлять</p>
+        </section>
+
+        <section>
+            <h2>Open Graph</h2>
+            <pre><code><meta property="og:title" content="Осень, Matt Absolon.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://yandex.ru/images...">
+<meta property="og:image" content="http://images.yandex..."></code></pre>
+
+        </section>
+
+        <section>
+            <img src="images/open-graph.png">
+        </section>
+
+        <section class="center">
+            <h1>Семантическая разметка</h1>
+        </section>
+
+        <section class="center">
+             <p>Семантика – раздел лингвистики, изучающий смысловое значение единиц языка</p>
+        </section>
+
+        <section>
+            <h2>"Дивная" верстка</h2>
+<pre><code><div>
+    <div>CERN is a European research organization that operates
+    the largest particle physics laboratory in the world.</div>
+
+    <div>CERN's main function is to provide the particle accelerators
+    and other infrastructure needed for high-energy physics research</div>
+
+    <div>Last modified: 2015-09-22</div>
+    <div>Author: ivan@example.com</div>
+</div></code></pre>
+        </section>
+
+        <section>
+            <h2>Семантичная верстка</h2>
+
+            <pre><code><!-- Обозначаем статью -->
+<article>
+    <!-- Аббревиатура -->
+    <p><abbr title="Conseil Européen pour la ...">CERN</abbr>
+    is ... </p>
+    <p>CERN's main function is to provide the particle
+    accelerators and ... </p>
+</article>
+<!-- Информацию в подвале -->
+<footer>
+    <!-- Время -->
+    <p>Last modified: <time>2001-04-23</time></p>
+    <!-- И контактную информацию -->
+    <address>Author: fred@example.com</address>
+</footer></code></pre>
+        </section>
+
+        <section>
+            <h2>Семантичные теги</h2>
+            <ul style="font-size: 30px;">
+                <li>section/article</li>
+                <li>aside</li>
+                <li>header/main/footer</li>
+                <li>figure и figcaption</li>
+                <li>h1-h6</li>
+                <li>nav</li>
+                <li><a href="https://html5book.ru/html5-semantic-elements/" target="_blank">Другие</a></li>
+            </ul>
+        </section>
+
+        <section class="center">
+            <p>section – определяет <strong>тематическую</strong> группу элементов: блок комментариев к посту в блоге, главы в статье или список постов</p>
+        </section>
+
+        <section class="center">
+            <p>article – обозначает <strong>законченную самодостаточную</strong> часть документа: пост на форуме или в блоге, новостная статья или виджет</p>
+        </section>
+
+        <section class="center" style="text-align: center;">
+            <img src="http://front-end.su/images/div-section-article.png">
+        </section>
+
+        <section class="center" style="text-align: center;">
+            <img src="https://cdn-images-1.medium.com/max/800/1*j2PG4zz6Dsr_91maYVGIGA.png">
+        </section>
+
+        <section>
+            <h2>p и hr</h2>
+<pre><code><article> <!-- Пост в блоге -->
+     <h1>
+         Protect — как Яндекс.Браузер защищает пользователей
+     </h1>
+     <p>Яндекс.Браузер предостерегает пользователей,
+         когда они начинают вводить пароль на подозрительных
+         страницах.</p>
+     <hr>
+     <p>Как только пользователь устанавливает курсор мыши в
+         поле для ввода пароля на любом сайте, которого нет
+         в списке, активируется система защиты.</p>
+ </article></code></pre>
+        </section>
+
+        <section>
+            <h2>Иногда br</h2>
+
+            <pre><code><p>
+    Сижу за решеткой в темнице сырой.<br>
+    Вскормленный в неволе орел молодой,<br>
+    Мой грустный товарищ, махая крылом,<br>
+    Кровавую пищу клюет под окном,<br>
+</p>
+<p>...</p></code></pre>
+
+        </section>
+
+        <section>
+            <h2>Что будет?</h2>
+<pre class="example"><code><p>
+,--.   ,--.  ,---.  ,------.  ,---.
+|   `.'   | /  O  \ |  .--. ''   .-'
+|  |'.'|  ||  .-.  ||  '--'.'`.  `-.
+|  |   |  ||  | |  ||  |\  \ .-'    |
+`--'   `--'`--' `--'`--' '--'`-----'
+</p></code><a class="example__link" target="_blank" href="examples/without-pre.html"></a></pre>
+        </section>
+
+        <section>
+            <h2>pre(preformatted text)</h2>
+<pre class="example"><code><pre>
+    
+,--.   ,--.  ,---.  ,------.  ,---.
+|   `.'   | /  O  \ |  .--. ''   .-'
+|  |'.'|  ||  .-.  ||  '--'.'`.  `-.
+|  |   |  ||  | |  ||  |\  \ .-'    |
+`--'   `--'`--' `--'`--' '--'`-----'
+</pre></code><a class="example__link" target="_blank" href="examples/with-pre.html"></a></pre>
+        </section>
+
+        <section>
+            <h2>Списки</h2>
+
+<pre class="example"><code><ol type="I">
+    <li>Сельдь</li>
+    <li>Хлеб</li>
+    <li>Фрукты:
+        <ul>
+            <li>Бананы</li>
+            <li>Яблоки</li>
+        </ul>
+    </li>
+    <li>Молоко</li>
+    <li>Audi TT</li>
+</ol></code><a class="example__link" target="_blank" href="examples/lists.html"></a></pre>
+        </section>
+
+        <section>
+            <h2>div/span</h2>
+<pre class="example"><code><div style="...">
+    <p>
+         <span style="color: red">Я</span>ндекс.Браузер
+        предостерегает пользователей,когда они начинают
+        вводить пароль на подозрительных страницах.
+     </p>
+     <p>
+         Как только пользователь устанавливает курсор мыши
+         в поле для ввода пароля на любом сайте, которого
+         нет в списке, активируется система защиты.
+     </p>
+ </div></code><a class="example__link" target="_blank" href="examples/div-span.html"></a></pre>
+        </section>
+
+        <section class="center">
+            <h1>Таблицы</h1>
+        </section>
+
+        <section>
+<pre class="example"><code>&lt;table>
+    &lt;thead><!--обозначает шапку таблицы-->
+        &lt;th>H 0.1&lt;/th>
+        &lt;th>H 0.2&lt;/th>
+        &lt;th>H 0.3&lt;/th>
+    &lt;/thead>&lt;tfoot>...&lt;/tfoot>
+    &lt;tbody>&lt;tr><!--обозначает строку таблицы-->
+        &lt;td>A 1.1&lt;/td><!--обозначает ячейку таблицы-->
+        &lt;td>A 1.2&lt;/td>
+        &lt;td>A 1.3&lt;/td>
+    &lt;/tr>
+    &lt;tr>
+        &lt;td>A 2.1&lt;/td>
+        &lt;td>A 2.2&lt;/td>
+        &lt;td>A 2.3&lt;/td>
+    &lt;/tr>&lt;/tbody>
+&lt;/table></code><a class="example__link" target="_blank" href="examples/table.html"></a></pre>
+        </section>
+
+        <section>
+            <h2>Объединение ячеек</h2>
+<pre class="example"><code>&lt;table>
+    &lt;tr>
+        <!--горизонтальные ячейки-->
+        &lt;td colspan=2>A 1.1&lt;/td>
+        <!--&lt;td>A 1.2&lt;/td>-->
+        <!--вертикальные ячейки-->
+        &lt;td rowspan=2>A 1.3&lt;/td>
+    &lt;/tr>
+    &lt;tr>
+        &lt;td>A 2.1&lt;/td>
+        &lt;td>A 2.2&lt;/td>
+        <!--&lt;td>A 2.3&lt;/td>-->
+    &lt;/tr>
+&lt;/table></code><a class="example__link" target="_blank" href="examples/join-table.html"></a></pre>
+        </section>
+
+        <section class="center">
+           <h2>Текстовые теги</h2>
+       </section>
+
+        <section>
+        <ul style="font-size: 24px">
+            <li>Форматирование текста:
+                <ul style="padding-left: 50px">
+                    <li>em - для акцентирования текста</li>
+                    <li>strong – для обозначения важной информации</li>
+                    <li>mark – помечает текст как выделенный</li>
+                    <li>small – для различной уточняющей информации</li>
+                    <li>i – для дополнительного выделения(экспрессивно-эмоциональным)</li>
+                    <li>b – для выделения из окружающего его контекста(ключевые слова в выдержках)</li>
+                    <li>&lt;sub&gt; &lt;sup&gt; &lt;ins&gt; &lt;del&gt;</li>
+                </ul>
+            </li>
+            <li>Для кода: &lt;code&gt; &lt;kbd&gt; &lt;samp&gt; &lt;var&gt; &lt;pre&gt;</li>
+            <li>Перенос текста: &lt;p&gt; &lt;br&gt; &lt;hr&gt; &lt;wbr&gt;</li>
+            <li>Цитаты/определения: &lt;abbr&gt; &lt;blockquote&gt; &lt;q&gt; &lt;dfn&gt; &lt;cite&gt; &lt;bdo&gt;</li>
+            <li><a target="_blank" href="examples/text-tags.html">Примеры</a></li>
+        </ul>
+
+        </section>
+
+        <section class="center">
+            <h1>Интерактивные элементы</h1>
+            <p><img src="https://rawgit.com/urfu-2016/markup-slides/master/01-html/img/inter.gif"></p>
+        </section>
+
+        <section>
+            <h2>Ссылки</h2>
+<pre class="fragment"><code><a href="http://yandex.ru" title="Yandex">Yandex</a></code></pre>
+<pre class="fragment"><code><!--Открывается в новой вкладке/окне-->
+<a href="http://yandex.ru" target="_blank">Yandex</a></code></pre>
+
+<pre class="fragment"><code><!--Относительно текущего пути-->
+<a href="examples/text-tags.html" >Yandex</a>
+<!--https://example.ru/slides/01-html/examples/text-tags.html--></code></pre>
+<pre class="fragment"><code><!--Относительно текущего хоста-->
+<a href="/examples/text-tags.html" >Yandex</a>
+<!--https://example.ru/examples/text-tags.html--></code></pre>
+            <a  class="fragment" href="https://ru.wikipedia.org/wiki/URL">Подробнее про URL</a>
+        </section>
+
+        <section>
+            <h2>Протоколы</h2>
+<pre><code><a href="http://images.yandex.ru">Images</a>
+
+<a href="//images.yandex.ru">Images</a>
+
+<a href="mailto:akuv@yandex-team.ru">@akuv</a>
+
+<a href="skype:trixartem">Позвонить по скайпу</a>
+
+<a href="tel:+79000000000">Позвонить</a></code></pre>
+        </section>
+
+        <section>
+            <h2>Якоря</h2>
+<pre><code><a href="#anchor">ссылка на якорь</a>
+
+<article>Много текста...</article>
+
+<div id="anchor">якорь</div></code></pre>
+        </section>
+
+        <section>
+            <h2>Картинки</h2>
+<pre><code><img src="cat.jpg" title="cat" alt="image fat cat"></code></pre>
+            <p class="fragment"><strong>Атрибут alt <a href="http://prgssr.ru/development/alternativnyj-tekst-dlya-izobrazhenij.html">обязательный</a></strong></p>
+        </section>
+
+        <section class="center">
+            <p>
+                <img src="images/cat.jpg" width="500"> <br>
+                <img src="images/cats.jpg" alt="КОТЭ">
+            </p>
+        </section>
+
+        <section>
+            <h2>Размеры картинок</h2>
+<pre><code><img src="img/cat.png" width="300">
+<img src="img/cat.png" height="300">
+<img src="img/cat.png" height="300" width="300"></code></pre>
+            <p>
+              <img class="fragment" src="images/fat_cat.jpg" width="250">
+              <img class="fragment" src="images/fat_cat.jpg" height="250">
+              <img class="fragment" src="images/fat_cat.jpg" width="250" height="250">
+            </p>
+        </section>
+
+        <section>
+            <h2>Почитать самим</h2>
+            <ul>
+                <li>iframe</li>
+                <li>audio/video</li>
+                <li>track</li>
+            </ul>
+
+            <p><img src="images/cat-hw.gif"></p>
+        </section>
+
+        <section class="center">
+            <h2>Формы</h2>
+        </section>
+
+        <section>
+            <h2>input</h2>
+<pre class="example"><code><input type="text" value="Текстовое поле">
+
+<!--все символы показываются звездочками.-->
+<input type="password">
+
+<!--для ввода символов с помощью клавиатуры.-->
+<input type="text" placeholder="Введите текст">
+
+<!--Поле для ввода имени файла,
+который пересылается на сервер.-->
+<input type="file"></code><a class="example__link" target="_blank" href="examples/inputs.html"></a></pre>
+        </section>
+
+        <section>
+            <h2>checkbox/radio</h2>
+<pre class="example"><code><!--Позволяют выбрать более одного
+варианта из предложенных.-->
+<input type="checkbox" checked> Хлеб
+<input type="checkbox"> Молоко
+
+<!--Используются, когда следует выбрать
+один вариант из нескольких предложенных.-->
+<input type="radio" name="drink"> Вода
+<input type="radio" name="drink" checked> Сок</code><a class="example__link" target="_blank" href="examples/checkboxes.html"></a></pre>
+        </section>
+
+        <section class="center">
+            <a href="examples/html5-forms.html"><h2>Атрибут type (HTML 5)</h2></a>
+        </section>
+
+        <section>
+            <h2>select</h2>
+<pre class="example"><code><select name="hero">
+    <option selected>Выберите героя</option>
+    <option value="Чебурашка">Чебурашка</option>
+    <option value="Крокодил Гена">Крокодил Гена</option>
+    <option value="Шапокляк">Шапокляк</option>
+    <option value="Крыса Лариса">Крыса Лариса</option>
+</select></code><a class="example__link" target="_blank" href="examples/select.html"></a></pre>
+        </section>
+
+        <section>
+            <h2>textarea</h2>
+<pre class="example"><code>&lt;textarea rows="7"
+  cols="35"
+  name="text"
+  placeholder="Введите текст">Текст&lt;/textarea></code><a class="example__link" target="_blank" href="examples/textarea.html"></a></pre>
+        </section>
+
+        <section>
+            <h2>Кнопки</h2>
+
+<pre class="example"><code><button>Это кнопка</button>
+
+<input type="button" value="Кнопка">
+
+<button disabled>Это кнопка заблокирована</button>
+
+<!--type="button | reset | submit*"-->
+<button type="button">Это кнопка</button>
+</code><a class="example__link" target="_blank" href="examples/button.html"></a></pre>
+
+<pre class="fragment example"><code><button>Это кнопка <img src="button.png"></button></code></pre>
+        </section>
+
+        <section>
+            <h2>label</h2>
+<pre class="example"><code><p>Выберите напиток</p>
+
+<input type="checkbox" id="check1">
+<!--устанавливает связь между определённой меткой и
+ элементом формы-->
+<label for="check1">Коньяк</label>
+
+<label><input type="checkbox">Арманьяк</label>
+</code><a class="example__link" target="_blank" href="examples/label.html"></a></pre>
+        </section>
+
+        <section class="center">
+            <p>form – для обмена данными между пользователем и сервером</p>
+        </section>
+
+        <section>
+            <h2>form</h2>
+<pre class="example"><code>
+<!--action - указывает обработчик, к которому обращаются
+данные формы при их отправке на сервер-->
+<form method="post" action="handler.php">
+    <input name="name" placeholder="Ваше ФИО">
+    <input name="email" placeholder="Ваш email" type="email">
+    <input name="secret" type="hidden">
+    <button type="submit">Отправить</button>
+    <button type="reset">Сбросить</button>
+</form></code><a class="example__link" target="_blank" href="examples/form.html"></a></pre>
+            <p class="fragment" style="font-size: 24px"><code>name=[значение1]&email=[значение2]&secret=[значение3]</code></p>
+        </section>
+
+        <section class="center">
+            <h2>method="get"</h2>
+            <p>для получения требуемой информации и передачи данных в адресной строке (<strong>ограничение в 4 Кб</strong>)</p>
+        </section>                                                                              
+
+        <section class="center">
+            <h2>method="post"</h2>
+            <p>посылает на сервер данные в запросе браузера. <strong>Большие объёмы данных</strong> используются в форумах, почтовых службах, заполнении базы данных, при пересылке файлов и др</p>
+        </section>
+
+        <section>
+            <h2>Вылидация</h2>
+<pre class="example"><code><form method="post">
+<input type="text" required placeholder="Как вас зовут?">
+
+<input type="email" placeholder="email" required>
+
+<input type="url" placeholder="url" required>
+
+&lt;input type="tel" pattern="2-[0-9]{3}-[0-9]{3}"
+       placeholder="2-123-312" required>
+
+<!--<input type="submit" value="Отправить">-->
+<button>Отправить</button>
+<button type="reset">Очистить</button>
+</form></code><a class="example__link" target="_blank" href="examples/form-valid.html"></a></pre>
+        </section>
+
+        <section>
+            <h2>На дом</h2>
+            <ul>
+                <li>Атрибут tabindex</li>
+                <li>ARIA</li>
+                <li>Как поменять направление текста?</li>
+                <li>Как верстать письма?</li>
+            </ul>
+            <p><img src="images/end.gif"></p>
+        </section>
+        <section>
+            <h2>Почитать</h2>
+            <ul>
+                <li><a href="https://github.com/urfu-2015/verstka-lectures/blob/master/html/part-1.md">HTML I</a></li>
+                <li><a href="https://github.com/urfu-2015/verstka-lectures/blob/master/html/part-2.md">HTML II</a></li>
+                <li><a href="http://front-end.su/2015/11/01/div-or-section-or-article/">div или section или article?</a></li>
+                <li><a href="https://www.w3.org/">W3C</a></li>
+                <li><a href="https://html.spec.whatwg.org/multipage/embedded-content.html">whatwg</a></li>
+                <li><a href="https://html5book.ru/">HTML5BOOK</a></li>
+            </ul>
+        </section>
+    </div>
+</div>
+
+<script src="../../@lib/core.js"></script>
+<script>
+    Reveal.initialize({
+        center: false,
+        controls: false,
+        hideAddressBar: true,
+        history: true,
+        progress: true,
+        slideNumber: true,
+        transition: 'none'
+    });
+
+    document.addEventListener('keydown', event => {
+        if (event.altKey && event.ctrlKey && event.code === 'KeyN') {
+            document.body.classList.toggle('white');
+            document.body.classList.toggle('black');
+        }
+    });
+</script>
+</body>
+</html>
