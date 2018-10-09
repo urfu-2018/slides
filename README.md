@@ -2,11 +2,11 @@
 
 ## Гайды
 
-1. [Просмотр презентаций](https://urfu-2018.github.io/slides/guides/00-presentations/)
+1. [Просмотр презентаций](https://urfu-2018.github.io/slides/guides/00-presentations/) ([pdf](https://urfu-2018.github.io/slides/guides/00-presentations/index.pdf))
 
 ## Markup
 
-1. HTML
+1. [HTML](https://urfu-2018.github.io/slides/markup/01-html/) ([pdf](https://urfu-2018.github.io/slides/markup/01-html/index.pdf))
 1. CSS
 1. Шрифты и текст
 1. Модель отображения I

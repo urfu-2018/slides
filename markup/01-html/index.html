@@ -272,7 +272,7 @@ var email = document.getElementById('email_input');
         <section>
             <h2>link</h2>
 <pre><code>&lt;link href="styles.css">
-    
+
 &lt;!--media="all/screen/print/speech/braille"-->
 &lt;link href="print-styles.css" media="print">
 &lt;link href="favicon.ico">
@@ -289,7 +289,7 @@ var email = document.getElementById('email_input');
     <style>
         p {
             color: red;
-        } 
+        }
     </style>
 &lt;/head>
 &lt;body>
@@ -438,7 +438,7 @@ var email = document.getElementById('email_input');
         <section>
             <h2>pre(preformatted text)</h2>
 <pre class="example"><code><pre>
-    
+
 ,--.   ,--.  ,---.  ,------.  ,---.
 |   `.'   | /  O  \ |  .--. ''   .-'
 |  |'.'|  ||  .-.  ||  '--'.'`.  `-.
@@ -731,7 +731,7 @@ var email = document.getElementById('email_input');
         <section class="center">
             <h2>method="get"</h2>
             <p>для получения требуемой информации и передачи данных в адресной строке (<strong>ограничение в 4 Кб</strong>)</p>
-        </section>                                                                              
+        </section>
 
         <section class="center">
             <h2>method="post"</h2>
@@ -781,23 +781,5 @@ var email = document.getElementById('email_input');
 </div>
 
 <script src="../../@lib/core.js"></script>
-<script>
-    Reveal.initialize({
-        center: false,
-        controls: false,
-        hideAddressBar: true,
-        history: true,
-        progress: true,
-        slideNumber: true,
-        transition: 'none'
-    });
-
-    document.addEventListener('keydown', event => {
-        if (event.altKey && event.ctrlKey && event.code === 'KeyN') {
-            document.body.classList.toggle('white');
-            document.body.classList.toggle('black');
-        }
-    });
-</script>
 </body>
 </html>
