@@ -1,0 +1,45 @@
+.code-two-columns
+{
+    display: flex;
+}
+
+.code-two-columns pre,
+.code-two-columns div
+{
+    flex: 1 1 auto;
+}
+
+.code-center
+{
+    display: flex;
+
+    justify-content: center;
+}
+
+.reveal h2,
+.reveal ul li,
+{
+    font-size: 0.9em;
+}
+
+.reveal h3
+{
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.reveal h4
+{
+    font-size: 0.7em;
+    text-align: center;
+}
+
+.reveal .left
+{
+    text-align: left;
+}
+
+.reveal .right
+{
+    text-align: right;
+}

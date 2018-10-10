@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Введение в JavaScript</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="white"><div class="reveal"><div class="slides">
+
+<section class="center">
+    <h1>Введение в JavaScript</h1>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h3 class="right"><span class="red">Ч</span>истяков Денис</h3>
+</section>
+
+<section>
+    <h2>Сегодня</h2>
+    <ul>
+        <li>Что такое JavaScript?</li>
+        <li>История JavaScript</li>
+        <li>Как выбрать текстовый редактор?</li>
+        <li>Основные типы данных</li>
+        <li>Зачем нужна система контроля версий?</li>
+        <li>Что нужно знать, чтобы сдать домашку?</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h1>На каких языках вы уже программировали?</h1>
+</section>
+
+<section>
+    <h2>JavaScript</h2>
+    <ul>
+        <li>Мультипарадигменный</li>
+        <li class="fragment">Объектно-ориентированный</li> 
+        <li class="fragment">Императивный</li> 
+        <li class="fragment">Функциональный</li>
+        <li class="fragment">Утиная типизация</li>
+    </ul>
+</section>
+
+<!-- Краткая история JavaScript -->
+<section>
+    <h2>Краткая история JavaScript</h2>
+    <ul>
+        <li>1995 – Первая реализация</li>
+    </ul>
+</section>
+<section class="center">
+    <p><img src="images/form-error.png" alt=""></p>
+</section>
+<section>
+    <h2>Краткая история JavaScript</h2>
+    <ul>
+        <li>1995 – Первая реализация</li>
+        <li>1998 – Ajax</li>
+    </ul>
+</section>
+<section class="center">
+    <p><img src="images/ajax2.jpg" style="transform: scale(1.7)"></p>
+</section>
+<section>
+    <h2>Краткая история JavaScript</h2>
+    <ul>
+        <li>1995 – Первая реализация</li>
+        <li>1998 – Ajax</li>
+        <li>2006 – jQuery</li>
+    </ul>
+</section>
+<section class="center">
+    <p>JavaScript</p>
+    <pre><code data-trim>
+        document.getElementsByTagName('header')[0]
+    </code></pre>
+    <p>jQuery</p>
+    <pre><code data-trim>
+        $('header')
+    </code></pre>
+</section>
+<section>
+    <h2>Краткая история JavaScript</h2>
+    <ul>
+        <li>1995 – JavaScript</li>
+        <li>1998 – Ajax</li>
+        <li>2006 – jQuery</li>
+        <li>2008 – Chromium + V8</li>
+    </ul>
+</section>
+<section class="center">
+    <div class="code-two-columns">
+        <div><img src="images/Chromium_11_Logo.png" alt=""></div>
+        <div><img src="images/V8_JavaScript_engine_logo_2.png" alt=""></div>
+    </div>
+</section>
+<section class="center">
+    <p>Chromium + V8</p>
+    <ul>
+        <li>Компиляция</li>
+        <li>Эффективное управление памятью</li>
+        <li>Скрытые классы и встроенные кэши</li>
+    </ul>
+</section>
+<section>
+    <h2>Краткая история JavaScript</h2>
+    <ul>
+        <li>1995 – JavaScript</li>
+        <li>1998 – Ajax</li>
+        <li>2006 – jQuery</li>
+        <li>2008 – Chromium + V8</li>
+        <li>2009 – Node.js</li>
+    </ul>
+</section>
+<section class="center">
+    <p><img src="images/isomorphic.png" alt=""></p>
+</section>
+
+<!-- Как выбрать текстовый редактор? -->
+<section class="center">
+    <h2>Текстовый редактор</h2>
+    <h3>В нём вы проводите большую часть времени. Поэтому отнеситесь к выбору ответственно.</h3>
+</section>
+<section>
+    <h2>Варианты</h2>
+    <ul>
+        <li><a href="https://code.visualstudio.com/">Visual Studio Code</a></li>
+        <li><a href="https://www.jetbrains.com/webstorm/">WebStorm</a></li>
+        <li><a href="https://atom.io/">Atom</a></li>
+        <li><a href="https://www.sublimetext.com/">Sublime Text</a></li>
+    </ul>
+</section>
+<section>
+    <h2>Visual Studio Code</h2>
+    <ul>
+        <li>Мощная поддержка языка</li>
+        <li>Инструменты для работы с git</li>
+        <li>Встроенный терминал</li>
+    </ul>
+</section>
+
+<!-- Основные типы данных -->
+<section>
+    <h2>Декларация переменных</h2>
+    <h3>Вы не планируете переприсваивать значение переменной</h3>
+    <pre class="js"><code data-trim>
+        const year = 1999;
+    </code></pre>
+</section>
+
+<section>
+    <h2>Декларация переменных</h2>
+    <pre class="js"><code data-trim>
+        const year = 1999;
+        year = 2000;  // TypeError: Assignment to constant variable.
+    </code></pre>
+</section>
+
+<section>
+    <h2>Декларация переменных</h2>
+    <h3>Значение переменной может быть переприсвоено</h3>
+    <pre class="js"><code data-trim>
+        let year;
+        year = 1999;
+    </code></pre>
+</section>
+
+<section>
+    <h2>Именование переменных</h2>
+    <pre class="js"><code data-trim data-noescape>
+        const year = 1999;      // OK
+        <span class="fragment">const $year = 1999;     // OK</span>
+        <span class="fragment">const _year = 1999;     // OK</span>
+        <span class="fragment">const year1999 = 1999;  // OK</span>
+        <span class="fragment">const 1year = 1999;     // Not OK!</span>
+        <p>&nbsp;</p>
+        <div class="fragment grey">
+        <sup>*</sup> <small>В качестве первого символа имени переменной можно использовать
+        буквы, символ доллара ($) и подчёркивание (_). Последующие символы
+        могут содержать всё вышеперечисленное, а также цифры.</small>
+        </div>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Числа</h2>
+    <pre class="js"><code data-trim>
+        const duration = 136;
+    </code></pre>
+</section>
+
+<section>
+    <h2>Числа</h2>
+    <pre class="js"><code data-trim>
+        const duration = 136;
+        console.log(duration);  // 136
+    </code></pre>
+</section>
+
+<section>
+    <h2>Числа</h2>
+    <pre class="js"><code data-trim>
+        const duration = 136;
+        const hours = duration / 60;    // 2.2666666666666666
+    </code></pre>
+</section>
+
+<section>
+    <h2>Числа</h2>
+    <pre class="js"><code data-trim>
+        const duration = 136;
+        const hours = Math.trunc(duration / 60);    // 2
+    </code></pre>
+</section>
+
+<section>
+    <h2>Числа</h2>
+    <pre class="js"><code data-trim>
+        const duration = 136;
+        const hours = Math.trunc(duration / 60);    // 2
+        const minutes = duration - (hours * 60);    // 16
+    </code></pre>
+</section>
+
+<section>
+    <h2>Числа</h2>
+    <pre class="js"><code data-trim>
+        const duration = 136;
+        const hours = Math.trunc(duration / 60);    // 2
+        const minutes = duration % 60;      // 16
+    </code></pre>
+</section>
+
+<section>
+    <h2>Числа</h2>
+    <pre class="js"><code data-trim data-noescape>
+        const duration = 136;
+        const hours = Math.trunc(duration / <span class="green">60</span>);    // 2
+        const minutes = duration % <span class="green">60</span>;      // 16
+    </code></pre>
+</section>
+
+<section>
+    <h2>«Магические числа»</h2>
+    <pre class="js"><code data-trim>
+        const minutesInHour = 60;
+        const duration = 136;
+        const hours = Math.trunc(duration / minutesInHour); // 2
+        const minutes = duration % minutesInHour; // 16
+    </code></pre>
+</section>
+
+<section>
+    <h2>Условные операторы</h2>
+    <pre class="js"><code data-trim>
+        const minutesInHour = 60;
+        const duration = 25;
+        const hours = Math.trunc(duration / minutesInHour); // 0
+        const minutes = duration % minutesInHour; // 25
+
+        if (hours > 0) {
+            console.log('Hours:', hours);
+            console.log('Minutes:', minutes);
+        }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Условные операторы</h2>
+    <pre class="js"><code data-trim>
+        const minutesInHour = 60;
+        const duration = 25;
+        const hours = Math.trunc(duration / minutesInHour); // 0
+        const minutes = duration % minutesInHour; // 25
+
+        if (hours > 0) {
+            console.log('Hours:', hours);
+            console.log('Minutes:', minutes);
+        } else {
+            console.log('Minutes:', minutes);
+        }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Условные операторы</h2>
+    <pre class="js"><code data-trim>
+        const minutesInHour = 60;
+        const duration = 60;
+        const hours = Math.trunc(duration / minutesInHour); // 1
+        const minutes = duration % minutesInHour; // 0
+
+        if (hours > 0 && minutes > 0) {
+            console.log('Hours:', hours);
+            console.log('Minutes:', minutes);
+        } else if (hours > 0) {
+            console.log('Hours:', hours);
+        } else {
+            console.log('Minutes:', minutes);
+        }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Boolean</h2>
+    <pre class="js"><code data-trim data-noescape>
+        const minutesInHour = 60;
+        const duration = 60;
+        const hours = Math.trunc(duration / minutesInHour); // 1
+        const minutes = duration % minutesInHour; // 0
+
+        const isHoursPositive = hours > 0; // true
+        <span class="fragment">const isHoursEqZero = hours === 0; // false</span>
+        <span class="fragment">const isHoursAndMinutesPositive = hours > 0 && minutes > 0;
+        // true</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Boolean</h2>
+    <pre class="js"><code data-trim data-noescape>
+        const minutesInHour = 60;
+        const duration = 60;
+        const hours = Math.trunc(duration / minutesInHour); // 1
+        const minutes = duration % minutesInHour; // 0
+
+        const isHoursPositive = hours > 0;
+        const isHoursAndMinutesPositive = hours > 0 && minutes > 0;
+
+        if (isHoursAndMinutesPositive) {
+            console.log('Hours:', hours);
+            console.log('Minutes:', minutes);
+        } else if (isHoursPositive) {
+            console.log('Hours:', hours);
+        } else {
+            console.log('Minutes:', minutes);
+        }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Строки</h2>
+    <pre class="js"><code data-trim>
+        const movie = 'The Matrix';
+    </code></pre>
+</section>
+
+<section>
+    <h2>Строки</h2>
+    <pre class="js"><code data-trim>
+        const movie = "The Matrix";
+    </code></pre>
+</section>
+
+<section>
+    <h2>Строки</h2>
+    <pre class="js"><code data-trim>
+        const movie = 'Операция «Ы»';
+    </code></pre>
+</section>
+
+<section>
+    <h2>Строки</h2>
+    <pre class="js"><code data-trim>
+        const movie = 'La vita è bella';
+    </code></pre>
+</section>
+
+<section>
+    <h2>Строки</h2>
+    <pre class="js"><code data-trim>
+        const movie = 'ハウルの動く城';
+    </code></pre>
+</section>
+
+<section>
+    <h2>Строки</h2>
+    <pre class="js"><code data-trim>
+        const movie = 'The Matrix';
+        const description = 'It\'s action movie';
+    </code></pre>
+</section>
+
+<section>
+    <h2>Строки</h2>
+    <pre class="js"><code data-trim>
+        const movie = 'The Matrix';
+        const description = 'It\'s action movie';
+        console.log(description.length);    // 17
+    </code></pre>
+</section>
+
+<section>
+    <h2>Строки</h2>
+    <pre class="js"><code data-trim>
+        const movie = 'The Matrix';
+        const description = 'It\'s action movie';
+        console.log(movie + '. ' + description);
+        // 'The Matrix. It's action movie'
+    </code></pre>
+</section>
+
+<section>
+    <h2>Строки</h2>
+    <pre class="js"><code data-trim>
+        const movie = 'The Matrix';
+        movie[0];   // 'T'
+    </code></pre>
+</section>
+
+<section>
+    <h2>Строки</h2>
+    <pre class="js"><code data-trim>
+        const movie = 'The Matrix';
+        movie[0] = 'D';
+        console.log(movie);     // 'The Matrix'
+    </code></pre>
+</section>
+
+<section>
+    <h2>Цикл</h2>
+    <pre class="js"><code data-trim data-noescape>
+        const movie = 'The Matrix';
+        
+        for (<span class="green">let i = 0</span>;;) {}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Цикл</h2>
+    <pre class="js"><code data-trim data-noescape>
+        const movie = 'The Matrix';
+        
+        for (let i = 0; <span class="green">i < movie.length</span>;) {}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Цикл</h2>
+    <pre class="js"><code data-trim data-noescape>
+        const movie = 'The Matrix';
+        
+        for (let i = 0; i < movie.length; <span class="green">i++</span>) {
+            const char = movie[<span class="green">i</span>]; // 'T'
+        }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Цикл</h2>
+    <pre class="js"><code data-trim>
+        const movie = 'The Matrix';
+        
+        for (let i = 0; i < movie.length; i++) {
+            const char = movie[i]; // 'h'
+        }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Цикл</h2>
+    <pre class="js"><code data-trim>
+        const movie = 'The Matrix';
+        
+        for (let i = 0; i < movie.length; i++) {
+            const char = movie[i]; // 'e'
+        }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Цикл</h2>
+    <pre class="js"><code data-trim data-noescape>
+        const movie = 'The Matrix';
+        
+        for (let i = 0; i < movie.length; i++) <span class="green">{</span>
+            const char = movie[i]; // 'x'
+        <span class="green">}</span>
+        <span class="fragment">
+        console.log(i);  // ReferenceError: char is not defined
+        console.log(char);  // ReferenceError: char is not defined
+        </span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Массивы</h2>
+    <pre class="js"><code data-trim>
+        const genres = ['action', 'fantasy', 'sci-fi'];
+    </code></pre>
+</section>
+
+<section>
+    <h2>Массивы</h2>
+    <pre class="js"><code data-trim>
+        const genres = ['action', 'fantasy', 'sci-fi'];
+        console.log(genres.length); // 3
+    </code></pre>
+</section>
+
+<section>
+    <h2>Массивы</h2>
+    <pre class="js"><code data-trim>
+        const genres = ['action', 'fantasy', 'sci-fi'];
+        genres[0]; // 'action'
+    </code></pre>
+</section>
+
+<section>
+    <h2>Массивы</h2>
+    <pre class="js"><code data-trim>
+        const genres = ['action', 'fantasy', 'sci-fi'];
+        genres[0] = 'comedy';
+        
+        console.log(genres); // ['comedy', 'fantasy', 'sci-fi']
+    </code></pre>
+</section>
+
+<section>
+    <h2>Массивы</h2>
+    <pre class="js"><code data-trim>
+        const genres = ['action', 'fantasy', 'sci-fi'];
+        genres.push('comedy');
+        
+        console.log(genres);
+        // ['action', 'fantasy', 'sci-fi', 'comedy']
+    </code></pre>
+</section>
+
+<section>
+    <h2>Цикл</h2>
+    <pre class="js"><code data-trim>
+        const genres = ['action', 'fantasy', 'sci-fi'];
+        
+        for (let i = 0; i < genres.length; i++) {
+            const genre = genres[i]; // 'action'
+        }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Цикл</h2>
+    <pre class="js"><code data-trim>
+        const genres = ['action', 'fantasy', 'sci-fi'];
+        
+        for (let i = 0; i < genres.length; i++) {
+            const genre = genres[i]; // 'fantasy'
+        }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Цикл</h2>
+    <pre class="js"><code data-trim>
+        const genres = ['action', 'fantasy', 'sci-fi'];
+        
+        for (let i = 0; i < genres.length; i++) {
+            const genre = genres[i]; // 'sci-fi'
+        }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Undefined</h2>
+    <pre class="js"><code data-trim>
+        const genres = ['action', 'fantasy', 'sci-fi'];
+        genres[5]; // undefined
+    </code></pre>
+</section>
+
+<section>
+    <h2>Undefined</h2>
+    <pre class="js"><code data-trim>
+        let year;
+        year; // undefined
+        
+        year = 1999;
+        year; // 1999
+    </code></pre>
+</section>
+
+<section>
+    <h2>Объекты</h2>
+    <pre class="js"><code data-trim>
+        const movie = {};
+    </code></pre>
+</section>
+
+<section>
+    <h2>Объекты</h2>
+    <pre class="js"><code data-trim>
+        const movie = {
+            name: 'The Matrix'
+        };
+    </code></pre>
+</section>
+
+<section>
+    <h2>Объекты</h2>
+    <pre class="js"><code data-trim>
+        const movie = {
+            name: 'The Matrix',
+            year: 1999,
+            genres: ['action', 'fantasy', 'sci-fi']
+        };
+    </code></pre>
+</section>
+
+<section>
+    <h2>Объекты</h2>
+    <pre class="js"><code data-trim>
+        const movie = {
+            name: 'The Matrix',
+            year: 1999,
+            genres: ['action', 'fantasy', 'sci-fi']
+        };
+
+        console.log(movie.name); // 'The Matrix'
+    </code></pre>
+</section>
+
+<section>
+    <h2>Объекты</h2>
+    <pre class="js"><code data-trim data-noescape>
+        const movie = {
+            name: 'The Matrix',
+            year: 1999,
+            genres: ['action', 'fantasy', 'sci-fi']
+        };
+
+        const key = 'year';
+        console.log(movie[key]); // 1999
+        <span class="fragment">console.log(movie['na' + 'me']); // 'The Matrix'</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Объекты</h2>
+    <pre class="js"><code data-trim>
+        const movie = {
+            name: 'The Matrix',
+            year: 1999,
+            genres: ['action', 'fantasy', 'sci-fi']
+        };
+
+        movie.name = 'Gatsby';
+        console.log(movie);
+        // { name: 'Gatsby',
+        // year: 1999,
+        // genres: [ 'action', 'fantasy', 'sci-fi' ] }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Объекты</h2>
+    <pre class="js"><code data-trim>
+        const movie = {
+            name: 'The Matrix',
+            year: 1999,
+            genres: ['action', 'fantasy', 'sci-fi']
+        };
+
+        movie.name = 'Gatsby';
+        movie.genres.push('comedy');
+        movie.duration = 136;
+    </code></pre>
+</section>
+
+<section>
+    <h2>Объекты</h2>
+    <pre class="js"><code data-trim>
+        const movie = {
+            name: 'The Matrix',
+            year: 1999,
+            genres: ['action', 'fantasy', 'sci-fi']
+        };
+
+        delete movie.genres;
+        console.log(movie); // { name: 'The Matrix', year: 1999 }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Объекты</h2>
+    <pre class="js"><code data-trim>
+        const movie = {
+            name: 'The Matrix',
+            year: 1999,
+            genres: ['action', 'fantasy', 'sci-fi']
+        };
+
+        const keys = Object.keys(movie);
+        console.log(keys); // ['name', 'year', 'genres']
+    </code></pre>
+</section>
+
+<section>
+    <h2>Функции</h2>
+    <pre class="js"><code data-trim>
+        const movie = {
+            name: 'The Matrix',
+            year: 1999
+        };
+    </code></pre>
+</section>
+
+<section>
+    <h2>Функции</h2>
+    <pre class="js"><code data-trim>
+        function createMovie(name, year) {
+            return {
+                name: name,
+                year: year
+            };
+        }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Функции</h2>
+    <pre class="js"><code data-trim data-noescape>
+        function createMovie(<span class="green">name</span>, <span class="green">year</span>) {
+            return {
+                <span class="green">name</span>: <span class="green">name</span>,
+                <span class="green">year</span>: <span class="green">year</span>
+            };
+        }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Функции</h2>
+    <pre class="js"><code data-trim>
+        function createMovie(name, year) {
+            return {
+                name,
+                year
+            };
+        }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Функции</h2>
+    <pre class="js"><code data-trim>
+        function createMovie(name, year) {
+            return {
+                name,
+                year
+            };
+        }
+
+        console.log(createMovie('The Matrix', 1999));
+        // { name: 'The Matrix', year: 1999 }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Функции</h2>
+    <pre class="js"><code data-trim>
+        function createMovie(name, year) {
+            return {
+                name,
+                year
+            };
+        }
+
+        console.log(
+            createMovie('The Matrix', 1999),
+            createMovie('The Green Mile', 1999),
+            createMovie('Bad Boys', 1995)
+        )
+    </code></pre>
+</section>
+
+<!-- GitHub -->
+<section class="center">
+    <h2>git – система контроля версий.</h2>
+    <h3>В целом, нужна для двух вещей: версионирования кода и совместной разработки.</h3>
+    <h3><a href="https://git-scm.com/">git-scm.org</a></h3>
+</section>
+<section class="center">
+    <h2>GitHub – графический интерфейс для git.</h2>
+    <h3>Есть и другая версия: это социальная сеть для&nbsp;программистов.</h3>
+    <h3><a href="https://github.com/">github.com</a></h3>
+</section>
+<section class="center">
+    <h2>Ссылки про git/GitHub</h2>
+    <ul>
+        <li><a href="https://urfu-2016.github.io/javascript-slides/01-intro/#/37">Введение. Основы языка. GitHub</a>
+            <br><small>Язык программирования Javascript 2016</small></li>
+        <li><a href="https://gebetix.github.io/git/">git</a><br><small>Разработка веб-приложений 2016</small></li>
+        <li>Github (<a href="http://urfu-2015.github.io/webdev-slides/1-1-teamwork-git-github/#/">слайды</a>, <a href="https://www.youtube.com/watch?v=mvVsrB46zkc">видео</a>)
+            <br><small>Разработка веб-приложений 2015</small></li>
+        <li><a href="https://lab.github.com/githubtraining/introduction-to-github">lab.github.com</a></li>
+        <li><a href="https://learn.javascript.ru/screencast/git">learn.javascript.ru</a></li>
+    </ul>
+</section>
+<section>
+    <section class="center">
+        <h2>Демо</h2>
+        <h3>Отправляем пулл-реквест с домашкой.</h3>
+        <h3><a href="https://github.com/urfu-2018/demo-task-1">Задача «Сложить два числа»</a></h3>
+    </section>
+    <section class="center">
+        <h2>Перед началом работы</h2>
+        <h3>клонируем репозиторий<br>и устанавливаем зависимости.</h3>
+        <pre class="bash"><code data-trim>
+            git clone https://github.com/urfu-...
+            demo-task-1
+            npm install
+        </code></pre>
+    </section>
+    <section class="center">
+        <h2>Перед отправкой домашки</h2>
+        <h3>запускаем линтер и тесты.</h3>
+        <pre class="bash"><code data-trim>
+            npm run lint
+            npm run test
+        </code></pre>
+    </section>
+    <section class="center">
+        <h2>После прохождения проверок</h2>
+        <h3>создаём коммит в VS Code<br>и отправляем его на гитхаб.</h3>
+        <pre class="bash"><code data-trim>
+            git push
+        </code></pre>
+    </section>
+</section>
+
+<section class="center">
+    <h2>Спасибо!</h2>
+    <h2>Вопросы?</h2>
+</section>
+
+</div></div>
+
+<script src="../../@lib/core.js"></script>
+<script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? '../../@lib/pdf.css' : '../../@lib/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+</script>
+</body>
+</html>
