@@ -37,8 +37,8 @@
     <h2>JavaScript</h2>
     <ul>
         <li>Мультипарадигменный</li>
-        <li class="fragment">Объектно-ориентированный</li> 
-        <li class="fragment">Императивный</li> 
+        <li class="fragment">Объектно-ориентированный</li>
+        <li class="fragment">Императивный</li>
         <li class="fragment">Функциональный</li>
         <li class="fragment">Утиная типизация</li>
     </ul>
@@ -424,7 +424,7 @@
     <h2>Цикл</h2>
     <pre class="js"><code data-trim data-noescape>
         const movie = 'The Matrix';
-        
+
         for (<span class="green">let i = 0</span>;;) {}
     </code></pre>
 </section>
@@ -433,7 +433,7 @@
     <h2>Цикл</h2>
     <pre class="js"><code data-trim data-noescape>
         const movie = 'The Matrix';
-        
+
         for (let i = 0; <span class="green">i < movie.length</span>;) {}
     </code></pre>
 </section>
@@ -442,7 +442,7 @@
     <h2>Цикл</h2>
     <pre class="js"><code data-trim data-noescape>
         const movie = 'The Matrix';
-        
+
         for (let i = 0; i < movie.length; <span class="green">i++</span>) {
             const char = movie[<span class="green">i</span>]; // 'T'
         }
@@ -453,7 +453,7 @@
     <h2>Цикл</h2>
     <pre class="js"><code data-trim>
         const movie = 'The Matrix';
-        
+
         for (let i = 0; i < movie.length; i++) {
             const char = movie[i]; // 'h'
         }
@@ -464,7 +464,7 @@
     <h2>Цикл</h2>
     <pre class="js"><code data-trim>
         const movie = 'The Matrix';
-        
+
         for (let i = 0; i < movie.length; i++) {
             const char = movie[i]; // 'e'
         }
@@ -475,7 +475,7 @@
     <h2>Цикл</h2>
     <pre class="js"><code data-trim data-noescape>
         const movie = 'The Matrix';
-        
+
         for (let i = 0; i < movie.length; i++) <span class="green">{</span>
             const char = movie[i]; // 'x'
         <span class="green">}</span>
@@ -514,7 +514,7 @@
     <pre class="js"><code data-trim>
         const genres = ['action', 'fantasy', 'sci-fi'];
         genres[0] = 'comedy';
-        
+
         console.log(genres); // ['comedy', 'fantasy', 'sci-fi']
     </code></pre>
 </section>
@@ -524,7 +524,7 @@
     <pre class="js"><code data-trim>
         const genres = ['action', 'fantasy', 'sci-fi'];
         genres.push('comedy');
-        
+
         console.log(genres);
         // ['action', 'fantasy', 'sci-fi', 'comedy']
     </code></pre>
@@ -534,7 +534,7 @@
     <h2>Цикл</h2>
     <pre class="js"><code data-trim>
         const genres = ['action', 'fantasy', 'sci-fi'];
-        
+
         for (let i = 0; i < genres.length; i++) {
             const genre = genres[i]; // 'action'
         }
@@ -545,7 +545,7 @@
     <h2>Цикл</h2>
     <pre class="js"><code data-trim>
         const genres = ['action', 'fantasy', 'sci-fi'];
-        
+
         for (let i = 0; i < genres.length; i++) {
             const genre = genres[i]; // 'fantasy'
         }
@@ -556,7 +556,7 @@
     <h2>Цикл</h2>
     <pre class="js"><code data-trim>
         const genres = ['action', 'fantasy', 'sci-fi'];
-        
+
         for (let i = 0; i < genres.length; i++) {
             const genre = genres[i]; // 'sci-fi'
         }
@@ -576,7 +576,7 @@
     <pre class="js"><code data-trim>
         let year;
         year; // undefined
-        
+
         year = 1999;
         year; // 1999
     </code></pre>
@@ -839,12 +839,5 @@
 </div></div>
 
 <script src="../../@lib/core.js"></script>
-<script>
-    var link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
-    link.href = window.location.search.match(/print-pdf/gi) ? '../../@lib/pdf.css' : '../../@lib/paper.css';
-    document.getElementsByTagName('head')[0].appendChild(link);
-</script>
 </body>
 </html>
