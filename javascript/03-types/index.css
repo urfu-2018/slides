@@ -1,0 +1,76 @@
+.list li,
+.reveal p
+{
+    font-size: .9em;
+}
+
+.reveal .left p
+{
+    text-align: left;
+}
+
+.hor-center
+{
+    text-align: center;
+}
+
+.reveal .size-M,
+.reveal .bigger code,
+.reveal .left p
+{
+    font-size: .8em;
+}
+
+.no-margin pre
+{
+    margin: 0;
+}
+
+.reveal .equal
+{
+    font-size: 1.5em;
+}
+
+.reveal .link
+{
+    font-size: .6em;
+}
+
+.visible-fragment mark.fragment,
+.visible-fragment span.fragment
+{
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.visible-fragment mark.fragment
+{
+    background: unset !important;
+    color: unset !important;
+}
+
+.visible-fragment mark.fragment.visible
+{
+    background: yellow !important;
+}
+
+.visible-fragment span.strike:not([class~="visible"])
+{
+    text-decoration: none !important;
+}
+
+.flex
+{
+    display: flex;
+    justify-content: space-around;
+}
+
+.visible-fragment mark.space:not([class~="current-fragment"])
+{
+    background: none !important;
+}
+
+.reveal .nowrap
+{
+    white-space: nowrap;
+}

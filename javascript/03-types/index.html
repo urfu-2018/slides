@@ -1,0 +1,969 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Типы данных, часть 2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+</head><body class="white"><div class="reveal"><div class="slides">
+
+<section class="center">
+    <h1>Типы данных, часть II</h1>
+    <h2><span class="red">Б</span>аженова Анна</h2>
+</section>
+
+<section class="center" data-transition="slide-in fade-out">
+    <h2>В предыдущих сериях:</h2>
+
+    <ul class="list">
+        <li>Строки, массивы, объекты и функции</li>
+        <li>Отличия примитивных типов данных от объектов</li>
+        <li>Основные методы для работы со строками и массивами</li>
+    </ul>
+</section>
+
+<section class="center" data-transition="slide-in fade-out">
+    <h2>Сегодня в программе:</h2>
+
+    <ul class="list">
+        <li>Объекты и их методы</li>
+        <li>Операции сравнения</li>
+        <li>Даты</li>
+        <li>Регулярные выражения</li>
+    </ul>
+</section>
+
+<section class="center" data-transition="slide-in fade-out">
+    <h2>Объекты</h2>
+
+<pre class="js"><code data-trim>
+const tweet = {
+  id: 782188596690350100,
+  text: 'Я и ИоТ, доклад на WSD Вадима Макеева #wstdays',
+  user: {
+    id: 42081171,
+    name: 'Веб-стандарты',
+    screenName: 'webstandards_ru',
+    followersCount: 6443
+  },
+  hashtags: ['wstdays']
+};
+    </code></pre>
+</section>
+
+<section class="center visible-fragment" data-transition="fade-out">
+    <h2>Методы объекта</h2>
+
+    <pre class="js"><code class="js" data-noescape data-trim>
+const tweet = <mark class="fragment" data-fragment-index="2">{</mark>
+  likes: 16,
+  <mark class="fragment" data-fragment-index="1">getLikes: function () {</mark>
+    return <mark class="fragment" data-fragment-index="2">this</mark>.likes;
+  <mark class="fragment" data-fragment-index="1">}</mark>,
+  setLikes: function (value) {
+    this.likes = parseInt(value) || 0;
+  }
+<mark class="fragment" data-fragment-index="2">}</mark>;
+    </code></pre>
+</section>
+
+<section class="center" data-transition="slide-in fade-out">
+    <h2>Методы объекта</h2>
+
+    <pre class="js"><code data-noescape data-trim>
+const tweet = <mark>{</mark>
+  likes: 16,
+  getLikes: function () {
+    return this.likes;
+  },
+  setLikes: function (value) {
+    this.likes = parseInt(value) || 0;
+    <mark>return this</mark>;
+  }
+<mark>}</mark>;
+    </code></pre>
+</section>
+
+<section class="center" data-transition="slide-in fade-out">
+    <h2>Методы объекта</h2>
+
+    <pre class="js"><code data-trim>
+tweet.getLikes(); // 16
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+tweet.setLikes(17) // { … }
+     .getLikes();  // 17
+    </code></pre>
+</section>
+
+<section class="center" data-transition="slide-in fade-out">
+    <h2>Методы объекта</h2>
+
+    <pre class="js"><code data-noescape data-trim>
+const tweet = <mark>{</mark>
+  user: {
+    followersCount: 6443,
+    …
+  },
+  getFollowersCount: function() {
+    return <mark>this.user.followersCount</mark>;
+  }
+<mark>}</mark>;
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+tweet.getFollowersCount(); // 6443
+    </code></pre>
+</section>
+
+<section class="center" data-transition="slide-in fade-out">
+    <h1>Преобразование объектов</h1>
+</section>
+
+<section class="center" data-transition="slide-in fade-out">
+    <h2>Логическое преобразование</h2>
+
+    <pre class="js"><code data-trim>
+// Любой объект в логическом контексте – true
+if ({}) {
+  console.log('true!'); // вывод сработает
+}
+    </code></pre>
+</section>
+
+<section class="center" data-transition="slide-in fade-out">
+    <h2>Строковое преобразование</h2>
+
+    <pre class="js"><code data-noescape data-trim>
+const panda = {
+  face: '🐼'
+};
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+panda.toString(); // '[object Object]'
+    </code></pre>
+</section>
+
+<section class="center" data-transition="slide-in fade-out">
+    <h2>Строковое преобразование</h2>
+
+    <pre class="js"><code data-noescape data-trim>
+const panda = {
+  face: '🐼',
+  toString: function () {
+    return '&amp;#x1F43C;';
+  }
+};
+    </code></pre>
+
+        <pre class="fragment js"><code data-trim>
+panda.toString(); // &amp;#x1F43C;
+    </code></pre>
+</section>
+
+<section class="center" data-transition="slide-in fade-out">
+    <h2>Строковое преобразование</h2>
+
+    <pre class="js"><code data-trim>
+const array = [1, 2, 3];
+    </code></pre>
+
+    <pre class="js"><code data-trim>
+// Встроенный метод
+console.log(array.toString()); // 1,2,3
+    </code></pre>
+</section>
+
+<section class="center" data-transition="slide-in fade-out">
+    <h2>Приведение к строке</h2>
+
+    <pre class="js"><code data-noescape data-trim>
+const panda = {
+  face: '🐼',
+  toString: function () {
+    return '&amp;#x1F43C;';
+  }
+};
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+panda.toString(); // '&amp;#x1F43C;'
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+String(panda); // '&amp;#x1F43C;'
+    </code></pre>
+
+    <pre class="fragment visible-fragment js"><code data-noescape data-trim>
+<span class="fragment strike">'' + panda; // '&amp;#x1F43C;</span>'
+    </code></pre>
+</section>
+
+<section data-transition="slide-in">
+    <p class="equal">==</p>
+
+    <pre class="js"><code data-trim>
+'1' == 1; // true ???
+    </code></pre>
+</section>
+
+<section data-transition="fade-out">
+    <p class="red equal">==</p>
+
+    <pre class="js"><code data-trim>
+'1' == 1; // true ???
+    </code></pre>
+
+    <p class="green equal">===</p>
+
+    <pre class="js"><code data-trim>
+'1' === 1; // false
+    </code></pre>
+
+    <br>
+
+    <a class="fragment size-M link" href="http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.3">Абстрактный Алгоритм Эквивалентного Сравнения</a>
+</section>
+
+<section class="center" data-transition="slide-in fade-out">
+    <p>
+        Операция сравнения двух сложных типов вернет истину только в том случае,
+        если внутренние ссылки обоих объектов ссылаются на один и тот же объект в памяти
+    </p>
+
+    <div class="hor-center">
+        <pre class="js"><code class="red size-M">{} === {} // false</code></pre>
+    </div>
+</section>
+
+<section data-transition="slide-in fade-out">
+    <pre class="js hor-center equal"><code data-trim>object1 === object2 -> true ?</code></pre>
+
+    <pre class="js fragment"><code data-trim>
+const obj1 = { value: 1 };
+const obj2 = obj1;
+
+obj1 === obj2; // ?
+    </code></pre>
+</section>
+
+<section data-transition="fade-out">
+    <pre class="js hor-center equal"><code data-trim>object1 === object2 -> true ?</code></pre>
+
+    <pre class="js"><code data-trim>
+const obj1 = { value: 1 };
+const obj2 = obj1;
+
+obj1 === obj2; // true
+    </code></pre>
+
+    <pre class="js fragment"><code data-trim>
+obj1 === { value: 1 }; // false
+obj2 === { value: 1 }; // false
+    </code></pre>
+</section>
+
+<section data-transition="fade-out">
+    <pre class="js hor-center equal"><code data-trim>object1 === object2 -> true ?</code></pre>
+
+    <pre class="js"><code data-trim>
+const obj1 = { value: { a: 1 } };
+const obj2 = obj1;
+
+obj1 === obj2; // true
+    </code></pre>
+
+    <pre class="js fragment"><code data-trim>
+obj1.value.a = 2;
+console.log(obj1); // { value: { a: 2 } }
+
+obj1 === obj2; // ?
+    </code></pre>
+</section>
+
+<section data-transition="fade-out">
+    <pre class="js hor-center equal"><code data-trim>object1 === object2 -> true ?</code></pre>
+
+    <pre class="js"><code data-trim>
+const obj1 = { value: { a: 1 } };
+const obj2 = obj1;
+
+obj1 === obj2; // true
+    </code></pre>
+
+    <pre class="js"><code data-trim>
+obj1.value.a = 2;
+console.log(obj1); // { value: { a: 2 } }
+
+obj1 === obj2; // true
+    </code></pre>
+
+    <pre class="js fragment"><code data-trim>
+console.log(obj2); // { value: { a: 2 } }
+    </code></pre>
+</section>
+
+<section class="center" data-transition="slide-in fade-out">
+    <h2>Скрытые методы</h2>
+
+    <pre class="js"><code data-trim>
+const panda = {
+  toString: function() { return '&amp;#x1F43C;'; }
+};
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+Object.keys(panda); // ['toString']
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+const emptyObject = {};
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+Object.keys(emptyObject); // []
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+typeof panda.toString === 'function'; // true
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+typeof emptyObject.toString === 'function'; // true
+    </code></pre>
+</section>
+
+<section data-transition="slide-in fade-out">
+    <h2>Объявление свойств объекта</h2>
+
+    <p class="size-M visible-fragment">
+        Object.defineProperty(<span class="fragment highlight-current-green" data-fragment-index="1">obj</span>,
+            <span class="fragment highlight-current-red" data-fragment-index="2">prop</span>,
+            <span class="fragment highlight-current-blue" data-fragment-index="3">descriptor</span>)
+    </p>
+
+    <pre class="js"><code data-noescape data-trim>
+<span class="fragment" data-fragment-index="1">obj - объект, в котором объявляется свойство</span>
+
+<span class="fragment" data-fragment-index="2">prop - имя свойства, которое нужно объявить или модифицировать</span>
+
+<span class="fragment" data-fragment-index="3">descriptor – объект, который описывает поведение свойства</span>
+    </code></pre>
+</section>
+
+<section data-transition="slide-in fade-out">
+    <h2>Объявление свойств объекта</h2>
+
+    <pre class="js"><code data-trim>
+const panda = {};
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+panda.color = 'black';
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+Object.defineProperty(panda, 'color', {
+  value: 'black',
+  writable: true,
+  enumerable: true,
+  configurable: true
+});
+    </code></pre>
+</section>
+
+<section data-transition="slide-in fade-out">
+    <h2>Объявление свойств объекта. <span class="green">writable</span></h2>
+
+    <pre class="js"><code data-trim>
+Object.defineProperty(panda, 'color', {
+  value: 'black',
+  writable: false // запретить редактирование
+});
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+panda.color; // black
+panda.color = 'white';
+panda.color; // black
+    </code></pre>
+</section>
+
+<section data-transition="slide-in fade-out">
+    <h2>Объявление свойств объекта. <span class="green">configurable</span></h2>
+
+    <pre class="js"><code data-trim>
+Object.defineProperty(panda, 'color', {
+  value: 'black',
+  configurable: false // запретить удаление
+});
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+panda.color; // black
+panda.hasOwnProperty('color'); // true
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+delete panda.color; // false
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+panda.color; // black
+panda.hasOwnProperty('color'); // true
+    </code></pre>
+</section>
+
+<section data-transition="slide-in fade-out">
+    <h2>Объявление свойств объекта. <span class="green">enumerable</span></h2>
+
+    <pre class="js"><code data-trim>
+const panda = {
+  color: 'black',
+  toString: () => '&amp;#x1f43c;'
+};
+    </code></pre>
+
+    <pre class="js"><code data-trim>
+Object.keys(panda); // ['color', 'toString']
+    </code></pre>
+</section>
+
+<section data-transition="slide-in fade-out">
+    <h2>Объявление свойств объекта. <span class="green">enumerable</span></h2>
+
+    <pre class="js"><code data-trim>
+const panda = {
+  color: 'black'
+};
+    </code></pre>
+
+    <pre class="js"><code data-trim>
+Object.defineProperty(panda, 'toString', {
+  value:  () => '&amp;#x1f43c;',
+  enumerable: false // исключить toString из списка итерации
+});
+    </code></pre>
+
+    <pre class="js"><code data-trim>
+Object.keys(panda); // ['color']
+    </code></pre>
+</section>
+
+<section class="center" data-transition="slide-in fade-out">
+    <p>
+        Значения параметров <span class="green">writable</span>,
+        <span class="green">enumerable</span> и <span class="green">configurable</span>
+        по умолчанию — false.</p>
+</section>
+
+<section class="no-margin" data-transition="slide-in fade-out">
+    <h2>Заморозка</h2>
+
+    <pre class="js"><code data-trim>
+const panda = {
+  color: 'black'
+};
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+Object.isFrozen(panda); // false
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+Object.getOwnPropertyDescriptor(panda, 'color');
+// { value: 'black,
+//   writable: true,
+//   enumerable: true,
+//   configurable: true }
+    </code></pre>
+</section>
+
+<section class="no-margin" data-transition="slide-in fade-out">
+    <h2>Заморозка. <span class="green">freeze</span></h2>
+
+    <pre class="js"><code data-trim>
+Object.freeze(panda);
+    </code></pre>
+
+    <pre class="fragment js" data-fragment-index="0"><code data-trim>
+Object.isFrozen(panda); // true
+    </code></pre>
+
+    <pre class="fragment js" data-fragment-index="1"><code class="visible-fragment" data-noescape data-trim>
+Object.getOwnPropertyDescriptor(panda, 'color');
+// { value: 'black',
+//   <mark class="fragment" data-fragment-index="2">writable: false</mark>,
+//   enumerable: true,
+//   <mark class="fragment" data-fragment-index="2">configurable: false</mark> }
+    </code></pre>
+
+    <pre class="fragment js" data-fragment-index="3"><code data-trim>
+panda.color = 'white';
+    </code></pre>
+
+    <pre class="fragment js" data-fragment-index="4"><code data-trim>
+panda.color; // 'black'
+    </code></pre>
+
+    <pre class="fragment js" data-fragment-index="5"><code data-trim>
+delete panda.color; // false
+    </code></pre>
+</section>
+
+<section class="no-margin" data-transition="slide-in fade-out">
+    <h2>Заморозка. <span class="green">freeze</span></h2>
+
+    <pre class="js"><code data-noescape data-trim>
+Object.getOwnPropertyDescriptor(panda, 'color');
+// { value: 'black',
+//   <mark>writable: false</mark>,
+//   enumerable: true,
+//   <mark>configurable: false</mark> }
+    </code></pre>
+
+    <pre class="fragment js"><code>
+Object.defineProperty(panda, 'color', {
+  value: 'white'
+});
+// TypeError: Cannot redefine property: color
+    </code></pre>
+</section>
+
+<section class="no-margin" data-transition="slide-in fade-out">
+    <h2>Заморозка. <span class="green">freeze</span></h2>
+
+    <pre class="js"><code data-trim>
+const panda = {
+  classification: {
+    kingdom: 'Animalia',
+    class: 'Mammalia'
+  }
+};
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+Object.freeze(panda);
+panda.classification.kingdom = 'Fungi';
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+console.log(panda); // {
+                    //   classification: {
+                    //     kingdom: 'Fungi',
+                    //     class: 'Mammalia'
+                    //   }
+                    // }
+    </code></pre>
+</section>
+
+<section class="no-margin" data-transition="slide-in fade-out">
+    <h2>Заморозка. <span class="green">seal</span></h2>
+
+    <pre class="js"><code data-trim>
+const panda = {
+  color: 'black'
+};
+    </code></pre>
+
+    <pre class="js"><code data-trim="">
+Object.seal(panda);
+    </code></pre>
+
+    <pre class="fragment js"><code data-noescape data-trim="">
+Object.getOwnPropertyDescriptor(panda, 'color');
+// { value: 'black',
+//   <mark>writable: true</mark>,
+//   enumerable: true,
+//   <mark>configurable: false</mark> }
+    </code></pre>
+
+    <pre class="fragment js"><code data-noescape data-trim="">
+panda.color = 'white';
+panda.color; // white
+    </code></pre>
+</section>
+
+<section class="size-M" data-transition="slide-in fade-out">
+    <h2>Объект Даты</h2>
+
+    <pre class="js"><code data-trim>
+// Создает объект с текущей датой в системном часовом поясе
+new Date(); // Mon Oct 08 2018 00:07:53 GMT+0500 (YEKT)
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+const date = '2018-10-08T14:07:27.362Z';
+// Пытаемся сконвертировать строку в дату
+new Date(date); // Mon Oct 08 2018 19:07:27 GMT+0500 (YEKT)
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+// Создаем дату из UNIX Timestamp
+new Date(1540300025000); // Tue Oct 23 2018 18:07:05 GMT+0500 (YEKT)
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+// Создаем дату из набора параметров
+new Date(2018, 9, 23, 18, 7, 5); // Tue Oct 23 2018 18:07:05 GMT+0500 (YEKT)
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+// Получаем UNIX Timestamp из даты
+(new Date(2018, 9, 23, 18, 7, 5)).valueOf(); // 1540300025000
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+// Получаем текущее значение UNIX Timestamp
+Date.now(); // 1539007957389
+    </code></pre>
+</section>
+
+<section data-transition="slide-in">
+    <h2>Объект Даты</h2>
+
+    <pre class="js"><code class="hor-center" data-trim>
+const date = new Date(2018, 9, 23, 17, 50, 05);
+    </code></pre>
+
+    <div class="flex">
+        <pre class="fragment js" data-fragment-index="0"><code data-noescape data-trim>
+date.getFullYear(); // 2018
+<span class="fragment" data-fragment-index="1">date.getMonth(); // 9</span>
+<span class="fragment" data-fragment-index="2">date.getDate(); // 23</span>
+<span class="fragment" data-fragment-index="3">date.getHours(); // 17</span>
+<span class="fragment" data-fragment-index="4">date.getMinutes(); // 50</span>
+<span class="fragment" data-fragment-index="5">date.getSeconds(); // 5</span>
+        </code></pre>
+
+        <pre class="fragment js" data-fragment-index="6"><code data-noescape data-trim>
+date.setFullYear(2020);
+date.setMonth(1);
+date.setDate(25);
+date.setHours(4);
+date.setMinutes(7);
+date.setSeconds(0);
+        </code></pre>
+    </div>
+
+    <div class="hor-center"><a class="fragment" data-fragment-index="7"
+       href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a></div>
+</section>
+
+<section class="center">
+    <h1>Relax &#x1f43c;</h1>
+</section>
+
+<section class="center" data-transition="slide-in fade-out">
+    <h2>Регулярные выражения</h2>
+
+    <ul>
+        <li class="size-M">Имеют стандартный <a href="https://ru.wikipedia.org/wiki/PCRE">PCRE</a>-синтаксис</li>
+        <li class="size-M">Реализованы отдельным объектом <span class="green">RegExp</span> и интегрированы в методы строк</li>
+    </ul>
+</section>
+
+<section class="center" data-transition="slide-in fade-out">
+    <h2>Синтаксис</h2>
+
+    <pre class="js"><code data-trim>
+const regexp = new RegExp(pattern, flags);
+    </code></pre>
+
+    <pre class="fragment js"><code data-trim>
+const regexp = /pattern/; // без флагов
+const regexp = /pattern/gi; // с флагами
+    </code></pre>
+</section>
+
+<section class="center" data-transition="slide-in fade-out">
+    <h2>Методы строк</h2>
+
+    <pre class="js"><code data-noescape data-trim>
+tweet.text; // 'Node.js, и модули, Джеймс о проблемах Node.js
+            //  #nodejs #modules'
+
+// Проверяем, содержится ли регулярное выражение в строке
+tweet.text.search(/js/); // 5
+<span class="fragment">tweet.text.search(/abc/); // -1</span>
+    </code></pre>
+
+    <pre class="fragment js"><code data-noescape data-trim>
+// Находит первое совпадение в строке
+const result = tweet.text.match(/js/);
+result[0]; // js
+result.index; // 5
+result.input; // 'Node.js, и модули...' (вся поисковая строка)
+
+<span class="fragment">tweet.text.match(/abc/); // null</span>
+    </code></pre>
+</section>
+
+<section data-transition="slide-in fade-out">
+    <h2>Флаги</h2>
+
+    <div class="size-M left">
+        <p>g — глобальное сопоставление</p>
+        <p>i — игнорирование регистра при сопоставлении</p>
+        <p>m — многострочный режим</p>
+    </div>
+
+    <pre class="fragment js"><code data-noescape data-trim>
+tweet.text;
+// <span class="size-M">'Node.js, и модули, Джеймс о проблемах Node.js #nodejs #modules'</span>
+
+// Находит все совпадения в строке
+tweet.text.match(/node/ig); [ 'Node', 'Node', 'node' ]
+    </code></pre>
+</section>
+
+<section data-transition="slide-in fade-out">
+    <h2 class="green">replace</h2>
+
+    <pre class="js"><code data-noescape data-trim>
+tweet.text;
+<span class="size-M">// 'Node.js, и модули, Джеймс о проблемах Node.js #nodejs #modules'</span>
+    </code></pre>
+
+    <pre class="js"><code data-trim>
+tweet.text.replace(/node/gi, 'NODE');
+    </code></pre>
+</section>
+
+<section data-transition="fade-out">
+    <h2 class="green">replace</h2>
+
+    <pre class="js"><code data-noescape data-trim>
+tweet.text;
+<span class="size-M">// '<mark>Node</mark>.js, и модули, Джеймс о проблемах <mark>Node</mark>.js #<mark>node</mark>js #modules'</span>
+    </code></pre>
+
+    <pre class="js"><code data-noescape data-trim>
+tweet.text.replace(/node/gi, 'NODE');
+<span class="fragment size-M">// '<mark>NODE</mark>.js, и модули, Джеймс о проблемах <mark>NODE</mark>.js #<mark>NODE</mark>js #modules'</span>
+    </code></pre>
+</section>
+
+<section data-transition="fade-out">
+    <h2 class="green">replace</h2>
+
+    <pre class="js"><code data-noescape data-trim>
+tweet.text;
+<span class="size-M">// '<mark>Node</mark>.js, и модули, Джеймс о проблемах <mark>Node</mark>.js #<mark>node</mark>js #modules'</span>
+    </code></pre>
+
+    <pre class="js"><code data-noescape data-trim>
+tweet.text.replace(/node/gi, 'NODE');
+<span class="size-M">// 'NODE.js, и модули, Джеймс о проблемах NODE.js #NODEjs #modules'</span>
+    </code></pre>
+
+    <pre class="js"><code data-noescape data-trim>
+function replacer(match, offset, str) {
+  return match + offset;
+};
+    </code></pre>
+
+    <pre class="fragment js"><code data-noescape data-trim>
+tweet.text.replace(/node/gi, replacer);
+<span class="size-M">// '<mark>Node0</mark>.js, и модули, Джеймс о проблемах <mark>Node38</mark>.js #<mark>node47</mark>js #modules'</span>
+    </code></pre>
+</section>
+
+<section data-transition="slide-in fade-out">
+    <h2>Классы символов</h2>
+
+    <div class="size-M left">
+        <p>\d — любая цифра</p>
+        <p>\s — "пустой" символ (пробел, табуляция, перевод строки, ...)</p>
+        <p>\w — символ "слова" (цифра, буква, _)</p>
+    </div>
+
+    <pre class="fragment js visible-fragment" data-fragment-index="1"><code data-noescape data-trim>
+tweet.text;
+<span class="size-M fragment nowrap hljs-comment" data-fragment-index="1">// 'Node.js,<mark class="fragment space" data-fragment-index="2"> </mark>
+        и<mark class="fragment space" data-fragment-index="2"> </mark>
+        модули,<mark class="fragment space" data-fragment-index="2"> </mark>
+        Джеймс<mark class="fragment space" data-fragment-index="2"> </mark>
+        о<mark class="fragment space" data-fragment-index="2"> </mark>
+        проблемах<mark class="fragment" data-fragment-index="2"> </mark>
+        <mark class="fragment" data-fragment-index="3">N</mark><mark class="fragment" data-fragment-index="4">o</mark><mark class="fragment" data-fragment-index="5">d</mark><mark class="fragment" data-fragment-index="6">e</mark>.js<mark class="fragment space" data-fragment-index="2"> </mark>
+        #nodejs<mark class="fragment space" data-fragment-index="2"> </mark>#modules'</span>
+    </code></pre>
+
+    <pre class="fragment js" data-fragment-index="1"><code data-noescape data-trim>
+const result = tweet.text.match(/<span class="visible-fragment"><mark class="fragment" data-fragment-index="2">\s</mark><mark class="fragment" data-fragment-index="3">N</mark><mark class="fragment" data-fragment-index="4">\w</mark><mark class="fragment" data-fragment-index="5">\w</mark><mark class="fragment" data-fragment-index="6">e</mark></span>/);
+<span class="fragment" data-fragment-index="7">result[0]; // ' Node'
+result.index; // 37</span>
+    </code></pre>
+
+    <a class="fragment link" href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Guide/Regular_Expressions" data-fragment-index="8">Список классов</a>
+</section>
+
+<section data-transition="slide-in fade-out">
+    <h2>Классы символов</h2>
+
+    <pre class="js"><code data-noescape data-trim>
+tweet.text;
+<span class="size-M">// 'Node.js, и модули, Джеймс о проблемах Node.js #nodejs #modules'</span>
+    </code></pre>
+
+    <pre class="js"><code data-noescape data-trim>
+tweet.text.match(/\w\w\w\w.\w\w/gi);
+<span class="fragment size-M">// [ 'Node.js', 'Node.js', 'modules' ]</span>
+    </code></pre>
+</section>
+
+<section data-transition="fade-out">
+    <h2>Классы символов</h2>
+
+    <pre class="js"><code data-noescape data-trim>
+tweet.text;
+<span class="size-M">// 'Node.js, и модули, Джеймс о проблемах Node.js #nodejs #modules'</span>
+    </code></pre>
+
+    <pre class="js"><code data-noescape data-trim>
+tweet.text.match(/\w\w\w\w<mark>.</mark>\w\w/gi);
+<span class="size-M">// [ 'Node.js', 'Node.js', 'modules' ]</span>
+    </code></pre>
+
+    <p class="size-M red">Точка – любой символ</p>
+
+    <pre class="fragment js"><code data-noescape data-trim>
+tweet.text.match(/\w\w\w\w<mark>\.</mark>\w\w/gi);
+<span class="size-M">// [ 'Node.js', 'Node.js' ]</span>
+    </code></pre>
+</section>
+
+<section data-transition="slide-in fade-out">
+    <h2>Квантификаторы</h2>
+
+    <div class="size-M left">
+        <p>{n}, {n,m} — количество повторений</p>
+        <p>+ — один или более, {1,}</p>
+        <p>? — ноль или один, {0,1}</p>
+        <p>* — ноль или более, {0,}</p>
+    </div>
+
+    <pre class="fragment js"><code data-noescape data-trim>
+tweet.text;
+<span class="size-M">// 'Node.js, и модули, Джеймс о проблемах Node.js #nodejs #modules'</span>
+
+<span class="fragment">tweet.text.match(/\w+<mark>\.</mark>\w+/g); // [ 'Node.js', 'Node.js' ]</span>
+<span class="fragment">tweet.text.match(/\w+<mark>\.?</mark>\w+/g);
+// [ 'Node.js', 'Node.js', 'nodejs', 'modules' ]</span>
+<span class="fragment">tweet.text.match(/\w<mark>{5,7}</mark>/g); // [ 'nodejs', 'modules' ]</span>
+    </code></pre>
+</section>
+
+<section data-transition="slide-in fade-out">
+    <h2>Наборы символов</h2>
+
+    <pre class="js"><code data-noescape data-trim>
+tweet.text;
+<span class="size-M">// 'Node.js, и модули, Джеймс о проблемах Node.js #nodejs #modules'</span>
+    </code></pre>
+
+    <pre class="js"><code data-noescape data-trim>
+tweet.text.match(/#[nodemilsuj]+/g); <span class="size-M">// [ '#nodejs', '#modules' ]</span>
+    </code></pre>
+
+    <pre class="fragment js"><code data-noescape data-trim>
+tweet.text.match(/#[a-z]+/g); <span class="size-M">// [ '#nodejs', '#modules' ]</span>
+    </code></pre>
+
+    <pre class="js fragment"><code data-trim>
+\d — [0-9]
+\s — [\t\n\v\f\r ]
+\w - [a-zA-Z0-9_]
+    </code></pre>
+
+    <pre class="fragment js"><code data-noescape data-trim>
+tweet.text.match(/[#\w]+/g);
+<span class="size-M">// [ 'Node', 'js', 'Node', 'js', '#nodejs', '#modules' ]</span>
+    </code></pre>
+</section>
+
+<section data-transition="slide-in fade-out">
+    <h2>Наборы символов</h2>
+
+    <pre class="js"><code data-noescape data-trim>
+tweet.text;
+<span class="size-M">// 'Node.js, и модули, Джеймс о проблемах Node.js #nodejs #modules'</span>
+    </code></pre>
+
+    <div class="size-M">^ - все, кроме перечисленных</div>
+
+    <pre class="js"><code data-noescape data-trim>
+tweet.text.match(/[^\s]+/g);
+<span class="size-M">// [ 'Node.js,', 'и', 'модули,',
+//   'Джеймс', 'о', 'проблемах',
+//   'Node.js', '#nodejs', '#modules' ]</span>
+    </code></pre>
+</section>
+
+<section data-transition="slide-in fade-out">
+    <h2>Скобочные группы</h2>
+
+    <pre class="js"><code data-noescape data-trim>
+tweet.text;
+// 'Node.js, и модули, Джеймс о
+// проблемах Node.js #nodejs #modules'
+    </code></pre>
+
+    <pre class="js"><code data-trim>
+tweet.text.match(/\s[#\w]+/g);
+// [ ' Node', ' #nodejs', ' #modules' ]
+    </code></pre>
+
+    <pre class="fragment js"><code data-noescape data-trim>
+// Квантификатор применится ко всей скобке
+tweet.text.match(/<mark>(</mark>\s[#\w]+<mark>)+</mark>/g);
+// [ ' Node', ' #nodejs #modules' ]
+    </code></pre>
+</section>
+
+<section data-transition="slide-in fade-out">
+    <h2>Скобочные группы</h2>
+
+    <pre class="js"><code data-noescape data-trim>
+tweet.text;
+<span class="size-M">// 'Node.js, и модули, Джеймс о проблемах Node.js #nodejs #modules'</span>
+    </code></pre>
+
+    <pre class="js"><code data-noescape data-trim>
+tweet.text.match(/\s[#\w]+/);
+<span class="size-M">// [ ' Node',
+// index: 37,
+// input: 'Node.js, и модули, Джеймс о проблемах Node.js #nodejs #modules' ]</span>
+    </code></pre>
+
+    <pre class="fragment js"><code data-noescape data-trim>
+<span class="size-M"> // Выделяем часть совпадения в отдельный элемент массива</span>
+tweet.text.match(/\s<mark>(</mark>[#\w]+<mark>)</mark>/);
+<span class="size-M">// [ ' Node',
+// <mark>'Node'</mark>,
+// index: 37,
+// input: 'Node.js, и модули, Джеймс о проблемах Node.js #nodejs #modules' ]</span>
+    </code></pre>
+</section>
+
+<section class="center" data-transition="slide-in fade-out">
+    <h2>Полезные ссылки</h2>
+
+    <ul class="size-M">
+        <li><a href="https://www.digitalocean.com/community/tutorials/understanding-date-and-time-in-javascript">Understanding Date and Time</a></li>
+        <li><a href="https://tproger.ru/articles/regexp-for-beginners/">Регулярные выражения для новичков</a></li>
+        <li><a href="https://learn.javascript.ru/regular-expressions-javascript">Руководство по регулярным выражениям</a></li>
+        <li><a href="https://regex101.com">Сервис для проверки регулярных выражений</a></li>
+    </ul>
+</section>
+
+<section class="center" data-transition="slide-in fade-out">
+    <h1>Вопросы?</h1>
+</section>
+
+</div></div><script src="../../@lib/core.js"></script></body></html>
