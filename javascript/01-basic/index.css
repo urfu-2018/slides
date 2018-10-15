@@ -1,14 +1,3 @@
-.code-two-columns
-{
-    display: flex;
-}
-
-.code-two-columns pre,
-.code-two-columns div
-{
-    flex: 1 1 auto;
-}
-
 .code-center
 {
     display: flex;

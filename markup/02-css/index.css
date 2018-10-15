@@ -1,37 +1,3 @@
-/*.center*/
-/*{*/
-/*display: flex;*/
-/*}*/
-
-/*.center p*/
-/*{*/
-/*margin: auto;*/
-/*}*/
-
-section
-{
-    display: flex !important;
-    flex-direction: column;
-}
-
-/*h1:only-child*/
-/*{*/
-/*margin: auto;*/
-/*}*/
-
-.two-columns
-{
-    display: flex;
-    align-content: flex-start;
-    flex-direction: row;
-    align-items: stretch;
-    justify-content: space-around;
-}
-
-.two-columns > * {
-    margin: 0 20px!important;
-}
-
 .pseudoclasses {
     justify-content: space-around;
 }
@@ -49,16 +15,6 @@ section
 .center
 {
     text-align: center;
-}
-
-ul li
-{
-    list-style: circle;
-}
-
-.flex
-{
-    display: flex;
 }
 
 .black .reveal pre code
@@ -85,7 +41,6 @@ ul li
 .clear-list li
 {
     list-style: none;
-    /*padding: 0;*/
 }
 
 .example-link:link
@@ -124,12 +79,6 @@ h3 {
     background-size: 100% 100% !important;
     background-repeat: no-repeat;
 }
-
-/*code mark,*/
-/*code mark **/
-/*{*/
-/*color: #000 !important;*/
-/*}*/
 
 mark.fragment.visible,
 mark.fragment.visible * {

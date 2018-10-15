@@ -47,6 +47,7 @@
 .reveal p
 {
     padding: 15px 0;
+    margin-left: 40px;
 }
 
 .reveal li
@@ -96,6 +97,20 @@
 .hljs-link
 {
   text-decoration: underline;
+}
+
+.code-two-columns,
+.two-columns
+{
+    display: flex;
+}
+
+.code-two-columns pre,
+.code-two-columns div,
+.two-columns pre,
+.two-columns div
+{
+    flex: 1 1 auto;
 }
 
 
