@@ -1,0 +1,1653 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>02-CSS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+</head><body class="white"><div class="reveal"><div class="slides">
+
+    <section class="center">
+        <h1>Основы CSS</h1>
+        <h5 style="text-align: center;"><span style="color: red;">Р</span>ыбалка Екатерина</h5>
+    </section>
+
+    <section class="center">
+        <p><span style="font-weight: bold">CSS</span> (каскадные таблицы стилей) - это язык, отвечающий за внешний вид документа, описанного с помощью языка разметки</p>
+    </section>
+
+    <section class="center">
+        <div style="background-color: white; padding: 5px;">
+            <img src="./images/css-is-awesome.png" width="676" height="463">
+        </div>
+    </section>
+
+    <section class="center">
+        <div>
+            <img src="./images/floated-labels-with-placeholder-shown-demo.gif" width="786" height="419">
+        </div>
+        <div class="size_xs"><a href="https://callmenick.com/dev/floated-labels-with-placeholder-shown/">Живой пример</a></div>
+    </section>
+
+    <section class="center">
+        <div>
+            <img src="./images/piter-css.gif"/>
+        </div>
+    </section>
+
+    <section class="center">
+        <img src="./images/abc.png">
+    </section>
+
+    <section class="center">
+        <img src="./images/53792_articleimage_original.png">
+    </section>
+
+    <section class="center">
+        <img src="./images/Old-Apple-Website.jpg">
+    </section>
+
+    <section class="center">
+        <img src="./images/websites3.png">
+    </section>
+
+    <section >
+        <iframe src="https://www.theworldsworstwebsiteever.com" width="1000" height="650"></iframe>
+    </section>
+
+    <section >
+        <pre><code class="html size_xs" style="width: 1020px;">&lt;table background="images/awesome-background.gif" border="0" width="300" height="446">
+    &lt;tr>
+        &lt;td><img src="images/super-icon.gif" alt="Super Icon" title="Super Icon">&lt;/td>
+        ...
+    &lt;/tr>
+    &lt;tr>
+        &lt;td collspan="4">
+            <font size="4" face="Comic Sans MS">
+                <p align="left">Разнообразный и богатый опыт начало повседневной
+                работы по формированию позиции требуют от нас анализа направлений
+                развития. Постоянный рост и сфера активности влечет за собой
+                процесс внедрения и модернизации систем массового участия.</p>
+            </font>
+        &lt;/td>
+    &lt;/tr>
+    &lt;tr>
+        &lt;td>
+            <marquee behavior="alternate" direction="right">
+                <font size="4" face="Comic Sans MS" color="red">Бегущая строка</font>
+            </marquee>
+        &lt;/td>
+    &lt;/tr>
+&lt;/table></code></pre>
+    </section>
+
+    <section class="size_m">
+        <h1>CSS: Причины появления</h1>
+        <ul>
+            <li class="fragment">избыточность HTML</li>
+            <li class="fragment">мало возможностей HTML для визуального оформления</li>
+            <li class="fragment">сложность оформления HTML</li>
+            <li class="fragment">много копипасты</li>
+            <li class="fragment visible-fragment"><mark class="fragment">смесь контента и визуальной состовляющей страницы</mark></li>
+        </ul>
+    </section>
+
+    <section class="two-columns">
+        <pre><code class="html size_xs">&lt;img
+    src="images/super-icon.gif"
+    alt="Super Icon"
+    title="Super Icon"
+>
+&lt;p>
+    Разнообразный и богатый
+    опыт начало повседневной
+    работы по формированию
+    позиции требуют от нас
+    анализа направлений развития.
+    Постоянный рост и сфера
+    активности влечет за собой
+    процесс внедрения и
+    модернизации систем
+    массового участия.
+&lt;/p>
+&lt;div class="marquee red">Бегущая строка&lt;/div></code></pre>
+        <pre><code class="css size_xs" style="padding-bottom: 0; height: calc(100% - 0.5em);">img {
+    display: inline-block;
+    margin: 20px auto;
+}
+
+p {
+    font: 12px/14px 'Comic Sans MS', serif;
+}
+
+.marquee {
+    padding-left: -100%;
+    overflow: hidden;
+    animation: scroll 5s infinite linear;
+}
+
+.red {
+    color: red;
+}</code></pre>
+    </section>
+
+    <section class="size_m center" >
+        <h1>Структура CSS</h1>
+        <div>
+            <img src="images/cat_in_box.webp">
+        </div>
+    </section>
+
+    <section class="size_m">
+        <h1>Правило</h1>
+        <pre><code data-trim data-noescape style="background: inherit; height: 320px;">
+свойство: значение; /* правило */
+        </code></pre>
+    </section>
+
+    <section class="size_m">
+        <h1>Правило</h1>
+        <pre><code data-trim data-noescape style="background: inherit; height: 320px;">
+свойство<mark>:</mark> значение; /* правило */
+        </code></pre>
+    </section>
+
+    <section class="size_m visible-fragment">
+        <h1>Селектор</h1>
+        <pre><code data-trim data-noescape style="background: inherit; height: 320px;">
+селектор <mark class="fragment" data-fragment-index="1">{</mark> <span class="fragment" data-fragment-index="2">/* блок объявления стилей */</span>
+    свойство: значение;
+<mark class="fragment" data-fragment-index="1">}</mark>
+        </code></pre>
+    </section>
+
+    <section class="size_m visible-fragment">
+        <h1>&nbsp;</h1>
+        <pre><code data-trim data-noescape style="background: inherit; height: 320px;">
+селектор {
+    свойство: значение<mark class="fragment" data-fragment-index="1">;</mark>
+    свойство: значение<mark class="fragment" data-fragment-index="1">;</mark>
+    свойство: значение;
+}
+        </code></pre>
+    </section>
+
+    <section class="size_m visible-fragment">
+        <h1>&nbsp;</h1>
+        <pre><code data-trim data-noescape style="background: inherit; height: 320px;">
+селектор<mark class="fragment" data-fragment-index="1">,</mark>
+селектор<mark class="fragment" data-fragment-index="1">,</mark>
+селектор<mark class="fragment" data-fragment-index="1">,</mark>
+селектор {
+    свойство: значение;
+    свойство: значение;
+    свойство: значение;
+}
+        </code></pre>
+    </section>
+    <section class="size_m">
+        <h1>&nbsp;</h1>
+        <pre><code data-trim data-noescape style="background: inherit; height: 320px;">
+селектор,
+селектор,
+селектор,
+селектор { /* комментарий */
+    свойство: значение;
+    свойство: значение;
+    свойство: значение;
+}
+        </code></pre>
+    </section>
+
+    <section>
+        <h1>At-правила</h1>
+        <ul class="size_s">
+            <li>@charset</li>
+            <li>@import</li>
+            <li>@media</li>
+            <li>@document</li>
+            <li>@font-face</li>
+            <li>@supports</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>@charset</h2>
+        <pre><code class="css">@charset "UTF-8";
+@charset "iso-8859-15";</code></pre>
+    </section>
+
+    <section>
+        <h2>@import</h2>
+        <pre><code class="css">@import 'custom.css';
+@import url('fineprint.css') print;</code></pre>
+    </section>
+
+    <section>
+        <h2>@supports</h2>
+        <pre><code class="css">@supports (display: flex) {
+    div {
+        display: flex;
+    }
+}</code></pre>
+    </section>
+
+    <section class="center">
+        <h1>Валидный CSS</h1>
+    </section>
+
+    <section>
+        <pre><code class="css" data-trim data-noescape>div {
+    font-size: 12px<mark class="fragment" data-fragment-index="2">&nbsp;</mark>
+    <span class="fragment" data-fragment-index="1">color: red</span>
+}</code></pre>
+        <div style="margin: 40px auto;" class="fragment" data-fragment-index="3">
+            <img src="images/Warning-icon.png" width="25" height="25">
+            <pre style="display: inline; text-decoration: line-through;"><code style="background: inherit; display:inline;">font-size: 12px color: red;</code></pre>
+        </div>
+    </section>
+
+    <section class="visible-fragment">
+        <pre><code class="css" data-trim data-noescape>p <mark class="fragment" data-fragment-index="1">{</mark>
+    font-size: 12px;
+    color: red;
+
+div <mark class="fragment" data-fragment-index="1">{</mark>
+     color: blue;
+<mark class="fragment" data-fragment-index="1">}</mark>
+</code></pre>
+        <div style="margin: 0 auto;" class="fragment" data-fragment-index="2">
+            <pre><code style="background: inherit;" class="size_s">p {
+    font-size: 12px;
+    color: red;
+}</code></pre>
+        </div>
+    </section>
+
+    <section class="visible-fragment">
+        <pre><code class="css" data-trim data-noescape>div {
+    <mark class="fragment" data-fragment-index="1">invalid</mark>: 12px;
+    font-size: <mark class="fragment" data-fragment-index="1">invalid</mark>;
+}</code></pre>
+        <div style="margin: 40px auto;" class="fragment" data-fragment-index="2">
+            <div>
+                <img src="images/Warning-icon.png" width="25" height="25">
+                <pre style="display: inline; text-decoration: line-through;"><code style="background: inherit; display:inline;">invalid: 12px;</code></pre>
+            </div>
+            <div>
+                <img src="images/Warning-icon.png" width="25" height="25">
+                <pre style="display: inline; text-decoration: line-through;"><code style="background: inherit; display:inline;">font-size: invalid;</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section class="visible-fragment">
+        <pre><code class="css" data-trim data-noescape><mark class="fragment" data-fragment-index="1">invalid</mark> {
+    font-size: 12px;
+}</code></pre>
+        <div style="margin: 40px auto;" class="fragment" data-fragment-index="2">
+            Браузер ничего не сделает
+        </div>
+    </section>
+
+    <section class="center">
+
+        <a href="https://jigsaw.w3.org/css-validator/" title="Валидатор"><h2>Валидатор</h2></a>
+    </section>
+
+    <section>
+        <h2>Добавление стилей к html</h2>
+        <ul class="clear-list size_m">
+            <li class="fragment">
+                <pre><code class="html">&lt;p style="color: red;"&gt;</code></pre>
+            </li>
+            <li class="fragment">
+<pre><code class="html">&lt;style>
+    p {
+        color: red;
+    }
+&lt;/style></code></pre>
+            </li>
+            <li class="fragment">
+<pre><code class="html">&lt;head>
+    <link rel="stylesheet" href="style.css">
+&lt;/head></code></pre>
+            </li>
+        </ul>
+    </section>
+
+    <section class="center">
+        <h1>Селекторы</h1>
+        <div>
+            <img src="images/fly_cat.webp">
+        </div>
+    </section>
+
+    <section class="visible-fragment">
+        <h2>Селектор тега</h2>
+        <div class="two-columns">
+            <pre><code style="height: calc(100% - 0.5em); padding-bottom: 0;">p {
+    color: red;
+}
+
+h1 {
+    font-size: 34px;
+}
+
+nav {
+    border: 1px solid black;
+}</code></pre>
+            <pre><code data-trim data-noescape><mark class="fragment" data-fragment-index="0">&lt;h1></mark>Очень важный текст&lt;/h1>
+<mark class="fragment" data-fragment-index="0">&lt;nav></mark>
+    &lt;a href="/">Главная&lt;/a>
+    &lt;a href="/profile">Профиль&lt;/a>
+&lt;/nav>
+&lt;img src="/cats.png">
+<mark class="fragment" data-fragment-index="0">&lt;p></mark>Вот вам яркий пример
+современных тенденций - реализация
+намеченных плановых заданий является
+качественно новой ступенью
+модели развития!&lt;/p></code></pre>
+        </div>
+    </section>
+
+    <section class="visible-fragment">
+        <h2>Селектор класса</h2>
+        <div class="two-columns">
+            <pre><code>.red {
+    color: red;
+}
+
+.title {
+    font-size: 34px;
+}
+
+.info {
+    border: 1px solid black
+}</code></pre>
+            <pre><code data-trim data-noescape><mark class="fragment" data-fragment-index="0">&lt;h1 class="title"></mark>Очень важный текст&lt;/h1>
+&lt;nav class="nav">
+    <mark class="fragment" data-fragment-index="0">&lt;a href="/" class="red"></mark>Главная&lt;/a>
+    &lt;a href="/profile" class="blue">Профиль&lt;/a>
+&lt;/nav>
+&lt;img src="/cats.png" class="cats">
+<mark class="fragment" data-fragment-index="0">&lt;p class="info red"></mark>Вот вам яркий пример
+современных тенденций - реализация
+намеченных плановых заданий является
+качественно новой ступенью
+модели развития!&lt;/p></code></pre>
+        </div>
+    </section>
+
+    <section class="visible-fragment">
+        <h2>Селектор идентификатора</h2>
+        <div class="two-columns">
+            <pre><code>#red {
+    color: red;
+}
+
+#title {
+    font-size: 34px;
+}
+
+#info {
+    border: 1px solid black
+}</code></pre>
+            <pre><code data-trip data-noescape><mark class="fragment" data-fragment-index="0">&lt;h1 id="title"></mark>Очень важный текст&lt;/h1>
+&lt;nav id="nav">
+    <mark class="fragment" data-fragment-index="0">&lt;a href="/" id="red"></mark>Главная&lt;/a>
+    &lt;a href="/profile" id="blue">Профиль&lt;/a>
+&lt;/nav>
+&lt;img src="/cats.png" id="cats">
+<mark class="fragment" data-fragment-index="0">&lt;p id="info"></mark>Вот вам яркий пример
+современных тенденций - реализация
+намеченных плановых заданий является
+качественно новой ступенью
+модели развития!&lt;/p></code></pre>
+        </div>
+    </section>
+
+    <section class="visible-fragment">
+        <h2>Селектор идентификатора</h2>
+        <div class="two-columns">
+            <pre><code>#red {
+    color: red;
+}
+
+#title {
+    font-size: 34px;
+}
+
+#info {
+    border: 1px solid black
+}</code></pre>
+            <pre><code data-trip data-noescape><mark class="black-code">&lt;h1 id="title"></mark>Очень важный текст&lt;/h1>
+&lt;nav id="nav">
+    <mark class="black-code">&lt;a href="/" id="red"></mark>Главная&lt;/a>
+    &lt;a href="/profile" id="blue">Профиль&lt;/a>
+&lt;/nav>
+&lt;img src="/cats.png" id="cats">
+&lt;p id="info red">Вот вам яркий пример
+современных тенденций - реализация
+намеченных плановых заданий является
+качественно новой ступенью
+модели развития!&lt;/p></code></pre>
+        </div>
+    </section>
+
+    <section>
+        <h1>id vs class</h1>
+        <ul style="list-style: circle;">
+            <li class="fragment">class для визаульного стиля</li>
+            <li class="fragment">id для логических или для функциональных элементов</li>
+        </ul>
+    </section>
+
+    <section class="visible-fragment">
+        <h2>Универсальный селектор</h2>
+        <div class="two-columns">
+            <pre><code style="padding-bottom: 0; height: calc(100% - 0.5em);">* {
+    font-size: 24px;
+}</code></pre>
+            <pre><code data-trip data-noescape><mark class="fragment" data-fragment-index="0">&lt;h1></mark>Очень важный текст&lt;/h1>
+<mark class="fragment" data-fragment-index="0">&lt;nav></mark>
+    <mark class="fragment" data-fragment-index="0">&lt;a href="/"></mark>Главная&lt;/a>
+    <mark class="fragment" data-fragment-index="0">&lt;a href="/profile"></mark>Профиль&lt;/a>
+&lt;/nav>
+<mark class="fragment" data-fragment-index="0">&lt;img src="/cats.png"></mark>
+<mark class="fragment" data-fragment-index="0">&lt;p></mark>Вот вам яркий пример
+современных тенденций - реализация
+намеченных плановых заданий является
+качественно новой ступенью
+модели развития!&lt;/p></code></pre>
+        </div>
+    </section>
+
+    <section class="center">
+        <h1>Селекторы атрибутов</h1>
+    </section>
+
+    <section>
+        <h2>Селекторы атрибутов</h2>
+        <pre><code class="css">[href] {
+    color: red;
+}</code></pre>
+        <pre><code class="html">&lt;a href="https://yandex.ru">Яндекс&lt;/a>
+&lt;a>Пустая ссылка&lt;/a></code></pre>
+        <div style="margin: 0 auto; text-align: center;">
+            <a href="https://yandex.ru" style="color: red;">Яндекс</a><br>
+            <a>Пустая ссылка</a>
+        </div>
+    </section>
+
+    <section>
+        <h2>Селекторы атрибутов</h2>
+        <pre><code class="css">[href="http://yandex.ru"] {
+    color: red;
+}</code></pre>
+        <pre><code class="html">&lt;a href="https://yandex.ru">Яндекс&lt;/a>
+&lt;a href="https://google.com">Google&lt;/a></code></pre>
+        <div style="margin: 0 auto; text-align: center;">
+            <a href="https://yandex.ru" style="color: red;">Яндекс</a><br>
+            <a href="https://google.com">Google</a>
+        </div>
+    </section>
+
+    <section>
+        <h2>Селекторы атрибутов</h2>
+        <pre><code class="css">[href^="https://"] {
+    color: red;
+}</code></pre>
+        <pre><code class="html">&lt;a href="https://yandex.ru">Яндекс&lt;/a>
+&lt;a href="https://google.com">Google&lt;/a></code></pre>
+        <div style="margin: 0 auto; text-align: center;">
+            <a href="https://yandex.ru" style="color: red;">Яндекс</a><br>
+            <a href="https://google.com" style="color: red;">Google</a>
+        </div>
+    </section>
+
+    <section>
+        <h2>Селекторы атрибутов</h2>
+        <pre><code class="css">[href&="yandex.ru"] {
+    color: red;
+}</code></pre>
+        <pre><code class="html">&lt;a href="https://yandex.ru">Яндекс&lt;/a>
+&lt;a href="https://yandex.ru/maps">Яндекс.Карты&lt;/a></code></pre>
+        <div style="margin: 0 auto; text-align: center;">
+            <a href="https://yandex.ru" style="color: red;">Яндекс</a><br>
+            <a href="https://yandex.ru/maps">Яндекс.Карты</a>
+        </div>
+    </section>
+
+    <section>
+        <h2>Селекторы атрибутов</h2>
+        <pre><code class="css">[href*="yandex.ru"] {
+    color: red;
+}</code></pre>
+        <pre><code class="html">&lt;a href="https://yandex.ru">Яндекс&lt;/a>
+&lt;a href="https://yandex.ru/maps">Яндекс.Карты&lt;/a></code></pre>
+        <div style="margin: 0 auto; text-align: center;">
+            <a href="https://yandex.ru" style="color: red;">Яндекс</a><br>
+            <a href="https://yandex.ru/maps" style="color: red;">Яндекс.Карты</a>
+        </div>
+    </section>
+
+    <section class="center">
+        <h1>Псевдоселекторы</h1>
+    </section>
+
+    <section>
+        <h1><a href="https://developer.mozilla.org/ru/docs/Web/CSS/Псевдо-классы">Псевдоклассы</a></h1>
+        <div class="two-columns size_s pseudoclasses">
+            <ul>
+                <li>:active</li>
+                <li>:any</li>
+                <li>:checked</li>
+                <li>:default</li>
+                <li>:dir()</li>
+                <li>:disabled</li>
+                <li>:empty</li>
+                <li>:enabled</li>
+                <li>:first</li>
+                <li>:first-child</li>
+                <li>:first-of-type</li>
+                <li>:fullscreen</li>
+                <li>:focus</li>
+                <li>:hover</li>
+            </ul>
+            <ul>
+                <li>:indeterminate</li>
+                <li>:in-range</li>
+                <li>:invalid</li>
+                <li>:lang()</li>
+                <li>:last-child</li>
+                <li>:last-of-type</li>
+                <li>:left</li>
+                <li>:link</li>
+                <li>:not()</li>
+                <li>:nth-child()</li>
+                <li>:nth-last-child()</li>
+                <li>:nth-last-of-type()</li>
+                <li>:nth-of-type()</li>
+                <li>:only-child</li>
+            </ul>
+            <ul>
+                <li>:only-of-type</li>
+                <li>:optional</li>
+                <li>:out-of-range</li>
+                <li>:read-only</li>
+                <li>:read-write</li>
+                <li>:required</li>
+                <li>:right</li>
+                <li>:root</li>
+                <li>:scope</li>
+                <li>:target</li>
+                <li>:valid</li>
+                <li>:visited</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>Динамические псевдоклассы</h2>
+        <pre><code class="size_xs css">a:hover { color: green; }
+
+a:visited { color: purple; }
+
+a:focus { color: yellow; }</code></pre>
+        <pre><code class="size_xs html">&lt;a>Ссылочка&lt;/a></code></pre>
+        <p><a href="#/45" class="example-link">Ссылочка</a></p>
+    </section>
+
+    <section>
+        <h2>Динамические псевдоклассы</h2>
+        <pre><code class="size_xs">input:disabled {
+    background: pink;
+}
+
+input:enabled {
+    background: yellow;
+}</code></pre>
+        <pre><code>&lt;input type="text" disabled placeholder="Я не активен!">
+&lt;input type="text" placeholder="Я активен!"></code></pre>
+        <div style="text-align: center; width: 100%;">
+            <style>.example-input-1:disabled
+            {
+                background: #e7b7e8;
+            }
+            .example-input-1:enabled
+            {
+                background: yellow;
+            }
+            .example-input-1
+            {
+                font-size: .4em;
+                width: 40%;
+            }
+            </style>
+            <input type="text" class="example-input-1" disabled placeholder="Я не активен!"><br>
+            <input type="text" class="example-input-1" placeholder="Я активен!">
+        </div>
+    </section>
+
+    <section>
+        <h2>Динамические псевдоклассы</h2>
+        <pre><code class="size_xs">input:valid {
+    background: green;
+}
+
+input:invalid {
+    background: red;
+}</code></pre>
+        <pre><code>&lt;input type="text" class="example-input" pattern="^[a-zA-Z]+$"></code></pre>
+        <style>
+            .example-input-2
+            {
+                font-size: .4em;
+                width: 40%;
+            }
+            .example-input-2:valid
+            {
+                background: greenyellow;
+            }
+            .example-input-2:invalid
+            {
+                background: orangered;
+            }
+        </style>
+        <div style="text-align: center"><input type="text" class="example-input-2" pattern="^[a-zA-Z]+$" placeholder="Тут немного валидации"></div>
+    </section>
+
+    <section>
+        <h2>Структурные псевдоклассы</h2>
+        <ul class="size_s">
+            <li class="fragment">:root</li>
+            <li class="fragment">:first-child/last-child</li>
+            <li class="fragment">:nth-child/nth-last-child(2n+1)</li>
+            <li class="fragment">:nth-of-type/nth-last-of-type(-n+4)</li>
+            <li class="fragment">:only-child/only-of-type</li>
+            <li class="fragment">:empty</li>
+        </ul>
+        </code></pre>
+    </section>
+
+    <section class="visible-fragment">
+        <h3><code style="margin: auto;">:first-child</code></h3>
+        <div class="two-columns">
+            <pre style="display: block;"><code data-noescape class="size_xs html"><mark class="fragment" data-fragment-index="1">&lt;html&gt;</mark>
+    <mark class="fragment blue" data-fragment-index="2">&lt;ul&gt;</mark>
+        <mark class="fragment blue" data-fragment-index="3">&lt;li&gt;&lt;/li&gt;</mark>
+        &lt;li&gt;&lt;/li&gt;
+        &lt;li&gt;
+            <mark class="fragment blue" data-fragment-index="4">&lt;ul&gt;</mark>
+                <mark class="fragment blue" data-fragment-index="4">&lt;li&gt;&lt;/li&gt;</mark>
+                &lt;li&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;ul&gt;
+                <mark class="fragment blue" data-fragment-index="4">&lt;li&gt;&lt;/li&gt;</mark>
+            &lt;/ul&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;&lt;/p&gt;
+&lt;/html&gt;</code></pre>
+            <div class="img" style="background-image: url('images/001-dom1.png');"></div>
+        </div>
+    </section>
+
+    <section data-transition="none" class="visible-fragment">
+        <h3><code>:last-child</code></h3>
+        <div class="two-columns">
+            <pre class="html size_s" style="display: block;"><code data-noescape><mark class="fragment" data-fragment-index="1">&lt;html&gt;</mark>
+    &lt;ul&gt;
+        &lt;li&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;/li&gt;
+        <mark class="fragment" data-fragment-index="1">&lt;li&gt;</mark>
+            &lt;ul&gt;
+                &lt;li&gt;&lt;/li&gt;
+                <mark class="fragment blue" data-fragment-index="1">&lt;li&gt;&lt;/li&gt;</mark>
+            &lt;/ul&gt;
+            <mark class="fragment blue" data-fragment-index="1">&lt;ul&gt;</mark>
+                <mark class="fragment blue" data-fragment-index="1">&lt;li&gt;&lt;/li&gt;</mark>
+            &lt;/ul&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+
+    <mark class="fragment blue" data-fragment-index="1">&lt;p&gt;&lt;/p&gt;</mark>
+&lt;/html&gt;</code></pre>
+            <div style="background-image: url('images/001-dom2.png')" class="img fragment" data-fragment-index="1"></div>
+        </div>
+    </section>
+
+    <section data-transition="none" class="visible-fragment">
+        <h3><code>:only-child</code></h3>
+        <div class="two-columns">
+            <pre class="html size_s" style="display: block;"><code data-noescape>&lt;html&gt;
+    &lt;ul&gt;
+        &lt;li&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;/li&gt;
+        &lt;li&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;ul&gt;
+                <mark class="fragment blue" data-fragment-index="1">&lt;li&gt;&lt;/li&gt;</mark>
+            &lt;/ul&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;&lt;/p&gt;
+&lt;/html&gt;</code></pre>
+            <div class="img fragment" style="background-image: url('images/001-dom3.png');" data-fragment-index="1"></div>
+        </div>
+    </section>
+
+    <section data-transition="none" class="visible-fragment">
+        <h3><code>:nth-child(2n)</code></h3>
+        <div class="two-columns">
+            <pre class="html size_s" style="display: block;"><code data-trim data-noescape>&lt;html&gt;
+    &lt;div>
+        &lt;span>&lt;/span>
+        <mark class="fragment" data-fragment-index="1">&lt;em>&lt;/em></mark>
+        &lt;div>
+            &lt;em>
+                &lt;span>&lt;/span>
+                <mark class="fragment" data-fragment-index="1">&lt;span>&lt;/span></mark>
+            &lt;/em>
+            <mark class="fragment" data-fragment-index="1">&lt;em></mark>
+                &lt;i>&lt;/i>
+            &lt;/em>
+        &lt;/div>
+        <mark class="fragment" data-fragment-index="1">&lt;span>&lt;/span></mark>
+        <mark class="fragment" data-fragment-index="1">&lt;div>&lt;/div></mark>
+    &lt;/div>
+
+    &lt;div>&lt;/div>
+&lt;/html&gt;</code></pre>
+            <div class="img" style="background-image: url('images/001-dom4.png')"></div>
+        </div>
+    </section>
+
+    <section data-transition="none" class="visible-fragment">
+        <h3><code>div:nth-of-type(2n)</code></h3>
+        <div class="two-columns">
+            <pre class="html size_s" style="display: block;"><code data-noescape>&lt;html&gt;
+    <mark class="fragment blue" data-fragment-index="1">&lt;div&gt;</mark>
+        &lt;span&gt;&lt;/span&gt;
+        &lt;em&gt;&lt;/em&gt;
+        <mark class="fragment" data-fragment-index="1">&lt;div&gt;</mark>
+            &lt;em&gt;
+                &lt;span&gt;&lt;/span&gt;
+                &lt;span&gt;&lt;/span&gt;
+            &lt;/em&gt;
+            &lt;em&gt;
+                &lt;i&gt;&lt;/i&gt;
+            &lt;/em&gt;
+        &lt;/div&gt;
+        &lt;span&gt;&lt;/span&gt;
+        <mark class="fragment" data-fragment-index="1"><mark class="fragment blue-2" data-fragment-index="2">&lt;div&gt;&lt;/div&gt;</mark></mark>
+    &lt;/div&gt;
+
+    <mark class="fragment blue" data-fragment-index="1"><mark class="fragment blue-2" data-fragment-index="2">&lt;div&gt;&lt;/div&gt;</mark></mark>
+&lt;/html&gt;</code></pre>
+            <div class="img" style="background-image: url('images/001-dom5.png')"></div>
+        </div>
+    </section>
+
+    <section data-transition="none" class="visible-fragment">
+        <h3><code>li:not(:first-child)</code></h3>
+        <div class="two-columns">
+ <pre class="html size_s" style="display: block;"><code data-noescape>&lt;html&gt;
+    &lt;ul>
+        &lt;li>&lt;/li>
+        <mark class="fragment" data-fragment-index="1">&lt;li>&lt;/li></mark>
+        <mark class="fragment" data-fragment-index="1">&lt;li></mark>
+            &lt;ul>
+                &lt;li>&lt;/li>
+                <mark class="fragment" data-fragment-index="1">&lt;li>&lt;/li></mark>
+            &lt;/ul>
+            &lt;ul>
+                &lt;li>&lt;/li>
+            &lt;/ul>
+        &lt;/li>
+    &lt;/ul>
+
+    &lt;p>&lt;/p>
+&lt;/html&gt;</code></pre>
+            <div class="img fragment" style="background-image: url('images/22-dom7.png')" data-fragment-index="1"></div>
+        </div>
+    </section>
+
+
+    <section>
+        <h2><a href="https://developer.mozilla.org/ru/docs/Learn/CSS/Introduction_to_CSS/Pseudo-classes_and_pseudo-elements#Псевдоэлементы">Псевдоэлементы</a></h2>
+        <ul class="size_s">
+            <li>::after</li>
+            <li>::before</li>
+            <li>::first-letter</li>
+            <li>::first-line</li>
+            <li>::selection</li>
+            <li>::backdrop</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Псевдоэлементы</h2>
+        <p>
+        <pre class="css size-xl"><code>
+::first-letter { color: red }
+::first-line { color: blue }
+        </code></pre>
+        <div style="text-align: center">
+            Я маленький апельсин<br/>
+            А я нет
+        </div>
+        <style>.pseudo6::first-letter {color: red} .pseudo6::first-line {color: blue}</style>
+        <div class="pseudo6 fragment" style="text-align: center">
+            Я маленький апельсин<br/>
+            А я нет
+        </div>
+    </section>
+
+    <section>
+        <h2>Псевдоэлементы</h2>
+        <div class="html size_s" style="font-family: Courier, 'Courier New', monospace; text-align: left;">
+            &lt;div&gt;<span style="background: red; color: #fff">::before</span>Однажды, в студеную зимнюю пору, я из лесу вышел; был сильный мороз. Гляжу, поднимается медленно в гору лошадка, везущая хворосту воз.<span style="background: red; color: #fff">::after</span>&lt;/div&gt;
+        </div>
+    </section>
+
+    <section class="visible-fragment">
+        <h2>Псевдоэлементы</h2>
+        <pre class="css size_s"><code data-noescape>::before,
+::after {
+    color: red;
+    font-weight: bold;
+    <mark class="fragment" data-fragment-index="1">content: '»';</mark>
+}
+::before { <mark class="fragment" data-fragment-index="1">content: '«';</mark>}
+            </code></pre>
+        <div class="html size_s" style="font-family: Courier, 'Courier New', monospace; text-align: left;">
+            <span>Однажды, в студеную зимнюю пору, я из лесу вышел; был сильный мороз. Гляжу, поднимается медленно в гору лошадка, везущая хворосту воз.</span>
+        </div>
+        <style>.pseudo7::before, .pseudo7::after{ content: '»'; color: red;  font-weight: bold; } .pseudo7::before { content: '«';}</style>
+        <div class="html size_s fragment pseudo7" style="font-family: Courier, 'Courier New', monospace; text-align: left;">
+            <span>Однажды, в студеную зимнюю пору, я из лесу вышел; был сильный мороз. Гляжу, поднимается медленно в гору лошадка, везущая хворосту воз.</span>
+        </div>
+    </section>
+
+    <section class="center"><h1>Перерыв</h1></section>
+
+    <section class="center">
+        <h1>Комбинации</h1>
+        <div>
+            <img src="images/pacific_rim.webp" width="640" height="360">
+        </div>
+    </section>
+
+    <section>
+        <h2>Комбинации</h2>
+        <div class="two-columns size_m">
+            <pre><code class="css" data-noescape data-trim>div.info { border: 1px solid black; }
+
+.info.red { color: red; }
+
+a[href].red { opacity: .9; }
+
+a.red:hover { color: purple; }
+
+#red#big { opacity: .9 }</code></pre>
+            <pre><code class="html" data-noescape data-trim>&lt;a href="/" class="red">На главную&lt;/a>
+&lt;div class="info">
+    Вот вам яркий пример
+    современных тенденций -
+    реализация намеченных
+    плановых заданий является
+    качественно новой ступенью
+    модели развития!
+&lt;/div>
+&lt;div>&lt;img src="./cats.png">&lt;/div>
+            </code></pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>Комбинации</h2>
+        <div class="two-columns size_m">
+            <pre><code class="css" data-noescape data-trim><mark class="black-code">div.info { border: 1px solid black; }</mark>
+
+.info.red { color: red; }
+
+a[href].red { opacity: .9; }
+
+a:hover.red { color: purple; }
+
+#red#big { opacity: .9 }</code></pre>
+            <pre><code class="html" data-noescape data-trim>&lt;a href="/" class="red">На главную&lt;/a>
+<mark class="black-code">&lt;div class="info"></mark>
+    Вот вам яркий пример
+    современных тенденций -
+    реализация намеченных
+    плановых заданий является
+    качественно новой ступенью
+    модели развития!
+&lt;/div>
+&lt;div>&lt;img src="./cats.png">&lt;/div>
+            </code></pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>Комбинации</h2>
+        <div class="two-columns size_m">
+            <pre><code class="css" data-noescape data-trim>div.info { border: 1px solid black; }
+
+<mark class="black-code">.info.red { color: red; }</mark>
+
+a[href].red { opacity: .9; }
+
+a:hover.red { color: purple; }
+
+#red#big { opacity: .9 }</code></pre>
+            <pre><code class="html" data-noescape data-trim>&lt;a href="/" class="red">На главную&lt;/a>
+&lt;div class="info">
+    Вот вам яркий пример
+    современных тенденций -
+    реализация намеченных
+    плановых заданий является
+    качественно новой ступенью
+    модели развития!
+&lt;/div>
+&lt;div>&lt;img src="./cats.png">&lt;/div>
+            </code></pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>Комбинации</h2>
+        <div class="two-columns size_m">
+            <pre><code class="css" data-noescape data-trim>div.info { border: 1px solid black; }
+
+.info.red { color: red; }
+
+<mark class="black-code">a[href].red { opacity: .9; }</mark>
+
+a:hover.red { color: purple; }
+
+#red#big { opacity: .9 }</code></pre>
+            <pre><code class="html" data-noescape data-trim><mark class="black-code">&lt;a href="/" class="red"></mark>На главную&lt;/a>
+&lt;div class="info">
+    Вот вам яркий пример
+    современных тенденций -
+    реализация намеченных
+    плановых заданий является
+    качественно новой ступенью
+    модели развития!
+&lt;/div>
+&lt;div>&lt;img src="./cats.png">&lt;/div>
+            </code></pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>Комбинации</h2>
+        <div class="two-columns size_m">
+            <pre><code class="css" data-noescape data-trim>div.info { border: 1px solid black; }
+
+.info.red { color: red; }
+
+a[href].red { opacity: .9; }
+
+<mark class="black-code">a:hover.red { color: purple; }</mark>
+
+#red#big { opacity: .9 }</code></pre>
+            <pre><code class="html" data-noescape data-trim>&lt;a href="/" class="red">На главную&lt;/a>
+&lt;div class="info">
+    Вот вам яркий пример
+    современных тенденций -
+    реализация намеченных
+    плановых заданий является
+    качественно новой ступенью
+    модели развития!
+&lt;/div>
+&lt;div>&lt;img src="./cats.png">&lt;/div>
+            </code></pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>Комбинации</h2>
+        <div class="two-columns size_m">
+            <pre><code class="css" data-noescape data-trim>div.info { border: 1px solid black; }
+
+.info.red { color: red; }
+
+a[href].red { opacity: .9; }
+
+a:hover.red { color: purple; }
+
+<mark class="red-back">#red#big { opacity: .9 }</mark></code></pre>
+            <pre><code class="html" data-noescape data-trim>&lt;a href="/" class="red">На главную&lt;/a>
+&lt;div class="info">
+    Вот вам яркий пример
+    современных тенденций -
+    реализация намеченных
+    плановых заданий является
+    качественно новой ступенью
+    модели развития!
+&lt;/div>
+&lt;div>&lt;img src="./cats.png">&lt;/div>
+            </code></pre>
+        </div>
+    </section>
+
+
+
+    <section>
+        <h2>Комбинаторы</h2>
+
+        <div class="fragment">div div - потомок</div>
+        <div class="fragment">div > div - сын</div>
+        <div class="fragment">div + div - младший брат</div>
+        <div class="fragment">div ~ div - младшие братья</div>
+    </section>
+
+    <section data-transition="none" class="visible-fragment">
+        <h3><code>ul li</code></h3>
+        <div class="two-columns">
+            <pre class="html size_s" style="display: block;"><code class="size_s" data-trim data-noescape>
+&lt;html&gt;
+    &lt;ul>
+        <mark class="fragment" data-fragment-index="1">&lt;li>&lt;/li></mark>
+        <mark class="fragment" data-fragment-index="1">&lt;li>&lt;/li></mark>
+        <mark class="fragment" data-fragment-index="1">&lt;li></mark>
+            &lt;ul>
+                <mark class="fragment" data-fragment-index="1">&lt;li>&lt;/li></mark>
+                <mark class="fragment" data-fragment-index="1">&lt;li>&lt;/li></mark>
+            &lt;/ul>
+            &lt;ul>
+                <mark class="fragment" data-fragment-index="1">&lt;li>&lt;/li></mark>
+            &lt;/ul>
+        &lt;/li>
+    &lt;/ul>
+
+    &lt;p>&lt;/p>
+&lt;/html&gt;
+                        </code></pre>
+            <div class="img" style="background-image: url('images/17-dom2.png')"></div>
+        </div>
+    </section>
+
+    <section data-transition="none" class="visible-fragment">
+        <h3><code>li li</code></h3>
+        <div class="two-columns">
+            <pre class="html size_s" style="display: block;"><code data-trim data-noescape>
+&lt;html&gt;
+    &lt;ul>
+        &lt;li>&lt;/li>
+        &lt;li>&lt;/li>
+        &lt;li>
+            &lt;ul>
+                <mark class="fragment" data-fragment-index="1">&lt;li>&lt;/li></mark>
+                <mark class="fragment" data-fragment-index="1">&lt;li>&lt;/li></mark>
+            &lt;/ul>
+            &lt;ul>
+                <mark class="fragment" data-fragment-index="1">&lt;li>&lt;/li></mark>
+            &lt;/ul>
+        &lt;/li>
+    &lt;/ul>
+
+    &lt;p>&lt;/p>
+&lt;/html&gt;
+                        </code></pre>
+            <div class="img fragment" style="background-image: url('images/18-dom3.png')" data-fragment-index="1"></div>
+        </div>
+    </section>
+
+    <section data-transition="none" class="visible-fragment">
+        <h3><code>html > *</code></h3>
+        <div class="two-columns">
+<pre class="html size_s" style="display: block;"><code data-trim data-noescape>
+&lt;html&gt;
+    <mark class="fragment" data-fragment-index="1">&lt;ul></mark>
+        &lt;li>&lt;/li>
+        &lt;li>&lt;/li>
+        &lt;li>
+            &lt;ul>
+                &lt;li>&lt;/li>
+                &lt;li>&lt;/li>
+            &lt;/ul>
+            &lt;ul>
+                &lt;li>&lt;/li>
+            &lt;/ul>
+        &lt;/li>
+    &lt;/ul>
+
+    <mark class="fragment" data-fragment-index="1">&lt;p>&lt;/p></mark>
+&lt;/html&gt;
+                        </code></pre>
+            <div class="img" style="background-image: url('images/20-dom5.png')"></div>
+        </div>
+    </section>
+
+    <section data-transition="none" class="visible-fragment">
+        <h3><code>li:first-child + li</code></h3>
+        <div class="two-columns">
+            <pre class="html size_s" style="display: block;"><code data-trim data-noescape>
+&lt;html&gt;
+    &lt;ul>
+        <mark class="fragment" data-fragment-index="1">&lt;li>&lt;/li></mark>
+        <mark class="fragment blue-2" data-fragment-index="2">&lt;li>&lt;/li></mark>
+        &lt;li>
+            &lt;ul>
+                <mark class="fragment" data-fragment-index="1">&lt;li>&lt;/li></mark>
+                <mark class="fragment blue-2" data-fragment-index="2">&lt;li>&lt;/li></mark>
+            &lt;/ul>
+            &lt;ul>
+                <mark class="fragment" data-fragment-index="1">&lt;li>&lt;/li></mark>
+            &lt;/ul>
+        &lt;/li>
+    &lt;/ul>
+
+    &lt;p>&lt;/p>
+&lt;/html&gt;
+                        </code></pre>
+            <div class="img fragment" style="background-image: url('images/21-dom6.png')" data-fragment-index="3"></div>
+        </div>
+    </section>
+
+    <section data-transition="none" class="visible-fragment">
+        <h3><code>li:first-child ~ li</code></h3>
+        <div class="two-columns">
+            <pre class="html size_s" style="display: block;"><code data-trim data-noescape>
+&lt;html&gt;
+    &lt;ul>
+        <mark class="fragment" data-fragment-index="1">&lt;li>&lt;/li></mark>
+        <mark class="fragment blue-2" data-fragment-index="2">&lt;li>&lt;/li></mark>
+        <mark class="fragment blue-2" data-fragment-index="2">&lt;li></mark>
+            &lt;ul>
+                <mark class="fragment" data-fragment-index="1">&lt;li>&lt;/li></mark>
+                <mark class="fragment blue-2" data-fragment-index="2">&lt;li>&lt;/li></mark>
+            &lt;/ul>
+            &lt;ul>
+                <mark class="fragment" data-fragment-index="1">&lt;li>&lt;/li></mark>
+            &lt;/ul>
+        &lt;/li>
+    &lt;/ul>
+
+    &lt;p>&lt;/p>
+&lt;/html&gt;
+                        </code></pre>
+            <div class="img fragment" style="background-image: url('images/22-dom7.png')" data-fragment-index="2"></div>
+        </div>
+    </section>
+
+
+
+    <section class="center">
+        <h1>Специфичность</h1>
+        <div>
+            <img src="images/cat_and_fire.webp">
+        </div>
+    </section>
+
+    <section>
+        <h3>Пример</h3>
+        <div class="two-columns">
+            <pre><code class="html" style="height: 100%;"><p class="red yellow">
+    Красный или желтый
+</p></code></pre>
+            <pre><code style="height: 100%;">.yellow {
+    color: yellow;
+}
+
+.red {
+    color: red;
+}</code></pre>
+        </div>
+        <div class="fragment" style="margin-top: 50px;">
+            <style>.s-1.yellow {color: yellow !important;}  .s-1.red {color: red !important;}</style>
+            <p class="s-1 yellow red">Красный или желтый</p>
+        </div>
+    </section>
+
+    <section>
+        <h3>Пример</h3>
+        <div class="two-columns">
+            <pre><code class="html" style="height: 100%;"><p class="red yellow">
+    Красный или желтый
+</p></code></pre>
+            <pre><code style="height: 100%;">p.yellow {
+    color: yellow;
+}
+
+.red {
+    color: red;
+}</code></pre>
+        </div>
+        <div class="fragment" style="margin-top: 50px;">
+            <style>p.s-2.yellow {color: yellow !important;}  .s-2.red {color: red !important; }</style>
+            <p class="s-2 yellow red">Красный или желтый</p>
+        </div>
+    </section>
+
+    <section>
+        <h3>Пример</h3>
+        <div class="two-columns">
+            <pre><code class="html" style="height: 100%;"><p class="red yellow">
+    Красный или желтый
+</p></code></pre>
+            <pre><code style="height: 100%;">html .yellow {
+    color: yellow;
+}
+
+.red {
+    color: red;
+}</code></pre>
+        </div>
+        <div class="fragment" style="margin-top: 50px;">
+            <style>html .s-4.yellow {color: yellow !important;}  .s-4.red {color: red !important; }</style>
+            <p class="s-4 yellow red">Красный или желтый</p>
+        </div>
+    </section>
+
+    <section>
+        <h3>Пример</h3>
+        <div class="two-columns">
+            <pre><code class="html" style="height: 100%;"><p id="red" class="yellow">
+    Красный или желтый
+</p></code></pre>
+            <pre><code style="height: 100%;">html .yellow {
+    color: yellow;
+}
+
+#red {
+    color: red;
+}</code></pre>
+        </div>
+        <div class="fragment" style="margin-top: 50px;">
+            <style>html .s-3.yellow {color: yellow !important;}  .s-3#red-e {color: red !important; }</style>
+            <p id="red-e" class="s-3 yellow">Красный или желтый</p>
+        </div>
+    </section>
+
+    <section class="center">
+        <style>
+            .spec-container
+            {
+                display: flex;
+                justify-content: space-between;
+                align-items: stretch;
+            }
+
+            .spec
+            {
+                padding: 10px !important;
+                border: 5px solid white !important;
+
+                width: 25%;
+
+                font-size: .5em !important;
+
+                min-height: 200px;
+                display: flex;
+            }
+
+            .white .spec
+            {
+                border-color: black !important;
+            }
+
+            .spec p
+            {
+                margin: auto !important;
+                text-align: center !important;
+            }
+        </style>
+        <div class="spec-container">
+            <div class="spec">
+                <p class="fragment">идентификаторы</p>
+            </div>
+            <div class="spec">
+                <p class="fragment">классы<br>
+                    псевдоклассы<br>
+                    атрибуты<br></p>
+            </div>
+            <div class="spec">
+                <p class="fragment">элемент<br>
+                    псевдоэлемент</p>
+            </div>
+        </div>
+        <div class="size_s fragment" style="margin-top: 100px; color: yellow;">универсальный селектор, комбинаторы потомков, детей и прочие не влияют на специфичность</div>
+    </section>
+
+    <section class="center">
+        <style>
+            .spec-container
+            {
+                display: flex;
+                justify-content: space-between;
+                align-items: stretch;
+            }
+
+            .spec
+            {
+                padding: 10px !important;
+                border: 5px solid white !important;
+
+                width: 25%;
+
+                font-size: .5em !important;
+
+                min-height: 200px;
+                display: flex;
+            }
+
+            .spec p
+            {
+                margin: auto !important;
+                text-align: center !important;
+            }
+        </style>
+        <div class="spec-container">
+            <div class="spec">
+                <p style="font-size: 2em;">0</p>
+            </div>
+            <div class="spec">
+                <p style="font-size: 2em;">0</p>
+            </div>
+            <div class="spec">
+                <p style="font-size: 2em;">0</p>
+            </div>
+        </div>
+        <div class="size_s" style="margin-top: 100px;">&nbsp;<br>&nbsp;</div>
+    </section>
+
+    <section>
+        <h2>Применяем высчитанные значения:</h2>
+        <ol class="size_s">
+            <li class="fragment">Находим каждому HTML элементу соответствующие ему селекторы</li>
+            <li class="fragment">Сортируем селекторы исходя из специфичности (от менее приоритетных к более приоритетным)</li>
+            <li class="fragment">Применяем правила последовательно</li>
+        </ol>
+    </section>
+
+    <section data-transition="none">
+        <h2>Специфичность</h2>
+        <pre class="css size_s"><code data-noescape>
+div { <span class="fragment">/* 0 0 1 */</span>
+    color: blue;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+div#id { <span class="fragment">/* 1 0 1 */</span>
+    font-size: 15px;
+}
+
+html div { <span class="fragment">/* 0 0 2 */</span>
+    color: red;
+}
+            </code></pre>
+    </section>
+
+    <section data-transition="none">
+        <h2>Специфичность</h2>
+        <pre class="css size_s"><code data-noescape>
+div { <span>/* 0 0 1 */</span>
+    color: blue;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+html div { <span>/* 0 0 2 */</span>
+    color: red;
+}
+
+div#id { <span>/* 1 0 1 */</span>
+    font-size: 15px;
+}
+            </code></pre>
+    </section>
+
+    <section data-transition="none">
+        <h2>Специфичность</h2>
+        <pre class="css size_s"><code data-noescape>
+div {
+    color: blue; /* 0 0 1 */
+    font-weight: bold; /* 0 0 1 */
+    font-size: 12px; /* 0 0 1 */
+}
+
+html div {
+    color: red; /* 0 0 2 */
+}
+
+div#id {
+    font-size: 15px; /* 1 0 1 */
+}
+           </code></pre>
+    </section>
+
+    <section data-transition="none" class="visible-fragment">
+        <h2>Специфичность</h2>
+        <pre class="css size_s"><code data-noescape>
+color: blue; /* 0 0 1 */
+<mark data-fragment-index="3" class="fragment">font-weight: bold;</mark> /* 0 0 1 */
+font-size: 12px; /* 0 0 1 */
+<mark data-fragment-index="1" class="fragment">color: red;</mark> /* 0 0 2 */
+<mark data-fragment-index="2" class="fragment">font-size: 15px;</mark> /* 1 0 1 */
+            </code></pre>
+    </section>
+
+    <section data-transition="none" class="visible-fragment">
+        <h2>Специфичность</h2>
+        <pre class="css size_s"><code data-noescape>
+color: blue; /* 0 0 1 */
+font: 13px <mark data-fragment-index="4" class="fragment">Arial;</mark> /* 0 0 1 */
+font-size: 12px; /* 0 0 1 */
+<mark data-fragment-index="3" class="fragment">font-weight: bold;</mark> /* 0 0 1 */
+<mark data-fragment-index="1" class="fragment">color: red;</mark> /* 0 0 2 */
+<mark data-fragment-index="2" class="fragment">font-size: 15px;</mark> /* 1 0 1 */
+            </code></pre>
+    </section>
+
+    <section>
+        <h2>Инлайн и !important</h2>
+        <pre class="fragment html size_s"><code><div style="color: blue"></div></code></pre>
+        <pre class="fragment css size_s"><code>div {
+    color: green !important;
+}</code></pre>
+        <pre class="fragment html size_s"><code><div style="color: white !important"></div></code></pre>
+        <ol class="fragment size_s">
+            <li>Инлайн стили по умолчанию приоритетнее стилей в CSS</li>
+            <li class="fragment">Стили в CSS с !important приоритетнее инлайн стилей</li>
+            <li class="fragment">Инлайн стили с !important приоритетнее всего <span class="fragment">(на самом деле нет)</span></li>
+        </ol>
+    </section>
+
+    <section class="visible-fragment">
+        <h2>Специфичность</h2>
+        <pre class="css size_s"><code data-noescape>
+color: blue; /* 0 0 1 */
+<mark data-fragment-index="1" class="fragment">font-weight: bold; /* 0 0 1 */</mark>
+font-size: 12px; /* 0 0 1 */
+<mark data-fragment-index="1" class="fragment">font-size: 15px; /* 0 0 1 */</mark>
+color: red; /* 0 0 2 */
+&lt;div style="color: blue"&gt;&lt;/div&gt;
+color: green !important;
+&lt;div style="<mark data-fragment-index="1" class="fragment">color: white !important"</mark>&gt;&lt;/div&gt;
+            </code></pre>
+    </section>
+
+    <section>
+        <pre><code class="css" data-trim data-noescape>
+<span class="fragment">p.class <span class="fragment">/* 0 1 1 */</span></span>
+
+<span class="fragment">.class-1.class-2:first-child <span class="fragment">/* 0 3 0 */</span></span>
+
+<span class="fragment">#id#id <span class="fragment">/* 2 0 0 */</span></span>
+
+<span class="fragment">p.class-1.class-2:nth-child(2n)[href]::after <span class="fragment">/* 0 4 2 */</span></span>
+        </code></pre>
+    </section>
+
+    <section>
+        <h1>Наследование</h1>
+        <ul class="size_s">
+            <li class="fragment">Некоторые стили применяются не только к целевому элементу, но и к его потомкам</li>
+            <li class="fragment">Унаследованные стили не имеют специфичности, то есть их всегда перебивает любой селектор</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Пример наследования</h2>
+        <pre class="html size_s"><code>
+<div>
+    Привет,
+    <abbr title="Уральский федеральный университет">
+        УрФУ
+    </abbr>
+</div>
+            </code></pre>
+        <pre class="css size_s"><code data-noescape>div {
+    color: green; /* 0 0 1 */
+    <span data-fragment-index="2" class="fragment">/* abbr { color : green } – нет специфичности */</span>
+}</code></pre>
+        <div data-fragment-index="1" class="fragment" style="color: #488033; text-align: center;">
+            Привет,
+            <abbr title="Уральский федеральный университет">
+                УрФУ
+            </abbr>
+        </div>
+    </section>
+
+    <section>
+        <h2>Пример наследования</h2>
+        <pre class="html size_s"><code><div>
+    Привет,
+    <abbr title="Уральский федеральный университет">
+        УрФУ
+    </abbr>
+</div></code></pre>
+        <pre class="css size_s"><code data-noescape>* {
+    color: red; /* 0 0 0 */
+}
+div {
+    color: green; /* 0 0 1 */
+    <span data-fragment-index="2" class="fragment">/* abbr { color : green } – нет специфичности */</span>
+}</code></pre>
+        <div data-fragment-index="1" class="fragment" style="color: #488033; text-align: center;">
+            Привет,
+            <abbr title="Уральский федеральный университет" style="color: red">
+                УрФУ
+            </abbr>
+        </div>
+    </section>
+
+    <section>
+        <h2>Наследование</h2>
+        <p class="size_s">Стили, которые наследуются (<a href="http://www.w3.org/TR/CSS21/propidx.html">Полный список</a>)</p>
+        <div style="-moz-columns: 2;-webkit-columns: 2; columns: 2; font-family: monospace; text-align: left" class="size_s">color<br>
+            cursor<br>
+            direction<br>
+            empty-cells<br>
+            font-family<br>
+            font-size<br>
+            font-weight<br>
+            font-style<br>
+            font-variant<br>
+            font<br>
+            letter-spacing<br>
+            list-style-type<br>
+            list-style-position<br>
+            list-style-image<br>
+            list-style<br>
+            line-height<br>
+            quotes<br>
+            text-align<br>
+            text-indent<br>
+            text-transform<br>
+            visibility<br>
+            white-space<br>
+            word-spacing</div>
+    </section>
+
+    <section>
+        <h1>Порядок применения стилей</h1>
+        <ul class="size_s">
+            <li class="fragment">Стили браузера</li>
+            <li class="fragment">Стили пользователя и/или плагинов браузера</li>
+            <li class="fragment">Стили страницы</li>
+            <li class="fragment">Стили пользователя и/или плагинов браузера с !important</li>
+        </ul>
+    </section>
+
+    <section class="center">
+        <h1>Значения свойств</h1>
+    </section>
+
+    <section>
+        <h2>Числовые значения</h2>
+        <ul class="size_s">
+            <li class="fragment">Целые числа (1, 2, 3...)</li>
+            <li class="fragment">Дробные числа (.5, 1.5)</li>
+            <li class="fragment">Процентные значения (50%)</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Абсолютные единицы измерения длины</h2>
+        <ul class="size_s">
+            <li class="fragment">Миллиметры (mm)</li>
+            <li class="fragment">Сантиметры (cm)</li>
+            <li class="fragment">Дюймы (in)</li>
+            <li class="fragment">Пункты – используется в типографиях, 1 дюйм = 72 пункта (pt)</li>
+            <li class="fragment">Пики – 12 пунктов (pc)</li>
+        </ul>
+        <p class="size_s fragment">Абсолютные единицы удобны при определении CSS для печати. В вебе же практически не используются</p>
+    </section>
+
+    <section>
+        <h2>Относительные единицы измерения длины</h2>
+        <ul class="size_s">
+            <li class="fragment">пикселы<span>*</span> (px)</li>
+            <li class="fragment">em – зависит от размера шрифта (em)</li>
+            <li class="fragment">rem – зависит от размера шрифта корневого элемента (rem)</li>
+            <li class="fragment">ex – зависит от высоты символа x в данном шрифте</li>
+            <li class="fragment">ch – зависит от ширины символа 0 в данном шрифте</li>
+            <li class="fragment">vh/vw – 1/100 высоты и ширины viewport'а соответственно</li>
+            <li class="fragment">vmax – 1/100 от максимума между высотой и шириной viewport'а</li>
+            <li class="fragment">vmin – 1/100 от минимума между высотой и шириной viewport'а</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Способы задания цвета</h2>
+        <ul class="size_s">
+            <li class="fragment">Именованные цвета – red</li>
+            <li class="fragment">Функциональный – rgb(255, 0, 0) или rgba(255, 0, 0, 1)</li>
+            <li class="fragment">Шестнадцатиричный – #ff0000 или #f00</li>
+            <li class="fragment">Шестнадцатиричный с прозрачностью - #ff000000</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Ещё типы значений</h2>
+        <ul class="size_s">
+            <li class="fragment">Именованные слова: bold, underline</li>
+            <li class="fragment">Комбинации: 1px solid red</li>
+            <li class="fragment">Функциональные: url(), attr(), rgb(), calc()</li>
+        </ul>
+    </section>
+
+    <section class="center">
+        <h2>Вопросы</h2>
+        <div>
+            <img src="images/cat_and_dot.webp">
+        </div>
+    </section>
+
+</div></div><script src="../../@lib/core.js"></script></body></html>

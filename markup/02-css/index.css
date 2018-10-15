@@ -1,0 +1,183 @@
+/*.center*/
+/*{*/
+/*display: flex;*/
+/*}*/
+
+/*.center p*/
+/*{*/
+/*margin: auto;*/
+/*}*/
+
+section
+{
+    display: flex !important;
+    flex-direction: column;
+}
+
+/*h1:only-child*/
+/*{*/
+/*margin: auto;*/
+/*}*/
+
+.two-columns
+{
+    display: flex;
+    align-content: flex-start;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-around;
+}
+
+.two-columns > * {
+    margin: 0 20px!important;
+}
+
+.pseudoclasses {
+    justify-content: space-around;
+}
+
+.pseudoclasses li
+{
+    padding: 0;
+}
+
+.pseudoclasses ul:not(:last-child) {
+    margin-left: -20px;
+    margin-right: 40px;
+}
+
+.center
+{
+    text-align: center;
+}
+
+ul li
+{
+    list-style: circle;
+}
+
+.flex
+{
+    display: flex;
+}
+
+.black .reveal pre code
+{
+    background: #333;
+}
+
+.size_m
+{
+    font-size: .8em !important;
+}
+
+.size_s,
+.size_s > code
+{
+    font-size: .6em !important;
+}
+
+.size_xs
+{
+    font-size: .35em !important;
+}
+
+.clear-list li
+{
+    list-style: none;
+    /*padding: 0;*/
+}
+
+.example-link:link
+{
+    color: blue !important;
+}
+
+.example-link:active
+{
+    color: red !important;
+}
+
+.example-link:visited
+{
+    color: purple !important;
+}
+
+.example-link:focus
+{
+    color: yellow !important;
+}
+
+.example-link:hover
+{
+    color: green !important;
+}
+
+h3 {
+    text-align: center !important;
+}
+
+.img
+{
+    width: 50%;
+    background-position: 50% 50% !important;
+    background-size: 100% 100% !important;
+    background-repeat: no-repeat;
+}
+
+/*code mark,*/
+/*code mark **/
+/*{*/
+/*color: #000 !important;*/
+/*}*/
+
+mark.fragment.visible,
+mark.fragment.visible * {
+    color: #000 !important;
+}
+
+.visible-fragment mark.fragment
+{
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.visible-fragment mark.fragment
+{
+    background: unset !important;
+    color: unset !important;
+}
+
+.visible-fragment mark.fragment.visible
+{
+    background: yellow !important;
+    color: black !important;
+}
+
+.visible-fragment mark.fragment.visible *
+{
+    color: black !important;
+
+}
+
+code mark.black-code,
+code mark.black-code *
+{
+    color: black !important;
+}
+
+.visible-fragment mark.fragment.visible.blue-2
+{
+    background-color: #5f62ff !important;
+}
+
+mark.red-back
+{
+    background-color: red !important;
+}
+
+mark.red-back,
+mark.red-back *
+{
+    color: white !important;
+}
