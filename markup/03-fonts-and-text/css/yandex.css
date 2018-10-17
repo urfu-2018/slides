@@ -1,0 +1,172 @@
+.reveal
+{
+    font-family: yandex-sans !important;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4
+{
+    font-family: yandex-sans-display, Arial, sans-serif;
+    font-weight: 600;
+}
+
+.reveal h4
+{
+    font-weight: normal;
+}
+
+.reveal code,
+.reveal var
+{
+    font-family: 'sourcecodepro-light' !important;
+    font-weight: 700 !important;
+}
+
+.reveal var
+{
+    font-weight: 600;
+}
+
+.reveal dfn {
+    font-style: italic;
+    font-weight: bold;
+}
+
+.reveal span.ya-letter {
+    display: inline-block;
+}
+
+.reveal .ya-letter:first-letter {
+    color: #f00;
+}
+
+.reveal .strike {
+    text-decoration: line-through;
+}
+
+.reveal .underline {
+    text-decoration: underline;
+}
+
+.reveal h1,
+.reveal h2 {
+    text-transform: none;
+}
+
+.reveal section img {
+    border: none;
+    background: none;
+    box-shadow: 0 0 0 0 transparent;
+}
+
+.reveal section img.w_back {
+    background: #fff;
+}
+
+.reveal {
+    font-family: textbook, Arial;
+}
+
+.reveal h1, .reveal h2, .reveal h3 {
+    font-family: textbook-bold, Arial;
+}
+
+.reveal h4, .reveal h5, .reveal h6 {
+    font-family: textbook, Arial;
+}
+
+section.large,
+pre.large {
+    font-size: 50px;
+}
+
+section.middle,
+pre.middle {
+    font-size: 40px;
+}
+
+section.small,
+pre.small {
+    font-size: 30px;
+}
+
+.w25, .w33, .w50, .w75 {
+    display: inline-block;
+}
+
+.w25 {
+    width: 25%;
+}
+
+.w33 {
+    width: 33%;
+}
+
+.w50 {
+    width: 50%;
+}
+
+.t-center {
+    text-align: center !important;
+}
+
+body .reveal .slides section .from-l {
+    transform: translateX(-25%) rotateY(-65deg) scale(.5);
+}
+
+body .reveal .slides section .from-r {
+    transform: translateX(25%) rotateY(65deg) scale(.5);
+}
+
+body .reveal .slides section .from-t {
+    transform: translateY(-25%) rotateX(65deg) scale(.5);
+}
+
+body .reveal .slides section .from-b {
+    transform: translateY(50%) rotateX(-65deg) scale(.5);
+}
+
+body .reveal .slides section .from-l,
+body .reveal .slides section .from-r,
+body .reveal .slides section .from-t,
+body .reveal .slides section .from-b {
+    transform-origin: 50% 50% -50px;
+    transition-duration: .5s;
+}
+
+body .reveal .slides section .from-l.visible,
+body .reveal .slides section .from-r.visible,
+body .reveal .slides section .from-t.visible,
+body .reveal .slides section .from-b.visible {
+    transform: translate(0) rotate(0) scale(1);
+}
+
+section.ex,
+div.ex {
+    position: relative;
+    border: 1px dashed #fff;
+    padding: 15px;
+}
+
+.ex {
+    text-align: left;
+}
+
+section.ex:after,
+div.ex:after {
+    content: 'EXAMPLE';
+    position: absolute;
+    right: 15px;
+    top: 100%;
+    font-size: 18px;
+    background-color: #fff;
+    color: #000;
+    transform: translateY(-50%);
+    padding: 0 10px
+}
+
+.size-l * {
+    font-size: 45px !important;
+}

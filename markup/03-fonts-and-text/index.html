@@ -1,0 +1,2417 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Шрифты и текст</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="css/reveal.css">
+
+    <link rel="stylesheet" href="css/night-2.css" id="theme">
+    <link rel="stylesheet" href="css/yandex.css">
+    <link rel="stylesheet" href="css/j7.css">
+    <link rel="stylesheet" href="css/solarized-dark.css">
+</head>
+
+<body>
+
+<div class="reveal yandex">
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <section class="slides">
+        <section>
+            <h1>Шрифты и текст</h1>
+            <h3>&nbsp;</h3>
+
+            <p>
+            <div class="ya-letter">Лена Рашкован</div>
+            </p>
+        </section>
+
+        <section>
+            <h1>Что такое шрифт?</h1>
+            <div class="fragment oops">слово википедии:</div>
+            <div class="fragment">
+                <dfn>Шрифт</dfn> — графический рисунок начертаний букв и знаков,
+                составляющих единую стилистическую и композиционную систему;
+                набор символов определенного размера и рисунка.
+            </div>
+        </section>
+
+        <section>
+            <h2>Компьютерный шрифт</h2>
+
+            Файл шрифта — это файл, содержащий в себе набор символов<br>
+            и соответствующих им кодов.
+
+            <p class="fragment">
+                Символы могут быть
+                различными по назначению:
+            </p>
+
+            <div class="t-center">
+                <div class="fragment from-l w25">
+                    <h1 class="t-green">Aa</h1>
+                    языковые знаки
+                </div><div class="fragment from-b w25">
+                <h1 class="t-yellow">07</h1>
+                    цифровые
+                </div><div class="fragment from-b w25">
+                    <h1 class="t-blue">☂⁂</h1>
+                    графические
+                </div><div class="fragment from-r w25">
+                    <h1 class="t-pink">$#!</h1>
+                    специальные
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Вывод шрифтов</h2>
+
+            <h2>&nbsp;</h2>
+
+            <div class="t-center">
+                <div class="fragment from-b w50">
+                    <img height="280" src="images/pixel.gif">
+                    растровые
+                </div><div class="fragment from-b w50">
+                    <img class="vector_cat" height="280" src="images/pusheen.png">
+                    векторные
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Растровые шрифты</h2>
+            <div class="fragment">
+                <p>
+                    Были распространены в эпоху матричных принтеров и экранов
+                    с низким разрешением и представляли собой набор
+                    растровых изображений каждого символа в виде битмапа.
+                </p>
+
+                <img src="images/bitmap_o.jpg">
+            </div>
+
+            <div class="fragment from-b">Самый наглядный пример использования такого типа шрифтов — игры.</div>
+        </section>
+
+        <section>
+            <h3>Final Fantasy (1987)</h3>
+
+            <img src="images/ff1.png">
+        </section>
+
+        <section>
+            <h3>Prehistorik 2 (1993)</h3>
+
+            <img src="images/prehistorik_2.jpg">
+        </section>
+
+        <section>
+            <h3>Diablo (1996)</h3>
+
+            <img src="images/diablo.png">
+        </section>
+
+        <section>
+            <h2>А как обстоят дела со шрифтами в современных играх?</h2>
+        </section>
+
+        <section>
+            <h3>Overwatch (2016)</h3>
+
+            <img src="images/overwatch.jpg">
+        </section>
+
+        <section>
+            <h3>Far Cry 4 (2014)</h3>
+
+            <img src="images/far_cry_4.jpg">
+        </section>
+
+        <section>
+            <h3>Warcraft 3 (2002)</h3>
+
+            <img src="images/warcraft_3.jpg">
+        </section>
+
+        <section>
+            <h2>Векторные шрифты</h2>
+
+            <p class="fragment">
+                Векторная графика основана на математических формулах геометрических объектов.
+            </p>
+            <div class="fragment">
+                <img src="images/vector_text.png">
+                <p>
+                    Современные шрифты описывают символы с помощью тех самых формул,
+                    что позволяет их масштабировать без потери качества,
+                    как и любое другое векторное изображение.
+                </p>
+            </div>
+
+            <a href="http://www.compuart.ru/article.aspx?id=23461&iid=1079" class="fragment" target="_blank">
+                Старая, но познавательная статья о шрифтах
+            </a>
+        </section>
+
+        <section class="no-js-top">
+            <h2 class="fragment zoom init_visible">Данная презентация сделана с использованием векторного шрифта?</h2>
+        </section>
+
+        <section>
+            <h2>Гарнитура</h2>
+            <div class="fragment oops" data-fragment-index="0">слово википедии:</div>
+            <div class="fragment" data-fragment-index="1">
+                <dfn>Гарниту́ра</dfn> в типографике — набор из одного или нескольких шрифтов
+                в одном или нескольких
+                <span class="fragment highlight green init_visible" data-fragment-index="2">размерах</span> и
+                <span class="fragment highlight blue init_visible" data-fragment-index="3">начертаниях</span>,
+                имеющих стилевое единство рисунка и состоящих из определённого набора типографских знаков.
+            </div>
+        </section>
+
+        <section>
+            <h2>Анатомия шрифта</h2>
+            <img class="w_back" src="images/font_anatomy.png">
+        </section>
+
+        <section>
+            <h3>Baseline</h3>
+
+            <p>
+                <dfn>Базовая линия</dfn> — воображаемая прямая линия, проходящая по нижнему краю прямых знаков
+                без учёта свисаний и нижних выносных элементов.
+            </p>
+
+            <img src="images/baseline.gif">
+        </section>
+
+        <section>
+            <h3><img src="images/letter_heights.jpg"></h3>
+
+            <p>
+                <dfn>Высота прописных знаков</dfn> — расстояние от базовой линии до верхней линии прописных,
+                то есть высота прописных букв без учета свисаний.
+            </p>
+
+            <p>
+                <dfn>Высота строчных знаков</dfn> — расстояние от базовой линии до верхней линии строчных,
+                то есть высота строчных букв без свисаний и выносных элементов.
+            </p>
+        </section>
+
+        <section>
+            <h3>Leading</h3>
+
+            <p>
+                <dfn>Интерлиньяж</dfn>, <dfn>межстрочный интервал</dfn> — расстояние между базовыми линиями строк.
+                В вебе данный термин чаще всего называют <dfn>высотой строки</dfn>.
+            </p>
+
+            <img src="images/leading.png">
+        </section>
+
+        <section>
+            <h3>Em Square</h3>
+            <p>
+                <dfn>Кегельная площадка</dfn> — верхняя прямоугольная часть ножки литеры,
+                на которой расположено выпуклое (печатающее) изображение знака.
+            </p>
+            <img src="images/em_metal.JPG">
+        </section>
+
+        <section>
+            <p>
+                В цифровом шрифте кегельная площадка важна при проектировании шрифта как прямоугольник,
+                в который вписывается изображение знака.
+            </p>
+            <img src="images/em_digital.jpg">
+
+            <p class="fragment">
+                <br/>
+                <a href="https://habrahabr.ru/company/pt/blog/337450/" target="_blank">
+                    Исчерпывающая статья о сабже на хабре
+                </a>
+            </p>
+        </section>
+
+        <section>
+            <p>
+                <dfn>Гарниту́ра</dfn> в типографике — набор из одного или нескольких шрифтов
+                в одном или нескольких
+                <span class="highlight green static">размерах</span> и начертаниях,
+                имеющих стилевое единство рисунка и состоящих из определённого набора типографских знаков.
+            </p>
+        </section>
+
+        <section>
+            <div class="t-center font_sizes">
+                <div class="fragment from-l w50">
+                    <div class="pulse_font t-green">Oo</div>
+                    размер шрифта
+                </div><div class="fragment from-r w50">
+                <div class="pulse_line t-green">First Line<br />Second Line</div>
+                    высота строки
+                </div><div class="fragment from-l w50">
+                    <div class="pulse_letters t-green">&nbsp;ALIEN</div>
+                    расстояние между<br>
+                    буквами
+                </div><div class="fragment from-r w50">
+                    <div class="pulse_words t-green">Words Like To Move</div>
+                    расстояние между<br>
+                    словами
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Размер шрифта</h2>
+            <p>
+                С помощью <var>font-size</var> можно определить размер шрифта элемента.
+                Размер шрифта определяется как высота от
+                <span class="t-green">базовой линии</span> до верхней границы
+                <span class="t-green">кегельной площадки</span>.
+            </p>
+
+            <p class="fragment">
+                Размер шрифта можно установить с помощью<br>единиц измерения длины.
+            </p>
+
+            <br>
+            <br>
+
+            <p class="fragment">
+                Подробно про единицы измерения длины<br>можно почитать
+                <a href="https://learn.javascript.ru/css-units" target="_blank">тут</a> и
+                <a href="https://developer.mozilla.org/ru/docs/Web/CSS/%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80"
+                   target="_blank">тут</a>
+            </p>
+        </section>
+
+        <section>
+            <h2>Единицы измерения длины</h2>
+            <p class="fragment">
+                <var>px</var> — размер шрифта в пикселях.
+                Так как задание динамического размера требуется
+                нечасто, эта единица измерения является наиболее популярной.
+            </p>
+            <pre class="fragment"><code class="css">
+    p {
+        font-size: 10px;
+    }
+                    </code></pre>
+
+            <div class="ex fragment">
+                <p style="font-size: 10px;">
+                    Здесь не написано ничего интересного, уверяю вас. Никакого заговора нет,
+                    масоны и рептилоиды — выдумка рентв, всем △!
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <p>
+                <var>em</var>/<var>%</var> — размер шрифта в зависимости от размера шрифта родителя.
+                Эти размеры – относительные, они определяются по текущему контексту.
+            </p>
+            <pre class="fragment"><code class="css">
+    div {
+        font-size: .6em; /* то же, что и 60% */
+        color: #0b0;
+    }
+                    </code></pre>
+            <pre class="fragment"><code class="html">
+    <h2>
+        Большой заголовок
+        <div>Подпись к заголовку</div>
+    </h2>
+
+    <h3>
+        Заголовок поменьше
+        <div>Подпись к заголовку</div>
+    </h3>
+                    </code></pre>
+        </section>
+
+        <section>
+            <div class="ex">
+                <h2>
+                    Большой заголовок <span class="oops">(1em)</span>
+                    <div style="font-size: .6em;">
+                        Подпись к заголовку <span class="oops">(.6em)</span>
+                    </div>
+                </h2>
+
+                <h3>
+                    Заголовок поменьше <span class="oops">(1em)</span>
+                    <div style="font-size: .6em;">
+                        Подпись к заголовку <span class="oops">(.6em)</span>
+                    </div>
+                </h3>
+            </div>
+        </section>
+
+        <section>
+            <var>rem</var>(root em) — подобно <var>em</var> наследует значение,
+            но только <var>&lt;html&gt;</var>.
+
+            <pre class="fragment"><code class="css">
+    html {
+        font-size: 16px;
+    }
+
+    h2 {
+        font-size: 60px;
+    }
+
+    div {
+        font-size: 2rem;
+    }
+                    </code></pre>
+            <pre class="fragment"><code class="html">
+    <h2>
+        Большой заголовок
+        <div>Подпись к заголовку</div>
+    </h2>
+                    </code></pre>
+            <div class="ex fragment">
+                <h2>
+                    Большой заголовок <span class="oops">60px</span>
+                    <div style="font-size: 2rem;">Подпись к заголовку <span class="oops">явно не 120px</span></div>
+                </h2>
+            </div>
+        </section>
+
+        <section>
+            <h3>Редко используемые единицы измерения длины в контексте шрифтов</h3>
+            <p class="fragment">
+                <var>pc</var>, <var>pt</var>, <var>ch</var>, <var>ex</var> — типографские единицы измерения.
+            <div class="fragment oops">
+                Практически не нужны в вебе.
+                Перекочевали из типографики.
+            </div>
+            </p>
+
+            <p class="fragment">
+                <var>cm</var>,
+                <var>mm</var>,
+                <var>q</var>,
+                <var>in</var> — абсолютные единицы из реального мира.
+            <div class="fragment oops">
+                Могут использоваться для верстки печатных версий сайтов.
+            </div>
+            </p>
+            <p class="fragment">
+                <var>vh</var>,
+                <var>vw</var>,
+                <var>vmin</var>,
+                <var>vmax</var> — единицы измерения относительно viewport'а.
+            <div class="fragment oops">
+                Данные единицы были в принципе придуманы не для того, чтобы работать со шрифтами.
+            </div>
+            </p>
+        </section>
+
+        <section>
+            <h2>Высота строки</h2>
+            <p>
+                Устанавливается двумя типами значений:
+                <span class="t-green">единицами измерения длины</span> или
+                <span class="t-green">безразмерным множителем</span>. В чем же разница?
+            </p>
+
+            <pre class="fragment"><code class="css">
+    body { font-size: 20px; }
+
+    .line-height-mult  { line-height: 1.5;   }
+    .line-height-em    { line-height: 1.5em; }
+    .line-height-pixel { line-height: 30px;  }
+                    </code></pre>
+
+            <pre class="fragment"><code class="html">
+    <div class="line-height-mult">
+        <p>...</p>
+    </div>
+
+    <div class="line-height-em">
+        <p>...</p>
+    </div>
+
+    <div class="line-height-pixel">
+        <p>...</p>
+    </div>
+                    </code></pre>
+        </section>
+
+        <section>
+            <div class="ex line-height-example">
+                <div class="line-height-mult">
+                    <span class="fragment oops">Высота строки множителем 1.5 x 20 = 30</span>
+                    <p>
+                        Swinging against the wind
+                        Keeping the noose tight on her skin
+                        God will save her, the father's Lucifer, they say
+                        Oh do they
+                    </p>
+                </div>
+                <div class="line-height-em">
+                    <span class="fragment oops">Высота строки в em 1.5 x 20 = 30</span>
+                    <p>
+                        Does that make it okay?
+                        Sin finds the culprit
+                        Unexplained circumstances cause people to fear,
+                        Deceive and act so irrationally
+                    </p>
+                </div>
+                <div class="line-height-pixel">
+                    <span class="fragment oops">Высота в пикселях 30 = 30</span>
+                    <p>
+                        Up in the bedroom she's seeing ghosts
+                        Demons in clothes, people she knows
+                        Swear on the bible that earns their trust
+                        Fractions of fiction dismissed so start your hunt
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p>
+                Что, если мы укажем размер шрифта у параграфов явно?
+            </p>
+
+            <pre class="fragment"><code class="css">
+    body { font-size: 20px; }
+
+    .line-height-mult  { line-height: 1.5;   }
+    .line-height-em    { line-height: 1.5em; }
+    .line-height-pixel { line-height: 30px;  }
+                    </code></pre>
+            <pre class="fragment"><code class="html">
+    <div class="line-height-mult">
+        <p>...</p>
+    </div>
+
+    <div class="line-height-em">
+        <p>...</p>
+    </div>
+
+    <div class="line-height-pixel">
+        <p>...</p>
+    </div>
+                    </code></pre>
+            <pre class="fragment"><code class="css">
+    p { font-size: 30px; }
+            </code></pre>
+        </section>
+
+        <section style="font-size: 20px">
+            <div class="ex line-height-example p-30">
+                <div class="line-height-mult">
+                    <span class="fragment oops">Высота строки множителем 1.5 * 30 = 45</span>
+                    <p>
+                        Swinging against the wind
+                        Keeping the noose tight on her skin
+                        God will save her, the father's Lucifer, they say
+                        Oh do they
+                    </p>
+                </div>
+                <div class="line-height-em">
+                    <span class="fragment oops">Высота строки в em 1.5 * 20 = 30</span>
+                    <p>
+                        Does that make it okay?
+                        Sin finds the culprit
+                        Unexplained circumstances cause people to fear,
+                        Deceive and act so irrationally
+                    </p>
+                </div>
+                <div class="line-height-pixel">
+                    <span class="fragment oops">Высота в пикселях 30 = 30</span>
+                    <p>
+                        Up in the bedroom she's seeing ghosts
+                        Demons in clothes, people she knows
+                        Swear on the bible that earns their trust
+                        Fractions of fiction dismissed so start your hunt
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Расстояние между буквами</h2>
+            <p>
+                Для изменения данного расстояния предусмотрено<br> свойство <var>letter-spacing</var> со
+                значением в любой<br> единице измерения длины, <span class="t-green">кроме процентов</span>.
+            </p>
+            <pre class="fragment"><code class="css">
+    .zero {
+        letter-spacing: normal;
+    }
+
+    .first {
+        letter-spacing: -2.5px;
+    }
+
+    .second {
+        letter-spacing: 1em;
+    }
+                    </code></pre>
+        </section>
+
+        <section class="size-m">
+            <div class="ex">
+                <span class="fragment oops">letter-spacing: normal;</span><br>
+                <p>
+                    We are the sheep that rose against the shepherd
+                    We are the ones you led astray
+                </p>
+                <span class="fragment oops">letter-spacing: -2.5px;</span><br>
+                <p style="letter-spacing: -2.5px;">
+                    Embrace the light in your heart
+                    Not the one in the sky
+                </p>
+                <span class="fragment oops">letter-spacing: 1em;</span><br>
+                <p style="letter-spacing: 1em;">
+                    Saints and sinners rejoice
+                    We will all rot together
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Расстояние между словами</h2>
+            <p>
+                Для изменения данного расстояния предусмотрено<br> свойство <var>word-spacing</var> со
+                значением в любой<br> единице измерения длины, <span class="t-green">кроме процентов</span>.
+            </p>
+            <pre class="fragment"><code class="css">
+    .zero {
+        word-spacing: normal;
+    }
+
+    .first {
+        word-spacing: -10px;
+    }
+
+    .second {
+        word-spacing: 1em;
+    }
+                    </code></pre>
+        </section>
+
+        <section class="size-m">
+            <div class="ex">
+                <span class="fragment oops">word-spacing: normal;</span><br>
+                <p>
+                    We're reaching for the sky now
+                    stretching out our limbs
+                </p>
+                <span class="fragment oops">word-spacing: -10px;</span><br>
+                <p style="word-spacing: -10px;">
+                    to the birds to the clouds
+                    To the people who cut us down
+                </p>
+                <span class="fragment oops">word-spacing: 1em;</span><br>
+                <p style="word-spacing: 1em;">
+                    We're building mountains higher
+                    Today! Today! Today!
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <dfn>Гарниту́ра</dfn> в типографике — набор из одного или нескольких шрифтов
+            в одном или нескольких размерах и <span class="highlight blue static">начертаниях</span>,
+            имеющих стилевое единство рисунка и состоящих из определённого набора типографских знаков.
+        </section>
+
+        <section>
+            <p>
+                Характеристики рисунка одной гарнитуры:
+            </p>
+            <div class="t-center font_attrs fragment init_visible" data-fragment-index="4">
+                <div class="fragment from-l w50" data-fragment-index="0">
+                    <h1 class="italic t-blue">01</h1>
+                    наклон
+                </div><div class="fragment from-r w50" data-fragment-index="1">
+                    <h1 class="bold t-blue">02</h1>
+                    насыщенность
+                </div><div class="fragment from-b w50" data-fragment-index="2">
+                    <h1 class="condensed t-blue">03</h1>
+                    плотность
+                </div>
+
+                <div class="circle_conclusion">Начертание</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant" target="_blank">
+                    Капитель
+                </a>
+            </h2>
+
+            <div class="fragment">
+                Вариант прописных букв уменьшенного роста и чуть расширенных пропорций, несколько выше роста строчных.
+                Устанавливается с помощью свойства <var>font-variant</var>.
+            </div>
+            <br>
+
+            <div>
+                <div class="w50 fragment from-l">
+                    <h3>
+                        Я Уже Не Текст<br>
+                        Я Рыба
+                    </h3>
+
+                            <pre><code class="css">
+    .h3 {
+        font-variant: normal;
+    }
+                            </code></pre>
+                </div><div class="w50 fragment from-r">
+                    <h3 style="font-variant: small-caps">
+                        Я Уже Не Текст<br>
+                        Я Рыба
+                    </h3>
+                                <pre><code class="css">
+    .h3 {
+        font-variant: small-caps;
+    }
+                                </code></pre>
+                </div>
+
+                <img src="images/true_small_caps.png" class="fragment" style="background: #fff">
+            </div>
+        </section>
+
+        <section>
+            <h2 class="font_styles">
+                <img class="w_back" src="images/font_style_oblique.gif">
+
+                <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-style" target="_blank">
+                    Наклон
+                </a>
+
+                <img class="w_back" src="images/font_style_cursive.gif">
+            </h2>
+
+            <br>
+
+            <pre><code class="css">
+    font-style: normal;
+                oblique;   /* наклонный */
+                italic;    /* курсивный */
+                    </code></pre>
+        </section>
+
+        <section>
+            <h2 class="font_styles">
+                <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight" target="_blank">
+                    Насыщенность
+                </a>
+
+                <img class="w_back" src="images/font_style_weight.gif">
+            </h2>
+
+            <pre><code class="css">
+    font-weight: normal;
+                 bold;     /* жирное начертание  */
+                 light;    /* светлое начертание  */
+                    </code></pre>
+            <pre class="fragment"><code class="css">
+                 100      /* thin          */
+                 200      /* extra light   */
+                 300      /* light         */
+                 400      /* normal        */
+                 500      /* medium        */
+                 600      /* semi-bold     */
+                 700      /* bold          */
+                 800      /* extra bold    */
+                 900      /* black         */
+                    </code></pre>
+        </section>
+
+        <section>
+            <h2 class="font_styles">
+                <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-stretch" target="_blank">
+                    Плотность
+                </a>
+
+                <img class="w_back" src="images/font_style_cond.gif">
+            </h2>
+
+            <pre><code class="css">
+    font-stretch: ultra-condensed;   /* 50%  */
+                  extra-condensed;   /* 62.5%  */
+                  condensed;         /* узкий, 75%  */
+                  semi-condensed;    /* 87.5%  */
+                  normal;            /* нормальный, 100%  */
+                  semi-expanded;     /* 112.5%  */
+                  expanded;          /* широкий, 125%  */
+                  extra-expanded;    /* 150%  */
+                  ultra-expanded;    /* 200%  */
+                    </code></pre>
+
+            <div class="fragment from-b">
+                Данное свойство <span class="t-blue">не поддерживается</span> в мобильном Safari.<br>
+                Шрифты разной плотности нужно <span class="t-blue">подключать отдельно</span>.
+            </div>
+        </section>
+
+        <section>
+            Например, вот так:
+
+            <pre><code class="css">
+    .block {
+        font-family: 'My Font Condensed'
+    }
+                    </code></pre>
+
+            <div class="fragment">
+                <span>или в случае с широким шрифтом:</span>
+
+                <pre><code class="css">
+    .block {
+        font-family: 'My Font Expanded'
+    }
+                        </code></pre>
+            </div>
+
+            <div class="fragment from-b">
+                Таким образом мы медленно подходим к свойству <var>font-family</var>, но...
+            </div>
+        </section>
+
+        <section>
+            <h2>Нюанс работы с начертаниями</h2>
+            <div>
+                <div class="w50 fragment from-l">
+                    <img src="images/italic_diff.png">
+                    наклонный шрифт
+                </div><div class="w50 fragment from-r">
+                    <img src="images/bold_diff.png">
+                    жирный шрифт
+                </div>
+            </div>
+
+            <p class="fragment from-b">
+                Браузер <span class="t-blue">попытается «наклонить»/«насытить»</span> обычное начертание,
+                используя для этого упрощенные алгоритмы.
+            </p>
+        </section>
+
+        <section>
+            <h2>Анатомия шрифтовых гарнитур</h2>
+
+            <div>
+                <div class="w50 fragment from-l">
+                    <p class="t-green">
+                        С засечками / без засечек
+                    </p>
+
+                    <img class="w_back fragment" src="images/sans_serif.png"><br>
+                    <img class="w_back fragment" src="images/serif.png"><br>
+                    <img class="w_back fragment" src="images/serif_highlighted.png">
+                </div><div class="w50 fragment from-r">
+                    <p class="t-green">
+                        Пропорциональные / непропорциональные
+                    </p>
+
+                    <br>
+
+                    <img class="w_back fragment" src="images/prop_vs_mono.png">
+
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </div>
+
+        </section>
+
+        <section>
+            <p>Классификация шрифтов в веб:</p>
+
+            <div class="t-center fragment init_visible font_families" data-fragment-index="5">
+                <div class="fragment from-t w33" data-fragment-index="1">
+                    <h2 class="serif t-yellow">serif</h2>
+                    c засечками
+                    <div class="oops">антиква</div>
+                </div><div class="fragment from-t w33"  data-fragment-index="2">
+                <h2 class="sans t-yellow">sans-serif</h2>
+                без засечек
+                <div class="oops">гротески</div>
+            </div><div class="fragment from-l w50"  data-fragment-index="0">
+                <h2 class="cursive t-yellow">cursive</h2>
+                рукописные
+                <div class="oops">каллиграфические</div>
+            </div><div class="fragment from-r w50"  data-fragment-index="3">
+                <h2 class="fantasy t-yellow">fantasy</h2>
+                декоративные
+                <div class="oops">акцидентные</div>
+            </div><div class="fragment from-b w50"  data-fragment-index="4">
+                <h2 class="mono t-yellow">monospace</h2>
+                моноширинные
+                <div class="oops">непропорциональные</div>
+            </div>
+
+                <div class="circle_conclusion">Семейства</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Шрифты в ОС</h2>
+            <p>
+                Существует ряд шрифтов, которые есть практически в каждой ОС,
+                таким образом их использование считается наиболее <span class="t-yellow">безопасным</span>.
+
+            <table class="fragment">
+                <caption>Самые известные из них:</caption>
+                <tr>
+                    <td>Без засечек</td>
+                    <td>
+                        <span class="fragment sans t-yellow">Arial</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>С засечками</td>
+                    <td>
+                        <span class="fragment serif t-yellow">Times New Roman</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Моноширинный</td>
+                    <td>
+                        <span class="fragment mono t-yellow">Courier New</span>
+                    </td>
+                </tr>
+            </table>
+            </p>
+
+            <div class="fragment">Но по факту их больше, и есть красивые</div>
+        </section>
+
+        <section>
+            Чтобы использовать нужный шрифт, пишем:
+            <pre><code class="css">
+    body {
+        font-family: 'Arial';
+    }
+                    </code></pre>
+
+            <div class="fragment">
+                Можно писать название шрифта без кавычек:
+
+                <pre><code class="css">
+    body {
+        font-family: Arial;
+    }
+                        </code></pre>
+            </div>
+
+            <div class="fragment">
+                И несколько шрифтов через запятую:
+
+                <pre><code class="css">
+    body {
+        font-family: Arial, Helvetica, Calibri;
+    }
+                        </code></pre>
+            </div>
+        </section>
+
+        <section>
+            А что, если и третьего шрифта нет?
+            <pre><code class="css">
+    body {
+        font-family: Arial, Helvetica, Calibri, /* ?????? */;
+    }
+                    </code></pre>
+
+            <div class="fragment">
+                Браузер установит шрифт по умолчанию.<br>
+                И в 99% случаев – <span class="t-yellow serif">Times New Roman</span>.
+
+                <pre><code class="css">
+    body {
+        font-family: Arial, Helvetica, Calibri, /* Times New Roman */;
+    }
+                        </code></pre>
+            </div>
+
+            <div class="fragment">
+                Как сказать браузеру, чтобы он установил
+                шрифт по умолчанию <span class="t-yellow">нужного нам семейства</span>?
+            </div>
+        </section>
+
+        <section>
+            <h3>Вот теперь нам пригодится классификация:</h3>
+            <ul>
+                <li>
+                    <span class="t-yellow">serif</span> — с засечками
+                </li>
+                <li>
+                    <span class="t-yellow">sans-serif</span> — без засечек
+                </li>
+                <li>
+                    <span class="t-yellow">cursive</span> — рукописные
+                </li>
+                <li>
+                    <span class="t-yellow">monospace</span> — моноширинные
+                </li>
+                <li>
+                    <span class="t-yellow">fantasy</span> — декоративные
+                </li>
+            </ul>
+            <br><br>
+            <div class="fragment">
+
+                        <pre><code class="css">
+    body {
+        font-family: Arial, Helvetica, Calibri, sans-serif;
+    }
+                        </code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>А что, если нам нужен шрифт, которого точно нет ни в одной ОС?</h2>
+        </section>
+
+        <section>
+            <h2>Нестандартные шрифты</h2>
+            Всегда есть возможность подключить свой шрифт на страницу с помощью
+            at-правила <var>@font-face</var>.
+
+            <pre class="fragment"><code class="css">
+    @font-face {
+        font-family: myCustomFont;
+        src: url(myCustomFont.woff2)       format(woff2),
+             url(myCustomFont.woff)        format(woff)
+    }
+                    </code></pre>
+
+            <pre class="fragment"><code class="css">
+    body {
+        font-family: myCustomFont, sans-serif;
+    }
+                    </code></pre>
+        </section>
+
+        <section>
+            Если есть вероятность, что какой-либо шрифт уже установлен<br>на пользовательский компьютер,
+            можно указать его через <var>local()</var>:
+
+            <pre class="fragment"><code class="css">
+    @font-face {
+        font-family: myCustomFont;
+        src: local('Native Custom Font'),
+             url('myCustomFont.woff2')       format('woff2'),
+             url('myCustomFont.woff')        format('woff');
+    }
+                    </code></pre>
+
+            <p class="fragment">
+                А можно указать диапазон используемых в шрифте символов<br>
+                с помощью <var>unicode-range</var>:
+            </p>
+
+            <pre class="fragment"><code class="css">
+    @font-face {
+        font-family: myCustomFont;
+        unicode-range: U+000-5FF; // только латинские символы
+        src: local('Native Custom Font'),
+             url('myCustomFont.woff2')       format('woff2'),
+             url('myCustomFont.woff')        format('woff');
+    }
+                    </code></pre>
+
+            <p class="fragment">
+                Но, как всегда, есть <span class="t-yellow">нюансы</span>.
+                <span class="fragment">И <span class="t-yellow">проблемы</span>.</span>
+            </p>
+        </section>
+
+        <section>
+            Шрифт <span class="t-yellow">жирного</span> и, например,
+            <span class="t-yellow">курсивного</span> начертания — два разных файла, и
+            подключать их нужно <span class="t-yellow">отдельно</span>.
+
+            Мы можем привязывать определенный <span class="t-yellow">файл</span>
+            к определенному <span class="t-yellow">начертанию</span>
+            с помощью свойств <var>font-weight</var> и <var>font-style</var>, указанных в <var>@font-face</var>.
+            <pre><code style="max-height: none" class="css fragment">
+    @font-face {
+        font-family: Sooo Good Font;
+        src: url(soGoodFont.woff2);
+        font-style: normal; /* обычный */
+    }
+                    </code></pre>
+            <pre class="fragment"><code style="max-height: none" class="css">
+    @font-face {
+        font-family: Sooo Good Font;
+        src: url(soGoodFontItalic.woff2);
+        font-style: italic; /* курсивный */
+    }
+                    </code></pre>
+
+            <pre class="fragment"><code style="max-height: none" class="css">
+    .normal {
+        font-family: Sooo Good Font; /* обычный */
+    }
+
+    .italic {
+        font-family: Sooo Good Font;
+        font-style: italic; /* курсивный */
+    }
+                    </code></pre>
+        </section>
+
+        <section>
+            <h2>Где брать файлы шрифтов</h2>
+
+            <p class="fragment strike oops">у дизайнера</p>
+
+            <p class="fragment">
+                Существуют сервисы-генераторы, которые помогают собрать<br>
+                весь пакет нужных форматов в несколько кликов.<br>
+
+                <small>
+                    <br>
+                    Самый популярный —
+                    <a href="http://www.fontsquirrel.com/tools/webfont-generator" target="_blank">Font Squirell</a>
+                </small>
+            </p>
+
+            <p class="fragment">
+                Они также помогают значительно уменьшить вес благодаря выбору
+                только нужных символов шрифта или диапазонов, например,
+                только кириллических и латинских символов. <br>
+
+                <small>
+                    <br>
+                    Почитать подробнее про различия сервисов можно
+                    <a href="http://habrahabr.ru/company/webfont/blog/217949/" target="_blank">тут</a>
+                </small>
+            </p>
+
+            <p class="fragment">
+                А еще существуют сервисы, которые предоставляют шрифты.<br>
+
+                <small>
+                    <br>
+                    Самый популярный — <a href="https://www.google.com/fonts" target="_blank">Google Fonts</a>
+                </small>
+            </p>
+        </section>
+
+        <section>
+            Шрифты — файлы, а файлы нужно <span class="t-yellow">загружать</span>.
+            Более того, когда шрифт загружен на страницу, он не применяется сразу.
+
+            <p class="fragment">
+                Условные этапы работы браузера со шрифтами:
+            </p>
+
+            <ol>
+                <li class="fragment">Браузер получает и парсит CSS</li>
+                <li class="fragment">Встречает в CSS <var>@font-face</var>, но НЕ скачивает файл шрифта</li>
+                <li class="fragment">Парсит дальше и встречает указание шрифта в <var>font-family</var></li>
+                <li class="fragment">Начинает загрузку шрифта</li>
+                <li class="fragment">По окончанию загрузки парсит шрифт и применяет к странице</li>
+            </ol>
+
+            <p class="fragment">
+                Что же видит пользователь в этот момент?
+            </p>
+        </section>
+
+        <section>
+            <img src="images/site_fonts.gif" height="600">
+            <div class="fragment">FOIT — Flash Of Invisible Text</div>
+        </section>
+
+        <section>
+            <p>
+                Сейчас активно внедряется свойство <var>font-display</var>.
+                Оно определяет, как именно браузер будет загружать и рендерить подключенный в <var>@font-face</var> шрифт.
+            </p>
+
+            <br>
+
+            <pre class="fragment"><code class="css">
+    @font-face {
+        font-family: myFont;
+        font-display: auto; /* block, swap, fallback, optional */
+
+        src: url('myFont.woff2')       format('woff2'),
+             url('myFont.woff')        format('woff');
+    }
+            </code></pre>
+
+            <br>
+
+            <p class="fragment">
+                С помощью <var>font-display</var> можно повлиять на длину периодов блокировки (невидимый текст)
+                и подмены (сколько браузер ждёт загрузки шрифта).
+            </p>
+        </section>
+
+        <section>
+            <h3>Жизненный цикл шрифта</h3>
+
+            <img class="fragment" src="images/font_lifecycle.png" height="600">
+        </section>
+
+        <section>
+            <img src="images/font_display_side_by_side.png" height="600">
+
+            <a href="https://font-display.glitch.me" class="fragment" target="_blank">
+                Подробнее о <var>font-display</var>
+            </a>
+        </section>
+
+        <section>
+            Подводя итог...
+        </section>
+
+        <section>
+            <h2>Свойство <var>font</var></h2>
+
+            <div class="css-font">
+                <div class="fragment show_required" data-fragment-index="7"></div>
+
+                <var class="fragment required prop" data-fragment-index="0">font:</var>
+                <var class="fragment" data-fragment-index="1">variant</var>
+                <var class="fragment" data-fragment-index="2">style</var>
+                <var class="fragment" data-fragment-index="3">weight</var>
+                <var class="fragment required" data-fragment-index="4">size</var>
+                <var class="fragment" data-fragment-index="5">/ line-height</var>
+                <var class="fragment required" data-fragment-index="6">family</var>
+            </div>
+
+            <pre class="fragment"><code class="css">
+    body {
+        font: 14px;                /* не будет работать */
+        font: italic Arial;        /* это тоже */
+
+        font: 14px Arial, sans-serif;
+        font: 14px / 1.2 Arial, sans-serif;
+        font: italic bold 14px Times New Roman;
+        font: small-caps italic 700 14px / 20px Arial, sans-serif;
+    }
+                    </code></pre>
+        </section>
+
+        <section>
+            <h1>Что такое текст?</h1>
+            <div class="fragment oops">снова слово википедии:</div>
+            <div class="fragment">
+                <dfn>Текст</dfn> — зафиксированная на каком-либо материальном носителе человеческая мысль;
+                в общем плане связная и полная последовательность символов.
+            </div>
+        </section>
+
+        <section>
+            <h2>Выравнивание</h2>
+            <p>
+                Осуществляется с помощью свойства <var>text-align</var>.
+            </p>
+
+            <pre class="fragment"><code class="css">
+    .uno    { text-align: left;        }
+    .dos    { text-align: start;       }
+    .tres   { text-align: right;       }
+    .quatro { text-align: end;         }
+    .cinco  { text-align: center;      }
+    .seis   { text-align: justify;     }
+                    </code></pre>
+        </section>
+
+        <section>
+            <div class="ex" style="font-size: 24px">
+                <p style="text-align: left">
+                    По левому краю
+                </p>
+
+                <p class="fragment" style="text-align: start">
+                    По краю начала текста
+                </p>
+
+                <p class="fragment" style="text-align: start; direction: rtl">
+                    <var>rtl</var>על קצה תחילת הטקסט
+                </p>
+
+                <p class="fragment" style="text-align: right">
+                    По правому краю
+                </p>
+
+                <p class="fragment" style="text-align: end">
+                    По краю, противоположному краю начала текста
+                </p>
+
+                <p class="fragment" style="text-align: end; direction: rtl">
+                    <var>rtl</var>לאורך הקצה, בקצה הנגדי של תחילת הטקסט
+                </p>
+
+                <p class="fragment" style="text-align: center">
+                    По центру
+                </p>
+
+                <p class="fragment" style="text-align: justify">
+                    По всей ширине <span class="fragment t-pink">WTF?</span>
+                </p>
+
+                <p class="fragment" style="text-align: justify">
+                    We need as much text as possible, my comrade, otherwise we can't see what's "justify" doing
+                </p>
+
+                <p class="fragment" style="text-align: left">
+                    <span class="oops">And again to compare with left alignment:</span><br>
+                    We need as much text as possible, my comrade, otherwise we can't see what's
+                    <del>"justify"</del>
+                    "left" doing
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>«Украшение» текста</h2>
+            <p>
+                Устанавливается с помощью свойства <var>text-decoration</var>, которое имеет три законных значения
+                <var>overline</var>, <var>line-through</var> и <var>underline</var>. Оно позволяет нам сделать так:
+            </p>
+            <div class="ex fragment">
+                <p style="text-decoration: overline">никакое это</p>
+                <p class="fragment" style="text-decoration: line-through">не украшение</p>
+                <p class="fragment" style="text-decoration: underline">ну подчеркивание для ссылок можно использовать,
+                    да<a href="http://prgssr.ru/development/sposoby-podcherkivaniya.html" target="_blank"
+                         class="fragment">, или нет?</a>
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <p>
+                <var>text-decoration</var> не наследуется дочерними элементами,
+                и им нельзя отменить «украшение», которое применено к родителю.
+            </p>
+
+            <pre><code class="html">
+    <p style="text-decoration: overline;">
+        Текст надчеркнут.
+        <span style="text-decoration: none;">Текст по прежнему надчеркнут</span>.
+    </p>
+                    </code></pre>
+
+            <div class="ex fragment">
+                <p style="text-decoration: overline;">
+                    Текст надчеркнут.
+                    <span style="text-decoration: none;">Текст по прежнему надчеркнут</span>.
+                <p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Трансформация текста</h2>
+            <p>
+                Свойство <var>text-transform</var> позволяет менять регистр букв с помощью трех
+                значений: <var>capitalize</var>, <var>lowercase</var> и <var>uppercase</var>.
+            </p>
+            <div class="ex fragment">
+                <p style="text-transform: capitalize">
+                    регистр прям как у названий песен
+                </p>
+                <p class="fragment" style="text-transform: lowercase">
+                    В HTML ЭТОТ ТЕКСТ НАПИСАН КАПСОМ <span class="oops">// ПОВЕРЬТЕ НА СЛОВО</span>
+                </p>
+                <p class="fragment" style="text-transform: uppercase">
+                    а этот не капсом <span class="oops">// тоже придется поверить!!!</span>
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Абзацный отступ</h2>
+            <p>
+                Для задания величины отступа используется свойство <var>text-indent</var>.
+                Допустимо использовать любые единицы измерения длины и их отрицательные значения.
+            </p>
+            <pre><code class="css">
+    .eins {
+        text-indent: 5%;
+    }
+
+    .zwei {
+        text-indent: -1em;
+    }
+                    </code></pre>
+        </section>
+
+        <section>
+            <div class="ex">
+                <p style="text-indent: 5%; padding-left: 2em;">
+                    Let's talk about the old days,
+                    Let's talk about your friends,
+                    Let's talk about the summer
+                    And how you wish it wouldn't end.
+                    Did I forget to tell you,
+                    How pretty you looked in that dress?
+                    In the first time that I saw you,
+                    In the first time that I saw you,
+                    In the first time that I saw you,
+                    You cleaned the mess from my head.
+                </p>
+                <p style="text-indent: -1em; padding-left: 2em;">
+                    Lets go walking on the boardwalk,
+                    Dip our feet into the sea.
+                    Lets find ourselves lost for hours,
+                    Until we find ourselves a drink.
+                    Lets talk that sun into setting,
+                    Just need the sound of your voice.
+                    Need that calming and the comfort,
+                    Something to drown out the noise.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Цвет</h2>
+
+            <p>
+                Цвет текста задается с помощью свойства <var>color</var>.
+            </p>
+
+            <div class="fragment">
+                Принято использовать <var>hex</var> для сплошных цветов</li><br> и <var>rgba()</var> для
+                полупрозрачных</li>.
+            </div>
+
+            <pre class="fragment"><code class="css">
+    h1 {
+        color: #f00;
+    }
+
+    div {
+        color: rgba(255, 0, 0, .3);
+    }
+            </code></pre>
+
+            <div class="ex fragment">
+                <h1 style="color: #f00;">
+                    ДЕДЛАЙН <span style="color: rgba(255, 0, 0, .3); font-size: 60%">(кродёться)</span>
+                </h1>
+            </div>
+            <p class="fragment">
+                Почитать буквально обо всём, что связано с цветами, можно <a
+                    href="https://css-tricks.com/nerds-guide-color-web/" target="_blank">тут</a>.
+            </p>
+        </section>
+
+        <section>
+            <h2>Нюанс #1</h2>
+            <p>
+                <var>color</var> устанавливает так называемый «цвет переднего плана»
+                (в противовес <var>background-color</var> — цвету фона), поэтому он имеет влияние
+                на многие свойства.
+            </p>
+            <pre class="fragment"><code class="css">
+    p {
+        color: #0f0;               /* зеленый цвет текста */
+        border: 5px solid;         /* рамка будет зеленой */
+        box-shadow: 0 0 50px;      /* и тень элемента     */
+        text-shadow: 4px 4px 10px; /* и тень текста       */
+    }
+                    </code></pre>
+            <div class="ex fragment">
+                <p style="text-align: justify; text-transform: uppercase; margin: 40px; color: #0f0; border: 5px solid; box-shadow: 0 0 50px; text-shadow: 4px 4px 5px;">
+                    Кислотный dj, хей
+                    Кислотный music, хей
+                    Кислотный people, хей
+                    Давай, давай веселей
+                    Кислотный dj, хей
+                    Кислотный music, хей
+                    Кислотный people, хей
+                    веселей
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Нюанс #2</h2>
+            <p>
+                Свойства, которые не наследуют цвет от <var>color</var> автоматически,
+                могут сделать это при помощи ключевого слова <var>currentColor</var>.
+            </p>
+            <pre class="fragment"><code class="css">
+    h1 {
+        color: #f0f;
+        background-color: currentColor; /* цвет фона тоже станет #f0f */
+    }
+                    </code></pre>
+            <div class="ex fragment">
+                <h1 style="color: #f0f; background-color: currentColor;">
+                    Зачем?
+                </h1>
+            </div>
+        </section>
+
+        <section>
+            <div class="ex">
+                <h1 style="text-align: center; color: #f0f; background-color: currentColor; text-shadow: 3px 3px rgba(0,0,0,.5), -3px -3px rgba(255,255,255,.5)">
+                    ЗАТЕМ
+                </h1>
+            </div>
+        </section>
+
+        <section>
+            <h2>Тень текста</h2>
+            <div class="css-font">
+                <div class="fragment show_required" data-fragment-index="5"></div>
+
+                <var class="fragment required prop" data-fragment-index="0">text-shadow:</var>
+                <var class="fragment required" data-fragment-index="1">offset-x</var>
+                <var class="fragment required" data-fragment-index="2">offset-y</var>
+                <var class="fragment" data-fragment-index="3">blur-radius</var>
+                <var class="fragment" data-fragment-index="4">color</var>
+            </div>
+        </section>
+
+        <section>
+            <p>
+                Создадим тень со сдвигом в 4 пикселя вправо вниз,<br>
+                по умолчанию она будет такого же цвета, что и текст:
+            </p>
+            <pre><code class="css">
+    h1 {
+        text-shadow: 4px 4px;
+
+    }
+                    </code></pre>
+
+            <div class="ex">
+                <h1 style="text-shadow: 4px 4px;">
+                    Shadow heading
+                </h1>
+            </div>
+        </section>
+
+        <section>
+            <p>
+                Закрасим её красным цветом:
+                <br/><br/>
+            </p>
+            <pre><code class="css">
+    h1 {
+        text-shadow: 4px 4px #f00;
+
+    }
+                    </code></pre>
+
+            <div class="ex">
+                <h1 style="text-shadow: 4px 4px #f00;">
+                    Shadow heading
+                </h1>
+            </div>
+        </section>
+
+        <section>
+            <p>
+                Добавим размытие в 10 пикселей:
+                <br/><br/>
+            </p>
+            <pre><code class="css">
+    h1 {
+        text-shadow: 4px 4px 10px #f00;
+
+    }
+                    </code></pre>
+
+            <div class="ex">
+                <h1 style="text-shadow: 4px 4px 10px #f00;">
+                    Shadow heading
+                </h1>
+            </div>
+        </section>
+
+        <section>
+            <p>
+                Укажем еще одну тень со сдвигом<br>
+                влево вверх зеленого цвета:
+            </p>
+            <pre><code class="css">
+    h1 {
+        text-shadow:  4px  4px 10px #f00,
+                     -4px -4px 10px #0f0;
+    }
+                    </code></pre>
+
+            <div class="ex">
+                <h1 style="text-shadow: 4px 4px 10px #f00, -4px -4px 10px #0f0;">
+                    Shadow heading
+                </h1>
+            </div>
+        </section>
+
+        <section>
+            <h1 class="fragment"
+                style="text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de;">
+                Shadow heading
+            </h1>
+            <pre class="fragment"><code class="css">
+    h1 {
+        text-shadow: 0 0 10px  #fff,
+                     0 0 20px  #fff,
+                     0 0 30px  #fff,
+                     0 0 40px  #ff00de,
+                     0 0 70px  #ff00de,
+                     0 0 80px  #ff00de,
+                     0 0 100px #ff00de,
+                     0 0 150px #ff00de;
+    }
+                    </code></pre>
+        </section>
+
+        <section>
+            <h1 style=" background: #aaf; text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);">
+                Shadow heading
+            </h1>
+            <pre class="fragment"><code class="css">
+    h1 {
+        background: #aaf;
+        text-shadow: 0 1px  0    #ccc,
+                     0 2px  0    #c9c9c9,
+                     0 3px  0    #bbb,
+                     0 4px  0    #b9b9b9,
+                     0 5px  0    #aaa,
+                     0 6px  1px  rgba(0,0,0, .1),
+                     0 0    5px  rgba(0,0,0, .1),
+                     0 1px  3px  rgba(0,0,0, .3),
+                     0 3px  5px  rgba(0,0,0, .2),
+                     0 5px  10px rgba(0,0,0,.25),
+                     0 10px 10px rgba(0,0,0, .2),
+                     0 20px 20px rgba(0,0,0,.15);
+    }
+                    </code></pre>
+        </section>
+
+        <section>
+            <h2>Многоколоночность</h2>
+            <img src="images/columns.jpg">
+        </section>
+
+        <section>
+            Предположим, у нас есть текст:
+
+            <pre class="fragment"><code class="html">
+    <div>
+        В европейских языках чтение текста происходит слева направо,
+        в то время как есть языки, где текст читается справа
+        налево. При смешении в одном документе разных
+        по написанию символов в системе юникод,
+        их направление определяется браузером из характеристик
+        и содержимого текста.
+    </div>
+                    </code></pre>
+
+            <div class="ex fragment">
+                <div>
+                    В европейских языках чтение текста происходит слева направо,
+                    в то время как есть языки, где текст читается справа
+                    налево. При смешении в одном документе разных
+                    по написанию символов в системе юникод,
+                    их направление определяется браузером из характеристик
+                    и содержимого текста.
+                </div>
+            </div>
+        </section>
+
+        <section>
+            Указываем нужное количество
+            колонок с помощью <var>column-count</var>:
+
+            <pre class="fragment"><code class="css">
+    div {
+        column-count: 2;
+    }
+                    </code></pre>
+
+            <div class="ex fragment">
+                <div style="-webkit-column-count: 2">
+                    В европейских языках чтение текста происходит слева направо,
+                    в то время как есть языки, где текст читается справа
+                    налево. При смешении в одном документе разных
+                    по написанию символов в системе юникод,
+                    их направление определяется браузером из характеристик
+                    и содержимого текста.
+                </div>
+            </div>
+        </section>
+
+        <section>
+            Меняем расстояние между колонками, используя <var>column-gap</var>:
+
+            <pre class="fragment"><code class="css">
+    div {
+        column-count: 2;
+        column-gap: 300px;
+    }
+                    </code></pre>
+
+            <div class="ex fragment">
+                <div style="-webkit-column-count: 2; -webkit-column-gap: 300px">
+                    В европейских языках чтение текста происходит слева направо,
+                    в то время как есть языки, где текст читается справа
+                    налево. При смешении в одном документе разных
+                    по написанию символов в системе юникод,
+                    их направление определяется браузером из характеристик
+                    и содержимого текста.
+                </div>
+            </div>
+        </section>
+
+        <section>
+            С помощью <var>column-rule</var> можно добавить разделитель между колонками,
+            задав ширину, тип и размер:
+
+            <pre class="fragment"><code class="css">
+    div {
+        column-count: 2;
+        column-rule: 2px solid #0f0;
+    }
+                    </code></pre>
+
+            <div class="ex fragment">
+                <div style="-webkit-column-count: 2; -webkit-column-rule: 2px solid #0f0">
+                    В европейских языках чтение текста происходит слева направо,
+                    в то время как есть языки, где текст читается справа
+                    налево. При смешении в одном документе разных
+                    по написанию символов в системе юникод,
+                    их направление определяется браузером из характеристик
+                    и содержимого текста.
+                </div>
+            </div>
+        </section>
+
+        <section>
+            С помощью <var>column-width</var> можно указать ширину колонок:
+
+            <pre class="fragment"><code class="css">
+    div {
+        column-width: 200px;
+        column-rule: 2px solid #fff;
+    }
+                    </code></pre>
+
+            <div class="ex fragment">
+                <div style="-webkit-column-width: 200px; -webkit-column-rule: 2px solid #fff">
+                    В европейских языках чтение текста происходит слева направо,
+                    в то время как есть языки, где текст читается справа
+                    налево. При смешении в одном документе разных
+                    по написанию символов в системе юникод,
+                    их направление определяется браузером из характеристик
+                    и содержимого текста.
+                </div>
+            </div>
+        </section>
+
+        <section>
+            Добавить текст на всю ширину колонок можно с помощью <var>column-span</var> со
+            значением <var>all</var>:
+
+            <pre class="fragment"><code class="html">
+    <div>
+        В европейских языках чтение текста происходит слева направо,
+        в то время как есть языки, где текст читается справа
+        <h3>И ТУТ В ТЕКСТ ВРЫВАЕТСЯ ЗАГОЛОВОК</h3>
+        налево. При смешении в одном документе разных
+        по написанию символов в системе юникод,
+        их направление определяется браузером из характеристик
+        и содержимого текста.
+    </div>
+                    </code></pre>
+            <pre class="fragment"><code class="css">
+    div {
+        column-count: 2;
+        column-rule: 2px solid #fff;
+    }
+
+    h3 {
+        column-span: all;
+        font-style: italic;
+        margin: 10px;
+    }
+                    </code></pre>
+        </section>
+
+        <section>
+            <div class="ex">
+                <div style="-webkit-column-count: 2; -webkit-column-rule: 2px solid #fff">
+                    В европейских языках чтение текста происходит слева направо,
+                    в то время как есть языки, где текст читается справа
+                    <h3 style="margin: 10px; -webkit-column-span: all; font-style: italic;">И ТУТ В ТЕКСТ ВРЫВАЕТСЯ ЗАГОЛОВОК</h3>
+                    налево. При смешении в одном документе разных
+                    по написанию символов в системе юникод,
+                    их направление определяется браузером из характеристик
+                    и содержимого текста.
+                </div>
+            </div>
+            <p class="fragment">
+                Чуть более подробно о колонках можно почитать
+                <a href="http://habrahabr.ru/company/microsoft/blog/143158/" target="_blank">здесь</a>.
+            </p>
+        </section>
+
+        <section class="elips">
+            <h2>Переполнение текста</h2>
+
+            <table class="fragment">
+                <tr>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Points</th>
+                </tr>
+                <tr>
+                    <td>Cloud</td>
+                    <td>Strife</td>
+                    <td>13</td>
+                </tr>
+                <tr>
+                    <td>John</td>
+                    <td>Cena</td>
+                    <td>37</td>
+                </tr>
+                <tr class="fragment">
+                    <td>Akakiy</td>
+                    <td>Stanislavovskiy</td>
+                    <td>666</td>
+                </tr>
+                <tr class="fragment">
+                    <td>Konstantinopolskiy</td>
+                    <td>Ruslan</td>
+                    <td>2</td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="elips">
+            <p>
+                Переполнение контента следует скрыть<br> c помощью
+                <var>overflow: hidden</var>:
+            </p>
+
+            <table class="fragment">
+                <tr>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Points</th>
+                </tr>
+                <tr>
+                    <td>Cloud</td>
+                    <td>Strife</td>
+                    <td>13</td>
+                </tr>
+                <tr>
+                    <td>John</td>
+                    <td>Cena</td>
+                    <td>37</td>
+                </tr>
+                <tr>
+                    <td>Akakiy</td>
+                    <td class="overflow">Stanislavovskiy</td>
+                    <td>666</td>
+                </tr>
+                <tr>
+                    <td class="overflow">Konstantinopolskiy</td>
+                    <td>Ruslan</td>
+                    <td>2</td>
+                </tr>
+            </table>
+            <p class="fragment">
+                Как видно, буквы обрезались посередине.
+            </p>
+        </section>
+
+        <section class="elips">
+            <p>
+                Для этого предусмотрено свойство переполнения текста
+                <var>text-overflow</var>, имеющее два значения:
+                <var>clip</var> и <var>ellipsis</var>.
+            </p>
+
+            <p class="fragment">Нам нужно значение <var>ellipsis</var>:</p>
+
+            <table class="fragment">
+                <tr>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Points</th>
+                </tr>
+                <tr>
+                    <td>Cloud</td>
+                    <td>Strife</td>
+                    <td>77</td>
+                </tr>
+                <tr>
+                    <td>Vladimir</td>
+                    <td>Putin</td>
+                    <td>146</td>
+                </tr>
+                <tr>
+                    <td>Akakiy</td>
+                    <td title="Stanislavovskiy" class="overflow t-overflow">Stanislavovskiy</td>
+                    <td>666</td>
+                </tr>
+                <tr>
+                    <td title="Konstantinopolskiy" class="overflow t-overflow">Konstantinopolskiy</td>
+                    <td>Ruslan</td>
+                    <td>2</td>
+                </tr>
+            </table>
+
+            <a href="https://css-tricks.com/snippets/css/truncate-string-with-ellipsis/" target="_blank" class="fragment">
+                <br/>
+                Сниппет использования ellipsis
+            </a>
+        </section>
+
+        <section>
+            <h2>Перенос текста</h2>
+            <p class="fragment">
+                Осуществляется с помощью <var>&lt;br&gt;</var>:
+            </p>
+
+            <pre><code class="html fragment">
+    <p>
+        Далеко-далеко за<br>словесными горами в
+        стране гласных<br> и согласных живут рыбные тексты.
+    </p>
+                    </code></pre>
+
+            <div class="ex fragment">
+                <p>
+                    Далеко-далеко за<br>словесными горами в стране гласных<br> и согласных живут рыбные тексты.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Переносы внутри слов</h2>
+
+            <p class="fragment">
+                Избавляют от «лесенок» при выравнивании по левому краю:
+            </p>
+            <div class="ex fragment">
+                <p>
+                    Далеко-далеко за словесными горами в стране гласных и согласных букв живут рыбные тексты.
+                    Вдали от всех живут они в буквенных домах на берегу Семантика большого языкового океана.
+                </p>
+            </div>
+            <p class="fragment">
+                Сводят к минимуму разброс ширины пробелов:
+            </p>
+            <div class="ex fragment" style="text-align: justify">
+                <p>
+                    Далеко-далеко за словесными горами в стране гласных и согласных букв живут рыбные тексты.
+                    Вдали от всех живут они в буквенных домах на берегу Семантика большого языкового океана.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <p>
+                Вот так выглядит текст с автопереносами:
+            </p>
+            <div class="ex fragment">
+                <p lang="ru">
+                    Да&shy;ле&shy;ко-да&shy;ле&shy;ко за сло&shy;вес&shy;ны&shy;ми го&shy;ра&shy;ми
+                    в стра&shy;не глас&shy;ных и со&shy;глас&shy;ных букв жи&shy;вут рыб&shy;ные тексты.
+                    Вда&shy;ли от всех жи&shy;вут они в бук&shy;вен&shy;ных до&shy;мах на бе&shy;ре&shy;гу
+                    Се&shy;ман&shy;ти&shy;ка боль&shy;шо&shy;го язы&shy;ко&shy;во&shy;го оке&shy;ана.
+                </p>
+            </div>
+            <p class="fragment">
+                Как этого добиться?
+            </p>
+        </section>
+
+        <section>
+            <p class="fragment">
+                1. Указываем <var>lang</var> для параграфа
+            </p>
+            <p class="fragment">
+                2. Устанавливаем автопереносы с помощью свойства <var>hyphens</var>
+            </p>
+            <pre class="fragment"><code>
+    <p lang="ru">
+        Далеко-далеко за словесными горами в стране
+        гласных и согласных букв живут рыбные тексты.
+        Вдали от всех живут они в буквенных домах на берегу
+        Семантика большого языкового океана.
+    </p>
+                    </code></pre>
+
+            <pre class="fragment"><code>
+    p {
+        hyphens: auto;
+    }
+                    </code></pre>
+        </section>
+
+        <section>
+            <h1>Ура, товарищи!</h1>
+            <h2>И это всё, что нужно сделать</h2>
+        </section>
+
+        <section>
+            <h2>На самом деле, почти</h2>
+            <img class="fragment" src="images/hyphens.png">
+        </section>
+
+        <section>
+            <h2>Мягкие переносы</h2>
+            <span class="fragment" style="line-height: 1.5">
+                Указываются с помощью <var>&#x26;shy;</var> и работают при <var>hyphens: manual</var>.<br/>
+                <span class="oops fragment">это значение по умолчанию, so who cares?</span>
+            </span>
+
+            <img class="fragment" src="images/shy.png">
+
+            <p class="fragment">
+                Пример <a href="http://quittance.ru/hyphenator.php" target="_blank">сервиса</a>,
+                расставляющего переносы.
+            </p>
+        </section>
+
+        <section>
+            <h2>Переносы без дефиса</h2>
+            <p class="fragment">
+                Устанавливаются c помощью <var>&lt;wbr&gt;</var>:
+            </p>
+
+            <pre class="fragment"><code>
+    <p>
+        Да<wbr>ле<wbr>ко-да<wbr>ле<wbr>ко за сло<wbr>вес<wbr>ны<wbr>ми
+        го<wbr>ра<wbr>ми в стра<wbr>не глас<wbr>ных и со<wbr> глас<wbr>ных букв
+        жи<wbr>вут рыб<wbr>ные тексты. Вда<wbr>ли от всех жи<wbr>вут они в
+        бук<wbr> вен<wbr>ных до<wbr>мах на бе<wbr>ре<wbr>гу Се<wbr>ман<wbr>ти<wbr>ка
+        боль<wbr>шо<wbr>го язы<wbr>ко<wbr>во<wbr>го оке<wbr>ана.
+    </p>
+                    </code></pre>
+
+            <div class="ex fragment">
+                <p>
+                    Да<wbr>ле<wbr>ко-да<wbr>ле<wbr>ко за сло<wbr>вес<wbr>ны<wbr>ми го<wbr>ра<wbr>ми
+                    в стра<wbr>не глас<wbr>ных и со<wbr>глас<wbr>ных букв жи<wbr>вут рыб<wbr>ные тексты.
+                    Вда<wbr>ли от всех жи<wbr>вут они в бук<wbr>вен<wbr>ных до<wbr>мах на бе<wbr>ре<wbr>гу
+                    Се<wbr>ман<wbr>ти<wbr>ка боль<wbr>шо<wbr>го язы<wbr>ко<wbr>во<wbr>го оке<wbr>ана.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Разрыв слов</h2>
+            <p>
+                Мы можем заставить текст всегда «разрываться» в любом месте. Для этого используется свойство
+                <var>word-break</var> со значением <var>break-all</var>.
+                <span class="oops">
+                            есть еще значение <var>keep-all</var>, но работает оно только для китайского,
+                            корейского и японского языков, so who cares again?
+                        </span>
+            </p>
+
+            <pre class="fragment"><code>
+    零 {
+        word-break: normal;
+    }
+
+    一 {
+        word-break: break-all;
+    }
+                    </code></pre>
+        </section>
+
+        <section>
+            <div class="fragment shrink" data-fragment-index="1"></div>
+
+            <p class="w50">
+                Этот текст будет переноситься по словам, чисто, чинно, благородно.
+                Всё в столбец, как этот чертяка так делает?
+            </p><p class="fragment w50" data-fragment-index="0" style="word-break: break-all;">
+            Этому тексту плевать вообще, он такой теряет буквы, ничего толком не прочесть, беда совсем,
+            еще дергается как монстры из silent hill
+        </p>
+        </section>
+
+        <section>
+            <h2>Запрет переноса</h2>
+            <p>
+                Существуют ситуации, когда слово или словосочетание
+                не нужно разрывать ни при каких обстоятельствах.
+                Простейший пример:
+            </p>
+
+            <pre class="fragment"><code class="html">
+    Тут нужно что-то написать, чтобы текст сдвинул `mark` в неудобное положение.
+    Правило <mark>hyphens: auto;</mark> использует примерно никто,
+    ибо пока оно не работает нормально
+                    </code></pre>
+
+            <div class="ex fragment" style="width: 450px; margin: 0 auto;">
+                Тут нужно что-то написать, чтобы текст сдвинул `mark` в неудобное положение.
+                Правило <mark>hyphens: auto;</mark> использует примерно никто,
+                ибо пока оно не работает нормально
+            </div>
+            <p class="fragment">
+                Некрасиво.
+            </p>
+        </section>
+
+        <section>
+            <p>Перенос нужно запретить:</p>
+            <pre class="fragment"><code class="css">
+    mark {
+        white-space: nowrap;
+    }
+                    </code></pre>
+
+            <div class="ex fragment" style="width: 450px; margin: 0 auto;">
+                Тут нужно что-то написать, чтобы текст сдвинул `mark` в неудобное положение.
+                Правило <mark style="white-space: nowrap;">hyphens: auto;</mark> использует примерно никто,
+                ибо пока оно не работает нормально
+            </div>
+
+            <p class="fragment">
+                Красиво.
+            </p>
+
+            <p class="fragment">
+                И <var>white-space</var> умеет еще много чего.
+            </p>
+        </section>
+
+        <section>
+                    <pre><code class="html">
+    <div>
+        We ache to be transparent
+            We run from the "open" arms;
+                The facade of something greater than ourselves <span>(здесь просто дополнительный текст, чтобы не помещался в строку)</span>
+                    And we're left to coexist with infestation
+
+        Our history is cursed
+
+                    Through the past, present, and future
+                If they're created in his image
+            Then his image is disgusting...
+        And even he can't wipe you clean
+    </div>
+                    </code></pre>
+
+            <div class="ex fragment">
+                <div>
+                    We ache to be transparent
+                        We run from the "open" arms;
+                            The facade of something greater than ourselves <span>(здесь просто дополнительный текст, чтобы не помещался в строку)</span>
+                                And we're left to coexist with infestation
+
+                    Our history is cursed
+
+                                Through the past, present, and future
+                            If they're created in his image
+                        Then his image is disgusting...
+                    And even he can't wipe you clean
+                </div>
+            </div>
+        </section>
+
+        <section>
+                    <pre><code class="css">
+    p {
+        white-space: pre;
+    }
+                    </code></pre>
+            <div class="ex fragment">
+                <div style="white-space: pre">
+                    We ache to be transparent
+                        We run from the "open" arms;
+                            The facade of something greater than ourselves <span class="oops">(здесь просто дополнительный текст, чтобы не помещался в строку)</span>
+                                And we're left to coexist with infestation
+
+                    Our history is cursed
+
+                                Through the past, present, and future
+                            If they're created in his image
+                        Then his image is disgusting...
+                    And even he can't wipe you clean
+                </div>
+            </div>
+        </section>
+
+        <section>
+                    <pre><code class="css">
+    p {
+        white-space: pre-line;
+    }
+                    </code></pre>
+            <div class="ex fragment">
+                <div style="white-space: pre-line">
+                    We ache to be transparent
+                        We run from the "open" arms;
+                            The facade of something greater than ourselves <span class="oops">(здесь просто дополнительный текст, чтобы не помещался в строку)</span>
+                                And we're left to coexist with infestation
+
+                    Our history is cursed
+
+                                Through the past, present, and future
+                            If they're created in his image
+                        Then his image is disgusting...
+                    And even he can't wipe you clean
+                </div>
+            </div>
+        </section>
+
+        <section>
+                    <pre><code class="css">
+    p {
+        white-space: pre-wrap;
+    }
+                    </code></pre>
+            <div class="ex fragment">
+                <div style="white-space: pre-wrap">
+                    We ache to be transparent
+                        We run from the "open" arms;
+                            The facade of something greater than ourselves <span class="oops">(здесь просто дополнительный текст, чтобы не помещался в строку)</span>
+                                And we're left to coexist with infestation
+
+                    Our history is cursed
+
+                                Through the past, present, and future
+                            If they're created in his image
+                        Then his image is disgusting...
+                    And even he can't wipe you clean
+                </div>
+            </div>
+        </section>
+
+        <section>
+                    <pre><code class="css">
+    p {
+        white-space: nowrap;
+    }
+                    </code></pre>
+            <div class="ex fragment">
+                <div style="white-space: nowrap">
+                    We ache to be transparent
+                        We run from the "open" arms;
+                            The facade of something greater than ourselves <span class="oops">(здесь просто дополнительный текст, чтобы не помещался в строку)</span>
+                                And we're left to coexist with infestation
+
+                        Our history is cursed
+
+                                Through the past, present, and future
+                            If they're created in his image
+                        Then his image is disgusting...
+                    And even he can't wipe you clean
+                </div>
+            </div>
+        </section>
+
+        <section>
+            Буквица
+            <img src="images/initial_cap.jpg" height="600">
+        </section>
+
+        <section>
+            <h2>Псевдоэлемент первой строки</h2>
+            Оформить первую строку можно с помощью <var>::first-line</var>.
+            <br>
+
+            <p class="fragment">Примерный список того, что можно сделать:</p>
+
+            <div class="lists">
+                <ul class="fragment">
+                    <li>font</li>
+                    <li>word/letter-spacing</li>
+                    <li>text</li>
+                </ul>
+                <ul class="fragment">
+                    <li>color</li>
+                    <li>background</li>
+                    <li>vertical-align</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+                    <pre><code class="css">
+    p::first-line {
+        font: 25px Courier New;
+        letter-spacing: 6px;
+    }
+                    </code></pre>
+
+            <pre class="fragment"><code class="html">
+    <p>
+        Текст в первой строке будет выглядеть как китайско-русская инструкция
+        купленного на таганчике барахла. И не спрашивайте откуда
+        я это знаю и почему вообще показываю как этот шрифт имитировать.
+    </p>
+                    </code></pre>
+
+            <div class="ex fragment">
+                <p class="f-line">
+                    Текст в первой строке будет выглядеть как китайско-русская инструкция
+                    купленного на таганчике барахла. И не спрашивайте откуда я это знаю
+                    и почему вообще показываю, как этот шрифт имитировать.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Псевдоэлемент первой буквы</h2>
+            Оформить первую букву можно с помощью <var>::first-letter</var>.
+
+            <p class="fragment">Cписок пополнился:</p>
+
+            <div class="lists">
+                <ul class="fragment">
+                    <li>margin</li>
+                    <li>padding</li>
+                    <li>border</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+                    <pre><code class="css">
+    p::first-letter {
+        font: italic 50px Times New Roman;
+        margin: 15px;
+        padding: 10px;
+        color: #f00;
+        background: #0ff;
+        border: 2px dashed #0f0;
+    }
+                    </code></pre>
+
+            <pre class="fragment"><code class="html">
+    <p>
+        Хочется сделать наиболее вырвыглазный вариант, отвратный прям максимально и бесповоротно
+    </p>
+    <p>
+        А еще лучше — в два параграфа, чтобы вдвойне вырвиглазнее
+    </p>
+                    </code></pre>
+
+            <div class="ex fragment">
+                <p class="f-letter">
+                    Хочется сделать наиболее вырвыглазный вариант, отвратный прям максимально и бесповоротно
+                </p>
+
+                <p class="f-letter">
+                    А еще лучше — в два параграфа, чтоб вдвойне вырвиглазнее
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>
+                Секретики <span class="ya-letter">Яндекса</span>
+            </h2>
+            <pre class="fragment"><code class="css">
+    .ya-ya::first-letter {
+        color: #f00;
+    }
+                    </code></pre>
+
+            <div class="ex fragment">
+                <h2>
+                    <span class="ya-letter">Хочется</span>
+                    <span class="ya-letter">просто</span>
+                    <span class="ya-letter">взять</span>
+                    <span class="ya-letter">и</span>
+                    <span class="ya-letter">бесконечно</span>
+                    <span class="ya-letter">использовать</span>
+                    <span class="ya-letter">эту</span>
+                    <span class="ya-letter">фичу</span>
+                    <span class="ya-letter">ммммммм</span>
+                </h2>
+            </div>
+        </section>
+
+        <section>
+            <h2>Рекомендованные ссылки</h2>
+            <br/>
+
+            <a href="http://www.compuart.ru/article.aspx?id=23461&iid=1079" target="_blank">Старая, но познавательная
+                статья о шрифтах</a><br><br>
+            <a href="https://habrahabr.ru/company/pt/blog/337450/" target="_blank">Исчерпывающая статья о нюансах
+                шрифтов</a><br><br>
+            <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/webfont-optimization"
+               target="_blank">Must-Read статья о шрифтах от Google</a><br><br>
+            <a href="https://www.youtube.com/watch?v=MTQ9FpT3ayc" target="_blank">Вадим Макеев о загрузке сторонних
+                шрифтов</a><br><br>
+            <a href="http://habrahabr.ru/company/microsoft/blog/143158/" target="_blank">Статья о
+                многоколоночности</a><br><br>
+            <a href="https://css-tricks.com/nerds-guide-color-web/" target="_blank">Исчерпывающая статья о цветах в
+                вебе</a><br><br>
+        </section>
+    </section>
+</div>
+
+<script src="js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: false,
+        slideNumber: true,
+        history: true,
+
+        transition: 'fade', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+            {
+                src: 'js/classList.js', condition: function () {
+                    return !document.body.classList;
+                }
+            },
+            {
+                src: 'plugin/markdown/marked.js', condition: function () {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            },
+            {
+                src: 'plugin/markdown/markdown.js', condition: function () {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            },
+            {
+                src: 'plugin/highlight/highlight.js', async: true, condition: function () {
+                    return !!document.querySelector('pre code');
+                }, callback: function () {
+                    hljs.initHighlightingOnLoad();
+                }
+            },
+            {src: 'plugin/zoom-js/zoom.js', async: true},
+            {src: 'plugin/notes/notes.js', async: true}
+        ]
+    });
+</script>
+</body>
+</html>
