@@ -1,0 +1,74 @@
+.code-two-columns
+{
+    display: flex;
+}
+
+.code-two-columns pre,
+.code-two-columns div
+{
+    flex: 1 1 auto;
+}
+
+.reveal h2,
+.reveal ul li,
+{
+    font-size: 0.9em;
+}
+
+.reveal h3
+{
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.reveal h4
+{
+    font-size: 0.7em;
+    text-align: center;
+}
+
+.reveal .left
+{
+    text-align: left;
+}
+
+.reveal .right
+{
+    text-align: right;
+}
+
+.reveal pre.size-S code {
+    font-size: 22px;
+    line-height: 28px;
+
+    padding: 0 13px;
+}
+
+.reveal pre.size-XS code {
+    font-size: 20px;
+    line-height: 26px;
+
+    padding: 0 13px;
+}
+
+.reveal pre.size-XXS code {
+    font-size: 18px;
+    line-height: 24px;
+
+    padding: 0 13px;
+}
+
+.reveal p.size-S {
+    font-size: 26px;
+    line-height: 32px;
+}
+
+.reveal p.size-XS {
+    font-size: 24px;
+    line-height: 30px;
+}
+
+.reveal p.size-XXS {
+    font-size: 22px;
+    line-height: 28px;
+}
