@@ -8,7 +8,7 @@
 
 1. [HTML](https://urfu-2018.github.io/slides/markup/01-html/) ([pdf](https://urfu-2018.github.io/slides/markup/01-html/index.pdf))
 1. [CSS](https://urfu-2018.github.io/slides/markup/02-css/) ([pdf](https://urfu-2018.github.io/slides/markup/02-css/index.pdf))
-1. Шрифты и текст
+1. [Шрифты и текст](https://urfu-2018.github.io/slides/markup/03-fonts-and-text/) ([pdf](https://urfu-2018.github.io/slides/markup/03-fonts-and-text/index.pdf))
 1. Модель отображения I
 1. Модель отображения II
 1. Браузер

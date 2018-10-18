@@ -1,29 +1,16 @@
 <!doctype html>
 <html lang="ru">
-
 <head>
     <meta charset="utf-8">
-
-    <title>Шрифты и текст</title>
-
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-
-    <link rel="stylesheet" href="css/reveal.css">
-
-    <link rel="stylesheet" href="css/night-2.css" id="theme">
-    <link rel="stylesheet" href="css/yandex.css">
-    <link rel="stylesheet" href="css/j7.css">
-    <link rel="stylesheet" href="css/solarized-dark.css">
+    <title>03-fonts-and-text</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="index.css">
 </head>
-
-<body>
-
+<body class="white">
 <div class="reveal yandex">
     <!-- Any section element inside of this container is displayed as a slide -->
-    <section class="slides">
+    <div class="slides">
         <section>
             <h1>Шрифты и текст</h1>
             <h3>&nbsp;</h3>
@@ -2368,50 +2355,9 @@
             <a href="https://css-tricks.com/nerds-guide-color-web/" target="_blank">Исчерпывающая статья о цветах в
                 вебе</a><br><br>
         </section>
-    </section>
+    </div>
 </div>
 
-<script src="js/head.min.js"></script>
-<script src="js/reveal.js"></script>
-
-<script>
-    // Full list of configuration options available at:
-    // https://github.com/hakimel/reveal.js#configuration
-    Reveal.initialize({
-        controls: false,
-        slideNumber: true,
-        history: true,
-
-        transition: 'fade', // none/fade/slide/convex/concave/zoom
-
-        // Optional reveal.js plugins
-        dependencies: [
-            {
-                src: 'js/classList.js', condition: function () {
-                    return !document.body.classList;
-                }
-            },
-            {
-                src: 'plugin/markdown/marked.js', condition: function () {
-                    return !!document.querySelector('[data-markdown]');
-                }
-            },
-            {
-                src: 'plugin/markdown/markdown.js', condition: function () {
-                    return !!document.querySelector('[data-markdown]');
-                }
-            },
-            {
-                src: 'plugin/highlight/highlight.js', async: true, condition: function () {
-                    return !!document.querySelector('pre code');
-                }, callback: function () {
-                    hljs.initHighlightingOnLoad();
-                }
-            },
-            {src: 'plugin/zoom-js/zoom.js', async: true},
-            {src: 'plugin/notes/notes.js', async: true}
-        ]
-    });
-</script>
+<script src="../../@lib/core.js"></script>
 </body>
 </html>
