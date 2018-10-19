@@ -1,0 +1,1167 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Типы данных</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="white"><div class="reveal"><div class="slides">
+
+<section class="center">
+    <h1>Типы данных</h1>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h3 class="right"><span class="red">В</span>укмирович Александр</h3>
+</section>
+
+<section>
+    <h2>Содержание</h2>
+    <ul>
+        <li>Логический (Boolean)</li>
+        <li>Числа (Numbers)</li>
+        <li>Строки (Strings)</li>
+        <li>Массивы (Arrays)</li>
+        <li>Объекты (Objects)</li>
+        <li>Функции (Functions)</li>
+    </ul>
+</section>
+
+    <section>
+        <h2>Примитивы</h2>
+        <ul>
+            <li>Логический (Boolean)</li>
+            <li>Числа (Numbers)</li>
+            <li>Строки (Strings)</li>
+            <li>undefined и null</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Объекты (в широком смысле)</h2>
+        <ul>
+            <li>Массивы (Arrays)</li>
+            <li>Функции (Functions)</li>
+            <li>Объекты (Objects)</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Логический (Boolean)</h2>
+
+        <pre class="js"><code>
+// Логическое "Да"
+const trueVar = true;
+
+// Логическое "Нет"
+const falseVar = false;
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Логический (Boolean)</h2>
+
+        <pre class="js"><code>
+// Неявное сравнение
+'1' == 1; // true
+
+// Явное сравнение
+1 === 1; // true
+'1' !== 1; // true
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Логические операции</h2>
+
+        <pre class="js"><code>
+// Логическое И
+true && false;   // false
+
+// Логическое ИЛИ
+true || false;   // true
+
+// Логическое НЕ (отрицание)
+!false;          // true
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Числа (Numbers)</h2>
+        <pre class="js"><code>
+const intPositive = 1;
+const intNegative = -1;
+const floatPositive = 45.354435;
+const negativePositive = -0.374599;
+const exp = 5e2;
+const hex = 0xFF; // 255
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Базовая математика</h2>
+        <pre class="js"><code>
+5 + 2 = 7;   // сложение
+5 - 2 = 3;   // вычитание
+5 * 2 = 10;  // умножение
+5 / 2 = 2.5; // деление
+5 % 2 = 1;   // остаток от целочисленного деления
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Математические функции (Math)</h2>
+        <pre class="js"><code data-noescape>
+Math.abc(-5); // 5 (абсолютное значени)
+            <span class='fragment'>
+Math.floor(7.43); // 7 (округление к младшему)
+Math.ceil(7.43);  // 8 (округление к старшему)
+Math.round(7.43); // 7 (округление к ближайшему)
+            </span><span class='fragment'>
+Math.floor(7.53); // 7 (округление к младшему)
+Math.ceil(7.53);  // 8 (округление к старшему)
+Math.round(7.53); // 8 (округление к ближайшему)
+            </span></span><span class='fragment'>
+Math.sqrt(16);   // 4 (извлечение квадратного корня)
+Math.pow(2, 8);  // 256 (возведение в степень), или 2**8
+            </span>
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Бесконечность (Infinity)</h2>
+        <pre class="js"><code data-noescape>
+            <span class='fragment'>
+1 / 0 === Infinity; // true
+            </span><span class='fragment'>
+1 / Infinity === 0; // true
+            </span>
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Not a Number (NaN)</h2>
+        <pre class="js"><code data-noescape>
+            <span class='fragment'>
+Math.sqrt(-1);         // NaN
+            </span><span class='fragment'>
+NaN !== NaN;           // true
+            </span><span class='fragment'>
+isNaN(Math.sqrt(-1));  // true
+
+Number.isNaN(Math.sqrt(-1)); // true, не поддерживается в IE
+            </span>
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Стандарт чисел</h2>
+        <p class="size-S">64-bit двойной точности</p>
+        <p class="size-S">Соответствуют стандарту IEEE 754 (IEEE Standard for Floating-Point Arithmetic)</p>
+        <pre class="js"><code data-noescape>
+Number.MAX_VALUE; // 1.79e+308
+Number.MIN_VALUE; // 5e-324, самое близкое к нулю
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Стандарт чисел</h2>
+        <pre class="size-S js"><code data-noescape>
+            <span class='fragment'>
+Number.MAX_SAFE_INTEGER;  // 2^53 - 1 или 9007199254740991
+Number.MAX_SAFE_INTEGER + 1 === Number.MAX_SAFE_INTEGER + 2; // true
+            </span><span class='fragment'>
+Number.MIN_SAFE_INTEGER;  // -(2^53 - 1) или -9007199254740991
+Number.MIN_SAFE_INTEGER - 1 === Number.MIN_SAFE_INTEGER - 2; // true
+            </span><span class='fragment'>
+Number.isSafeInteger(Math.pow(2, 54)); // false
+Number.isSafeInteger(-Math.pow(2, 54)); // false
+// все это не поддерживается в IE и Safari
+            </span>
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Особенности вычислений</h2>
+        <pre class="js"><code data-noescape>
+0.1 + 0.2 = <span class='fragment'>0.30000000000000004;</span>
+
+<span class='fragment'>0.1 + 0.2 !== 0.3; // true</span>
+
+<span class='fragment'>Number.EPSILON; // 2^-52, не поддерживается в IE</span>
+
+<span class='fragment'>Math.abs((0.1 + 0.2) - 0.3) < Number.EPSILON; // true</span>
+        </code></pre>
+
+        <p class="fragment left size-S">
+            <a href="https://medium.com/dailyjs/javascripts-number-type-8d59199db1b6">Here is what you need to know about JavaScript’s Number type</a>
+        </p>
+    </section>
+
+    <section>
+        <h2>Строки (Strings)</h2>
+        <p class="grey left">
+            Строки полезны для хранения данных, которые можно представить в текстовой форме.
+        </p>
+        <p class="grey right"><small>Mozilla Developer Network</small></p>
+    </section>
+
+    <section>
+        <h2>Создание строки</h2>
+
+        <pre class="js"><code data-noescape>
+// Пустая строка
+const emptyString = '';
+            <span class="fragment">
+// Длина строки
+emptyString.length; // 0
+            </span>
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Создание строки</h2>
+
+        <pre class="js"><code data-noescape>
+// Можно использовать одинарные кавычки
+const russianString = 'строка текста';
+
+russianString.length; // 13
+            <span class="fragment">
+// Можно использовать двойные кавычки
+const russianString = "строка текста";
+
+russianString.length; // 13
+            </span>
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Создание строки</h2>
+
+        <pre class="js"><code data-noescape>
+const escapeCodesString = 'a\'b'; // a'b
+
+escapeCodesString.length; // 3
+            <span class="fragment">
+const escapeCodesString = "a\"b"; // a"b
+
+escapeCodesString.length; // 3
+            </span>
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Создание строки</h2>
+
+        <pre class="js"><code data-noescape>
+const escapeCodesString = 'a\\b'; // a\b
+
+escapeCodesString.length; // 3
+            <span class="fragment">
+const escapeCodesString = 'a\n\tb'; // a
+                                    //     b
+
+escapeCodesString.length; // 4
+            </span>
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Создание строки</h2>
+
+        <pre class="js"><code>
+// Поддерживаются все символы из Unicode
+const utf8String = '中文 español English বাংলা 日本語 ਪੰਜਾਬੀ';
+
+utf8String.length; // 53
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Создание строки</h2>
+
+        <pre class="js"><code data-noescape>
+// Соединение строк
+const concatString = 'Hello,' + ' World!'; // Hello, World!
+            <span class="fragment">
+const concatString = "Hello," + " World!"; // Hello, World!
+            </span>
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Создание строки</h2>
+
+        <pre class="js"><code data-noescape>
+const world = 'World';
+const concatString = 'Hello, ' + world + '!'; // Hello, World!
+            <span class="fragment">
+const world = 'World';
+const concatString = `Hello, ${world}!`; // Hello, World!
+            </span>
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Строки являются незаписываемыми</h2>
+
+        <pre class="js"><code>
+const russianString = 'кот';
+
+// Возможно обращение к символу по индексу
+russianString[1]; // 'о'
+
+// Редактирование невозможно
+russianString[1] = 'и';
+russianString; // 'кот'
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Срезы из строк</h2>
+
+        <pre class="size-S js"><code>
+// Обрезаем строку до 140 символов под длину твита
+const longString = 'Очевидно проверяется, что математический анализ
+существенно масштабирует интеграл по поверхности, что неудивительно.
+Первая производная, очевидно, позиционирует
+ортогональный определитель.'
+
+const shortString = longString;
+
+if (longString.length > 140) {
+  shortString = longString.slice(0, 139) + '…';
+}
+
+shortString; // 'Очевидно проверяется, что математический анализ
+// существенно масштабирует интеграл по поверхности, что неудивительно.
+// Первая производная, оч…'
+shortString.length; // 140
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Поиск в строке</h2>
+
+        <pre class="size-S js"><code data-noescape="">
+const tweet = 'PWA. Что это такое? Третий доклад на WSD в Питере Сергея
+Густуна #wstdays';
+
+// Находим индекс первого вхождения подстроки в строке
+tweet.indexOf('#wstdays'); // 65
+
+// Искомая подстрока отсутствует
+tweet.indexOf('#fronttalks'); // -1
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Поиск в строке</h2>
+
+        <pre class="size-S js"><code>
+const tweet = 'PWA. Что это такое? Третий доклад на WSD в Питере Сергея
+Густуна #wstdays';
+
+// Искомая подстрока присутствует
+tweet.includes('#wstdays'); // true
+
+// Искомая подстрока отсутствует
+tweet.includes('#fronttalks'); // false
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Сравнение строк</h2>
+
+        <pre class="size js"><code>
+'hi' === 'hi'; // true
+
+'a' < 'b';     // true
+'a' < 'ab';    // true
+'bar' < 'foo'; // true
+
+'1' > '12';    // false
+'2' > '12';    // true
+'12' < '5';    // true
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Сравнение строк</h2>
+
+        <pre class="size js"><code>
+'foo'.localeCompare('bar');         // 1
+'abc'.localeCompare('b');           // -1
+'Привет!'.localeCompare('Привет!'); // 0
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Преобразование строки в число</h2>
+        <div class='code-two-columns'>
+            <pre class="fragment js"><code data-noescape>
+Number('123');     // 123
+Number('12.8');    // 12.8
+Number('12.8  ');  // 12.8
+Number('  12.8');  // 12.8
+Number('   ');     // 0
+Number('');        // 0
+Number('12.8s')    // NaN
+Number('s12.8')    // NaN
+            </code></pre>
+            <pre class="fragment js"><code data-noescape>
+parseFloat('123');     // 123
+parseFloat('12.8');    // 12.8
+parseFloat('12.8  ');  // 12.8
+parseFloat('  12.8');  // 12.8
+parseFloat('   ');     // NaN
+parseFloat('');        // NaN
+parseFloat('12.8s');   // 12.8
+parseFloat('s12.8');   // NaN
+            </code></pre>
+        </div>
+
+    </section>
+
+    <section>
+        <h2>Полезные функции для работы со строками</h2>
+
+        <p class="left size-S">
+            <a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase">toLowerCase</a>
+            — приводим строку к нижнему регистру
+        </p>
+        <p class="left size-S">
+            <a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase">toUpperCase</a>
+            — приводим строку к верхнему регистру
+        </p>
+        <p class="left size-S">
+            <a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/String/Trim">trim</a>
+            — удаляет пробельные символы с обеих сторон
+        </p>
+        <p class="left size-S">
+            <a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith">startsWith</a>
+            — начинается ли строка с подстроки
+        </p>
+        <p class="left size-S">
+            <a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith">endsWith</a>
+            — заканчивается ли строка подстрокой
+        </p>
+        <br>
+        <p class="left size-S">
+            <a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/String">
+                Все функции для работы со строками
+            </a>
+        </p>
+    </section>
+
+    <section class="center">
+        <h2>Перерыв?</h2>
+    </section>
+
+    <section>
+        <h2>Массивы (Arrays)</h2>
+
+        <p class="grey left">
+            Массивы являются спископодобными объектами, чьи прототипы содержат методы для операций обхода и изменения массива.
+        </p>
+        <p class="grey left">
+            Ни размер JavaScript-массива, ни типы его элементов не являются фиксированными.
+        </p>
+        <p class="grey right"><small>Mozilla Developer Network</small></p>
+    </section>
+
+    <section>
+        <h2>Создание массива</h2>
+
+        <pre class="size-S js"><code data-noescape>
+// Пустой массив
+const emptyArray = [];
+
+emptyArray.length; // 0
+            <span class="fragment">
+// Массив чисел
+const arrayOfNumbers = [1, 2, 3, 4];
+
+arrayOfNumbers.length; // 4
+            </span><span class="fragment">
+// Массив строк
+const arrayOfStrings = ['a', 'b', 'c'];
+
+arrayOfStrings.length; // 3
+            </span>
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Добавление в массив</h2>
+
+        <pre class="js"><code>
+const emptyArray = [];
+
+// Добавляем элементы
+emptyArray.push('a');
+emptyArray.push('b');
+emptyArray; // ['a', 'b']
+
+emptyArray.length; // 2
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Удаление из массива</h2>
+
+        <pre class="js"><code>
+const someArray = ['a', 'b'];
+
+// Удаляем последний элемент
+someArray.pop();  // 'b'
+someArray;        // ['a']
+
+someArray.length; // 1
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Объединение массивов</h2>
+
+        <pre class="js"><code>
+const arrayOfNumbers = [1, 2, 3, 4];
+const arrayOfStrings = ['a', 'b', 'c'];
+
+const concatedArray = arrayOfNumbers.concat(arrayOfStrings);
+
+concatedArray;  // [1, 2, 3, 4, 'a', 'b', 'c']
+
+arrayOfNumbers; // [1, 2, 3, 4]
+arrayOfStrings; // ['a', 'b', 'c']
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Итерирование по массиву</h2>
+
+        <pre class="size-XXS js"><code>
+const tweets = [
+    'Я и ИоТ, пятый доклад на WSD в Питере Вадима Макеев #wstdays',
+    'Вёрстка писем. Развенчиваем мифы. Четвёртый доклад на WSD в Питере Артура Коха #wstdays',
+    'PWA. Что это такое? Третий доклад на WSD в Питере Сергея Густуна #wstdays',
+    'Pokémon GO на веб-технологиях, второй доклад на WSD в Питере Егора Коновалова #wstdays',
+    'Ого сколько фронтендеров. #wstdays',
+    '&lt;head&gt; — всему голова, первый доклад на WSD в Питере Романа Ганина #wstdays',
+    'Доброе утро! WSD в Питере начинается через 30 минут: программа, трансляция и хештег #wstdays',
+    'Наглядная таблица доступности возможностей веб-платформы Пола Айриша: Can I use + StatCounter, от CSS до JS',
+    'Node.js, TC-39 и модули, Джеймс Снел о проблемах Node.js с асинхронными модулями ES и вариантах выхода из ситуации',
+    'Всегда используйте &lt;label&gt;, перевод статьи Адама Сильвера в блоге Академии HTML',
+    'JSX: антипаттерн или нет? Заметка Бориса Сердюка на Хабре',
+    'Как прятать инлайновые SVG-иконки от читалок, Роджер Йохансен объясняет, зачем это нужно'
+];
+
+tweets.length; // 12
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Итерирование по массиву</h2>
+
+        <pre class="js"><code>
+const tweets = [...];
+
+for (let i = 0; i < tweets.length; i++) {
+    const tweet = tweets[i];
+
+    // Что-то делаем с конкретным твитом
+}
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Поиск в массиве твитов</h2>
+
+        <pre class="js"><code>
+// Найдем все строки, содержашие хештег #wstdays в массиве
+const tweets = [...];
+
+const result = [];
+
+for (let i = 0; i < tweets.length; i++) {
+  const tweet = tweets[i];
+
+  if (tweet.includes('#wstdays')) {
+    result.push(tweet);
+  }
+}
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Операции с массивом твитов</h2>
+
+        <pre class="js"><code>
+const tweets = [...];
+
+// Постраничная навигация
+const tweetsByPage = tweets.slice(5, 10);
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Операции с массивом твитов</h2>
+
+        <pre class="js"><code data-noescape>
+const tweets = [...];
+
+// Копируем оригинальную ленту в новый массив
+const tweetsWithAdv = tweets.slice();
+            <span class="fragment">
+// Добавим немного рекламы в ленту, изменяя копию
+tweetsWithAdv.splice(4, 0, 'Покупайте наших слонов!');
+tweetsWithAdv.splice(9, 0, 'И натяжные потолки тоже отличные!');
+
+tweets.length;        // 12
+tweetsWithAdv.length; // 14
+            </span>
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Сортировка массива</h2>
+
+        <pre class="js"><code data-noescape>
+const arrayOfNumbers = [4, 1, 1000, 3, -1, 5];
+// сортирует исходный массив
+arrayOfNumbers.sort();
+arrayOfNumbers; // [ -1, 1, 1000, 3, 4, 5 ] (!)
+            <span class="fragment">
+const arrayOfStrings = ['ab', 'a', 'c', '10', '1', '2'];
+arrayOfStrings.sort();
+arrayOfStrings; // [ '1', '10', '2', 'a', 'ab', 'c' ]
+            </span>
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Полезные функции для работы с массивами</h2>
+
+        <p class="left size-S">
+            <a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/shift">
+                shift
+            </a>
+            — выталкивает из массива первый элемент и возвращает его
+        </p>
+        <p class="left size-S">
+            <a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/unshift">
+                unshift
+            </a>
+            — добавляет элемент в начало массива
+        </p>
+        <p class="left size-S">
+            <a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse">
+                reverse
+            </a>
+            — инвертирует порядок элементов в <b>исходном массив</b>
+        </p>
+        <p class="left size-S">
+            <a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/filter">
+                filter
+            </a>
+            — выбирает элементы исходного массива, удовлетворяющие условию, в новый массив
+        </p>
+        <p class="left size-S">
+            <a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/map">
+                map
+            </a>
+            — создает новый массив, содержащий преобразованные элементы исходного массива
+        </p>
+        <p class="left size-S">
+            <a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce">
+                reduce
+            </a>
+            — преобразует исходный массив к одному новому значению
+        </p>
+
+        <br>
+
+        <p class="left size-S">
+            <a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array">
+                Все функции для работы с массивами
+            </a>
+        </p>
+    </section>
+
+    <section>
+        <h2>Объекты (Objects)</h2>
+
+        <p class="grey left">
+            Список, состоящий из пар с именем свойства и связанного с ним значения, которое может быть произвольного типа.
+        </p>
+        <p class="grey right"><small>Mozilla Developer Network</small></p>
+    </section>
+
+    <section>
+        <h2>Создание объекта</h2>
+
+        <pre class="js"><code>
+// Пустой объект
+const emptyObject = {};
+
+// Присвоение значения свойства через точечную нотацию
+emptyObject.propertyName = 'foo'; // { propertyName: 'foo' }
+
+// Получение значения свойства через точечную нотацию
+emptyObject.propertyName; // 'foo'
+
+// Удаление свойства (пользоваться аккуратно)
+delete emptyObject.propertyName; // true
+
+emptyObject; // {}
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Обращение к свойствам объекта</h2>
+
+        <pre class="size-XS js"><code data-noescape>
+// Объект с предопределенным набором свойств
+const tweet = {
+    id: '782188596690350100',
+    text: 'Я и ИоТ, пятый доклад на WSD в Питере Вадима Макеева #wstdays',
+    user: {
+        id: 42081171,
+        name: 'Веб-стандарты',
+        screenName: 'webstandards_ru',
+        followersCount: 6443
+    },
+    hashtags: ['wstdays']
+};
+        <span class="fragment">
+tweet.id; // '782188596690350100'
+tweet.user.screenName; // 'webstandards_ru'
+        </span><span class="fragment">
+// Получение значения свойства через квадратные скобки
+tweet['i' + 'd']; // '782188596690350100'
+        </span></code></pre>
+
+    </section>
+
+    <section>
+        <h2>Итерирование по ключам объекта</h2>
+
+        <pre class="js"><code data-noescape>
+const keys = Object.keys(tweet);
+            <span class="fragment">
+keys; // ['id', 'text', 'user', 'hashtags']
+            </span><span class="fragment">
+for (let i = 0; i < keys.length; i++) {
+  const key = keys[i];
+  const value = tweet[key];
+
+  // Что-то делаем с ключом и со значением
+}
+            </span>
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Проверка наличия свойства у объекта</h2>
+
+        <pre class="js"><code data-noescape>
+tweet.hasOwnProperty('text'); // true
+tweet.hasOwnProperty('nonExistentProperty'); // false
+            <span class="fragment">
+'text' in tweet; // true
+'nonExistentProperty' in tweet; // false
+            </span><span class="fragment">
+tweet.nonExistentProperty; // undefined
+            </span>
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Функции (Functions)</h2>
+
+        <p class="grey left">
+            Именованый блок кода, который позволяет переиспользовать существующий код.
+        </p>
+        <p class="grey left">
+            Может иметь входные параметры и возвращать значение
+        </p>
+        <p class="grey left">
+            Является объектом высшего порядка
+        </p>
+    </section>
+
+    <section>
+        <h2>Декларация функции</h2>
+
+        <pre class="js"><code>
+function getFollowersCount() {
+  return 6443;
+}
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Декларация функции</h2>
+
+        <pre class="js"><code data-noescape>
+function noop() {
+}
+            <span class="fragment">
+function noop() {
+  return undefined;
+}
+            </span><span class="fragment">
+function noop() {
+  return;
+}
+            </span>
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Декларация функции</h2>
+
+        <pre class="js"><code>
+function getAuthor(tweet) {
+  return tweet.user.screenName;
+}
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Передача по значению и по ссылке</h2>
+
+        <pre class="js"><code data-noescape>
+const tweet = {
+  user: {
+    followersCount: 6443
+  }
+};
+            <span class="fragment">
+function incrementFollowersCount(count) {
+  count++;
+}
+            </span><span class="fragment">
+incrementFollowersCount(tweet.user.followersCount);
+            </span><span class="fragment">
+tweet.user.followersCount; // <strike>6444</strike> 6443
+            </span>
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Передача по значению и по ссылке</h2>
+
+        <pre class="js"><code data-noescape>
+const tweet = {
+  user: {
+    followersCount: 6443
+  }
+};
+            <span class="fragment">
+function incrementFollowersCount(user) {
+  user.followersCount++;
+}
+            </span><span class="fragment">
+incrementFollowersCount(tweet.user);
+            </span><span class="fragment">
+tweet.user.followersCount; // 6444
+            </span>
+        </code></pre>
+
+    </section>
+
+    <section class="center">
+        <h2>Функции — объекты высшего порядка</h2>
+        <p class="grey">
+            Они могут быть переданы в другие функции в качестве аргумента, а так же могут
+            иметь личные свойства, как и другие объекты.
+        </p>
+    </section>
+
+    <section>
+        <h2>Передача функций в качестве аргументов</h2>
+
+        <pre class="size-XS js"><code>
+const tweets = [
+  { hashtags: ['wstdays'], likes: 16, text: 'Я и ИоТ, пятый…' },
+  { hashtags: ['wstdays', 'mails'], likes: 33, text: 'Вёрстка писем…' },
+  { hashtags: ['wstdays'], likes: 7, text: 'PWA. Что это…' },
+  { hashtags: ['wstdays', 'pokemongo'], likes: 12, text: 'Pokémon GO на…' },
+  { hashtags: ['wstdays'], likes: 15, text: 'Ого сколько фронт…' },
+  { hashtags: ['wstdays', 'html'], likes: 22, text: '&lt;head&gt; — всему…' },
+  { hashtags: ['wstdays'], likes: 8, text: 'Доброе утро! WSD…' },
+  { hashtags: ['nodejs'], likes: 7, text: 'Node.js, TC-39 и модули,…' },
+  { hashtags: ['html'], likes: 28, text: 'Всегда используйте &lt;label&gt;…' },
+  { hashtags: ['svg'], likes: 19, text: 'Как прятать инлайновые…' },
+  { likes: 9, text: 'Наглядная таблица доступности…' },
+  { likes: 18, text: 'JSX: антипаттерн или нет?…' }
+];
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Передача функций в качестве аргументов</h2>
+
+        <pre class="size-S js"><code data-noescape>
+let result = [];
+
+// Выбираем только твиты с хештегом #wstdays
+function filterWithWstdaysHashtag(tweet) {
+  const hashtags = tweet.hashtags;
+  if (<span class="fragment highlight-current-blue" data-fragment-index="1">Array.isArray(hashtags)</span> &amp;&amp; <span class="fragment highlight-current-blue" data-fragment-index="2">hashtags.includes('wstdays')</span>) {
+    result.push(tweet);
+  }
+}
+
+// Теперь в result лежат отфильтрованные твиты
+tweets.forEach(filterWithWstdaysHashtag);
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Передача функций в качестве аргументов</h2>
+
+        <pre class="size-XS js"><code data-noescape>
+let result = tweets
+            <span class="fragment" data-fragment-index="1">.filter(filterWithWstdaysHashtag)</span>
+            <span class="fragment" data-fragment-index="2">.map(render)</span>
+            <span class="fragment" data-fragment-index="3">.join('\n');</span>
+            <span class="fragment" data-fragment-index="1">
+// Выбираем только твиты с хештегом #wstdays
+function filterWithWstdaysHashtag(tweet) {
+  const hashtags = tweet.hashtags;
+  return Array.isArray(hashtags) &amp;&amp; hashtags.includes('wstdays');
+}
+            </span><span class="fragment" data-fragment-index="2">
+// Превращаем массив объектов твитов в HTML-строки
+function render(tweet) {
+  return `&lt;dt&gt;${tweet.text}&lt;/dt&gt;
+          &lt;dd&gt;${tweet.user}&lt;/dd&gt;
+          &lt;dd&gt;${tweet.hashtags.join(', ')}&lt;/dd&gt;`;
+}
+            </span><span class="fragment" data-fragment-index="4">
+// Теперь в result лежит HTML c деревом твитов
+result = `&lt;dl&gt;${result}&lt;/dl&gt;`;
+            </span>
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Передача функций в качестве аргументов</h2>
+
+        <pre class="size-XS js"><code data-noescape>
+const likesCount = tweets.reduce(getTotalLikes, 0)
+
+function getTotalLikes(acc, item) {
+  return acc + item.likes;
+}
+
+likesCount; // 194
+        </code></pre>
+        <pre class="size-XS fragment js"><code data-noescape>
+// можно переписать так
+const likesCount = tweets.reduce(function (acc, item) {
+    return acc + item.likes;
+}, 0);
+
+likesCount; // 194
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Стрелочные функции</h2>
+
+        <pre class="js"><code data-noescape>
+// обычная функция, сохраненная в переменную
+const addFunc = function (a, b) { return a + b; }
+
+addFunc(2, 4); // 6
+            <span class="fragment">
+// стрелочная функция, сохраненная в переменную
+const addArrowFunc = (a, b) => a + b;
+
+addArrowFunc(2, 4); // 6
+            </span>
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Передача функций в качестве аргументов</h2>
+
+        <pre class="size-XXS js"><code data-noescape>
+const hashtagsStat = tweets
+            <span class="fragment" data-fragment-index="1">.reduce(flattenHashtags, [])</span>
+            <span class="fragment" data-fragment-index="2">.reduce(getHashtagsStats, {});</span>
+            <span class="fragment" data-fragment-index="1">
+function flattenHashtags(acc, item) {
+  return acc.concat(item.hashtags || []);
+}
+            </span><span class="fragment" data-fragment-index="2">
+function getHashtagsStats(acc, item) {
+  if (!(item in acc))
+    acc[item] = 0;
+  }
+
+  acc[item]++;
+
+  return acc;
+}
+            </span><span class="fragment" data-fragment-index="3">
+hashtagsStats; // { html: 2, mails: 1, nodejs: 1, pokemongo: 1, svg: 1, wstdays: 7 }
+            </span>
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Передача функций в качестве аргументов</h2>
+
+        <pre class="size-XXS js"><code data-noescape>
+const hashtagsStat = tweets
+            <span class="fragment">
+        .reduce(function (acc, item) {
+            return acc.concat(item.hashtags || []);
+        }, [])
+            </span><span class="fragment">
+        .reduce(function (acc, item) {
+            if (!(item in acc)) {
+                acc[item] = 0;
+            }
+
+            acc[item]++;
+
+            return acc;
+        }, {});
+            </span><span class="fragment">
+hashtagsStats; // { html: 2, mails: 1, nodejs: 1, pokemongo: 1, svg: 1, wstdays: 7 }
+            </span>
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Передача функций в качестве аргументов</h2>
+
+        <pre class="size-XXS js"><code data-noescape>
+const hashtagsStat = tweets
+
+        .reduce((acc, item) => acc.concat(item.hashtags || []), [])
+
+        .reduce((acc, item) => {
+            if (!(item in acc)) {
+                acc[item] = 0;
+            }
+
+            acc[item]++;
+
+            return acc;
+        }, {});
+
+hashtagsStats; // { html: 2, mails: 1, nodejs: 1, pokemongo: 1, svg: 1, wstdays: 7 }
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Передача функций в качестве аргументов</h2>
+
+        <pre class="size-XXS js"><code data-noescape>
+const hashtagsStats = {html: 2, mails: 1, nodejs: 1, pokemongo: 1, svg: 1, wstdays: 7};
+            <span class="fragment">
+const sorted = Object</span><span class="fragment">
+    .keys(hashtagsStats) // ['html', 'mails', 'nodejs', 'pokemongo', 'svg', 'wstdays']</span><span class="fragment">
+    .map(key => {
+        return {
+            tag: key,
+            count: hashtagsStats[key]
+        };
+    }) // [ { tag: 'html', count: 2 }, { tag: 'mails', count: 1 } ,...]</span><span class="fragment">
+    .sort((a, b) => {
+        if (a.count !== b.count) {
+            return a.count > b.count ? -1 : 1; // сортируем от большего к меньшему
+        }
+        return a.tag.localeCompare(b.tag);
+    }) // [ { tag: 'wstdays', count: 7 }, { tag: 'html', count: 2 } ,...]</span><span class="fragment">
+    .reduce((acc, item) => {
+        acc[item.tag] = item.count;
+        return acc;
+    }, {});</span>
+            <span class="fragment">
+sorted; // { wstdays: 7, html: 2, mails: 1, nodejs: 1, pokemongo: 1, svg: 1 }
+            </span>
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>typeof (Определение типа в runtime)</h2>
+        <pre class="js"><code data-noescape><span class="fragment">
+typeof true;       // 'boolean'
+typeof undefined;  // 'undefined'
+typeof 'строка';   // 'string'
+typeof { baz: 1 }; // 'object'
+            </span><span class="fragment">
+typeof 12.4;       // 'number'
+typeof NaN;        // 'number'
+typeof Infinity;   // 'number'
+            </span><span class="fragment">
+function foo() {}
+typeof foo;        // 'function'
+            </span><span class="fragment">
+typeof [1, 2];     // 'object', используйте Array.isArray()
+typeof null;       // 'object' (!)
+            </span>
+        </code></pre>
+    </section>
+
+    <section class="center">
+        <h2>Спасибо!</h2>
+        <h2>Вопросы?</h2>
+    </section>
+
+</div></div>
+
+<script src="../../@lib/core.js"></script>
+</body>
+</html>
