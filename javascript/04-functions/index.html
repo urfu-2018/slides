@@ -1,0 +1,1599 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Функции</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+</head><body class="white"><div class="reveal"><div class="slides">
+
+    <section class="center">
+        <h1>Функции</h1>
+        <h1>this</h1>
+        <p>&nbsp;</p>
+        <h3 class="right"><span class="red">Н</span>аталья Дружинина</h3>
+    </section>
+
+    <section>
+        <h2>Содержание</h2>
+        <ul>
+            <li>Функции (Functions)</li>
+            <li>Аргументы</li>
+            <li>Область видимости</li>
+            <li>Замыкание</li>
+            <li>Всплытие</li>
+            <li>this</li>
+            <li>Контекст исполнения</li>
+        </ul>
+    </section>
+
+    <section>
+        <section class="center">
+            <h1>Функции</h1>
+        </section>
+        <section>
+            <h2>Функции</h2>
+            <ul>
+                <li>Не повторять код (DRY)</li>
+                <li>Объединить группу действий</li>
+                <li>Рекурсивный вызов</li>
+                <li>Создать область видимости</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Аргументы</h2>
+            <pre class="js"><code>
+function min(a, b) {
+    return a < b ? a : b;
+}
+        </code></pre>
+
+            <pre><code class="js fragment" data-trim>
+min(2, 7);    // 2</code></pre>
+            <pre><code class="js fragment" data-trim>
+min(3, 4, 2); // 3</code></pre>
+            <pre><code class="js fragment" data-trim>
+min(13);      // undefined</code></pre>
+        </section>
+
+
+        <section>
+            <h2>Аргументы</h2>
+            <pre class="js"><code>
+function min(a, b) {
+    return a > b ? b : a;
+}
+        </code></pre>
+
+            <pre><code class="js fragment">
+min(2, 7);    // 2
+min(13);      // 13
+       </code></pre>
+        </section>
+
+        <section>
+            <h2>Аргументы</h2>
+            <pre class="js"><code>
+function min(a, b) {
+    if (b === undefined) {
+        return a;
+    }
+
+    return a < b ? a : b;
+}
+        </code></pre>
+
+            <pre><code class="js fragment" data-trim>
+min(2, 7);    // 2
+min(13);      // 13
+       </code></pre>
+        </section>
+
+        <section>
+            <h2>Аргументы. Значения по умолчанию</h2>
+            <pre class="js"><code>
+function min(a, b = Infinity) {
+    return a < b ? a : b;
+}
+        </code></pre>
+            <pre><code class="js">
+min(2, 7);    // 2
+min(13);      // 13
+       </code></pre>
+        </section>
+
+        <section>
+            <h2>Аргументы. Значения по умолчанию</h2>
+            <pre class="js"><code data-trim>
+function log(a = 'hello') {
+    console.log(a);
+}
+        </code></pre>
+            <pre class="js fragment"><code data-trim>
+log(); // hello
+            </code></pre>
+            <pre class="js fragment"><code data-trim>
+log(0); // 0
+            </code></pre>
+            <pre class="js fragment"><code data-trim>
+log(undefined); // hello
+            </code></pre>
+            <pre class="js fragment"><code data-trim>
+log(null); // null
+        </code></pre>
+        </section>
+
+        <section>
+            <h2>Именованные аргументы</h2>
+            <pre class="js"><code>
+function BMI(params) {
+    const { weight, height } = params;
+
+    return weight / (height * height);
+}
+        </code></pre>
+
+            <pre class="js fragment"><code>
+BMI({ weight: 60, height: 1.7 }) // 20.7
+        </code></pre>
+        </section>
+
+        <section>
+            <h2>Именованные аргументы. Деструктуризация</h2>
+            <pre class="js"><code data-noescape>
+function BMI(params) {
+    <mark>const { weight, height } = params;</mark>
+
+    return weight / (height * height);
+}
+        </code></pre>
+
+            <pre class="js"><code>
+BMI({ weight: 60, height: 1.7 }) // 20.7
+        </code></pre>
+        </section>
+
+        <section>
+            <h2><span class="grey">Именованные аргументы.</span> <span class="green">Достоинства</span></h2>
+            <ul>
+                <li>Удобно, если несколько необязательных аргументов</li>
+                <li>Неважен порядок аргументов</li>
+                <li>Неограниченное число аргументов</li>
+                <li>Легко рефакторить код</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2><span class="grey">Именованные аргументы.</span> <span class="red">Недостатки</span></h2>
+            <ul>
+                <li>Неявный интерфейс</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>arguments</h2>
+            <p class="size-M">Объект arguments - это подобный массиву объект, который содержит аргументы, переданные в функцию.</p>
+            <p><a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Functions/arguments">arguments MDN docs</a></p>
+        </section>
+
+        <section>
+            <h2>arguments</h2>
+            <pre><code class="js">
+function example() {
+    arguments[1]; // 12
+    arguments.length; // 2
+}
+
+example(3, 12);
+        </code></pre>
+        </section>
+
+        <section>
+            <h2>arguments</h2>
+
+            <pre><code class="js" data-trim>
+function sum() {
+    let sum = 0;
+
+    for (let i = 0; i < arguments.length; i++) {
+        sum += arguments[i];
+    }
+
+    return sum;
+}
+        </code></pre>
+            <pre><code class="js fragment" data-trim>
+sum(); // 0
+sum(2); // 2
+sum(2, 4, 8);   // 14
+        </code></pre>
+        </section>
+
+        <section>
+            <h2>arguments в стрелочных функциях</h2>
+            <p class="size-S">В браузере:</p>
+            <pre><code class="js" data-trim>
+const func = () => console.log(arguments);
+
+func(); // ReferenceError: arguments is not defined
+            </code></pre>
+        </section>
+
+        <section>
+            <h2>arguments в стрелочных функциях</h2>
+            <pre><code class="js">
+function argumentsTest(str) {
+    console.log(arguments);
+
+    const arrowFunc = (a, b) => {
+        console.log(arguments);
+    }
+
+    arrowFunc(1, 2);
+}
+
+
+            </code></pre>
+        </section>
+
+        <section>
+            <h2>arguments в стрелочных функциях</h2>
+            <pre><code class="js">
+function argumentsTest(str) {
+    console.log(arguments); // [Arguments] { '0': 'test' }
+
+    const arrowFunc = (a, b) => {
+        console.log(arguments); // [Arguments] { '0': 'test' }
+    }
+
+    arrowFunc(1, 2);
+}
+
+argumentsTest('test');
+            </code></pre>
+        </section>
+
+
+        <section>
+            <h2>Rest operator</h2>
+            <pre><code class="js">
+function example(a, b, ...others) {
+    console.log(a);
+    console.log(b);
+    console.log(others);
+}
+        </code></pre>
+            <pre class="fragment"><code>
+example(1, 2, 3, 4, 5);
+// 1
+// 2
+// [3, 4, 5]
+        </code></pre>
+        </section>
+
+        <section>
+            <h2>Rest operator</h2>
+            <pre><code class="js">
+function sum(...numbers) {
+    return numbers.reduce((sum, item) => {
+        return sum + item;
+    }, 0);
+}
+        </code></pre>
+            <pre><code>
+sum(1, 2, 3); // 6
+        </code></pre>
+        </section>
+
+        <section>
+            <h2>Способы объявления функции</h2>
+            <pre><code class="js">
+// function declaration
+function add(a, b) {
+    return a + b;
+}
+        </code></pre>
+            <pre class="js fragment"><code data-trim>
+// function expression
+const add = function (a, b) {
+    return a + b;
+}
+        </code></pre>
+        </section>
+
+        <section>
+            <h2>function declaration</h2>
+            <pre><code class="js">
+add(2, 3);
+
+function add(a, b) {
+    return a + b;
+}
+        </code></pre>
+        </section>
+
+        <section>
+            <h2>function declaration</h2>
+            <pre><code class="js">
+add(2, 3); // 5
+
+function add(a, b) {
+    return a + b;
+}
+        </code></pre>
+        </section>
+
+        <section>
+            <h2>function expression</h2>
+            <pre><code class="js">
+add(2, 3);
+
+const add = function (a, b) {
+    return a + b;
+};
+        </code></pre>
+        </section>
+
+        <section>
+            <h2>function expression</h2>
+            <pre><code class="js">
+add(2, 3); // ReferenceError: add is not defined
+
+const add = function (a, b) {
+    return a + b;
+};
+        </code></pre>
+        </section>
+
+        <section>
+            <h2>Named function expression</h2>
+            <pre><code class="js">
+const factorial = function inner(n) {
+    return n === 1 ?
+        1 : n * inner(n - 1);
+}
+        </code></pre>
+            <pre><code class="fragment js">
+typeof factorial; // 'function'
+typeof inner; // undefined
+factorial(3);    // 6
+        </code></pre>
+        </section>
+
+
+    </section>
+
+
+
+    <section>
+        <section class="center">
+            <h1>Области видимости</h1>
+        </section>
+
+        <section>
+            <h2>Область видимости</h2>
+            <div class="code-two-columns">
+                <div>
+                    <p class="size-XXS">Код:</p>
+                    <pre><code class="js">
+const text = 'Привет';
+
+function greet() {}
+            </code></pre>
+                </div>
+                <div class="fragment">
+                    <p class="size-XXS">Область видимости:</p>
+                    <pre class="js left lexical-envorinment"><code>
+┌{ text, greet }
+│
+│
+│
+            </code></pre>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h2>Создание области видимости</h2>
+            <div class="code-two-columns">
+                <div>
+                    <p class="size-XXS">Код:</p>
+                    <pre><code class="js">
+function greet() {
+    const text = 'Привет';
+    text; // 'Привет'
+}
+                </code></pre>
+                </div>
+                <div>
+                    <p class="size-XXS">Область видимости:</p>
+                    <pre><code class="js">
+┌{ greet }
+├─┬{ text }
+│ │
+│ │
+│
+│
+│
+                </code></pre>
+                </div>
+            </div>
+        </section>
+
+
+        <section>
+            <h2>Создание области видимости</h2>
+            <div class="code-two-columns">
+                <div>
+                    <p class="size-XXS">Код:</p>
+                    <pre><code class="js">
+function greet() {
+    const text = 'Привет';
+    text; // 'Привет'
+}
+
+text;   // ReferenceError:
+        //    text is not defined
+                </code></pre>
+                </div>
+                <div>
+                    <p class="size-XXS">Область видимости:</p>
+                    <pre><code class="js">
+┌{ greet }
+├─┬{ text }
+│ │
+│ │
+│
+│
+│
+                </code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Вложенные функции</h2>
+            <div class="code-two-columns">
+                <div>
+                    <p class="size-XXS">Код:</p>
+                    <pre><code class="js">
+function greet() {
+    let text = 'Привет';
+
+    function nested() {
+        text; // 'Привет'
+    }
+}
+                </code></pre>
+                </div>
+                <div>
+                    <p class="size-XXS">Область видимости:</p>
+                    <pre><code class="js">
+┌{ greet }
+├─┬{ text, nested }
+│ │
+│ │
+│ ├─┬{ }
+│ │ │
+│ │
+│
+                </code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Затенение</h2>
+            <div class="code-two-columns">
+                <div>
+                    <p class="size-XXS">Код:</p>
+                    <pre><code class="js">
+function greet() {
+    let text = 'Привет';
+
+    function nested() {
+        let text = 'Пока';
+        text; // 'Пока'
+    }
+
+    text; // 'Привет'
+}
+                </code></pre>
+                </div>
+                <div>
+                    <p class="size-XXS">Область видимости:</p>
+                    <pre><code class="js">
+┌{ greet }
+├─┬{ text: Привет, nested }
+│ │
+│ │
+│ ├─┬{ text: Пока }
+│ │ │
+│ │ │
+│ │
+│ │
+│ │
+│
+                </code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Блочные области видимости</h2>
+            <pre class="size-S"><code class="js" data-trim>
+let x = 10;
+var y = 10;
+{
+    let x = 5;
+    var y = 5;
+    {
+        let x = 2;
+        var y = 2;
+        console.log(x);
+        console.log(y);
+    }
+    console.log(x);
+    console.log(y);
+}
+console.log(x);
+console.log(y);
+        </code></pre>
+        </section>
+
+        <section>
+            <h2>Блочные области видимости</h2>
+            <pre class="size-S"><code class="js" data-trim data-noescape>
+let x = 10;
+var y = 10;
+{
+    let x = 5;
+    var y = 5;
+    {
+        let x = 2;
+        var y = 2;
+        <mark>console.log(x); // 2</mark>
+        <mark>console.log(y); // 2</mark>
+    }
+    console.log(x);
+    console.log(y);
+}
+console.log(x);
+console.log(y);
+        </code></pre>
+        </section>
+
+        <section>
+            <h2>Блочные области видимости</h2>
+            <pre class="size-S"><code class="js" data-trim data-noescape>
+let x = 10;
+var y = 10;
+{
+    let x = 5;
+    var y = 5;
+    {
+        let x = 2;
+        var y = 2;
+        console.log(x); // 2
+        console.log(y); // 2
+    }
+    <mark>console.log(x); // 5</mark>
+    <mark>console.log(y); // 2</mark>
+}
+console.log(x);
+console.log(y);
+        </code></pre>
+        </section>
+
+        <section>
+            <h2>Блочные области видимости</h2>
+            <pre class="size-S"><code class="js" data-trim data-noescape>
+let x = 10;
+var y = 10;
+{
+    let x = 5;
+    var y = 5;
+    {
+        let x = 2;
+        var y = 2;
+        console.log(x); // 2
+        console.log(y); // 2
+    }
+    console.log(x); // 5
+    console.log(y); // 2
+}
+<mark>console.log(x); // 10</mark>
+<mark>console.log(y); // 2</mark>
+        </code></pre>
+        </section>
+    </section>
+
+    <section>
+
+    <section class="center">
+        <h1>Всплытие (Hoisting)</h1>
+    </section>
+    <section>
+        <h2>Выполнение кода</h2>
+        <ol class="fragment">
+            <li>
+                Инициализация
+                <ol class="fragment">
+                    <li><code>function declaration</code></li>
+                    <li><code>var</code></li>
+                </ol>
+            </li>
+            <li>Собственно выполнение</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>Всплытие функций</h2>
+        <pre><code class="js">
+add(2, 3);  // 5
+
+function add(a, b) {
+    return a + b;
+}
+        </code></pre>
+    </section>
+
+        <section>
+            <h2>Всплытие переменных. var</h2>
+            <div class="code-two-columns">
+                <div>
+                    <p class="size-S">Код:</p>
+                    <pre><code class="js">
+add(2, 3);  // TypeError:
+            // add is not a function
+
+var add = function (a, b) {
+    return a + b;
+}
+        </code></pre>
+                </div>
+                <div class="fragment">
+                    <p class="size-S">Интерпретатор:</p>
+                    <pre><code class="js" data-trim>
+var add;
+add(2, 3);
+
+add = function (a, b) {
+    return a + b;
+};</code></pre>
+                </div>
+            </div>
+        </section>
+
+    <section>
+        <h2><s>Всплытие переменных</s>. let/const</h2>
+        <pre><code class="js">
+add(2, 3);  // ReferenceError: add is not defined
+
+const add = function (a, b) {
+    return a + b;
+}
+        </code></pre>
+    </section>
+    </section>
+
+    <section>
+    <section class="center">
+        <h1>Замыкание</h1>
+    </section>
+
+    <section>
+        <h1>Замыкание</h1>
+        <p>Замыкание – это функция вместе со всеми внешними переменными, которые ей доступны.</p>
+    </section>
+
+    <section>
+        <h2>Ссылка на переменные</h2>
+        <div class="code-two-columns">
+            <div>
+                <p class="size-S">Код:</p>
+                <pre><code class="js">
+function greet() {
+    const text = 'Привет';
+}
+
+greet();
+            </code></pre>
+            </div>
+            <div class="fragment">
+                <p class="size-S">Счётчик ссылок:</p>
+                <pre><code class="js">
+
+{ text: 1 }
+
+
+</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Ссылка на переменные</h2>
+        <div class="code-two-columns">
+            <div>
+                <p class="size-S">Код:</p>
+                <pre><code class="js">
+function greet() {
+    const text = 'Привет';
+}
+
+greet();
+            </code></pre>
+            </div>
+            <div>
+                <p class="size-S">Счётчик ссылок:</p>
+                <pre><code class="js">
+
+
+
+
+{ text: 0 }
+</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Ссылка на переменные</h2>
+        <div class="code-two-columns">
+            <div>
+                <p class="size-S">Код:</p>
+                <pre><code class="js">
+function makeCounter() {
+    let currentCount = 0;
+
+    return function () {
+        return currentCount++;
+    };
+}
+
+const counter = makeCounter();
+            </code></pre>
+            </div>
+            <div>
+                <p class="size-S">Счётчик ссылок:</p>
+                <pre><code class="js">
+
+{ currentCount: 1 }
+
+
+
+</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Ссылка на переменные</h2>
+        <div class="code-two-columns">
+            <div>
+                <p class="size-S">Код:</p>
+                <pre><code class="js">
+function makeCounter() {
+    let currentCount = 0;
+
+    return function () {
+        return currentCount++;
+    };
+}
+
+const counter = makeCounter();
+            </code></pre>
+            </div>
+            <div>
+                <p class="size-S">Счётчик ссылок:</p>
+                <pre><code class="js">
+
+
+
+
+
+
+
+
+{ currentCount: 1 }
+</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Замыкание</h2>
+        <div class="code-two-columns">
+            <div>
+                <p class="size-S">Код:</p>
+                <pre><code class="js">
+function makeCounter() {
+    let currentCount = 0;
+
+    return function () {
+        return currentCount++;
+    };
+}
+            </code></pre>
+            </div>
+            <div>
+                <p class="size-S">Область видимости:</p>
+                <pre><code class="js">
+┌{ makeCounter }
+├─┬{ currentCount }
+│ │
+│ │
+│ ├─┬{ }
+│ │ │
+│ │
+│
+</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Замыкание</h2>
+        <pre><code class="js">
+const counter = makeCounter();
+counter(); // 0
+counter(); // 1
+counter(); // 2
+
+const yetAnother = makeCounter();
+yetAnother(); // 0
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Замыкание</h2>
+        <pre><code class="js">
+function greet(name) {
+    return function () {
+        return `Привет, ${name}`;
+    }
+}
+
+let helloWorld = greet('мир!');
+        </code></pre>
+        <pre class="fragment"><code class="js">
+helloWorld(); // "Привет, мир!"
+        </code></pre>
+    </section>
+
+    </section>
+
+    <section class="center">
+        <h1>Перерыв</h1>
+    </section>
+
+    <section>
+
+    <section class="center">
+        <h1>this</h1>
+    </section>
+
+    <section>
+        <h2>this в Java</h2>
+        <pre><code class="java">
+public class User {
+    private int age = 30;
+
+    public void showAge() {
+        System.out.println(this.age);
+    }
+}
+
+public static void main(String []args){
+    User vasya = new User();
+
+    vasya.showAge();
+}
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Свойства this</h2>
+        <ul>
+            <li>ключевое слово</li>
+            <li>указывает на текущий объект</li>
+            <li>нельзя перезаписать</li>
+        </ul>
+    </section>
+    <section>
+        <h2>this в Javascript</h2>
+        <pre><code class="js">
+class User () {
+    constructor() {
+        this.age = 24;
+    }
+
+    showAge() {
+        return this.age;
+    }
+}
+
+const mike = new User();
+
+mike.showAge(); // 24
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>this за пределом объекта</h2>
+        <div class="fragment">
+            <p>В браузере</p>
+            <pre><code class="js">
+this.innerWidth; // 1440
+        </code></pre>
+        </div>
+        <div class="fragment">
+            <p>В Node.js</p>
+            <pre><code class="js">
+this.process.version; // 'v10.8.0'
+        </code></pre>
+        </div>
+    </section>
+
+    <section>
+        <h1>Контекст исполнения</h1>
+    </section>
+
+    <section>
+        <div class="code-two-columns">
+            <div>
+                <p class="size-XS">Код:</p>
+                <pre><code class="js">
+function sum(a, b) {
+    return a + b;
+}
+
+sum(1, 2);
+                </code></pre>
+            </div>
+            <div class="fragment">
+                <p class="size-XS">Область видимости:</p>
+                <pre><code>
+┌{ sum } // 1
+├─┬{ a, b } // 2
+│ │
+│ │
+│
+│
+                </code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="code-two-columns">
+            <div>
+                <p class="size-XS">Код:</p>
+                <pre><code class="js">
+function sum(a, b) {
+    return a + b;
+}
+
+sum(1, 2);
+                </code></pre>
+            </div>
+            <div>
+                <p class="size-XS">Контекст исполнения:</p>
+                <pre><code>
+┌{ lE: { sum }, this: ??? }
+├─┬{ lE: { a, b }, this: ??? }
+│ │
+│ │
+│
+│
+                </code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <p>Значение this зависит от:</p>
+        <ol>
+            <li>Типа участка кода</li>
+            <li>Как мы попали на этот участок</li>
+            <li>Режима работы интерпретатора</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>Тип участка кода. Глобальный в браузере</h2>
+        <pre><code class="js">
+this.innerWidth; // 1440
+        </code></pre>
+        <pre class="fragment"><code class="js">
+window.innerWidth; // 1440
+        </code></pre>
+        <pre class="fragment"><code class="js">
+innerWidth; // 1440
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Тип участка кода. Глобальный в Node.js</h2>
+        <pre><code class="js">
+this.process.version; // 'v10.8.0'
+        </code></pre>
+        <pre class="fragment"><code class="js">
+global.process.version; // 'v10.8.0'
+        </code></pre>
+        <pre class="fragment"><code class="js">
+process.version; // 'v10.8.0'
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Тип участка кода. Глобальный</h2>
+        <pre><code class="js">
+console.log('Hello!');
+
+        </code></pre>
+        <pre class="fragment"><code class="js">
+global.console.log('Hello!');
+        </code></pre>
+        <pre class="fragment"><code class="js">
+this.console.log('Hello!');
+        </code></pre>
+    </section>
+    <section>
+        <h2>Тип участка кода. Глобальный</h2>
+        <pre><code>
+this === global; // true
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Как попали на участок кода. Простой вызов</h2>
+        <pre><code class="js">
+function getSelf() {
+    return this;
+}
+
+getSelf(); // global
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Как попали на участок кода. Метод объекта</h2>
+        <div class="code-two-columns">
+            <div>
+                <p class="size-XS">Код:</p>
+                <pre><code class="js">
+const block = {
+    innerHeight: 200,
+
+    getHeight: function () {
+        return this.innerHeight;
+    }
+}
+                </code></pre>
+            </div>
+            <div class="fragment">
+                <p class="size-XS">Значение this:</p>
+                <pre><code class="js">
+
+
+
+
+???.innerHeight;
+                </code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Как попали на участок кода. Метод объекта</h2>
+        <div class="code-two-columns">
+            <div>
+                <p class="size-XS">Код:</p>
+                <pre><code class="js" data-noescape>
+const block = {
+    innerHeight: 200,
+
+    getHeight: function () {
+        return this.innerHeight;
+    }
+}
+
+<mark>block</mark>.getHeight(); // 200
+                </code></pre>
+            </div>
+            <div>
+                <p class="size-XS">Значение this:</p>
+                <pre><code class="js" data-noescape>
+
+
+
+
+<mark>block</mark>.innerHeight;
+                </code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Как попали на участок кода. Метод объекта</h2>
+        <div class="code-two-columns">
+            <div>
+                <p class="size-XS">Код:</p>
+                <pre><code class="js">
+const block = {
+    innerHeight: 200,
+
+    getHeight: function () {
+        return this.innerHeight;
+    }
+}
+
+const getHeight = block.getHeight;
+                </code></pre>
+            </div>
+            <div>
+                <p class="size-XS">Значение this:</p>
+                <pre><code class="js">
+
+
+
+
+???.innerHeight;
+                </code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Как попали на участок кода. Метод объекта</h2>
+        <div class="code-two-columns">
+            <div>
+                <p class="size-XS">Код:</p>
+                <pre><code class="js">
+const block = {
+    innerHeight: 200,
+
+    getHeight: function () {
+        return this.innerHeight;
+    }
+}
+
+const getHeight = block.getHeight;
+getHeight();
+                </code></pre>
+            </div>
+            <div>
+                <p class="size-XS">Значение this:</p>
+                <pre><code class="js">
+
+
+
+
+window.innerHeight;
+                </code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h1>Заимствование метода</h1>
+        <h2>call</h2>
+        <p>Метод call() вызывает функцию с указанным значением this и индивидуально предоставленными аргументами.</p>
+        <p><a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Function/call">Function.prototype.call() - JavaScript | MDN</a></p>
+        <pre><code class="js">
+fun.call(thisArg, arg1, arg2, ...);
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Как попали на участок кода. Заимствование метода</h2>
+        <div class="code-two-columns">
+            <div>
+                <p class="size-XS">Код:</p>
+                <pre><code class="js" data-trim>
+const mike = {
+    age: 30,
+
+    getAge: function () {
+        return this.age;
+    }
+};
+const jane = {
+    age: 24
+};
+                </code></pre>
+            </div>
+            <div>
+                <p class="size-XS">Значение this:</p>
+                <pre><code class="js" data-trim>
+
+
+
+
+???.age;
+                </code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Как попали на участок кода. Заимствование метода</h2>
+        <div class="code-two-columns">
+            <div>
+                <p class="size-XS">Код:</p>
+                <pre><code class="js" data-trim>
+const mike = {
+    age: 30,
+
+    getAge: function () {
+        return this.age;
+    }
+};
+const jane = {
+    age: 24
+};
+mike.getAge.call(jane); // 24
+                </code></pre>
+            </div>
+            <div>
+                <p class="size-XS">Значение this:</p>
+                <pre><code class="js data-trim">
+
+
+
+jane.age;
+                </code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>apply</h2>
+        <p>Метод apply() вызывает функцию с указанным значением this и аргументами, предоставленными в виде массива.</p>
+        <p><a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Function/apply">Function.prototype.apply() - JavaScript | MDN</a></p>
+        <pre class="fragment js"><code>
+    fun.apply(thisArg, [arg1, arg2]);
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>apply</h2>
+
+        <pre class="js"><code data-trim>
+Math.min(4, 7, 2, 9); // 2
+        </code></pre>
+
+        <pre class="js fragment"><code data-trim>
+const numbers = [4, 7, 2, 9];
+Math.min(arr); // NaN
+        </code></pre>
+
+        <pre class="js fragment"><code data-trim>
+Math.min.apply(Math, numbers); // 2
+        </code></pre>
+
+        <pre class="js fragment"><code data-trim>
+Math.min.apply(null, numbers); // 2
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Spread operator</h2>
+        <pre class="js"><code>
+const numbers = [4, 7, 2, 9];
+
+Math.min(...numbers); // 2
+        </code></pre>
+    </section>
+
+    <section data-transition='slide-in'>
+        <h4><span class="grey">Как попали на участок кода.</span> Callback</h4>
+
+        <div class="code-two-columns">
+        <pre class="js code"><code>const person = {
+    name: 'Jack',
+    items: ['keys', 'phone', 'banana'],
+
+    showItems: function () {
+        return this.items.map(function (item) {
+            return `${this.name} has ${item}`;
+        });
+    }
+}
+
+
+</code></pre>
+            <pre class="js this fragment"><code>
+
+
+
+
+???.items
+???.name
+
+
+
+
+        </code></pre>
+        </div>
+    </section>
+
+    <section data-transition='none'>
+        <h4><span class="grey">Как попали на участок кода.</span> Callback</h4>
+
+        <div class="code-two-columns">
+        <pre class="js code"><code>const person = {
+    name: 'Jack',
+    items: ['keys', 'phone', 'banana'],
+
+    showItems: function () {
+        return this.items.map(function (item) {
+            return `${this.name} has ${item}`;
+        });
+    }
+}
+
+person.showItems();
+</code></pre>
+            <pre class="js this"><code>
+
+
+
+
+person.items
+???.name
+
+
+
+
+        </code></pre>
+        </div>
+    </section>
+
+    <section data-transition='slide-out'>
+        <h4><span class="grey">Как попали на участок кода.</span> Callback</h4>
+
+        <div class="code-two-columns">
+        <pre class="js code"><code>const person = {
+    name: 'Jack',
+    items: ['keys', 'phone', 'banana'],
+
+    showItems: function () {
+        return this.items.map(function (item) {
+            return `${this.name} has ${item}`;
+        });
+    }
+}
+
+person.showItems();
+</code></pre>
+            <pre class="js this"><code>
+
+
+
+
+person.items
+global.name
+
+
+
+
+        </code></pre>
+        </div>
+    </section>
+
+    <section>
+        <h4>Результат</h4>
+        <pre class="js"><code data-trim>
+'undefined has keys'
+'undefined has phone'
+'undefined has banana'
+        </code></pre>
+    </section>
+
+    <section data-transition='slide-in'>
+        <h4><span class="grey">Как попали на участок кода.</span> Стрелочные функции</h4>
+
+        <div class="code-two-columns">
+        <pre class="js code"><code>const person = {
+    name: 'Jack',
+    items: ['keys', 'phone', 'banana'],
+
+    showItems: function () {
+        return this.items.map(item => {
+            return `${this.name} has ${item}`;
+        });
+    }
+}
+
+person.showItems();
+</code></pre>
+            <pre class="js this"><code>
+
+
+
+
+person.items
+person.name
+
+
+
+
+        </code></pre>
+        </div>
+    </section>
+
+    <section>
+        <h4>Результат</h4>
+        <pre class="js"><code data-trim>
+'Jack has keys'
+'Jack has phone'
+'Jack has banana'
+        </code></pre>
+    </section>
+
+    <section data-transition='slide-in'>
+        <h4><span class="grey">Как попали на участок кода.</span> Callback</h4>
+
+        <div class="code-two-columns">
+        <pre class="js code"><code>const person = {
+    name: 'Jack',
+    items: ['keys', 'phone', 'banana'],
+
+    showItems: function () {
+        return this.items.map(function (item) {
+            return `${this.name} has ${item}`;
+        }, this);
+    }
+}
+
+person.showItems();
+</code></pre>
+            <pre class="js this"><code>
+
+
+
+
+person.items
+person.name
+
+
+
+
+        </code></pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>bind</h2>
+        <blockquote cite="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Function/bind">
+            Метод <mark><code>bind()</code></mark> создаёт новую функцию,
+            которая при вызове устанавливает в качестве контекста выполнения
+            this предоставленное значение. <...>
+        </blockquote>
+
+        <small><a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Function/bind">Function.prototype.bind() - JavaScript | MDN</a></small>
+    <pre class="fragment js"><code>
+fun.bind(thisArg, arg1, arg2, ...);
+    </code></pre>
+    </section>
+
+    <section data-transition='slide-in'>
+        <h4><span class="grey">Как попали на участок кода.</span> Callback</h4>
+
+        <div class="code-two-columns">
+        <pre class="js code"><code data-noescape>const person = {
+    name: 'Jack',
+    items: ['keys', 'phone', 'banana'],
+
+    showItems: function () {
+        return this.items.map(function (item) {
+            return this.name + ' has ' + item;
+        }<mark>.bind(this)</mark>);
+    }
+}
+
+
+</code></pre>
+            <pre class="js this"><code>
+
+
+
+
+???.items
+???.name
+
+
+
+
+        </code></pre>
+        </div>
+    </section>
+
+    <section data-transition='slide-out'>
+        <h4><span class="grey">Как попали на участок кода.</span> Callback</h4>
+
+        <div class="code-two-columns">
+        <pre class="js code"><code data-noescape>const person = {
+    name: 'Jack',
+    items: ['keys', 'phone', 'banana'],
+
+    showItems: function () {
+        return this.items.map(function (item) {
+            return this.name + ' has ' + item;
+        }<mark>.bind(this)</mark>);
+    }
+}
+
+person.showItems();
+</code></pre>
+            <pre class="js this"><code>
+
+
+
+
+person.items
+person.name
+
+
+
+
+        </code></pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>Частичное применение</h2>
+
+        <pre class="js"><code data-trim>
+Math.pow(2, 3);  // 8
+Math.pow(2, 10); // 1024
+        </code></pre>
+
+        <pre class="js fragment"><code data-trim>
+const binPow = Math.pow.bind(null, 2);
+        </code></pre>
+
+        <pre class="js fragment"><code data-trim>
+binPow(3);  // 8
+binPow(10); // 1024
+        </code></pre>
+    </section>
+
+    <section>
+        <h2><span class="grey">Режим работы интерпретатора.</span> Режим совместимости</h2>
+
+        <pre class="js"><code data-trim>
+function getSelf() {
+    return this;
+}
+
+getSelf(); // global
+        </code></pre>
+    </section>
+
+    <section>
+        <h2><span class="grey">Режим работы интерпретатора.</span> Строгий режим</h2>
+
+        <pre class="js"><code data-trim>
+function getSelf() {
+    'use strict';
+
+    return this;
+}
+
+getSelf(); // undefined
+        </code></pre>
+    </section>
+
+    </section>
+
+    <section class="center">
+        <h1>Вопросы?</h1>
+    </section>
+
+</div></div><script src="../../@lib/core.js"></script></body></html>
