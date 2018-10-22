@@ -21,7 +21,7 @@
 
 1. [Основы](https://urfu-2018.github.io/slides/javascript/01-basic/) ([pdf](https://urfu-2018.github.io/slides/javascript/01-basic/index.pdf))
 1. [Типы данных I](https://urfu-2018.github.io/slides/javascript/02-types/) ([pdf](https://urfu-2018.github.io/slides/javascript/02-types/index.pdf))
-1. Типы данных II
+1. [Типы данных II](https://urfu-2018.github.io/slides/javascript/03-types/) ([pdf](https://urfu-2018.github.io/slides/javascript/03-types/index.pdf))
 1. Функции и контекст
 1. Прототипы
 1. Конструкторы
