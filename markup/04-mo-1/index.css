@@ -1,0 +1,190 @@
+.pseudoclasses {
+    justify-content: space-around;
+}
+
+.pseudoclasses li
+{
+    padding: 0;
+}
+
+.pseudoclasses ul:not(:last-child) {
+    margin-left: -20px;
+    margin-right: 40px;
+}
+
+.center
+{
+    text-align: center;
+}
+
+.black .reveal pre code
+{
+    background: #333;
+}
+
+.size_m
+{
+    font-size: .8em !important;
+}
+
+.size_s,
+.size_s > code
+{
+    font-size: .6em !important;
+}
+
+.size_xs
+{
+    font-size: .35em !important;
+}
+
+.clear-list li
+{
+    list-style: none;
+}
+
+.example-link:link
+{
+    color: blue !important;
+}
+
+.example-link:active
+{
+    color: red !important;
+}
+
+.example-link:visited
+{
+    color: purple !important;
+}
+
+.example-link:focus
+{
+    color: yellow !important;
+}
+
+.example-link:hover
+{
+    color: green !important;
+}
+
+h3 {
+    text-align: center !important;
+}
+
+.img
+{
+    width: 50%;
+    background-position: 50% 50% !important;
+    background-size: 100% 100% !important;
+    background-repeat: no-repeat;
+}
+
+mark.fragment.visible,
+mark.fragment.visible * {
+    color: #000 !important;
+}
+
+.visible-fragment mark.fragment
+{
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.visible-fragment mark.fragment
+{
+    background: unset !important;
+    color: unset !important;
+}
+
+.visible-fragment mark.fragment.visible
+{
+    background: yellow !important;
+    color: black !important;
+}
+
+.visible-fragment mark.fragment.visible *
+{
+    color: black !important;
+
+}
+
+code mark.black-code,
+code mark.black-code *
+{
+    color: black !important;
+}
+
+.visible-fragment mark.fragment.visible.blue-2
+{
+    background-color: #5f62ff !important;
+}
+
+mark.red-back
+{
+    background-color: red !important;
+}
+
+mark.red-back,
+mark.red-back *
+{
+    color: white !important;
+}
+
+.reveal .slides section mark.fragment {
+    background: transparent;
+    visibility: visible;
+    opacity: 1;
+}
+
+.reveal section mark.fragment.blue.visible {
+    background: #1b91ff;
+}
+
+.reveal section mark.fragment.green.visible {
+    background: #0aff70;
+}
+
+.reveal section div.fragment.invisible-box {
+    visibility: visible;
+    background: #fff;
+    opacity: 1;
+    color: #fff;
+}
+
+.reveal section div.fragment.visible.margin {
+    background: #FFCF7F;
+    color: #000;
+}
+
+.reveal section div.fragment.visible.padding {
+    background: #B9F9B5;
+    color: #000;
+}
+
+.reveal section div.fragment.visible.border {
+    background: #FFF9B0;
+    color: #000;
+}
+
+.reveal section div.fragment.visible.content {
+    background: #B5CFF9;
+    color: #000;
+}
+
+.flex-parent {
+    display: flex;
+    align-item: flex-start;
+    justify-content: space-between;
+}
+
+.flex-vertical {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-vertical .hljs,
+.list-border .hljs {
+    padding-top: 0;
+    padding-bottom: 0;
+}

@@ -1,0 +1,1212 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Модель отображения</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+</head><body class="white"><div class="reveal"><div class="slides">
+
+    <section class="center">
+        <h1>Модель отображения</h1>
+        <h2>Часть 1</h2>
+        <h5 style="text-align: center;"><span style="color: red;">Е</span>катерина Симонова</h5>
+    </section>
+
+    <section class="center">
+        <p>Все есть прямоугольники</p>
+        <img class="fragment" src="./images/cat2.png" width="700px">
+    </section>
+
+    <section class="center">
+        <img src="./images/yandex.png">
+    </section>
+
+    <section class="center">
+        <div style="background-color: white; padding: 5px;">
+            <img src="./images/yandex-outline.png" width="100%">
+        </div>
+    </section>
+
+    <section class="center">
+        <div style="background-color: white; padding: 5px;">
+            <img src="./images/github.png" width="100%">
+        </div>
+    </section>
+
+    <section class="center">
+        <div style="background-color: white; padding: 5px;">
+            <img src="./images/caniuse.png" width="100%">
+        </div>
+    </section>
+
+    <section class="center">
+        <h2>Боксовая модель CSS</h2>
+        <img src="./images/all-boxes.png">
+    </section>
+    <section class="center">
+        <h2>&nbsp;</h2>
+        <img src="./images/without-p.png">
+    </section>
+    <section class="center">
+        <h2>&nbsp;</h2>
+        <img src="./images/without-b.png">
+    </section>
+    <section class="center">
+        <h2>&nbsp;</h2>
+        <img src="./images/without-m.png">
+    </section>
+    <section class="center">
+        <h2>&nbsp;</h2>
+        <img src="./images/all-boxes.png">
+    </section>
+    <section class="center">
+        <h2>&nbsp;</h2>
+        <img src="./images/content+m.png">
+    </section>
+    <section class="center">
+        <h2>&nbsp;</h2>
+        <img src="./images/content+m+right.png">
+    </section>
+
+    <section class="center">
+        <h1>Модель визуального форматирования</h1>
+    </section>
+
+    <section class="center">
+        <p style="font-size: 32px; text-align: left; font-weight: bold;">Это алгоритм, который обрабатывает документ и отображает его на экране устройства.</p>
+        <p style="font-size: 32px; text-align: left; padding-bottom: 40px; font-weight: bold;">Модель визуального форматирования задаёт трансформацию каждого элемента в документе и создаёт ноль, один или несколько боксов, согласно боксовой модели CSS</p>
+        <a style="font-size: 24px; font-weight: bold;" href="https://developer.mozilla.org/ru/docs/Web/Guide/CSS/Visual_formatting_model">MDN Web Docs</a>
+    </section>
+
+    <section>
+        <h2>На положение блочных боксов на странице влияет:</h2>
+        <ul class="size_s">
+            <li class="fragment">размер бокса: точно задан он или вычисляется</liт>
+            <li class="fragment">тип элемента: строчный или блочный</li>
+            <li class="fragment">схема позиционирования: нормальный поток, позиционированные или плавающие элементы</li>
+            <li class="fragment">отношения между элементами DOM: дочерними и соседними</li>
+            <li class="fragment">размеры и расположение окна просмотра (viewport)</li>
+            <li class="fragment">внутренние размеры содержащихся изображений</li>
+        </ul>
+    </section>
+
+    <section>
+        <h1>Создание бокса</h1>
+        <p class="size_s" style="text-align: left;">Генератор боксов - это часть модели визуального форматирования, которая создает боксы из элементов документа</p>
+    </section>
+
+    <section class="center flex-vertical">
+        <div class="flex-parent">
+            <div style="margin-top: -5px;">
+                <div>Элемент</div>
+                <pre style="text-align: left;">
+                    <code class="html size_xs">
+<div>
+    It's who we are<br>
+    Doesn't matter if we've gone too far<br>
+    Doesn't matter if it's all okay
+</div>
+                    </code>
+                </pre>
+            </div>
+            <div class="fragment">
+                <div>Бокс</div>
+                <div style="width: 400px; height: 100px; background: #ffbbd8; margin-top: 100px; padding: 20px; font-size: 26px; text-align: center;">
+                    It's who we are<br>
+                    Doesn't matter if we've gone too far<br>
+                    Doesn't matter if it's all okay
+                </div>
+                <p style="padding-top: 40px;">Боксовая модель</p>
+                <img src="./images/only-padding.png" width="250px">
+            </div>
+            </div>
+    </section>
+
+    <section>
+        <h2>Типы боксов</h2>
+        <ul class="size_s">
+            <li class="fragment">блочного уровня</liт>
+            <li class="fragment">строчного уровня (inline)</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Боксы блочного уровня</h2>
+        <p class="size_s fragment" style="text-align: left;">Каждый элемент блочного уровня генерирует главный бокс блочного уровня (principal block-level box) и в некоторых случаях дополнительные (например list-item генерирует бокс для буллета)</p>
+
+        <p class="size_s fragment" style="text-align: left; font-weight: bold;">Блочные элементы по умолчанию:</p>
+        <p class="size_s fragment" style="text-align: left;">p, div, h1, h2, h3, h4, h5, h6, ol, ul, pre, address, blockquote, dl, fieldset, form, hr, table</p>
+        <p></p>
+        <p class="size_s fragment" style="text-align: left; font-weight: bold;">CSS-свойство:</p>
+        <p class="size_s fragment" style="text-align: left;">display: block, list-item, table, flex...</p>
+    </section>
+
+    <section>
+        <h2>Боксы блочного уровня</h2>
+        <ul class="size_s">
+            <li>Отображаются как блоки (близкая аналогия - параграф)</li>
+            <img class="fragment" src="./images/paragrapher.png">
+        </ul>
+    </section>
+
+    <section>
+        <h2>Боксы блочного уровня</h2>
+        <ul class="size_s">
+            <li>Выстраиваются сверху вниз</li>
+            <img class="fragment" src="./images/stack.png">
+        </ul>
+    </section>
+
+    <section style="text-align: center;">
+        <h2>Боксы блочного уровня</h2>
+        <ul class="size_s" style="text-align: left;">
+            <li>Участвуют в блочном контексте форматирования</li>
+        </ul>
+        <a class="fragment size_s" href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context">MDN Web Docs</a>
+    </section>
+
+    <section>
+        <h2>Боксы блочного уровня</h2>
+        <ul class="size_s">
+            <li>могут создавать вокруг себя анонимные блочные боксы</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Анонимные блочные боксы</h2>
+        <pre class="fragment" data-fragment-index="1">
+            <code class="html size_xs" style="width: 1020px;">
+<div>Какой-то текст
+<p>с параграфом внутри</p>
+и текстом в конце.</div>
+            </code>
+        </pre>
+
+        <div class="fragment" data-fragment-index="2">
+            <div><mark class="fragment blue" data-fragment-index="4">Какой-то текст</mark>
+            <p style="text-align: left; padding: 0; margin: 10px 0;"><mark class="fragment green" data-fragment-index="3">с параграфом внутри</mark></p>
+            <mark class="fragment blue" data-fragment-index="4">и текстом в конце.</mark></div>
+        </div>
+    </section>
+
+    <section>
+        <h1>Математика блочных элементов</h1>
+    </section>
+
+    <section data-transition="none">
+        <input type="hidden" class="fragment animate-small" data-fragment-index="1" />
+        <div style="overflow: hidden; display: inline-block;" class="fragment" data-fragment-index="2"><pre class="css size-s"><code data-noescape><span class="fragment" data-fragment-index="2">margin-left</span> +<span class="fragment" data-fragment-index="8"> /* css */</span>
+<span class="fragment" data-fragment-index="3">border-left +</span><span class="fragment" data-fragment-index="8"> /* css */</span>
+<span class="fragment" data-fragment-index="4">padding-left +</span><span class="fragment" data-fragment-index="8"> /* css */</span>
+<span class="fragment" data-fragment-index="5"><mark class="fragment red" data-fragment-index="7">content-width</mark> +</span><span class="fragment" data-fragment-index="9"> /* ≠ width (css) */</span>
+<span class="fragment" data-fragment-index="4">padding-right +</span><span class="fragment" data-fragment-index="8"> /* css */</span>
+<span class="fragment" data-fragment-index="3">border-right +</span><span class="fragment" data-fragment-index="8"> /* css */</span>
+<span class="fragment" data-fragment-index="2">margin-right</span><span class="fragment" data-fragment-index="8"> /* css */</span>
+<span class="fragment" data-fragment-index="6">= width содержащего блока</span></pre></code></div>
+        <div class="fragment" data-fragment-index="1" style="background: #ffb9ee; display: inline-block; vertical-align: top; font-size: 22px; text-align: center; line-height: 60px;">
+            <div class="fragment margin" data-fragment-index="2" style="width: 400px; height: 360px; margin-top: 40px; line-height: 40px; font-size: 22px; text-align: center;">
+                margin
+                <div class="fragment invisible-box border" data-fragment-index="3" style="width: 320px; height: 280px; margin: 0 40px 40px; line-height: 40px; font-size: 22px; text-align: center;">
+                    border
+                    <div class="fragment invisible-box padding" data-fragment-index="4" style="width: 240px; height: 200px; margin: 0 40px 40px; line-height: 40px; font-size: 22px; text-align: center;">
+                        padding
+                        <div class="fragment invisible-box content" data-fragment-index="5" style="width: 160px; height: 120px; margin: 0 40px 40px; font-size: 22px; box-sizing: border-box; padding-top: 40px; text-align: center;">
+                            content
+                        </div>
+                    </div>
+                </div>
+            </div>
+            Содержащий блок
+        </div>
+    </section>
+
+    <section>
+        <h1>box-sizing</h1>
+        <p class="size_m" style="text-align: left; font-weight: bold;">Это CSS-свойство, которое сообщает браузеру, каким образом производить расчет ширины и высоты элемента.</p>
+    </section>
+
+    <section data-transition="none" style="font-size: 100%; text-align: center;">
+        <div class="size_s" style="padding-bottom: 15px;">margin + border + padding + width = width содержащего блока <span class="fragment">при <mark>content-box</mark></span></div>
+        <img style="width: 350px;" src="images/20-margin-math2.png"/>
+    </section>
+    <section data-transition="none" style="font-size: 100%; text-align: center;">
+        <div class="size_s" style="padding-bottom: 15px;">margin + border + width = width содержащего блока при <mark>padding-box</mark></div>
+        <img style="width: 350px;" src="images/21-margin-math3.png"/>
+    </section>
+    <section data-transition="none" style="font-size: 100%; text-align: center;">
+        <div class="size_s" style="padding-bottom: 15px;">margin + width = width содержащего блока при <mark>border-box</mark></div>
+        <img style="width: 350px;" src="images/22-margin-math4.png"/>
+    </section>
+    <section data-transition="none" style="font-size: 100%; text-align: center;">
+        <div class="size_s" style="padding-bottom: 15px;">margin + border + padding + height ≠ height содержащего блока</div>
+        <img style="width: 350px;" src="images/23-height.png"/>
+    </section>
+
+    <section>
+        <h2>Ширина и высота</h2>
+        <div class="flex-parent">
+            <div class="fragment">
+                <pre class="flex-parent" style="height: 300px;">
+                    <code>
+div {
+    width: 200px;
+    height: 200px;
+}
+                    </code>
+                </pre>
+                <div style="width: 200px; height: 200px; background: #ffbbd8;"></div>
+            </div>
+            <div class="fragment">
+                <pre class="flex-parent" style="height: 300px;">
+                    <code>
+div {
+    width: 20%;
+    height: 10%;
+}
+                    </code>
+                </pre>
+                <div style="width: 20%; height: 10%; background: #ffbbd8;"></div>
+            </div>
+            <div class="fragment">
+                <pre class="flex-parent" style="height: 300px;">
+                    <code>
+div {
+    width: 5em;
+    height: 5em;
+}
+                    </code>
+                </pre>
+                <div style="width: 5em; height: 5em; background: #ffbbd8;"></div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Ширина и высота</h2>
+        <div class="flex-parent">
+             <pre class="flex-vertical">
+                    <code class="html size_xs">
+<div>
+    <div>
+        I'm waking up<br>
+        I feel it in my bones
+    </div>
+</div>
+                    </code>
+                    <code class="css size_xs">
+div {
+    width: 400px;
+    height: 100px;
+}
+                    </code>
+                </pre>
+
+            <div style="width: 400px; height: 100px; background: #1b91ff; margin-top: 50px;">
+                <div style="background: #78ffee; font-size: 26px; text-align: center;">
+                    I'm waking up<br>
+                    I feel it in my bones
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Ширина и высота</h2>
+        <div class="flex-parent">
+             <pre class="flex-vertical">
+                    <code class="html size_xs">
+<div>
+    <div>
+        Enough to make my system blow<br>
+        Welcome to the new age, to the new age
+    </div>
+</div>
+                    </code>
+                    <code class="css size_xs">
+div {
+    width: 400px;
+    height: 100px;
+}
+
+div div {
+    margin: 0 20px;
+}
+                    </code>
+                </pre>
+            <div style="width: 400px; height: 100px; background: #1b91ff; margin-top: 50px;">
+                <div style="background: #62fff2; font-size: 26px; text-align: center; margin: 0 20px;">
+                    Enough to make my system blow<br>
+                    Welcome to the new age, to the new age
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Ширина и высота</h2>
+        <div class="flex-parent">
+             <pre class="flex-vertical">
+                    <code class="html size_xs">
+<div>
+    <div>
+        Enough to make my system blow<br>
+        Welcome to the new age, to the new age<br>
+        Welcome to the new age, to the new age
+    </div>
+</div>
+                    </code>
+                    <code class="css size_xs">
+div {
+    width: 400px;
+    height: 100px;
+}
+
+div div {
+    margin: 0 20px;
+}
+                    </code>
+                </pre>
+            <div style="width: 400px; height: 100px; background: #1b91ff; margin-top: 50px;">
+                <div style="background: rgba(98,255,242,0.5); font-size: 26px; text-align: center; margin: 0 20px;">
+                    Enough to make my system blow<br>
+                    Welcome to the new age, to the new age<br>
+                    Welcome to the new age, to the new age
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Ширина и высота</h2>
+        <div class="flex-parent">
+             <pre class="flex-vertical">
+                    <code class="html size_xs">
+<div>
+    <div>
+        Пишу тебе из пасмурных краёв<br>
+        Где дождь наполнил город до краёв<br>
+        Водой, в которой всё отражено
+    </div>
+</div>
+                    </code>
+                    <code class="css size_xs">
+div {
+    width: 400px;
+    height: 100px;
+}
+
+div div {
+    height: 100px;
+    margin: 0 20px;
+}
+                    </code>
+                </pre>
+            <div style="width: 400px; height: 100px; background: #1b91ff; margin-top: 50px;">
+                <div style="background: rgba(120,255,238,0.7); font-size: 26px; text-align: center; margin: 0 20px; height: 100px;">
+                    Пишу тебе из пасмурных краёв<br>
+                    Где дождь наполнил город до краёв<br>
+                    Водой, в которой всё отражено
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Ширина и высота</h2>
+        <div class="flex-parent">
+             <pre class="flex-vertical">
+                    <code class="html size_xs">
+<div>
+    <div>
+        I’m bulletproof, nothing to lose<br>
+        Fire away, fire away<br>
+        Ricochet you take your aim
+    </div>
+</div>
+                    </code>
+                    <code class="css size_xs">
+div {
+    width: 400px;
+    height: 100px;
+}
+
+div div {
+    width: 600px;
+    height: 100px;
+    margin: 0 20px;
+}
+                    </code>
+                </pre>
+            <div style="width: 400px; height: 100px; background: #1b91ff; margin-top: 50px;">
+                <div style="background: rgba(98,255,242,0.7); font-size: 26px; text-align: center; margin: 0 20px; height: 100px; width: 600px;">
+                    I’m bulletproof, nothing to lose<br>
+                    Fire away, fire away<br>
+                    Ricochet you take your aim
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Ширина и высота</h2>
+        <div class="flex-vertical">
+             <pre class="flex-parent">
+                    <code class="html size_xs">
+<div>
+    <div>
+        Время остановилось между сказкой и былью,<br>
+        Я стою на холодных плитах,
+        покрытых звёздной пылью.
+    </div>
+</div>
+                    </code>
+                    <code class="css size_xs">
+div {
+    height: 100px;
+}
+
+div div {
+    max-width: 800px;
+    height: 100px;
+    margin: 0 20px;
+}
+                    </code>
+                </pre>
+            <style>
+                @keyframes bigger {
+                    0% { width: 400px; }
+                    100% { width: 1000px;}
+                }
+            </style>
+
+            <div style="height: 100px; background: #1b91ff; margin-top: 50px; animation-name: bigger; animation-duration: 2s;  animation-iteration-count: infinite; animation-direction: alternate; ">
+                <div style="background: rgba(98,255,242,0.7); font-size: 26px; text-align: center; margin: 0 20px; height: 100px; max-width: 600px;">
+                    Время остановилось между сказкой и былью,<br>
+                    Я стою на холодных плитах, покрытых звёздной пылью.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>min/max-width и min/max-height</h2>
+        <style>
+            @keyframes bigger {
+                0% { width: 200px; }
+                100% { width: 1000px;}
+            }
+        </style>
+
+        <div class="fragment" style="height:100px; background: #ffb9ee; margin-top: 50px; animation-name: bigger; animation-duration: 5s;  animation-iteration-count: infinite; animation-direction: alternate;">
+            <div style="background: rgba(134,112,175,0.7); font-size: 26px; text-align: center; margin: 0 20px; height: 100px; max-width: 600px;">
+            </div>
+        </div>
+
+        <div class="fragment" style="height: 100px; background: #ffb9ee; margin-top: 50px; width: 200px;">
+            <div style="background: rgba(134,112,175,0.7); font-size: 26px; text-align: center; margin: 0 20px; height: 100px; max-width: 600px; min-width: 250px;">
+            </div>
+        </div>
+
+        <div class="fragment" style="height: 115px; background: #ffb9ee; margin-top: 50px; width: 200px; overflow: auto;">
+            <div style="background: rgba(134,112,175,0.7); font-size: 26px; text-align: center; margin: 0 20px; height: 100px; max-width: 600px; min-width: 250px;">
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>margin/padding</h2>
+        <div class="flex-parent">
+             <pre class="flex-vertical">
+                    <code class="html size_xs">
+<div>
+    <div>
+        What if I wanted to break<br>
+        Laugh it all off in your face<br>
+        What would you do?
+    </div>
+</div>
+                    </code>
+                    <code class="css size_xs">
+div {
+    width: 400px;
+}
+
+div div {
+    margin: 20px;
+    padding: 50px;
+}
+                    </code>
+                </pre>
+            <div>
+                <div style="width: 400px; background: #1b91ff; margin-top: 50px;">
+                    <div style="background: rgba(120,255,238,0.7); font-size: 26px; text-align: center; margin: 20px; padding: 50px;">
+                        What if I wanted to break<br>
+                        Laugh it all off in your face<br>
+                        What would you do?
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="text-align: center;">
+        <h2>margin/padding</h2>
+        <div class="flex-parent">
+            <div style="font-size: 40px; padding: 25px; text-align: left; font-weight: bold">
+                margin: <span class="fragment" data-fragment-index="1" style="color: #17ff2e;">20px </span>
+                <span class="fragment" data-fragment-index="2" style="color: #3332ff;">10px </span>
+                <span class="fragment" data-fragment-index="3" style="color: #ff255a;">5px </span>
+                <span class="fragment" data-fragment-index="4" style="color: #ff990a;">34px </span>
+                <div class="fragment" data-fragment-index="1" style="padding-top: 20px;">margin-top: 20px;</div>
+                <div class="fragment" data-fragment-index="2">margin-right: 10px;</div>
+                <div class="fragment" data-fragment-index="3">margin-bottom: 5px;</div>
+                <div class="fragment" data-fragment-index="4">margin-left: 34px;</div>
+            </div>
+            <div style="padding: 40px; position: relative; width: 300px; margin: 0 auto;">
+                <div class="fragment" data-fragment-index="1" style="position: absolute; top: 0; left: 185px; height: 10px; width: 10px; background: #17ff2e"></div>
+                <div class="fragment" data-fragment-index="2"  style="position: absolute; right: 0; top: 178px; height: 10px; width: 10px; background: #3332ff"></div>
+                <div class="fragment" data-fragment-index="3" style="position: absolute; bottom: 0; right: 185px; height: 10px; width: 10px; background: #ff255a"></div>
+                <div class="fragment" data-fragment-index="4"  style="position: absolute; left: 0; top: 178px; height: 10px; width: 10px; background: #ff990a"></div>
+                <img src="./images/clock.png" width="300px" />
+            </div>
+        </div>
+    </section>
+
+    <section data-transition="none">
+        <h2>margin/padding</h2>
+        <pre class="css flex-vertical" style="font-size: 70px;">
+<code>        top    right   bottom   left</code>
+<code>margin: 2px    30px    400px    5000px;</code>
+<code class="fragment">margin: 2px    30px    400px /* 30px */;</code>
+<code class="fragment">margin: 2px    30px /* 2px      30px */;</code>
+<code class="fragment">margin: 2px /* 2px     2px      2px  */;</code>
+                </pre>
+    </section>
+
+    <section>
+        <h1>Процентные значения</h1>
+    </section>
+
+    <section data-transition="none">
+        <ul class="size_m">
+            <li>ширина, заданная в процентах, считается относительно ширины содержащего блока</li>
+        </ul>
+                <pre class="css list-border size-s"><code>
+div div {
+    width: 50%;
+}
+                </code></pre>
+        <div class="size_s" style="background: #8670af; border: 1px solid white;">
+            <div style="color: #fff; background: rgba(0, 0, 255, 0.5); height: 50%; width: 50%;">
+                Построив свой дом на пороге луны,<br>
+                Живу без часов, без газет и без книг.
+            </div>
+        </div>
+    </section>
+    <section data-transition="none">
+        <ul class="size_m">
+            <li>высота, заданная в процентах, считается относительно высоты содержащего блока, но только если она задана явно</li>
+        </ul>
+        <div class="flex-parent">
+             <pre class="css list-border size-s" style="width: 300px;"><code>
+div {
+    height: 400px;
+}
+div div {
+    height: 50%;
+    width: 50%;
+}
+                </code></pre>
+            <div class="size_s" style="background: #8670af; height: 400px; border: 1px solid white;"><div style="color: #fff; background: rgba(0, 0, 255, 0.5); height: 50%; width: 50%;">
+                Никого не будет в доме. Кроме сумерек.<br>
+                Один зимний день в сквозном проеме
+            </div></div>
+        </div>
+    </section>
+
+    <section data-transition="none">
+        <ul class="size_m">
+            <li>высота, заданная в процентах, считается относительно высоты содержащего блока, но только если она задана явно</li>
+        </ul>
+        <div class="flex-parent">
+             <pre class="css list-border size-s" style="width: 300px;"><code>
+div {
+}
+div div {
+    height: 50%;
+    width: 50%;
+}
+                </code></pre>
+            <div class="size_s" style="background: #8670af; border: 1px solid white; height: 252px;"><div style="color: #fff; background: rgba(0, 0, 255, 0.5); width: 50%;">
+                Никого не будет в доме. Кроме сумерек.<br>
+                Один зимний день в сквозном проеме<br>
+                Незадернутых гардин
+            </div></div>
+        </div>
+    </section>
+
+    <section>
+        <ul class="size_m">
+            <li>margin-left/right и padding-left/right, заданные в процентах, считаются относительно ширины содержащего блока</li>
+            <li class="fragment">margin-top/bottom и padding-top/bottom, заданные в процентах, считаются относительно <mark class="blue">ширины</mark> содержащего блока</li>
+        </ul>
+    </section>
+
+    <section data-transition="none">
+                <pre class="css list-border ize-s"><code>
+div div {
+    margin: 10%;
+    padding: 10%;
+}
+                </code></pre>
+        <div style="background: #8670af; width: 800px; height: 400px; border: 1px solid white; animation-name: bigger; animation-duration: 2s;  animation-iteration-count: infinite; animation-direction: alternate;"><div class="size_s" style="color: #fff; background: rgba(0, 0, 255, 0.5); margin: 10%; padding: 10%;">
+            И где-то хлопнет дверь,<br>
+            И дрогнут провода<br>
+            Привет! Мы будем счастливы теперь<br>
+            И навсегда.
+        </div></div>
+    </section>
+
+    <section data-transition="none">
+        <h2>border</h2>
+        <pre class="css size-s list-border"><code>
+border: <размер> <тип> <цвет>;</code>
+<code class="fragment">border-left: <размер> <тип> <цвет>;</code>
+<code class="fragment">border-width: <размер> <размер> <размер> <размер>;
+border-type: <тип> <тип> <тип> <тип>;
+border-color: <цвет> <цвет> <цвет> <цвет>;</code>
+<code class="fragment">border-left-width: <размер>;
+border-left-type: <тип>;
+border-left-color: <цвет>;</code>
+</pre>
+    </section>
+
+    <section data-transition="none">
+        <h2>border</h2>
+        <pre class="css size-l"><code>
+div {
+    border: 20px dotted blue;
+}
+                </code></pre>
+
+        <div style="border: 20px dotted blue;">Some text</div>
+    </section>
+
+    <section data-transition="none">
+        <h2>border</h2>
+        <pre class="css size-l"><code>
+div {
+    border: 20px dashed blue;
+}
+                </code></pre>
+
+        <div style="border: 20px dashed blue;">Some text</div>
+    </section>
+    <section data-transition="none">
+        <h2>border</h2>
+        <pre class="css size-l"><code>
+div {
+    border: 20px solid blue;
+}
+                </code></pre>
+
+        <div style="border: 20px solid blue;">Some text</div>
+    </section>
+    <section data-transition="none">
+        <h2>border</h2>
+        <pre class="css size-l"><code>
+div {
+    border-width: 20px;
+    border-style: solid;
+    border-color: blue red;
+}
+                </code></pre>
+
+        <div style="border-width: 20px; border-style: solid; border-color: blue red;">Some text</div>
+    </section>
+    <section data-transition="none">
+        <h2>border</h2>
+        <pre class="css size-l"><code>
+div {
+    border-width: 40px 20px;
+    border-style: solid dotted;
+    border-color: blue red;
+}
+                </code></pre>
+
+        <div style="border-width: 40px 20px; border-style: solid dotted; border-color: blue red;">Some text</div>
+    </section>
+
+    <section>
+        <h1>Перерыв</h1>
+        <img src="./images/panda.jpg" style="max-width: 100%;">
+    </section>
+
+    <section data-transition="none">
+        <h2>Нетривиальная математика блочных элементов</h2>
+        <ul class="size_s">
+            <li>margin + border + padding + width = <br/>width содержащего блока</li>
+            <li class="fragment">margin + width = <br/>width содержащего блока - border - padding</li>
+            <li class="fragment">border/padding: либо заданы, либо auto = 0</li>
+            <li class="fragment">width либо задан, либо вычисляется</li>
+            <li class="fragment">если margin не задан, значит он равен 0, если margin задан в auto, то он вычисляется</li>
+        </ul>
+    </section>
+
+    <section data-transition="none">
+        <pre class="css size-s">
+<code>
+.wrapper {
+    width: 666px;
+    padding: 10px 0;
+}
+.inner { } </code>
+                </pre>
+        <div style="background: #8670af; padding: 10px 0; width: 666px;">
+            <div style="background: rgba(255,185,238,0.5); height: 50px"></div>
+        </div>
+    </section>
+    <section data-transition="none">
+        <pre class="css size-m">
+<code>
+.wrapper {
+    width: 666px;
+    padding: 10px 0;
+}
+.inner { } </code>
+                </pre>
+        <div style="background: #8670af; padding: 10px 0; width: 666px;">
+            <div class="size_s" style="background: rgba(255,185,238,0.5);"><span style="white-space: nowrap;">
+                Путник милый, ты далече, но с тобой я говорю. В небесах зажглися свечи <br>
+                Провожающих зарю.
+            </div>
+        </div>
+    </section>
+    <section data-transition="none">
+        <pre class="css size-s">
+<code>
+.wrapper { width: 666px; }
+.inner { margin-left: 500px; }</code>
+                </pre>
+        <div class="size_s" style="background: #8670af; padding: 10px 0; width: 666px;">
+            <div style="background: rgba(255,185,238,0.5); margin-left: 500px">Мне жаль</div>
+        </div>
+        <div class="fragment size_s" style="padding-top: 40px;">margin + width = width содержащего блока - border - padding</div>
+        <div class="fragment size_s" style="padding-top: 20px;">500px + [166px] = 666px</div>
+    </section>
+    <section data-transition="none">
+        <pre class="css size-s">
+<code>
+.wrapper { width: 666px; }
+.inner {
+    margin-left: 500px;
+    margin-right: 66px;
+}</code>
+                </pre>
+        <div class="size_s" style="background: #8670af; padding: 10px 0; width: 666px;">
+            <div style="background: rgba(255,185,238,0.5); margin-left: 500px; margin-right: 66px;">что тебя не застал</div>
+        </div>
+        <div class="fragment size_s" style="padding-top: 40px;">margin + width = width содержащего блока - border - padding</div>
+        <div class="fragment size_s" style="padding-top: 20px;">500px + 66px + [100px] = 666px</div>
+    </section>
+
+    <section data-transition="none">
+        <pre class="css size-s">
+<code>
+.wrapper { width: 666px; }
+.inner { width: 300px; }</code>
+                </pre>
+        <div class="size_s" style="background: #8670af; padding: 10px 0; width: 666px;">
+            <div style="background: rgba(255,185,238,0.5); width: 300px;">летний ливень</div>
+        </div>
+        <div class="fragment size_s" style="padding-top: 40px;">если margin не задан, значит он равен 0, если margin задан в auto, то он вычисляется</div>
+    </section>
+
+    <section data-transition="none">
+        <pre class="css size-s">
+<code>
+.wrapper { width: 666px; }
+.inner {
+    width: 300px;
+    margin-right: 0;
+}</code>
+                </pre>
+        <div class="size_s" style="background: #8670af; padding: 10px 0; width: 666px;">
+            <div style="background: rgba(255,185,238,0.5); width: 300px; margin-right: 0;">в июльскую ночь</div>
+        </div>
+        <h2 class="fragment size_s" style="text-align: left; margin-top: 30px;">если margin не задан, значит он равен 0, если margin задан в auto, то он вычисляется</h2>
+    </section>
+
+    <section data-transition="none">
+        <pre class="css size-m">
+<code>
+.wrapper { width: 666px; }
+.inner {
+    width: 300px;
+    margin-left: auto
+} </code>
+                </pre>
+        <div class="size_s" style="background: #8670af; padding: 10px 0; width: 666px;">
+            <div style="background: rgba(255,185,238,0.5); width: 300px; margin-left: auto;">на Балтийском заливе.</div>
+        </div>
+        <h2 class="fragment size_s" style="text-align: left; margin-top: 30px;">если margin не задан, значит он равен 0, если margin задан в auto, то он вычисляется</h2>
+        <div class="fragment size_s">margin + width = width содержащего блока - border - padding</div>
+        <div class="fragment size_s" style="padding-top: 20px;">[366px] + 300px = 666px</div>
+    </section>
+    <section data-transition="none">
+        <pre class="css size-m">
+<code>
+.wrapper { width: 666px; }
+.inner {
+    width: 300px;
+    margin: 0 auto
+} </code>
+                </pre>
+        <div class="size_s" style="background: #8670af; padding: 10px 0; width: 666px;">
+            <div style="background: rgba(255,185,238,0.5); width: 300px; margin: 0 auto;">Не видела ты</div>
+        </div>
+        <h2 class="fragment size_s" style="text-align: left; margin-top: 30px;">если margin не задан, значит он равен 0, если margin задан в auto, то он вычисляется</h2>
+        <div class="fragment size_s">margin + width = width содержащего блока - border - padding</div>
+        <div class="fragment size_s" style="padding-top: 20px;">[183px] + [183px] + 300px = 666px</div>
+    </section>
+
+
+    <section data-transition="none">
+        <pre class="css size-m">
+<code>
+.wrapper { width: 666px; }
+.inner { margin-right: -100px; }</code>
+                </pre>
+        <div class="size_s" style="background: #8670af; padding: 10px 0; width: 666px;">
+            <div style="background: rgba(255,185,238,0.5); margin-right: -100px; text-align: right">волшебства</div>
+        </div>
+        <div class="fragment size_s" style="padding-top: 40px;">margin + width = width содержащего блока - border - padding</div>
+        <div class="fragment size_s" style="padding-top: 20px;">-100px + [766px] = 666px</div>
+    </section>
+
+    <section data-transition="none">
+        <pre class="css size-m">
+<code>
+.wrapper { width: 666px; }
+.inner {
+    margin-right: -100px;
+    margin-left: -100px;
+}</code>
+                </pre>
+        <div class="size_s" style="background: #8670af; padding: 10px 0; width: 666px;">
+            <div style="background: rgba(255,185,238,0.5); margin-right: -100px;margin-left: -100px; text-align: left">этих</div>
+        </div>
+        <div class="fragment size_s" style="padding-top: 40px;">margin + width = width содержащего блока - border - padding</div>
+        <div class="fragment size_s" style="padding-top: 20px;">[866px] - 100px - 100px = 666px</div>
+    </section>
+
+    <section data-transition="none">
+        <pre class="css size-m">
+<code>
+.wrapper { width: 666px; }
+.inner {
+    width: 50%;
+    margin-left: auto;
+    margin-right: -100px;
+}</code>
+                </pre>
+        <div class="size_s" style="background: #8670af; padding: 10px 0; width: 666px;">
+            <div style="background: rgba(255,185,238,0.5); width: 50%; margin-left: auto; margin-right: -100px; text-align: left">линий.</div>
+        </div>
+    </section>
+
+    <section data-transition="none">
+        <h2>Схлопывание отступов</h2>
+        <pre class="css size-m">
+<code data-fragment-index="1" class="fragment">.first { margin-bottom: 30px; }</code>
+<code style="margin-top: -68px;" data-fragment-index="2" class="fragment">.second { margin-top: 60px; }</code>
+                </pre>
+        <div class="size_s" style="display: flex; justify-content: space-around; color: #000;">
+            <div style="width: 30%">
+                <h3 class="fragment" data-fragment-index="1">Блоки</h3>
+                <div data-fragment-index="1" class="fragment" style="background: red; padding-bottom: 30px; background: #FACD99">
+                    <div style="background: #A0C4E8;" >That's the price you pay</div>
+                </div>
+
+                <div data-fragment-index="2" class="fragment" style="background: red; margin-top: 10px; padding-top: 60px; background: #FACD99">
+                    <div style="background: #A0C4E8;" >Leave behind your heartache, cast away</div>
+                </div>
+            </div>
+            <div data-fragment-index="3"  class="fragment" style="width: 30%">
+                <h3>Ожидание</h3>
+                <div style="background: red; padding-bottom: 30px; background: #FACD99">
+                    <div style="background: #A0C4E8;" >That's the price you pay</div>
+                </div>
+
+                <div style="background: red; padding-top: 60px; background: #FACD99">
+                    <div style="background: #A0C4E8;" >Leave behind your heartache, cast away</div>
+                </div>
+            </div>
+            <div data-fragment-index="4"  class="fragment" style="width: 30%">
+                <h3>Реальность</h3>
+                <div style="background: red; padding-bottom: 30px; background: #FACD99">
+                    <div style="background: #A0C4E8;" >That's the price you pay</div>
+                </div>
+
+                <div style="background: red; margin-top: -30px; padding-top: 60px; background: #FACD99">
+                    <div style="background: #A0C4E8;" >Leave behind your heartache, cast away</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section data-transition="none">
+                <pre class="css size-m">
+<code class="fragment" data-fragment-index="1">.inner { margin-top: 30px; }</code>
+                </pre>
+        <div class="size_s" style="display: flex; justify-content: space-around;">
+            <div style="width: 30%">
+                <h3>Блоки</h3>
+                <div style="background: #A0C4E8; height: 200px;" ></div>
+
+                <div class="fragment" data-fragment-index="1" style="margin-top: 30px; background: rgba(255,0,0,0.5)">Я, конечно, еще спою на прощанье, но покину твой дом — с лучом рассвета.</div>
+            </div>
+            <div class="fragment" data-fragment-index="2" style="width: 30%">
+                <h3>Ожидание</h3>
+                <div style="padding-top: 30px; background: #A0C4E8; height: 200px;" ><div style="background: rgba(255,0,0,0.5)">Я, конечно, еще спою на прощанье, но покину твой дом — с лучом рассвета.</div></div>
+            </div>
+            <div class="fragment" data-fragment-index="3" style="width: 30%">
+                <h3>Реальность</h3>
+                <div style="margin-top: 30px; background: #A0C4E8; height: 200px;" ><div style="background: rgba(255,0,0,0.5)">Я, конечно, еще спою на прощанье, но покину твой дом — с лучом рассвета.</div></div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <h2>Высчитывание результирующего margin'а</h2>
+        <div class="size_s">Если у двух блочных элементов, пересекаются margin'ы, то</div>
+        <ol class="size_s" style="margin-bottom: 30px;">
+            <li>Берутся максимальный и минимальный среди всех margin'ов</li>
+            <li>Если максимальный &lt; 0, то максимум &mdash; 0</li>
+            <li>Если минимальный > 0, то минимум &mdash; 0.</li>
+            <li>Результирующий margin = max + min</li>
+        </ol>
+        <div class="foot-link size_s"><a href="http://www.w3.org/TR/CSS2/box.html#collapsing-margins">http://www.w3.org/TR/CSS2/box.html#collapsing-margins</a></div>
+    </section>
+    <section data-transition="none">
+                <pre class="css size-m">
+<code>
+.first { margin-bottom: 60px; }
+.second { margin-top: 100px; }</code>
+                </pre>
+        <div class="size_s" style="display: flex; justify-content: space-around; color: #000;">
+            <div style="width: 30%">
+                <div style="background: red; padding-bottom: 60px; background: #FACD99">
+                    <div style="background: #A0C4E8;" >Жизнь водоем и ты будешь вечно</div>
+                </div>
+
+                <div style="background: red; margin-top: 10px; padding-top: 100px; background: #FACD99">
+                    <div style="background: #A0C4E8;" >В сердце моем. Все быстротечно</div>
+                </div>
+            </div>
+            <div class="fragment" style="width: 30%">
+                <div style="background: red; padding-bottom: 60px; background: #FACD99">
+                    <div style="background: #A0C4E8;" >
+                        Жизнь водоем и ты будешь вечно
+                    </div>
+                </div>
+
+                <div style="background: red; margin-top: -60px; padding-top: 100px; background: #FACD99">
+                    <div style="background: #A0C4E8;" >В сердце моем. Все быстротечно</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section data-transition="none">
+                <pre class="css size-m">
+<code>
+.first { margin-bottom: 60px; }
+.second { margin-top: -60px; }</code>
+                </pre>
+        <div class="size_s" style="display: flex; justify-content: space-around; color: #000;">
+            <div style="width: 30%">
+                <div style="background: red; padding-bottom: 60px; background: #FACD99">
+                    <div style="background: #A0C4E8;" >Коронована луной,</div>
+                </div>
+
+                <div style="background: red; margin-top: 10px;  background: #FACD99">
+                    <div style="background: #A0C4E8; position: relative;" ><div style="position: absolute; height: 60px; width: 100%;background: #FACD99; opacity: 0.5; "></div><span style="position: relative;">Как начало - высока,</span></div>
+                </div>
+            </div>
+            <div class="fragment" style="width: 30%">
+                <div style="background: red; padding-bottom: 60px; background: #FACD99">
+                    <div style="background: #A0C4E8;" >Коронована луной,</div>
+                </div>
+
+                <div style="background: red; margin-top: -60px; background: #FACD99">
+                    <div style="background: #A0C4E8; position: relative;" ><div style="position: absolute; height: 60px; width: 100%;background: #FACD99; opacity: 0.5; "></div><span style="position: relative;"> Как начало - высока,</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section data-transition="none">
+                <pre class="css size-m">
+<code>
+.first { margin-bottom: 60px; }
+.second { margin-top: -80px; }</code>
+                </pre>
+        <div class="size_s" style="display: flex; justify-content: space-around; color: #000;">
+            <div style="width: 30%">
+                <div style="background: red; padding-bottom: 60px; background: #FACD99">
+                    <div style="background: #A0C4E8;" >Как победа - не со мной,</div>
+                </div>
+
+                <div style="background: red; margin-top: 10px;  background: #FACD99">
+                    <div style="background: #A0C4E8; position: relative;" ><div style="position: absolute; height: 80px; width: 100%;background: #FACD99; opacity: 0.5; "></div><span style="position: relative;">Как надежда - нелегка.</span></div>
+                </div>
+            </div>
+            <div class="fragment" style="width: 30%">
+                <div style="background: red; padding-bottom: 60px; background: #FACD99">
+                    <div style="background: #A0C4E8;" >Как победа - не со мной,</div>
+                </div>
+
+                <div style="background: red; margin-top: -80px; background: #FACD99">
+                    <div style="background: #A0C4E8; position: relative;" ><div style="position: absolute; height: 80px; width: 100%;background: #FACD99; opacity: 0.5; "></div><span style="position: relative;">Как надежда - нелегка.</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Типы боксов</h2>
+        <ul class="size_s">
+            <li class="fragment">блочного уровня</liт>
+            <li class="fragment">строчного уровня (inline)</li>
+        </ul>
+    </section>
+
+    <section>
+        <h1>Боксы строчного уровня</h1>
+    </section>
+
+    <section>
+        <h2>Боксы строчного уровня</h2>
+        <p class="size_s fragment" style="text-align: left;">Строчные элементы генерирует бокс(ы) строчного уровня.</p>
+        <p class="size_s fragment" style="text-align: left; font-weight: bold;">Строчные элементы по-умолчанию:</p>
+        <ul class="size_s fragment">
+            <li>b, big, i, small, tt</li>
+            <li>abbr, acronym, cite, code, dfn, em, kbd, strong, samp, var</li>
+            <li>a, bdo, br, img, map, object, q, script, span, sub, sup</li>
+            <li>button, input, label, select, textarea</li>
+        </ul>
+        <p class="size_s fragment" style="text-align: left; font-weight: bold;">CSS-свойство:</p>
+        <p class="size_s fragment" style="text-align: left;">display: inline, inline-block, inline-table</p>
+    </section>
+
+    <section>
+        <h2>Боксы строчного уровня</h2>
+        <ul class="size_m">
+            <li>Выглядят как строки</li>
+            <li class="fragment">Выстраиваются слева направо, сверху вниз</li>
+            <li class="fragment">Участвуют в строчном контексте форматирования</li>
+            <li class="fragment">Могут создать вокруг себя анонимные строчные боксы</li>
+        </ul>
+    </section>
+
+    <section>
+            <pre class="html size-s">
+<code><div>
+Some inline
+text <span>followed
+by a span</span>
+followed by
+more inline text.</div></code></pre>
+        <div class="fragment" style="text-align: left">
+            <div class="size-s">Some inline text <span><mark class="fragment green">followed by a span</mark></span> followed by more inline text.</div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Математика inline элементов</h2>
+        <ul class="size_m">
+            <li>не реагирует на ширину и высоту</li>
+            <li class="fragment">не реагирует на вертикальные margin'ы</li>
+            <li class="fragment">padding'и не затрагивают высоту строки</li>
+        </ul>
+    </section>
+
+    <section data-transition="none">
+        <div class="flex-parent">
+                <pre class="css size-xl">
+<code>span {
+    height: 200px;
+    padding: 20px;
+}</code>
+                </pre>
+        <pre class="css size-xl">
+<code class="fragment" data-fragment-index="2">span {
+    background: #ffb9ee;
+    height: 200px;
+    padding: 20px;
+}</code>
+                </pre>
+    </div>
+        <div class="size_s" style="display: flex; justify-content: space-between;">
+            <div style="background: #ffb9ee; width: 666px;; text-align: left; width: 33%;">
+                <span style="color: #000; color: #fff">Just tonight I will see it’s all because of me. Just tonight I will stay and we’ll throw it all away</span>
+            </div>
+            <div class="fragment" data-fragment-index="1" style="background: #ffb9ee; width: 666px;; text-align: left; width: 33%;">
+                <span class="inline-example" style="background: rgba(0, 0, 255, 0.5); color: #fff; height: 200px; padding: 20px; ">Just tonight I will see it’s all because of me. Just tonight I will stay and we’ll throw it all away</span>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Математика строчных элементов</h2>
+        <ul class="size_m">
+            <li>реагирует на ширину и высоту</li>
+            <li class="fragment">реагирует на вертикальные margin'ы</li>
+            <li class="fragment">padding'и затрагивают высоту строки</li>
+            <li class="fragment">создаёт внутри себя новый блочный контекст</li>
+        </ul>
+    </section>
+    <section data-transition="none">
+                <pre class="css size-s flex-parent" style="height: 370px;">
+<code>
+.wrapper { width: 500px; }
+.inner {
+    width: 50%;
+    height: 120px;
+    margin: 20px 0;
+}</code>
+
+                <code>
+.wrapper { width: 500px; }
+.inner {
+    display: inline-block;
+    width: 50%;
+    height: 120px;
+    margin: 20px 0;
+}
+                </code>
+                </pre>
+        <div class="size_s" style="display: flex; justify-content: space-between;">
+            <div class="fragment" style="height: 270px; width: 45%; background: #8670af; text-align: left">
+                <span style="color: #fff; background: rgba(255,185,238,0.5); height: 120px; width: 50%; margin: 20px 0; padding: 2px 0;">Будем заново учиться ходить по небу, никаких светофоров, разделительных полос.</span>
+            </div>
+            <div class="fragment" style="height: 270px; width: 35%; background: #8670af; text-align: left">
+                <span style="color: #fff; display: inline-block; background: rgba(255,185,238,0.5); width: 50%; height: 120px;  margin: 20px 0; padding: 2px 0;">И где бы я ни был, где бы я ни был</span> иди на мой голос, иди на мой голос
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Итог</h2>
+        <ul class="size_s" style="font-weight: bold;">
+            <li class="fragment">Элементы на странице отображаются в виде боксов</li>
+            <li class="fragment">Каждый бокс имеет контентную часть (content), отступы (padding и margin) и границу (border)</li>
+            <li class="fragment">Боксы бывают двух видов - блочного уровня и строчного уровня</li>
+            <li class="fragment">Для блочных боксов размеры и отступы можно задать либо явно, либо оставить вычисляемыми</li>
+            <li class="fragment">Строчные боксы не будут реагировать на заданные ширину, высоту и вертикальные отступы</li>
+            <li class="fragment">Элемент можно сделать строчным или блочным, используя CSS-свойство display</li>
+            <li class="fragment">inline-block элементы - строчные элементы, обладающие свойствами блочного</li>
+        </ul>
+    </section>
+
+</section></div><script src="../../@lib/core.js"></script></body></html>
