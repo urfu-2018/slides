@@ -1,0 +1,1104 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Прототипы</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+</head>
+<body class="white"><div class="reveal"><div class="slides">
+
+<section class="center">
+    <h1>Прототипы</h1>
+</section>
+
+<section>
+    <h2>Объект</h2>
+    <pre><code data-trim>
+    const student = {
+        name: 'Billy'
+    };
+    </code></pre>
+</section>
+
+<section>
+    <h2>Методы объекта</h2>
+    <pre><code data-trim>
+    const student = {
+        name: 'Billy',
+        getName: function () {
+            return this.name;
+        },
+        sleep: function () {}
+    };
+
+    student.getName();
+    // Billy
+    </code></pre>
+</section>
+
+<section>
+    <h2>Методы объекта</h2>
+    <pre><code data-trim>
+    const student = {
+        name: 'Billy',
+        getName: () => {
+            return this.name;
+        },
+        sleep: () => {}
+    };
+
+    student.getName();
+    // ?
+    </code></pre>
+</section>
+
+<section>
+    <h2>Методы объекта</h2>
+    <pre><code data-trim>
+    const student = {
+        name: 'Billy',
+        getName() {
+            return this.name;
+        },
+        sleep() {}
+    };
+
+    student.getName();
+    // Billy
+    </code></pre>
+</section>
+
+<section>
+    <h2>&nbsp;</h2>
+    <div class="code-two-columns"><pre><code data-trim data-noescape>
+        const student = {
+            name: 'Billy',
+            getName() {
+                return this.name;
+            },
+            sleep() {}
+        };
+    </code></pre><pre><code data-trim data-noescape>
+        const lecturer = {
+            name: 'Sergey',
+            getName() {
+                return this.name;
+            },
+            talk() {}
+        };
+    </code></pre></div>
+</section>
+
+<section>
+    <h2>&nbsp;</h2>
+    <div class="code-two-columns"><pre><code data-trim data-noescape>
+    const student = {
+        name: 'Billy',
+        <del>getName() {</del>
+            <del>return this.name;</del>
+        <del>},</del>
+        sleep() {}
+    };
+    </code></pre><pre><code data-trim data-noescape>
+        const lecturer = {
+            name: 'Sergey',
+            <del>getName() {</del>
+                <del>return this.name;</del>
+            <del>},</del>
+            talk() {}
+        };
+        </code></pre></div>
+    <div class="code-center"><pre><code data-trim>
+    const person = {
+        getName() {
+            return this.name;
+        }
+    };
+    </code></pre></div>
+</section>
+
+<section class="center">
+    <p>Задача – научить <strong>student</strong> пользоваться общим кодом, который вынесли в <strong>person</strong></p>
+</section>
+
+<section>
+    <h2>Заимствование метода</h2>
+    <pre><code data-trim>
+    const student = {
+        name: 'Billy',
+    };
+
+    const person = {
+        getName() {
+            return this.name;
+        }
+    };
+
+    person.getName.call(student);
+    </code></pre>
+    <pre class="fragment" data-fragment-index="1"><code data-trim>
+    // student.getName();
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Для создания такой связи между объектами есть специальное внутреннее поле <strong>[[Prototype]]</strong></p>
+</section>
+
+<section>
+    <h2>[[Prototype]]</h2>
+    <pre><code data-trim data-noescape>
+    const person = {
+        getName() {
+            return this.name;
+        }
+    };
+
+    const student = {
+        name: 'Billy',
+        sleep() {},
+        <strong class="grey">[[Prototype]]: &lt;ссылка на person&gt;</strong>
+    };
+    </code></pre>
+    <pre><code data-trim data-noescape>
+    student.getName();
+    // Billy
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Объект, на который указывает ссылка в <strong class="grey">[[Prototype]]</strong>, называется <strong>прототипом</strong></p>
+</section>
+
+<section class="center">
+    <p>Если у объекта нет собственного метода – интерпретатор ищет его в прототипе</p>
+</section>
+
+<section class="center">
+    <p>При вызове метода объекта в <strong>this</strong> записывается ссылка на этот объект,<br> а не на прототип</p>
+</section>
+
+<section>
+    <h2>[[Prototype]]</h2>
+    <pre><code data-trim data-noescape>
+    const person = {
+        getName() {
+            return this.name;
+        }
+    };
+
+    const student = {
+        name: 'Billy',
+        sleep() {},
+        <strong class="grey">[[Prototype]]: &lt;ссылка на person&gt;</strong>
+    };
+    </code></pre>
+    <pre><code data-trim data-noescape>
+    student.getName();
+    // Billy
+    </code></pre>
+</section>
+
+<section>
+    <h2><span>setPrototypeOf</span></h2>
+    <pre><code data-trim data-noescape>
+    const person = {
+        getName() {
+            return this.name;
+        }
+    };
+
+    const student = {
+        name: 'Billy',
+        sleep() {}
+    };
+
+    Object.setPrototypeOf(student, person);
+
+    student.getName(); // Billy
+    </code></pre>
+</section>
+
+<section>
+    <h2><span>Цепочка прототипов</span></h2>
+    <pre><code data-trim data-noescape>
+        const creature = {
+            getName() { return this.name; }
+        };
+    </code></pre>
+    <pre><code data-trim data-noescape>
+        const person = {
+            <strong class="grey">[[Prototype]]: &lt;сreature&gt;</strong>
+        };
+    </code></pre>
+    <pre><code data-trim data-noescape>
+        const student = {
+            name: 'Billy',
+            <strong class="grey">[[Prototype]]: &lt;person&gt;</strong>
+        };
+    </code></pre>
+    <pre class="javascript"><code data-trim data-noescape>
+        student.getName();
+    </code></pre>
+</section>
+
+<section>
+    <h2>Когда поиск остановится?</h2>
+    <pre><code data-trim data-noescape>
+        const creature = {};
+    </code></pre>
+    <pre><code data-trim data-noescape>
+        const person = {
+            <strong class="grey">[[Prototype]]: &lt;сreature&gt;</strong>
+        };
+    </code></pre>
+    <pre><code data-trim data-noescape>
+        const student = {
+            <strong class="grey">[[Prototype]]: &lt;person&gt;</strong>
+        };
+    </code></pre>
+    <pre class="javascript"><code data-trim data-noescape>
+        student.getName();
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Интепретатор будет идти по цепочке прототипов
+    в поиске поля, пока не встретит <strong>null</strong>
+    в поле <strong class="grey">[[Prototype]]</strong></p>
+</section>
+
+<section>
+    <h2>Object.prototype</h2>
+    <pre><code data-trim data-noescape>
+        const creature = {
+            <strong class="grey">[[Prototype]]: &lt;Object.prototype&gt;</strong>
+        };
+    </code></pre>
+    <pre><code data-trim data-noescape>
+        const person = {
+            <strong class="grey">[[Prototype]]: &lt;сreature&gt;</strong>
+        };
+    </code></pre>
+    <pre><code data-trim data-noescape>
+        const student = {
+            <strong class="grey">[[Prototype]]: &lt;person&gt;</strong>
+        };
+    </code></pre>
+    <pre class="javascript"><code data-trim data-noescape>
+        student.getName();
+    </code></pre>
+</section>
+
+<section class="center">
+    <p><strong>Object.prototype</strong> – прототип для всех объектов по умолчанию. Cодержит общие методы для всех объектов.</p>
+</section>
+
+<section>
+    <h2>Object.prototype<strong>.hasOwnProperty()</strong></h2>
+    <pre><code data-trim>
+        Object.prototype = {
+            hasOwnProperty() {}
+        };
+    </code></pre>
+    <pre><code data-trim data-noescape>
+        const student = {
+            name: 'Billy'
+        };
+    </code></pre>
+    <pre class="javascript"><code data-trim>
+    student.hasOwnProperty('name');
+    // true
+
+    student.hasOwnProperty('age');
+    // false
+    </code></pre>
+</section>
+
+<section>
+    <h2>Когда поиск остановится?</h2>
+    <pre class="javascript"><code data-trim data-noescape>
+        Object.prototype = { <strong class="grey">[[Prototype]]: null</strong> };
+    </code></pre>
+    <pre><code data-trim data-noescape>
+        const creature = { <strong class="grey">[[Prototype]]: &lt;Object.prototype&gt;</strong> };
+    </code></pre>
+    <pre><code data-trim data-noescape>
+        const person = { <strong class="grey">[[Prototype]]: &lt;сreature&gt;</strong> };
+    </code></pre>
+    <pre><code data-trim data-noescape>
+        const student = { <strong class="grey">[[Prototype]]: &lt;person&gt;</strong> };
+    </code></pre>
+    <pre class="javascript"><code data-trim data-noescape>
+        student.getName(); <span class="red fragment" data-fragment-index=1>TypeError: student.getName is not a function</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Array.prototype</h2>
+    <pre ><code data-trim data-noescape>
+    Array.prototype = {
+        concat() {},
+        slice() {},
+        splice() {},
+        forEach() {},
+        filter() {},
+        map() {},
+        <strong class="grey">[[Prototype]]: &lt;Object.prototype&gt;</strong>
+    };
+    </code></pre>
+</section>
+
+<section>
+    <h2>Function.prototype</h2>
+    <pre ><code data-trim  data-noescape>
+    Function.prototype = {
+        call() {},
+        apply() {},
+        bind() {},
+        <strong class="grey">[[Prototype]]: &lt;Object.prototype&gt;</strong>
+    };
+    </code></pre>
+</section>
+
+<section class="center">
+    <img src="images/prototypes-chains.svg" width="100%">
+</section>
+
+<section>
+    <h2>Цикл в цепочке прототипов</h2>
+    <pre><code data-trim data-noescape>
+    const student = {};
+    const person = {};
+
+    Object.setPrototypeOf(student, person);
+    Object.setPrototypeOf(person, student); <span class="red fragment" data-fragment-index=1>Error</span>
+
+    student.getName();
+    </code></pre>
+    <p class="red fragment" data-fragment-index=1>TypeError: Cyclic __proto__ value</p>
+</section>
+
+<section>
+    <h2>setPrototypeOf</h2>
+    <pre><code data-trim data-noescape>
+    const student = {};
+    const person = {};
+
+    Object.setPrototypeOf(student, person);
+    </code></pre>
+    <pre class="fragment javascript" data-fragment-index=1><code data-trim data-noescape>
+    Object.setPrototypeOf(student, null);
+    </code></pre>
+    <pre class="fragment javascript" data-fragment-index=2><code data-trim data-noescape>
+    Object.setPrototypeOf(student, 42); <span class="red fragment" data-fragment-index=2>Error</span>
+    <span class="red"></span>
+    </code></pre>
+    <p class="red fragment" data-fragment-index=2>TypeError: Object prototype may only be an Object or null</p>
+</section>
+
+<section>
+    <h2>getPrototypeOf</h2>
+    <pre><code data-trim data-noescape>
+    const student = {};
+    const person = {};
+
+    Object.setPrototypeOf(student, person);
+    </code></pre><pre><code data-trim data-noescape>
+    Object.getPrototypeOf(student) === person; // true
+    </code></pre><pre class="javascript"><code data-trim data-noescape>
+    Object.getPrototypeOf(Object.prototype) === null; // true
+    </code></pre>
+</section>
+
+<section>
+    <h2>create</h2>
+    <pre><code data-trim>
+    const person = {
+        getName() {
+            return this.name;
+        }
+    };
+
+    const student = Object.create(person);
+
+    student.name = 'Billy';
+    </code></pre>
+</section>
+
+<section>
+    <h2>create</h2>
+    <pre><code data-trim>
+    const person = {
+        getName() {
+            return this.name;
+        }
+    };
+
+    const student = Object.create(person, {
+        name: { value: 'Billy' }
+    });
+    </code></pre>
+</section>
+
+<section class="center">
+    <p><strong>create</strong> быстрее, чем <strong>setPrototypeOf</strong></p>
+</section>
+
+<section>
+    <h2>super</h2>
+    <pre><code data-trim>
+    const person = {
+        getName() { return this.name; }
+    };
+
+    const student = {
+        name: 'Billy',
+        getName() { return 'Student ' + super.getName(); }
+    };
+
+    Object.setPrototypeOf(student, person)
+
+    student.getName(); // Student Billy
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>При создании метода, его внутреннее поле <strong class="grey">[[HomeObject]]</strong> заполняется ссылкой на объект, в котором он определён</p>
+</section>
+
+<section class="center">
+    <p><strong>super</strong> ссылается на прототип объекта<br> из поля <strong class="grey">[[HomeObject]]</strong></p>
+</section>
+
+<section>
+    <h2>В виде псевдокода</h2>
+    <pre><code data-trim data-noescape>
+        student.getName.<strong class="grey">[[HomeObject]]</strong> == student;
+
+        super == Object.getPrototypeOf(student.getName.<strong class="grey">[[HomeObject]]</strong>);
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>У обычных полей-функций<br>  <strong class="grey">[[HomeObject]]</strong> не заполняется</p>
+</section>
+
+<section>
+    <h2>super</h2>
+    <pre><code data-trim data-noescape>
+    const person = {
+        getName() { return this.name; }
+    };
+
+    const student = {
+        name: 'Billy',
+        getName: function() {
+            return 'Student ' + super.getName(); <span class="red">Error</span>
+        }
+    };
+    </code></pre>
+    <p class="red">SyntaxError: 'super' outside of function or class </p>
+</section>
+
+<section class="center">
+    <p>Значение <strong class="grey">[[HomeObject]]</strong> нельзя изменить</p>
+</section>
+
+<section>
+    <h2>super</h2>
+    <pre><code data-trim>
+    const person = {
+        getName() { return 'and person ' + this.name; }
+    };
+
+    const student = {
+        name: 'Billy',
+        getName() { return 'Student ' + super.getName(); }
+    };
+
+    Object.setPrototypeOf(student, person)
+
+    const getName = student.getName; // this потеряли, но не super
+
+    getName(); // Student and person undefined
+
+    </code></pre>
+</section>
+
+<section class="center">
+    <p><strong>super</strong> навсегда привязывается к объекту,<br> в отличии от <strong>this</strong></p>
+</section>
+
+<section class="center">
+    <h1>Свойства полей</h1>
+</section>
+
+<section>
+    <h2>Установка полей объекта</span></h2>
+    <pre><code data-trim>
+    const student = {
+        name: 'Billy'
+    };
+    </code></pre>
+    <pre class="fragment javascript"><code data-trim>
+student.age = 21;
+
+student['age'] = 21;
+    </code></pre>
+    <pre class="fragment javascript"><code data-trim>
+    Object.defineProperty(student, 'planet', {
+        value: 'Earth'
+    });
+    </code></pre>
+</section>
+
+<section>
+    <h2>Установка полей объекта cо свойствами</span></h2>
+    <pre class="javascript"><code data-trim>
+    const student = {};
+
+    Object.defineProperty(student, 'name', {
+        writeable: false, // Можно не указывать, по умолчанию false
+        value: 'Billy'
+    });
+
+    Object.defineProperty(student, 'age', {
+        writeable: true,
+        value: 21
+    });
+    </code></pre>
+</section>
+
+<section>
+    <h2>getOwnPropertyDescriptor</span></h2>
+    <pre class="javascript"><code data-trim>
+    const student = {};
+
+    Object.defineProperty(student, 'name', {
+        value: 'Billy'
+    });
+
+    Object.getOwnPropertyDescriptor(student, 'name');
+    // {
+    //      value: 'Billy',
+    //      writable: false,
+    //      enumerable: false,
+    //      configurable: false
+    // }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Эффект <strong>затенения</strong> полей</h2>
+    <pre><code data-trim>
+    const person = {
+        planet: 'Earth'
+    };
+
+    const student = Object.create(person);
+
+    student.planet = 'Mars';
+    </code></pre>
+    <pre class="fragment"><code data-trim>
+    console.info(student.planet); // Mars
+    </code></pre>
+    <pre class="fragment"><code data-trim>
+    console.info(person.planet); // Earth
+    </code></pre>
+    <p class="fragment red">Работает не всегда!</p>
+</section>
+
+<section>
+    <h2>Object.prototype<strong>.toString()</strong></h2>
+    <pre><code data-trim>
+    Object.prototype = {
+        toString() {}
+    };
+
+    const student = {
+        name: 'Billy'
+    };
+    </code></pre>
+    <pre class="javascript fragment"><code data-trim>
+    console.info('Hello, ' + student); // Hello, [object Object]
+    </code></pre>
+</section>
+<section>
+    <h2>Object.prototype<strong>.toString()</strong></h2>
+    <pre class="javascript"><code data-trim>
+    Object.prototype = {
+        toString() {}
+    };
+
+    const student = {
+        name: 'Billy'
+    };
+
+    student.toString = function {
+        return this.name;
+    }
+
+    console.info('Hello, ' + student); // Hello, Billy
+    </code></pre>
+</section>
+
+<section>
+    <h2>Неперезаписываемые поля</h2>
+    <pre class="javascript"><code data-trim>
+    const student = {};
+
+    Object.defineProperty(student, 'name', {
+        writable: false, // Можно не указывать, по умолчанию false
+        value: 'Billy'
+    });
+    </code></pre>
+    <pre class="javascript fragment"><code data-trim>
+    student.name = 'Willy';
+
+    console.info(student.name); // Billy
+    </code></pre>
+    <p class="red fragment">Неявное поведение!</p>
+</section>
+
+<section>
+    <h2>Неперезаписываемые поля и <strong>use strict</strong></h2>
+    <pre class="javascript"><code data-trim>
+    'use strict';
+
+    const student = {};
+
+    Object.defineProperty(student, 'name', {
+        value: 'Billy'
+    });
+
+    student.name = 'Willy';
+
+    console.info(student.name);
+    </code></pre>
+    <p class="red fragment">TypeError: Cannot assign to read only property 'name' of object</p>
+</section>
+
+<section>
+    <h2>Неперезаписываемые поля в прототипах</h2>
+    <pre class="javascript"><code data-trim data-noescape>
+    const person = {};
+
+    Object.defineProperty(person, 'planet', {
+        value: 'Earth'
+    });
+
+    const student = {};
+
+    Object.setPrototypeOf(student, person);
+
+    student.planet = 'Mars';
+    </code></pre>
+    <p class="red fragment">TypeError: Cannot assign to read only property</p>
+</section>
+
+<section>
+    <h2><strong>Неперезаписываемые</strong> поля, а не неизменяемые</h2>
+    <pre class="javascript"><code data-trim>
+    const student = {};
+
+    Object.defineProperty(student, 'contacts', {
+        value: {
+            email: 'billy@example.com',
+            telegram: '@billy'
+        }
+    });
+
+    student.contacts.telegram = '@willy';
+
+    console.info(student.contacts.telegram); // @willy
+    </code></pre>
+</section>
+
+<section>
+    <h2>Перечисляемые поля</h2>
+    <pre class="javascript"><code data-trim>
+    const student = {
+        name: 'Billy',
+        age: 21
+    };
+
+    for (let key in student) {
+        console.info(key);
+    } // name, age
+    </code></pre>
+</section>
+
+<section>
+    <h2>Перечисляемые поля и прототипы</h2>
+    <pre class="javascript"><code data-trim>
+    const person = { planet: 'Earth' };
+
+    const student = {
+        name: 'Billy',
+        age: 20
+    };
+
+    Object.setPrototypeOf(student, person);
+
+    for (let key in student) {
+        console.info(key);
+    } // name, age, planet
+    </code></pre>
+</section>
+
+<section>
+    <h2>hasOwnProperty</h2>
+    <pre class="javascript"><code data-trim>
+    const person = { planet: 'Earth' };
+
+    const student = {
+        name: 'Billy',
+        age: 21
+    };
+
+    Object.setPrototypeOf(student, person);
+
+    for (let key in student) {
+        if (student.hasOwnProperty(key)) {
+            console.info(key);
+        }
+    } // name, age
+    </code></pre>
+</section>
+
+<section>
+    <h2>keys</h2>
+    <pre class="javascript"><code data-trim>
+    const person = { planet: 'Earth' };
+
+    const student = {
+        name: 'Billy',
+        age: 21
+    };
+
+    Object.setPrototypeOf(student, person);
+
+    Object.keys(student); // ['name', 'age']
+    </code></pre>
+</section>
+
+<section>
+    <h2><span>entries</span></h2>
+    <pre class="javascript"><code data-trim>
+    const person = { planet: 'Earth' };
+
+    const student = {
+        name: 'Billy',
+        age: 21
+    };
+
+    Object.setPrototypeOf(student, person);
+
+    for (let [key, value] of Object.entries(student)) {
+        console.info(key);
+    } // name, age
+    </code></pre>
+</section>
+
+<section>
+    <h2>Неперечисляемые поля</h2>
+    <pre><code data-trim>
+    const student = { name: 'Billy' };
+
+    Object.defineProperty(student, 'age', {
+        enumerable: false,
+        value: 21
+    });
+
+    Object.keys(student); // ['name']
+
+    JSON.stringify(student); // '{"name":"Billy"}'
+
+    Object.assign({}, student); // { name: 'Billy' }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Неперечисляемые поля в прототипах</h2>
+    <pre><code data-trim>
+    const person = {};
+
+    Object.defineProperty(person, 'planet', {
+        value: 'Earth'
+    });
+
+    const student = { name: 'Billy' };
+
+    Object.setPrototypeOf(student, person);
+
+    for (let key in student) {
+        console.info(key);
+    } // name
+    </code></pre>
+</section>
+
+<section>
+    <h2>Неперечисляемые поля по умолчанию</h2>
+    <pre><code data-trim>
+    Object.prototype = {
+        toString() {}
+    };
+
+    const student = { name: 'Billy' };
+
+    for (let key in student) {
+        console.info(key);
+    } // name
+    </code></pre>
+</section>
+
+<section>
+    <h2><span>getOwnPropertyNames</span></h2>
+    <pre class="javascript"><code data-trim>
+    const student = { name: 'Billy' };
+
+    Object.defineProperty(student, 'age', {
+        value: 21
+    });
+
+    Object.getOwnPropertyNames(student);
+    // ['name', 'age']
+    </code></pre>
+</section>
+
+<section>
+    <h2>set/get</h2>
+    <pre><code data-trim>
+    let name = null; // Не будет доступна снаружи модуля
+
+    const student = {
+        get name() { return 'Student ' + name; }
+
+        set name(value) {
+            name = value;
+        }
+    };
+
+    module.exports = student;
+    </code></pre>
+</section>
+
+<section>
+    <h2>set/get</h2>
+    <pre><code data-trim>
+    const student = require('./student');
+
+    student.name = 'Billy';
+
+    console.info(student.name); //Student Billy;
+    </code></pre>
+</section>
+
+<section>
+    <h2>set/get в прототипах</h2>
+    <pre><code data-trim>
+    let planet = null;
+
+    const person = {
+        get planet() { return planet; },
+        set planet(value) { planet = value; }
+    };
+
+    const student = {}
+
+    Object.setPrototypeOf(student, person);
+
+    student.planet = 'Mars';
+
+    student.hasOwnProperty('planet'); // false;
+    </code></pre>
+</section>
+
+<section>
+    <h2>set/get</h2>
+    <pre><code data-trim>
+    let name = null;
+
+    const student = {
+        name: 'Willy',
+        get name() { return 'Student ' + name; },
+        set name(value) { name = value;}
+    };
+
+    student.name = 'Billy'
+
+    console.info(student.name); // Student Billy
+    </code></pre>
+</section>
+
+<section>
+    <h2>set/get</h2>
+    <pre><code data-trim>
+    let name = null;
+
+    const student = {
+        get name() { return 'Student ' + name; },
+        name: 'Willy', // get становится undefined
+        set name(value) { name = value;}
+    };
+
+    student.name = 'Billy'
+
+    console.info(student.name); // undefined
+    </code></pre>
+</section>
+
+<section>
+    <h2>set/get</h2>
+    <pre><code data-trim>
+    let name = null;
+
+    const student = {
+        name: 'Willy', // get становится undefined
+        set name(value) { name = value;}
+    };
+
+    student.name = 'Billy'
+
+    console.info(student.name); // undefined
+    </code></pre>
+</section>
+
+<section>
+    <h2>set/get</h2>
+    <pre><code data-trim>
+    let name = null;
+
+    const student = {
+        get name() { return 'Student ' + name; }
+    };
+
+    student.name = 'Billy'
+
+    console.info(student.name); // Student null
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Поле одновременно может быть либо <strong>нормальным</strong> либо <strong>геттером/сеттером</strong></p>
+</section>
+
+<section class="center">
+    <p>Если есть хотя бы один из методов <strong>get</strong> или <strong>set</strong>, то поле становится <strong>геттером/сеттером</strong></p>
+</section>
+
+<section>
+    <h2>Геттеры/сеттеры</h2>
+    <pre><code data-trim>
+    let name = null;
+
+    const student = {
+        get name() { return 'Student ' + name; },
+        set name(value) { name = value;}
+    };
+
+    Object.getOwnPropertyDescriptor(student, 'name');
+    // {
+    //      get: [Function: get],
+    //      set: [Function: set],
+    //      enumerable: true,
+    //      configurable: true
+    // }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Нормальные поля</h2>
+    <pre class="javascript"><code data-trim>
+    const student = {
+        name: 'Billy'
+    };
+
+    Object.getOwnPropertyDescriptor(student, 'name');
+    // {
+    //      value: 'Billy',
+    //      writable: true,
+    //      enumerable: true,
+    //      configurable: true
+    // }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Нормальные поля</h2>
+    <pre class="javascript"><code data-trim>
+    Object.defineProperty(student, 'name', {
+        value: 'Billy'
+    });
+
+    Object.getOwnPropertyDescriptor(student, 'name');
+    // {
+    //      value: 'Billy',
+    //      writable: false,
+    //      enumerable: false,
+    //      configurable: false
+    // }
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Либо <strong>set/get</strong>, либо <strong>writable/value</strong></p>
+</section>
+
+<section>
+    <h2>Неконфигурируемые и неудаляемые поля</h2>
+    <pre class="javascript"><code data-trim>
+    const student = {};
+
+    Object.defineProperty(student, 'name', {
+        configurable: false, // По умолчанию false
+        value: 'Billy'
+    });
+
+    delete student.name;
+
+    console.info(student.name); // Billy
+    </code></pre>
+</section>
+
+<section class="center">
+    <p><strong>configurable</strong> не контролирует изменение атрибута <strong>writable</strong></p>
+</section>
+
+<section>
+    <h2>Почитать</h2>
+    <p><strong>Speaking JavaScript</strong><br>
+    Chapter 17. Objects and Inheritance.<br>
+    <a href="http://speakingjs.com/es5/ch17.html#single_objects">Layer 1: Single Objects</a></p>
+    <p><strong>Speaking JavaScript</strong><br>
+    Chapter 17. Objects and Inheritance<br>
+    <a href="http://speakingjs.com/es5/ch17.html#prototype_relationship">Layer 2: The Prototype Relationship Between Objects</a></p>
+</section>
+
+<section>
+    <h2>Почитать</h2>
+    <p><strong>Exploring ES6</strong><br>
+    <a href="http://exploringjs.com/es6/ch_oop-besides-classes.html">14. New OOP features besides classes</a></p>
+    <p><strong>MDN</strong><br>
+    <a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty()</a></p>
+    <p><p><strong>Лекции 2015 года</strong><br><a href="https://github.com/urfu-2015/javascript-lectures/blob/master/5-this.md">Про this</a></p>
+</section>
+
+<section>
+    <h2>Почитать</h2>
+    <p><strong>Современный учебник Javascript</strong><br>
+    ООП в прототипном стиле<br>
+    <a href="http://learn.javascript.ru/prototype">Прототип объекта</a></p>
+    <p><strong>Современный учебник Javascript</strong><br>
+    Современные возможности ES-2015<br>
+    <a href="http://learn.javascript.ru/es-object">Объекты и прототипы</a></p>
+</section>
+
+</div></div>
+
+<script src="../../@lib/core.js"></script>
+</body>
+</html>

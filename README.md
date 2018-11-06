@@ -23,8 +23,8 @@
 1. [Типы данных I](https://urfu-2018.github.io/slides/javascript/02-types/) ([pdf](https://urfu-2018.github.io/slides/javascript/02-types/index.pdf))
 1. [Типы данных II](https://urfu-2018.github.io/slides/javascript/03-types/) ([pdf](https://urfu-2018.github.io/slides/javascript/03-types/index.pdf))
 1. [Функции и контекст](https://urfu-2018.github.io/slides/javascript/04-functions/) ([pdf](https://urfu-2018.github.io/slides/javascript/04-functions/index.pdf))
-1. Прототипы
-1. Конструкторы
+1. [Прототипы и свойства полей объекта](https://urfu-2018.github.io/slides/javascript/05-prototypes/) ([pdf](https://urfu-2018.github.io/slides/javascript/05-prototypes/index.pdf))
+1. Конструирование объектов
 1. Асинхронность I
 1. Асинхронность II
 1. TypeScript I
