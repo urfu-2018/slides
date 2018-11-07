@@ -1,0 +1,938 @@
+section {
+    text-align: center;
+    font-size: 80% !important;
+    line-height: 1.1 !important;
+}
+
+section pre,
+section ol,
+section ul {
+    text-align: left;
+}
+
+section .strike {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.yandex table.tableMiddle td {
+    vertical-align: middle;
+}
+
+.yandex table.tableCenter td {
+    text-align: center;
+}
+
+.yandex table.noBorder td {
+    border: none;
+}
+
+pre.size-s {
+    font-size: 15px !important;
+}
+
+p.size-s {
+    font-size: 30px !important;
+}
+
+p.size-m {
+    font-size: 35px !important;
+}
+
+p.size-l {
+    font-size: 50px !important;
+}
+
+p.size-xl {
+    font-size: 50px !important;
+}
+
+p.size-xxl {
+    font-size: 60px !important;
+}
+
+pre.size-m {
+    font-size: 18px !important;
+}
+
+pre.size-l {
+    font-size: 40px !important;
+}
+
+pre.size-xl {
+    font-size: 40px !important;
+}
+
+pre.size-xxl {
+    font-size: 40px !important;
+}
+
+mark {
+    border-radius: 5px;
+    /*color: #fff !important;*/
+}
+
+mark.red {
+    background: red;
+    color: #fff !important;
+}
+
+mark.green.blue {
+    /*background: linear-gradient(to right, #00f, #006b05);*/
+}
+/*====reversed====*/
+.ex.reversed .float-right{
+    float: none;
+}
+.ex.reversed.visible .float-right{
+    float: right;
+}
+/*========*/
+/*===z-index===*/
+mark.z-index {
+    position: relative;
+    background: transparent !important;
+    color: #fff;
+}
+
+mark.z-index:after,
+mark.z-index:before{
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 40px;
+    top: 7px;
+}
+
+mark.z-index.red:before,
+mark.z-index.green:before,
+mark.z-index.blue:before {
+    left: -49px;
+}
+
+mark.z-index.green-blue:before,
+mark.z-index.red-green:before {
+    left: -49px;
+}
+
+mark.z-index.green-blue:after,
+mark.z-index.red-green:after {
+    left: -59px;
+}
+
+mark.z-index.red-green:before,
+mark.z-index.red:before {
+    background: #f00;
+}
+
+mark.z-index.red-green:after,
+mark.z-index.green-blue:before,
+mark.z-index.green:before {
+    background: #0f0;
+}
+
+mark.z-index.green-blue:after,
+mark.z-index.blue:before {
+    background: #00f;
+}
+/*==============*/
+
+mark.red.blue {
+    background: linear-gradient(to right, #00f, #f00);
+}
+
+mark.green.red {
+    background: linear-gradient(to right, #006b05, #f00);
+}
+
+mark.blue {
+    background: blue;
+    color: #fff !important;
+}
+
+mark.green {
+    background: #006b05;
+    color: #fff !important;
+}
+
+.reveal .slides section mark.fragment {
+    background: transparent;
+    visibility: visible;
+    color: white;
+    opacity: 1;
+}
+
+.reveal .slides section mark.fragment.toggle.visible {
+    color: white;
+    background: transparent;
+}
+
+.reveal .slides section mark.fragment.visible.current-fragment.toggle,
+.reveal .slides section mark.fragment.visible {
+    background: #ff0;
+    color: black;
+}
+
+.reveal .slides section mark.blue.fragment.visible {
+    background: #00f;
+    color: black;
+}
+
+.reveal .slides section mark.green.fragment.visible {
+    background: #006b05;
+    color: black;
+}
+
+.reveal .slides section mark.red.fragment.visible {
+    background: #f00;
+    color: black;
+}
+
+section.ex button.size-m,
+section.ex textarea.size-m {
+    margin-bottom: 20px;
+    font-size: 37px;
+}
+
+section.ex button:focus {
+    outline: 10px solid red;
+}
+
+section.ex button.size-l,
+section.ex input.size-l,
+section.ex textarea.size-l {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+section.ex button.zoom,
+section.ex input.zoom {
+    transform: scale(2);
+    vertical-align: middle;
+    margin: 10px;
+}
+
+.reveal .progress span {
+    color: rgb(243, 86, 38);
+    background: linear-gradient(92deg, rgb(243, 204, 35), rgb(254, 146, 11));
+    -webkit-animation: hue 100s linear infinite;
+}
+
+a {
+    color: #068ee9 !important;
+}
+
+div.body div.fragment.visible.animated {
+    -webkit-animation-name: bounceIn;
+}
+
+.deadline {
+    color: white;
+    transform: scale(.1);
+    pointer-events: none;
+    transition-property: color, transform !important;
+    transition-duration: 30s !important;
+    transition-timing-function: linear !important;
+}
+
+.deadline.visible {
+    color: red;
+    transform: scale(5);
+}
+
+@-webkit-keyframes hue {
+    from {
+        -webkit-filter: hue-rotate(0deg);
+    }
+    to {
+        -webkit-filter: hue-rotate(360deg);
+    }
+}
+
+.fragment.toggle {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/*====================================*/
+.position {
+    font-size: 40px !important;
+}
+
+.position.visible .position-value,
+.position.visible .position-pipe,
+.position.visible .position-name {
+    color: #636363;
+}
+
+.position.visible .position-pipe.checked {
+    visibility: visible;
+    animation-name: slideUpRetourn;
+}
+
+.position.visible .position-value.checked {
+    -webkit-animation-name: tinRightIn;
+    animation-name: tinRightIn;
+    color: #fff;
+    visibility: visible;
+}
+
+.position-value.checked,
+.position-pipe.checked {
+    display: inline-block;
+    visibility: hidden;
+}
+
+/*====================================*/
+
+.reveal .ex::before {
+    content: 'EXAMPLE';
+    position: absolute;
+    color: #000;
+    bottom: -15px;
+    right: 0;
+    background: #fff;
+    padding: 1px 14px;
+    font-size: 0.7em;
+}
+.reveal .ex::before {
+    transform: scaleY(.1);
+    transition: transform .3s ease .1s;
+    opacity: 0;
+}
+.reveal .present .ex::before {
+    opacity: 1;
+    transform: scaleY(1);
+}
+.reveal .ex {
+    border: 1px dashed #fff;
+}
+
+/*====================================*/
+.ex {
+    padding: 20px 10px !important;
+    position: relative;
+}
+
+.box {
+    background: rgba(61, 133, 198, .9);
+    outline: 1px solid #183951;
+}
+
+.box.red {
+    background: rgba(198, 46, 52, 0.9);
+}
+
+.box.green {
+    background: rgba(86, 198, 67, 0.9);
+}
+
+.anonim {
+    width: 150px;
+    height: 150px;
+    background: #4f4f4f;
+    display: inline-block;
+    vertical-align: top !important;
+    text-align: center;
+    margin: 10px 20px !important;
+}
+
+.anonim.block {
+    display: block;
+    margin: 0 auto;
+}
+
+.anonim .box {
+    width: 100%;
+    height: 100%;
+}
+
+.relative {
+    position: relative;
+    transition-property: top, left, bottom, right;
+    transition-duration: .5s;
+}
+.relative.percent + .anonim {
+    margin-left: -126px !important;
+    width: 100px;
+    height: 100px;
+}
+
+.relative.percent {
+    display: inline-block;
+    text-align: center;
+    margin: 10px 20px !important;
+    width: 100px;
+    height: 100px;
+}
+
+.box .relative.move-out {
+    left: 0;
+    transition: left .4s cubic-bezier(0.94, -1, 0.38, 0.74);
+}
+.box.visible .relative.move-out {
+    left: 600%;
+}
+
+.box.visible .relative.top-left {
+    animation: relative-tl 1s ease infinite alternate;
+}
+
+.relative-ex-height.visible + .ex {
+    height: 300px;
+}
+
+.relative-p-t-l.visible ~ .ex .relative.top-left.percent {
+    animation: relative-p-tl .7s ease forwards;
+}
+.relative.bottom-right.percent {
+    margin-left: auto;
+    margin-right: 0;
+}
+.relative-p-b-r.visible ~ .ex .relative.bottom-right.percent {
+    animation: relative-p-br .7s ease forwards;
+}
+
+.box.visible .relative.top {
+    animation: relative-t .7s ease infinite alternate;
+}
+
+.box.visible .relative.right {
+    animation: relative-r .7s ease infinite alternate;
+}
+
+.box.visible .relative.left {
+    animation: relative-l .7s ease infinite alternate;
+}
+
+.box.visible .relative.bottom {
+    animation: relative-b .7s ease infinite alternate;
+}
+
+.box.visible .relative.bottom-right {
+    animation: relative-br .7s ease infinite alternate;
+}
+
+.box.visible .relative.bottom-right.percent {
+    animation: relative-p-br .7s ease infinite alternate;
+}
+
+.box.visible .relative.top-left-n {
+    animation: relative-br .7s ease infinite alternate;
+}
+
+.box.visible .relative.top-n {
+    animation: relative-b .7s ease infinite alternate;
+}
+
+.box.visible .relative.right-n {
+    animation: relative-l .7s ease infinite alternate;
+}
+
+.box.visible .relative.left-n {
+    animation: relative-r .7s ease infinite alternate;
+}
+
+.box.visible .relative.bottom-n {
+    animation: relative-t .7s ease infinite alternate;
+}
+
+.box.visible .relative.bottom-right-n {
+    animation: relative-tl .7s ease infinite alternate;
+}
+
+.visible .box.ltr {
+    position: relative;
+    /*right: -20px;*/
+    /*left: -20px;*/
+    animation: relative-r .7s ease infinite alternate;
+}
+
+[direction="rtl"] {
+    direction: rtl;
+}
+
+.visible .box.rtl {
+    position: relative;
+    animation: relative-l .7s ease infinite alternate;
+    /*right: -20px;*/
+    /*left: -20px;*/
+}
+
+.box.top-bottom {
+    line-height: 70px;
+    position: relative;
+    top: -20px;
+    bottom: -20px;
+}
+
+@keyframes relative-t {
+    from {
+        top: 0;
+        /*left: 0;*/
+    }
+    to {
+        /*left: 15px;*/
+        top: 15px;
+    }
+}
+
+@keyframes relative-r {
+    from {
+        /*top: 0;*/
+        right: 0;
+    }
+    to {
+        right: 15px;
+        /*top: 15px;*/
+    }
+}
+
+@keyframes relative-tl {
+    from {
+        top: 0;
+        left: 0;
+    }
+    to {
+        left: 15px;
+        top: 15px;
+    }
+}
+
+@keyframes relative-p-tl {
+    from {
+        top: 0;
+        left: 0;
+    }
+    to {
+        top: 50%;
+        left: 50%;
+    }
+}
+
+@keyframes relative-l {
+    from {
+        left: 0;
+    }
+    to {
+        left: 15px;
+    }
+}
+
+@keyframes relative-b {
+    from {
+        bottom: 0;
+        /*left: 0;*/
+    }
+    to {
+        /*left: 15px;*/
+        bottom: 15px;
+    }
+}
+
+@keyframes relative-br {
+    from {
+        right: 0;
+        bottom: 0;
+    }
+    to {
+        right: 15px;
+        bottom: 15px;
+    }
+}
+
+@keyframes relative-p-br {
+    from {
+        right: 0;
+        bottom: 0;
+    }
+    to {
+        right: 50%;
+        bottom: 50%;
+    }
+}
+
+/*====================================*/
+
+.wrap {
+    background: rgba(198, 51, 51, 0.7);
+    outline: 1px solid #511b1f;
+    text-align: left;
+    padding: 20px !important;
+}
+
+.wrap-abs {
+    text-align: left;
+    transition: all .3s ease;
+}
+
+.wrap-abs .box {
+    width: 100%;
+    transition: all .3s ease;
+}
+
+.visible.wrap-abs .box {
+    position: absolute;
+    width: auto;
+}
+
+/*====================================*/
+.offset.visible + .ex .a2 {
+    margin-top: -40px !important;
+}
+.offset.visible + .ex .a3 {
+    margin-top: -80px !important;
+}
+
+.a2.mt {
+    margin-top: -20px !important;
+}
+
+.a3.mt {
+    margin-top: -40px !important;
+}
+
+.group {
+    width: 400px;
+    height: 600px;
+    margin: 0 auto !important;
+    transform-style: preserve-3d;
+    transition: transform .3s ease;
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+}
+
+.viewport {
+    transition: all .3s ease;
+    position: absolute;
+    top: 0;
+    font-size: 50px !important;
+    text-align: center;
+    padding-top: 200px !important;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(100, 100, 100, .5);
+    transform: translateZ(0);
+}
+
+/*.ex.visible .arrow {*/
+/*visibility: visible;*/
+/*}*/
+.ex.visible .viewport {
+    transform: translateZ(-90px);
+}
+
+.ex.visible .group {
+    transform: translateY(-100px) rotateX(51deg) rotateY(34deg) rotateZ(-46deg);
+}
+
+.ex.visible .group.levels {
+    transform: translateY(110px) rotateX(110deg) rotateY(0deg) rotateZ(-90deg);
+}
+
+.group.levels .wrapper {
+    opacity: 0;
+    text-align: left;
+}
+.ex.visible .group.levels .wrapper {
+    opacity: 1;
+}
+.group.levels .wrapper {
+    transform: rotateZ(89deg) rotateX(-109deg) rotateY(-1deg) translate3d(65px, -170px, 103px);
+}
+.group.levels .level {
+    border: 1px solid rgba(255,255,255, .6);
+    background: rgba(210, 214, 214, 0.13);
+}
+.group.levels .wrapper {
+    width: 840px;
+}
+
+.ex.visible .inner {
+    background: rgba(100, 100, 100, .6);
+}
+
+.ex.visible .out.a1 {
+    transform: translateZ(5px);
+}
+
+.ex.visible .out.a2 {
+    transform: translateZ(60px);
+}
+
+.ex.visible .out.a3 {
+    transform: translateZ(100px);
+}
+
+.ex.visible .out.z1 {
+    transform: translateZ(5px);
+}
+
+.ex.visible .out.z2 {
+    transform: translateZ(60px);
+}
+
+.ex.visible .out.z3 {
+    transform: translateZ(100px);
+}
+
+.ex.visible .out.has-inner div {
+    transform: translateZ(2px);
+}
+
+/*.arrow {*/
+/*visibility: hidden;*/
+/*width: 5px;*/
+/*height: 400px;*/
+/*background: #f00;*/
+/*position: absolute;*/
+/*top: -200px;*/
+/*left: 100%;*/
+/*font-size: 50px;*/
+/*color: red;*/
+/*transform: rotateX(-90deg) rotateY(-45deg);*/
+/*}*/
+
+.out {
+    transition: all .4s ease .3s;
+
+    width: 100%;
+    height: 30%;
+    border: 1px solid;
+    position: absolute;
+    left: 0;
+}
+
+.a1 {
+    transform: translateZ(0);
+    top: 0;
+    background: rgba(255, 0, 0, .7);
+}
+
+.wr1 {
+    background: rgba(255, 156, 155, 0.7);
+}
+
+.a2 {
+    top: 30%;
+    transform: translateZ(0);
+    transition-delay: .3s;
+    background: rgba(0, 255, 0, .7);
+}
+
+.a3 {
+    top: 60%;
+    transform: translateZ(0);
+    transition-delay: .2s;
+    background: rgba(0, 0, 255, .7);
+}
+
+.z1 {
+    transform: translateZ(0);
+}
+
+.z2 {
+    transform: translateZ(1px);
+}
+
+.z3 {
+    transform: translateZ(2px);
+}
+
+.out.has-inner {
+    transform-style: preserve-3d;
+
+}
+
+.out.has-inner div {
+    transition: all .3s ease .5s;
+    transform: translateZ(0);
+}
+
+.inner {
+    width: 100%;
+    height: 600px;
+    transition: all .2s ease;
+    background: rgba(100, 100, 100, 1);
+}
+
+/*====================================*/
+.z-2 .box {
+    outline: none !important;
+    width: 260px;
+    height: 100px;
+    font-size: 73px;
+}
+
+.z-2 .wrap2 {
+    outline: 1px solid white;
+    background: #ccc;
+}
+
+.z-2 div:nth-child(2) {
+    margin-left: 15px;
+}
+
+.z-2 div:nth-child(3) {
+    margin-left: 30px;
+}
+
+#z-1.visible .box {
+    transition: margin .2s ease;
+    outline: none;
+}
+
+#z-1.visible .box.red {
+    margin-top: -20px;
+}
+
+#z-1.visible .box.green {
+    margin-top: -20px;
+}
+
+.fragment.warning {
+    animation-iteration-count: infinite;
+    animation-name: pulse;
+}
+
+.helper {
+    position: absolute;
+    top: 0;
+    background: rgba(0, 0, 0, .9);
+    left: 17px;
+    outline: 1px solid white;
+    padding-left: 15px !important;
+}
+
+/*====================================*/
+.z-3 .wrap {
+    outline: none;
+    margin-bottom: 10px !important;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.float-left.ready,
+.float-right.ready {
+    position: absolute;
+    top: -100px;
+    right: 0;
+}
+
+.visible.float-right,
+.visible.float-left {
+    position: static !important;
+}
+
+.clear-left.visible {
+    clear: left;
+}
+
+.clear-right.visible {
+    clear: right;
+}
+
+.clear-both.visible {
+    clear: both;
+}
+
+.fragment.ovh {
+    overflow: visible;
+}
+
+.fragment.visible.ovh {
+    overflow: hidden;
+}
+
+/*====================================*/
+
+dl {
+    margin: 0;
+    padding: 24px 0 0 0;
+    display: block !important;
+}
+
+dt {
+    background: #c86b26;
+    border-bottom: 1px solid #989ea4;
+    border-top: 1px solid #717d85;
+    color: #fff;
+    font: bold 18px/21px Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 2px 0 0 12px !important;
+    position: -webkit-sticky;
+    position: sticky;
+    width: 99%;
+    top: 10px;
+}
+
+dd {
+    font: bold 20px/45px Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0 0 0 12px;
+    white-space: nowrap;
+}
+
+dd + dd {
+    border-top: 1px solid #ccc
+}
+
+/*====================================*/
+.checkbox {
+    transform: scale(2);
+    vertical-align: middle;
+    margin-right: 13px;
+}
+
+#width:checked ~ .ex .box {
+    width: 200px;
+}
+#height:checked ~ .ex .box {
+    height: 100px;
+}
+#margin:checked ~ .ex .box {
+    margin: 20px;
+}
+
+/*====three columt layout====*/
+.three-column .box {
+    height: 100px;
+}
+.three-column .box.center {
+    height: 200px;
+}
+.three-column-float-left.visible ~ .ex.three-column .box.left {
+    float: left;
+}
+.three-column-float-right.visible ~ .ex.three-column .box.right {
+    float: right;
+}
+.three-column-center.visible ~ .ex.three-column .box.center {
+    overflow: hidden;
+}
+.ex.three-column {
+    width: 100%;
+    margin: 0 auto;
+    transition: 1s ease;
+}
+.three-column-size.visible ~ .ex.three-column{
+    width: 50%;
+}
+/*==========*/
+.reveal code {
+    font-family: 'sourcecodepro-light' !important;
+}
+.reveal pre
+{
+    width: 100%;
+    font-size: 26px;
+
+    margin: 10px 15px !important;
+    box-shadow: none;
+}

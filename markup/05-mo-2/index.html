@@ -1,0 +1,1211 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Модель отображения II</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+</head><body class="black"><div class="reveal"><div class="slides">
+        <section style="font-size: 70px;">
+            <div class="fragment">
+                <h2 class="animated">Модель отображения</h2>
+                <h4 class="animated">Часть II</h4>
+                <p>
+                    <small class=" animated"><span style="color: red">К</span>увалдин Артем</small><br>
+                    <small class=" animated"><span style="color: red">Р</span>азработчик интерфейсов</small>
+                </p>
+            </div>
+        </section>
+        <section>
+            <!--На прошлой лекции Олег рассказал, из чего состоят элементы.
+            Сегодня вы узнаете как элементы взаимодействуют друг с другом на странице.
+            И как сделать подсветку столбца в таблице.-->
+            <aside class="notes">Прошлая лекция. </aside>
+            <h2>Позиционирование элементов</h2>
+            <img src="images/css-is-awesome.png" style="background: #fff">
+        </section>
+        <section>
+            <h2>Position</h2>
+
+            <p>– устанавливает  способ позиционирования элемента относительно окна браузера или других объектов на веб-странице.</p>
+            <div class="position fragment toggle">
+                <!--absolute | fixed | relative | static | sticky-->
+                <span class="position-name">position:</span>
+                <span class="position-value">static</span>
+                <span class="position-pipe checked magictime"> | </span>
+                <span class="position-value checked magictime">relative</span>
+            </div>
+        </section>
+<!--Position relative-->
+        <section>
+            <h2>Position: relative</h2>
+            <aside class="notes">
+                Оси X и Y Сверху вниз слева на право/
+                Отрицательные значения
+            </aside>
+            <p> – положение бокса вычисляется относительно позиции, которую блок занимал бы в нормальном потоке.</p>
+            <div class="ex fragment" data-fragment-index="1">
+                <div class="box anonim fragment" data-fragment-index="1">box</div>
+                <div class="box anonim fragment toggle" data-fragment-index="2"><div class="box relative move-out" style="width: 100%; height: 100%;">box</div></div>
+                <div class="box anonim fragment" data-fragment-index="1">box</div>
+            </div>
+            <p> – для задания смещения используются свойства top | right | bottom | left.</p>
+        </section>
+        <section>
+<pre class="css size-l"><code>div { position: relative; }
+.top { top: 10px; }
+.right { right: 10px; }
+.bottom { bottom: 10px; }
+.left { left: 10px; }
+.bottom-right { bottom: 10px; right: 10px; }
+.top-left { top: 10px; left: 10px; }</pre></code>
+            <div class="ex">
+                 <div class="box anonim fragment toggle" data-fragment-index="1"><div class="box relative top" style="width: 100%; height: 100%;">top</div></div>
+                 <div class="box anonim fragment toggle" data-fragment-index="1"><div class="box relative right" style="width: 100%; height: 100%;">right</div></div>
+                 <div class="box anonim fragment toggle" data-fragment-index="1"><div class="box relative bottom" style="width: 100%; height: 100%;">bottom</div></div>
+                 <div class="box anonim fragment toggle" data-fragment-index="1"><div class="box relative left" style="width: 100%; height: 100%;">left</div></div>
+                 <div class="box anonim fragment toggle" data-fragment-index="1"><div class="box relative top-left" style="width: 100%; height: 100%;">top left</div></div>
+                 <div class="box anonim fragment toggle" data-fragment-index="1"><div class="box relative bottom-right" style="width: 100%; height: 100%;">bottom right</div></div>
+                 <!--<div class="box">div</div>-->
+                 <!--<div class="box anonim fragment toggle" data-fragment-index="1"><div class="box relative bottom-right">.box2</div></div>-->
+            </div>
+        </section>
+        <section>
+<pre class="css size-l"><code>div {position: relative;}
+.top { top: -10px; }
+.right { right: -10px; }
+.bottom { bottom: -10px; }
+.left { left: -10px; }
+.bottom-right { bottom: -10px; right: -10px; }
+.top-left { top: -10px; left: -10px; }</pre></code>
+            <div class="ex">
+                 <div class="box anonim fragment toggle" data-fragment-index="1"><div class="box relative top-n" style="width: 100%; height: 100%;">top</div></div>
+                 <div class="box anonim fragment toggle" data-fragment-index="1"><div class="box relative right-n" style="width: 100%; height: 100%;">right</div></div>
+                 <div class="box anonim fragment toggle" data-fragment-index="1"><div class="box relative bottom-n" style="width: 100%; height: 100%;">bottom</div></div>
+                 <div class="box anonim fragment toggle" data-fragment-index="1"><div class="box relative left-n" style="width: 100%; height: 100%;">left</div></div>
+                 <div class="box anonim fragment toggle" data-fragment-index="1"><div class="box relative top-left-n" style="width: 100%; height: 100%;">top left</div></div>
+                 <div class="box anonim fragment toggle" data-fragment-index="1"><div class="box relative bottom-right-n" style="width: 100%; height: 100%;">bottom right</div></div>
+                 <!--<div class="box">div</div>-->
+                 <!--<div class="box anonim fragment toggle" data-fragment-index="1"><div class="box relative bottom-right">.box2</div></div>-->
+            </div>
+        </section>
+<!--Рассказать про ещз-->
+        <section>
+            <aside class="notes">
+                left = -right
+            </aside>
+<pre class="css size-l"><code>div {
+    right: -20px;
+    left: -20px;
+}</pre></code>
+<pre class="css size-l fragment"><code>.parent {
+    direction: rtl;
+}
+.rtl,
+.ltr {
+    right: -20px;
+    left: -20px;
+}</pre></code>
+            <div class="ex fragment">
+                <div class="box anonim " direction="ltr" data-fragment-index="1" ><div class="box ltr">left to right</div></div>
+                <div class="box anonim " direction="rtl" data-fragment-index="1" ><div class="box rtl">من اليمين إلى اليسار</div></div>
+            </div>
+        </section>
+        <section>
+<pre class="css size-l"><code>.box1 {
+    top: -20px;
+    bottom: -20px;
+}
+.box2 {
+    top: 20px;
+    bottom: 20px;
+}</pre></code>
+            <div class="ex">
+                <div class="box anonim fragment toggle" data-fragment-index="1"><div class="box relative bottom">box1</div></div>
+                <div class="box anonim fragment toggle" data-fragment-index="1"><div class="box relative top">box2</div></div>
+            </div>
+        </section>
+        <section>
+<pre class="css size-l"><code data-noescape>.box1 {
+    top: 50%;
+    left: 50%;
+}
+.box2 {
+    bottom: 50%;
+    right: 50%;
+}
+<div class="fragment" data-fragment-index="3">.wrap { height: 300px; }</div></pre></code>
+            <div class="fragment relative-p-t-l"  data-fragment-index="1"></div>
+            <div class="fragment relative-p-b-r"  data-fragment-index="2"></div>
+            <div class="fragment relative-ex-height"  data-fragment-index="3"></div>
+            <div class="ex" style="text-align: center; padding: 0 !important;">
+                <div class="box relative percent top-left">box1</div>
+                <div class="box anonim" data-fragment-index="1">box1</div>
+                <br>
+                <div class="box relative percent bottom-right">box2</div>
+                <div class="box anonim" data-fragment-index="1">box2</div>
+            </div>
+        </section>
+        <section>
+           <h2>Размеры</h2>
+           <table>
+               <tbody>
+               <tr>
+                   <td>width: auto</td>
+                   <td>по содержимому или всё пространство</td>
+               </tr>
+               <tr>
+                   <td>width: 50%</td>
+                   <td>от ширины родителя</td>
+               </tr>
+               <tr>
+                   <td>height: auto</td>
+                   <td>по содержимому</td>
+               </tr>
+               <tr>
+                   <td>height:&nbsp;50%;</td>
+                   <td>от высоты родителя, если его высота отлична от auto</td>
+               </tr>
+               <tr>
+                   <td>padding:&nbsp;50%</td>
+                   <td>от ширины родителя</td>
+               </tr>
+               <tr>
+                   <td>margin: 50%</td>
+                   <td>от ширины родителя</td>
+               </tr>
+               </tbody>
+           </table>
+            <a href="http://www.w3.org/TR/CSS2/visuren.html#relative-positioning">w3c</a>
+       </section>
+        <section>
+            <h2>Содержащий блок</h2>
+
+            <p>– прямоугольник, относительно которого считаются позиция и размеры бокса элементов.</p>
+            <ul>
+                <li>Для корневых элементов – это прямоугольник размерами с <mark class="fragment toggle">вьюпорт</mark></li>
+                <li>Для элементов position: relative | static – это границы контента <mark class="fragment toggle">ближайшего предка <a href="http://www.w3.org/TR/CSS2/visuren.html#block-boxes">блочного уровня</a></li>
+                <li><mark class="fragment toggle">Относительно спозиционированный</mark> блок создаёт новый <a href="http://www.w3.org/TR/CSS2/visudet.html">содержащий блок</a></mark></li>
+            </ul>
+        </section>
+        <section>
+            <h2>Position</h2>
+            <div class="position fragment toggle">
+                <!--absolute | fixed | relative | static | sticky-->
+                <span class="position-name">position:</span>
+                <span class="position-value">static</span>
+                <span class="position-pipe"> | </span>
+                <span class="position-value">relative</span>
+                <span class="position-pipe checked magictime"> | </span>
+                <span class="position-value checked magictime">absolute</span>
+                <!--<span class="position-value fragment">fixed</span>-->
+                <!--<span class="position-value fragment">sticky</span>-->
+            </div>
+            <p class="fragment">При таком позиционировании блок выводится из потока, при этом сам блок образует новый содержащий блок.</p>
+            <ul>
+                 <li class="fragment">Содержащим блоком является ближайший предок c position: relative | absolute | fixed</li>
+                 <li class="fragment">inline, inline-block, table-... -> block</li>
+                 <li class="fragment">У абсолютно спозиционированных элементов не схлапываются внешние отступы</li>
+            </ul>
+            <a href="http://www.w3.org/TR/CSS2/visuren.html#absolute-positioning">w3c</a>
+        </section>
+        <section>
+<pre class="html size-l"><code><div class="wrap">
+    wrapper
+    <div class="box">box1</div>
+    <div class="box">box2</div>
+</div></pre></code>
+            <pre class="css fragment size-l" data-fragment-index="1"><code>.box {
+    position: absolute;
+}</pre></code>
+            <div class="ex">
+                <div class="wrap wrap-abs fragment toggle" data-fragment-index="1">
+                    wrapper
+                    <div class="box">.box1</div>
+                    <div class="box">.box2</div>
+                </div>
+            </div>
+        </section>
+        <section data-transition="none">
+            <p>Позиционируется относительно первого предка, у которого position ≠ static (содержащий блок). Если такого нет – позиционируется относительно корневого элемента.</p>
+<pre class="css size-l"><code>.box {
+    position: absolute;
+    top: 0;
+    left: 0
+}</pre></code>
+            <div class="ex">
+                <div class="wrap wrap-abs visible">
+                    wrapper
+                    <div class="box" style="left: 0; top: 0">.box1</div>
+                    <div class="box"  style="left: 0; top: 0">.box2</div>
+                </div>
+            </div>
+        </section>
+        <section data-transition="none">
+            <p>Позиционируется относительно первого предка, у которого position ≠ static (содержащий блок). Если такого нет – позиционируется относительно корневого элемента.</p>
+<pre class="css size-l"><code>.wrap {
+    position: relative;
+}
+.box {
+    position: absolute;
+    top: 0;
+    left: 0
+}</pre></code>
+            <div class="ex">
+                <div class="wrap wrap-abs visible" style="position: relative;">
+                    wrapper
+                    <div class="box" style="left: 0; top: 0">.box1</div>
+                    <div class="box"  style="left: 0; top: 0">.box2</div>
+                </div>
+            </div>
+        </section>
+        <section  data-transition="none">
+<pre class="css size-l"><code>.box1 {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.box2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+}</pre></code>
+            <div class="ex">
+                <div class="wrap wrap-abs visible"  style="position: relative;">
+                    wrapper
+                    <div class="box" style="right: 0; bottom: 0">.box1</div>
+                    <div class="box"  style="left: 0; top: 0">.box2</div>
+                </div>
+            </div>
+        </section>
+        <section data-transition="none">
+            <p></p>
+<pre class="css size-l"><code>.box1 {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    bottom: 30px;
+    left: 40px;
+}</pre></code>
+            <input type="checkbox" class="checkbox" id="width" style="transform: scale(2)"><label for="width">width: 200px</label><br>
+            <input type="checkbox" class="checkbox " id="height" style="transform: scale(2)"><label for="height">height: 100px</label><br>
+            <input type="checkbox" class="checkbox " id="margin" style="transform: scale(2)"><label for="margin">margin: 20px</label>
+            <div class="ex">
+                <div class="wrap wrap-abs visible"  style="position: relative; height: 150px">
+                    wrapper
+                    <div class="box" style="left: 40px; top: 10px; right: 20px; bottom: 30px;">.box1</div>
+                    <!--<div class="box"  style="left: 0; top: 0">.box2</div>-->
+                </div>
+            </div>
+        </section>
+        <section>
+            <p>Можно задавать значения в %. Раccчитываются относительно размеров <mark class="fragment toggle">содержащего</mark> блока.</p>
+<pre class="css size-l"><code>.box1 { position: absolute;
+    top: 0;
+    right: 50%;
+    bottom: 50%;
+    left: 0;
+}
+.box2 { position: absolute;
+    top: 50%;
+    right: 0;
+    bottom: 0;
+    left: 50%;
+}</pre></code>
+            <div class="ex">
+                <div class="wrap wrap-abs visible"  style="padding: 0 !important; position: relative; outline: none; height: 100px;">
+                    wrapper
+                    <div class="box"  style="right: 50%; bottom: 50%;  left: 0; top: 0; outline: none">.box1</div>
+                    <div class="box" style="left: 50%; top: 50%; right: 0; bottom: 0; outline: none">.box2</div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h2>Размеры</h2>
+            <table>
+                <tbody>
+                <tr>
+                    <td>width/height: auto</td>
+                    <td>по содержимому или координатам</td>
+                </tr>
+                <tr>
+                    <td>width/height: 50%</td>
+                    <td>от ширины/высоты содержащего блока</td>
+                </tr>
+                <tr>
+                    <td>padding: 50%</td>
+                    <td>от ширины содержащего блока</td>
+                </tr>
+                <tr>
+                    <td>margin: 50%</td>
+                    <td>от ширины содержащего блока</td>
+                </tr>
+                </tbody>
+            </table>
+                <a href="http://codepen.io/anon/pen/YyvBLJ">Интерактив</a>
+                <a href="https://drafts.csswg.org/css-position/#abs-non-replaced-width">w3c</a>
+        </section>
+        <section>
+            <h2>Position</h2>
+
+            <div class="position fragment toggle" data-fragment-index="1">
+                <!--absolute | fixed | relative | static | sticky-->
+                <span class="position-name">position:</span>
+                <span class="position-value">static</span>
+                <span class="position-pipe"> | </span>
+                <span class="position-value">relative</span>
+                <span class="position-pipe"> | </span>
+                <span class="position-value">absolute</span>
+                <span class="position-pipe checked magictime"> | </span>
+                <span class="position-value  checked magictime">fixed</span>
+                <!--<span class="position-value fragment">sticky</span>-->
+            </div>
+            <p class="fragment" data-fragment-index="1">Содержащий блок у fixed элементов – это всегда вьюпорт. Во всех случаях.</p>
+        </section>
+        <section>
+<pre class="html size-l"><code><div class="wrapper">
+    wrapper
+    <div class="fixed">fixed</div>
+</div></pre></code>
+<pre class="css size-l"><code>.fixed {
+    position: fixed;
+    width: 50%;
+    top: 100px;
+    left: 100px;
+}</pre></code>
+            <a href="http://codepen.io/anon/pen/MaqEeN?editors=110"> Пример</a>
+        </section>
+        <section>
+            <h2>Position</h2>
+
+            <div class="position fragment toggle" data-fragment-index="1">
+                <!--absolute | fixed | relative | static | sticky-->
+                <span class="position-name">position:</span>
+                <span class="position-value">static</span>
+                <span class="position-pipe"> | </span>
+                <span class="position-value">relative</span>
+                <span class="position-pipe"> | </span>
+                <span class="position-value">absolute</span>
+                <span class="position-pipe"> | </span>
+                <span class="position-value">fixed</span>
+                <span class="position-pipe checked magictime"> | </span>
+                <span class="position-value  checked magictime">sticky</span>
+            </div>
+            <p class="fragment" data-fragment-index="1">Элемент отображается как относительно спозиционированный до тех пор, пока не пересечёт специальную границу и тогда он ведёт себя как  position fixed.</p>
+        </section>
+        <section>
+<pre class="html size-l"><code><dl>
+    <dt>A</dt>
+    <dd>Andrew W.K.</dd>
+    <dd>Apparat</dd>
+</dl>
+<dl>
+    <dt>B</dt>
+    <dd>Battle</dd>
+    <dd>...</dd>
+</dl></pre></code>
+<pre class="css size-l"><code>.dt {
+    position: sticky;
+    top: 0;
+}</pre></code>
+            <a href="http://jsbin.com/qewesajudi/1">Пример</a>
+        </section>
+        <section data-background-image="images/cat2.gif">
+            <h2>Наложения элементов</h2>
+        </section>
+        <section>
+            <h2>Z-ось</h2>
+            <div class="ex fragment toggle">
+
+                <div class="group">
+                  <div class="viewport">
+                    viewport
+                  </div>
+                   <!--<div class="inner">-->
+                       <!--box1-->
+                  <!--</div>-->
+                  <div class="out a1">
+                       box1
+                  </div>
+                  <div class="out a2">
+                       box2
+                  </div>
+                  <div class="out a3">
+                       box3
+                  </div>
+                  <!--<div class="arrow">-->
+                    <!--Ось&nbsp;Z-->
+                  <!--</div>-->
+                </div>
+
+            </div>
+        </section>
+        <section>
+            <p style="font-size: 20px;">Если элементы находятся в равных условиях – элемент,<br> который находится ниже в потоке, будет выше по оси Z.</p>
+<pre class="html size-l"><code><div class="box1">box1</div>
+<div class="box2">box2</div>
+<div class="box3">box3</div>
+</pre></code>
+<pre class="css size-l fragment offset" data-fragment-index="1"><code>.box2, .box3 {
+    margin-top: -20px;
+}</pre></code>
+            <div class="ex fragment toggle">
+
+                <div class="group" style="height: 400px">
+                  <div class="viewport">
+                    viewport
+                  </div>
+                   <!--<div class="inner">-->
+                       <!--box1-->
+                  <!--</div>-->
+                  <div class="out a1">
+                       box1
+                  </div>
+                  <div class="out a2">
+                       box2
+                  </div>
+                  <div class="out a3">
+                       box3
+                  </div>
+                  <!--<div class="arrow">-->
+                    <!--Ось&nbsp;Z-->
+                  <!--</div>-->
+                </div>
+
+            </div>
+        </section>
+<!--z-index-->
+        <section>
+            <h2>z-index</h2>
+
+            <p>Каждый элемент может находиться как ниже, так и выше других объектов веб-страницы, их размещением по z-оси и управляет z-index.</p>
+<pre class="css size-l"><code>.box {
+    position: relative; /*absolute | fixed*/
+    /*z-index: n; где n ∈ Z | auto*/
+    z-index: 1;
+}</pre></code>
+            <img src="https://drafts.csswg.org/css-position-3/images/stack.png"><br>
+            <a href="http://habrahabr.ru/post/166435/">Про z-index</a>
+        </section>
+        <section>
+            <h2>Контекст наложения</h2>
+
+            <p>Элементы с общими родителями, перемещающиеся на передний или задний план вместе, известны как контекст наложения.</p>
+            <p>Условия создания контекста наложения:</p>
+            <ul>
+                <li class="fragment">Если элемент – корневой элемент документа (html)</li>
+                <li class="fragment">Если элемент позиционирован не статически и его значение z-index не равно auto</li>
+                <li class="fragment">Если элемент имеет прозрачность менее 1</li>
+            </ul>
+            <p class="fragment warning animated"><mark>Нельзя расположить элемент из одного контекста ноложения между элементами другого контекста</mark></p>
+        </section>
+        <section>
+            <h2>Порядок наложения</h2>
+            <ol>
+                <!--<li class="fragment">Background и border элемента, который создаёт контекст наложения</li>-->
+                <!--<li class="fragment">Позиционированный элемент (и его дети) с z-index < 0 *</li>-->
+                <!--<li class="fragment">Элементы блочного уровня в нормальном потоке</li>-->
+                <!--<li class="fragment">Плавающие элементы</li>-->
+                <!--<li class="fragment">Элементы inline уровня</li>-->
+                <!--<li class="fragment">Позиционированный элемент (и их потомки) с z-index = 0 или auto. opacity < 1 *</li>-->
+                <!--<li class="fragment">Позиционированный элемент (и их потомки) с z-index > 0 *</li>-->
+            </ol>
+            <div class="ex fragment toggle"  data-fragment-index="1" style="margin-top: 0px;">
+                <div class="group levels" style="height: 600px">
+                  <div class="viewport">
+                    viewport
+                  </div>
+                    <div class="wrapper" reversed>
+                          <div class="level level-1 fragment" data-fragment-index="7">7 Элемент (и их потомки) с z-index > 0</div>
+                          <div class="level level-2 fragment" data-fragment-index="6">6 Элемент (и их потомки) с z-index = 0 или auto. opacity < 1</div>
+                          <div class="level level-3 fragment" data-fragment-index="5">5 Элементы inline уровня</div>
+                          <div class="level level-4 fragment" data-fragment-index="4">4 Плавающие элементы</div>
+                          <div class="level level-5 fragment" data-fragment-index="3">3 Элементы блочного уровня в нормальном потоке</div>
+                          <div class="level level-6 fragment" data-fragment-index="2">2 Позиционированный элемент (и его дети) с z-index < 0</div>
+                          <div class="level level-7 fragment" data-fragment-index="1">1 Background и border элемента</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section data-transition="none">
+<pre class="html size-l"><code><div class="red">red box</div>
+<div class="green">green box text!</div>
+<div class="blue">blue box</div></pre></code>
+            <div class="ex fragment toggle" style="margin-top: 50px;">
+                <div class="group" style="height: 400px">
+                  <div class="viewport">
+                    viewport
+                  </div>
+                  <div class="out a1 z1 has-inner">
+                       <div>red box</div>
+                  </div>
+                  <div class="out a2 z2 mt has-inner">
+                    <div>
+                        green <br>
+                        box <br>
+                        text! <br>
+                    </div>
+                  </div>
+                  <div class="out a3 z3 mt has-inner">
+                       <div style="margin-top: 30px;">blue box</div>
+                  </div>
+                </div>
+            </div>
+        </section>
+
+        <section data-transition="none">
+<pre class="html size-l"><code><div class="wrap">
+    <div class="red">red</div>
+</div>
+<div class="green">green</div>
+<div class="blue">blue</div></pre></code>
+<pre class="css size-l fragment"><code>.red {
+    position: relative;
+    /*z-index: auto;*/
+}</pre></code>
+    </section>
+      <section>
+            <div class="ex fragment toggle">
+                <div class="group" style="height: 600px">
+                  <div class="viewport">
+                    viewport
+                  </div>
+                   <!--<div class="inner">-->
+                       <!--box1-->
+                  <!--</div>-->
+                  <div class="out a1 z3">
+                       position: relative
+                  </div>
+                  <div class="out a2 z1 mt">
+                       display: block;
+                  </div>
+                  <div class="out a3 z2 mt">
+                       display: block;
+                  </div>
+                  <!--<div class="arrow">-->
+                    <!--Ось&nbsp;Z-->
+                  <!--</div>-->
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="">
+                <ol>
+                    <li>Background и border элемента, который создаёт контекст наложения</li>
+                    <li>Позиционированный элемент (и его дети) с z-index < 0.</li>
+                    <li><mark class="z-index green-blue">Элементы блочного уровня в нормальном потоке</mark></li>
+                    <li>Плавающие элементы</li>
+                    <li>Элементы inline уровня</li>
+                    <li><mark class="z-index red">Позиционированный элемент (и их потомки) с z-index = 0 или auto. opacity < 1</mark></li>
+                    <li>Позиционированный элемент (и их потомки) с z-index > 0</li>
+                </ol>
+            </div>
+        </section>
+
+        <section data-transition="none">
+<pre class="html size-l"><code><div class="wrap">
+    <div class="red">red</div>
+</div>
+<div class="green">green</div>
+<div class="blue">blue</div></pre></code>
+<pre class="css size-l fragment"><code>.red {
+    opacity: .99;
+}</pre></code>
+        </section>
+
+        </section>
+         <section>
+               <div class="ex fragment toggle">
+                   <div class="group" style="height: 600px">
+                     <div class="viewport">
+                       viewport
+                     </div>
+                     <div class="out a1 z3">
+                          opacity: 0.99;
+                     </div>
+                     <div class="out a2 z1 mt">
+                          display: block;
+                     </div>
+                     <div class="out a3 z2 mt">
+                          display: block;
+                     </div>
+                   </div>
+               </div>
+           </section>
+           <section>
+               <div class="">
+                   <ol>
+                       <li>Background и border элемента, который создаёт контекст наложения</li>
+                       <li>Позиционированный элемент (и его дети) с z-index < 0.</li>
+                       <li><mark class="z-index green-blue">Элементы блочного уровня в нормальном потоке</mark></li>
+                       <li>Плавающие элементы</li>
+                       <li>Элементы inline уровня</li>
+                       <li><mark class="z-index red">Позиционированный элемент (и их потомки) с z-index = 0 или auto. opacity < 1</mark></li>
+                       <li>Позиционированный элемент (и их потомки) с z-index > 0</li>
+                   </ol>
+               </div>
+           </section>
+
+        <section data-transition="none">
+<pre class="html size-l"><code><div class="wrap">
+   <div class="red">red</div>
+</div>
+<div class="green">green</div>
+<div class="blue">blue</div></pre></code>
+<pre class="css size-l fragment"><code>.red { position: relative;
+    z-index: 0;
+}
+.green { position: relative;
+    z-index: 1;
+}</pre></code>
+       </section>
+
+        <section>
+            <div class="ex fragment toggle">
+                <div class="group" style="height: 600px">
+                  <div class="viewport">
+                    viewport
+                  </div>
+                  <div class="out a1 z2">
+                       position: relative;<br>
+                       z-index: 0;
+                  </div>
+                  <div class="out a2 z3 mt">
+                      position: relative;<br>
+                      z-index: 1;
+                  </div>
+                  <div class="out a3 z1 mt">
+                       display: block;
+                  </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="">
+                <ol>
+                    <li>Background и border элемента, который создаёт контекст наложения</li>
+                    <li>Позиционированный элемент (и его дети) с z-index < 0.</li>
+                    <li><mark class="z-index blue">Элементы блочного уровня в нормальном потоке</mark></li>
+                    <li>Плавающие элементы</li>
+                    <li>Элементы inline уровня</li>
+                    <li><mark class="z-index red">Позиционированный элемент (и их потомки) с z-index = 0 или auto. opacity < 1</mark></li>
+                    <li><mark class="z-index green">Позиционированный элемент (и их потомки) с z-index > 0</mark></li>
+                </ol>
+            </div>
+        </section>
+
+        <section data-transition="none">
+<pre class="html size-l"><code><div class="wrap">
+   <div class="red">red</div>
+</div>
+<div class="green">green</div>
+<div class="blue">blue</div></pre></code>
+<pre class="css size-l fragment"><code>.red {
+    position: relative;
+    z-index: 0;
+}
+.green {
+    position: relative;
+    z-index: -1;
+}</pre></code>
+       </section>
+
+        <section>
+            <div class="ex fragment toggle">
+                <div class="group" style="height: 600px">
+                  <div class="viewport">
+                    viewport
+                  </div>
+                  <div class="out a1 z3">
+                       position: relative;<br>
+                       z-index: 0;
+                  </div>
+                  <div class="out a2 z1 mt">
+                      position: relative;<br>
+                      z-index: -1;
+                  </div>
+                  <div class="out a3 z2 mt">
+                       display: block;
+                  </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="">
+                <ol>
+                    <li>Background и border элемента, который создаёт контекст наложения</li>
+                    <li><mark class="z-index green">Позиционированный элемент и его дети) с z-index < 0.</mark></li>
+                    <li><mark class="z-index blue">Элементы блочного уровня в нормальном потоке</mark></li>
+                    <li>Плавающие элементы</li>
+                    <li>Элементы inline уровня</li>
+                    <li><mark class="z-index red">Позиционированный элемент (и их потомки) с z-index = 0 или auto. opacity < 1</mark></li>
+                    <li>Позиционированный элемент (и их потомки) с z-index > 0</li>
+                </ol>
+            </div>
+        </section>
+
+        <section data-transition="none">
+<pre class="html size-l"><code><div class="wrap">
+   <div class="red">red</div>
+</div>
+<div class="green">green</div>
+<div class="blue">blue</div></pre></code>
+<pre class="css size-l fragment"><code>.wrap { opacity: 0.99; }
+.red {
+    position: relative;
+    z-index: 999;
+}
+.green {
+    position: relative;
+    z-index: 0;
+}
+</pre></code>
+       </section>
+
+        <section>
+            <div class="ex fragment toggle">
+                <div class="group" style="height: 600px">
+                  <div class="viewport">
+                    viewport
+                  </div>
+                    <div class="out wr1 z2 has-inner">
+                        opacity: 0.99;
+                          <div class="a1">
+                               position: relative;<br>
+                               z-index: 999;
+                          </div>
+                    </div>
+                  <div class="out a2 z3 mt">
+                      position: relative;<br>
+                      z-index: 0;
+                  </div>
+                  <div class="out a3 z1 mt">
+                       display: block;
+                  </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="">
+                <ol>
+                    <li>Background и border элемента, который создаёт контекст наложения</li>
+                    <li>Позиционированный элемент (и его дети) с z-index < 0.</li>
+                    <li><mark class="z-index blue">Элементы блочного уровня в нормальном потоке</mark></li>
+                    <li>Плавающие элементы</li>
+                    <li>Элементы inline уровня</li>
+                    <li><mark class="z-index red-green">Позиционированный элемент (и их потомки) с z-index = 0 или auto. opacity < 1</mark></li>
+                    <li>Позиционированный элемент (и их потомки) с z-index > 0</li>
+                </ol>
+            </div>
+        </section>
+
+        <section data-transition="none">
+<pre class="html size-l"><code><div class="red">red</div>
+<div class="green">green</div>
+<div class="blue">blue</div></pre></code>
+<pre class="css size-l fragment"><code>.red {
+    position: relative;
+    z-index: 999;
+}
+.green {
+    position: relative;
+    z-index: -999;
+}
+</pre></code>
+       </section>
+
+        <section>
+            <div class="ex fragment toggle">
+                <div class="group" style="height: 600px">
+                  <div class="viewport">
+                    viewport
+                  </div>
+                    <div class="out a1 z3 has-inner">
+                         position: relative;<br>
+                         z-index: 999;
+                    </div>
+                  <div class="out a2 z1 mt">
+                      position: relative;<br>
+                      z-index: -999;
+                  </div>
+                  <div class="out a3 z2 mt">
+                       display: block;
+                  </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="">
+                <ol>
+                    <li>Background и border элемента, который создаёт контекст наложения</li>
+                    <li><mark class="z-index green">Позиционированный элемент (и его дети) с z-index < 0.</mark></li>
+                    <li><mark class="z-index blue">Элементы блочного уровня в нормальном потоке</mark></li>
+                    <li>Плавающие элементы</li>
+                    <li>Элементы inline уровня</li>
+                    <li>Позиционированный элемент (и их потомки) с z-index = 0 или auto. opacity < 1</li>
+                    <li><mark class="z-index red">Позиционированный элемент (и их потомки) с z-index > 0</mark></li>
+                </ol>
+            </div>
+        </section>
+         <section data-background-image="images/hell.png">
+             <aside class="notes">
+                 Паранжа. Селекты. Попапы. Много разработчиков. На доске нарисовать!!!!
+             </aside>
+             <h2>z-index hell</h2>
+         </section>
+        <section>
+            <img src="images/z-index-hell.png">
+        </section>
+        <section>
+            <h3>Группировка z-index</h3>
+            <ul>
+                <li>1000–1999 – шапка</li>
+                <li>2000–2999 – диалоговые окна</li>
+                <li>3000–3999 – попапы</li>
+                <li>4000–4999 – suggests</li>
+            </ul>
+        </section>
+        <section>
+            <h2>ДЗ<span class="fragment" data-fragment-index="1"> 2015</span></h2>
+
+            <p class="fragment"data-fragment-index="2">Подсветка строк и колонок в таблице.</p>
+<pre class="css size-l fragment" data-fragment-index="2"><code>td { position: relative; }
+td::after {
+    position: absolute;
+    left: 0;
+    top: -5000px;
+
+    width: 100%;
+    height: 10000px;
+
+    z-index: -1;
+
+    content: '';
+}</pre></code>
+            <a class="fragment" data-fragment-index="2" href="https://rawgit.com/VasiliiKuznecov/verstka-tasks-3/1bcb4830010954173552f152b0b2903cdd711347/index.html">z-index: 1;</a><br>
+            <a class="fragment" data-fragment-index="2" href="https://rawgit.com/AlexanderVakhitov/verstka-tasks-3/c5c2e28b75f76580fbbc9163b64ffb297a58f728/index.html">z-index: -1;</a>
+        </section>
+        <section data-background-image="images/fish-wallpaper-wonderful.jpg">
+            <h2>Плавающие элементы</h2>
+        </section>
+        <section>
+            <h2>Свойство float</h2>
+            <aside class="notes">float игнорируются блоками</aside>
+<pre class="css size-l"><code>
+.box {
+    /*float: left | right | none*/
+    float: left;
+}
+</pre></code>
+            <ul>
+            <li class="fragment">Элемент вынимается из потока и сдвигается влево (для left) или вправо (для right) до того как коснётся либо границы родителя, либо другого элемента с float</li>
+            <li class="fragment">inline элементы «знают» о float и обтекают элемент по сторонам</li>
+            <li class="fragment" style="opacity: .3"  >Создают блочный контекст форматирования</li>
+            <li class="fragment">Ширина float блока определяется по содержимому</li>
+            <li class="fragment">Вертикальные отступы margin элементов с float не сливаются с отступами соседей</li>
+            </ul>
+            <a href="http://habrahabr.ru/post/136622/">Float</a>
+        </section>
+        <section>
+<pre class="html size-l"><code><div class="wrap">
+    <div class="float-left">float-left</div>
+    Текст или <span>inline-элементы</span>
+    <div class="float-right">float-right</div>
+</div>
+<div class="wrap">Текст или
+    <span>inline-элементы</span>
+</div></pre></code>
+<pre class="css size-l"><code>.float-left {
+    float: left;
+}
+.float-right {
+    float: right;
+}</pre></code>
+        </section>
+        <section>
+            <h3>Inline элементы избегают float элементы</h3>
+
+<div class="ex z-3">
+    <div class="wrap"><div class="float-left box" style="height: 260px; margin: 0;">float-left</div>Дренаж, вследствие пространственной неоднородности
+        почвенного покрова, упруго дает агрегат. Ожелезнение иссушает
+        осадочный денситомер одинаково по всем направлениям. Заиливание
+        сжимает комковато-порошистый сушильный шкаф.<div class="float-right box" style="height: 200px; margin: 0;">float-right</div></div>
+    <div class="wrap">Дренаж, вследствие пространственной неоднородности
+        почвенного покрова, упруго дает агрегат.</div>
+</div>
+        </section>
+
+        <section>
+<pre class="html size-l"><code><div class="float-left">float-left</div>
+
+<div class="wrap">
+    Текст или <span>inline-элементы</span>
+</div>
+
+<div class="float-right">float-right</div>
+
+<div class="wrap">Текст или
+    <span>inline-элементы</span>
+</div></pre></code>
+<pre class="css size-l"><code>.float-left {
+    float: left;
+}
+.float-right {
+    float: right;
+}</pre></code>
+        </section>
+        <section>
+        <h3>Блоки игнорируют float элементы</h3>
+<div class="ex z-3">
+    <div class="float-left box" style="height: 260px; margin: 0;">float-left</div>
+    <div class="wrap">Дренаж, вследствие пространственной неоднородности
+        почвенного покрова, упруго дает агрегат. Ожелезнение иссушает
+        осадочный денситомер одинаково по всем направлениям. Заиливание
+        сжимает комковато-порошистый сушильный шкаф.</div>
+    <div class="float-right box" style="height: 200px; margin: 0;">float-right</div>
+    <div class="wrap">Дренаж, вследствие пространственной неоднородности
+        почвенного покрова, упруго дает агрегат.</div>
+</div>
+        </section>
+
+        <section>
+            <h3>Отступы не схлапываются</h3>
+            <div class="ex toggle z-3">
+                <div class="wrap"  style="height: 400px;">
+                    <div class="float-left box" style="width: 250px; height: 200px; margin-right: 20px;">1 <br>margin-right: 20px;</div>
+                    <div class="float-left box" style="width: 250px; height: 150px; margin: 20px;">2<br>margin: 20px;</div>
+                    <div class="float-left box" style="width: 250px; height: 300px;">3</div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h3>Где 4-ый будет?</h3>
+            <div class="ex toggle z-3">
+                <div class="wrap"  style="height: 400px;">
+                    <div class="float-left box" style="width: 250px; height: 200px;">1</div>
+                    <div class="float-left box" style="width: 250px; height: 150px;">2</div>
+                    <div class="float-left box" style="width: 250px; height: 100px;">3</div>
+                    <div class="float-left box fragment toggle ready" style="width: 100px; height: 200px;">4</div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h3>Где 4-ый будет?</h3>
+            <div class="ex toggle z-3">
+                <div class="wrap"  style="height: 400px;">
+                    <div class="float-left box" style="width: 250px; height: 200px;">1</div>
+                    <div class="float-left box" style="width: 250px; height: 150px;">2</div>
+                    <div class="float-left box" style="width: 250px; height: 100px;">3</div>
+                    <div class="float-left box fragment toggle ready" style="width: 250px; height: 200px;">4</div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h3>Где 4-ый будет?</h3>
+            <div class="ex toggle z-3">
+                <div class="wrap"  style="height: 400px;">
+                    <div class="float-left box" style="width: 250px; height: 200px;">1</div>
+                    <div class="float-left box" style="width: 250px; height: 250px;">2</div>
+                    <div class="float-left box" style="width: 250px; height: 200px;">3</div>
+                    <div class="float-left box fragment toggle ready" style="width: 250px; height: 200px;">4</div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h3>Где 4-ый будет?</h3>
+            <div class="ex toggle z-3">
+                <div class="wrap"  style="height: 400px;">
+                    <div class="float-left box" style="width: 250px; height: 200px;">1</div>
+                    <div class="float-left box" style="width: 250px; height: 150px;">2</div>
+                    <div class="float-left box" style="width: 250px; height: 200px;">3</div>
+                    <div class="float-left box fragment toggle ready" style="width: 250px; height: 200px;">4</div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h3>Где 4-ый будет?</h3>
+            <div class="ex toggle z-3">
+                <div class="wrap"  style="height: 400px;">
+                    <div class="float-left box" style="width: 250px; height: 100px;">1</div>
+                    <div class="float-left box" style="width: 250px; height: 150px;">2</div>
+                    <div class="float-left box" style="width: 250px; height: 200px;">3</div>
+                    <div class="float-left box fragment toggle ready" style="width: 250px; height: 200px;">4</div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h2>Cвойство clear</h2>
+<pre class="css size-l"><code>.box {
+    /*clear: left | right | both*/
+    clear: left;
+}</pre></code>
+            <p>Применение этого свойства сдвигает элемент вниз до тех пор, пока не закончатся float'ы слева/справа/с обеих сторон.</p>
+        </section>
+
+        <section>
+            <h3>clear: left</h3>
+<pre class="css size-l fragment" data-fragment-index="1"><code>.wrapper {
+    clear: left;
+}</pre></code>
+            <div class="ex toggle z-3">
+                <div class="wrap"  style="height: 100px;">
+                    <div class="float-left box" style="width: 250px; height: 200px;">float: left;</div>
+                    <div class="float-right box" style="width: 250px; height: 250px;">float: right;</div>
+                    wrapper 1
+                </div>
+                <div class="wrap clear-left fragment toggle" data-fragment-index="1" style="height: 100px;">
+                    wrapper 2
+                </div>
+            </div>
+        </section>
+        <section>
+            <h3>clear: right</h3>
+<pre class="css size-l fragment" data-fragment-index="1"><code>.wrapper {
+    clear: right;
+}</pre></code>
+            <div class="ex toggle z-3">
+                <div class="wrap"  style="height: 100px;">
+                    <div class="float-left box" style="width: 250px; height: 250px;">float: left;</div>
+                    <div class="float-right box" style="width: 250px; height: 200px;">float: right;</div>
+                    wrapper 1
+                </div>
+                <div class="wrap clear-right fragment toggle" data-fragment-index="1" style="height: 100px;">
+                    wrapper 2
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3>clear: both</h3>
+<pre class="css size-l fragment" data-fragment-index="1"><code>.wrapper {
+    clear: both;
+}</pre></code>
+            <div class="ex toggle z-3">
+                <div class="wrap clear-both fragment toggle"  style="height: 100px;">
+                    <div class="float-left box" style="width: 250px; height: 250px;">float: left;</div>
+                    <div class="float-right box" style="width: 250px; height: 200px;">float: right;</div>
+                    wrapper 1
+                </div>
+                <div class="wrap clear-both fragment toggle" data-fragment-index="1" style="height: 100px;">
+                    wrapper 2
+                </div>
+            </div>
+        </section>
+        <section data-background-image="images/cat1.gif">
+        </section>
+        <section>
+            <h3>Блочный  контекст форматирования</h3>
+
+            <p>– это регион страницы, в котором блоки размещаются в привычном для блоков порядке. Элементы из разных блочных контекстов форматирования никак не могут повлиять на положение друг друга на странице. </p>
+             <ul>
+                 <li>float элементы</li>
+                 <li class="fragment">position: absolute | fixed;</li>
+                 <li class="fragment">display: inline-block | table-cell | table-captions (не блочные элементы)</li>
+                 <li class="fragment">блочные элементы c overflow: hidden | auto;</li>
+             </ul>
+            <a href="http://www.w3.org/TR/CSS21/visuren.html#block-formatting">Block formatting contexts</a>
+        </section>
+
+        <section>
+<pre class="css size-l fragment" data-fragment-index="1"><code>.wrapper1 {
+    overflow: hidden;
+}</pre></code>
+            <div class="ex toggle z-3">
+                <div class="wrap clear-both fragment toggle ovh" data-fragment-index="1">
+                    <div class="float-left box" style="width: 250px; height: 220px;">float: left;</div>
+                    <div class="float-right box" style="width: 250px; height: 200px;">float: right;</div>
+                    wrapper 1
+                </div>
+                <div class="wrap"  data-fragment-index="1" style="height: 100px;">
+                    wrapper 2
+                </div>
+            </div>
+        </section>
+        <section>
+<pre class="css size-l fragment" data-fragment-index="1"><code>.wrapper2 {
+    overflow: hidden;
+}</pre></code>
+            <div class="ex toggle z-3">
+                <div class="wrap " data-fragment-index="1">
+                    <div class="float-left box" style="width: 250px; height: 220px; margin: 10px;">float: left;</div>
+                    <div class="float-right box" style="width: 250px; height: 200px; margin: 10px;">float: right;</div>
+                    wrapper 1
+                </div>
+                <div class="wrap fragment toggle ovh"  data-fragment-index="1">
+                    wrapper 2
+                </div>
+            </div>
+        </section>
+        <section>
+<pre class="html size-l"><code><div class="float-left">float: left;</div>
+<div class="box">box</div>
+</pre></code>
+<pre class="css size-l fragment" data-fragment-index="1"><code>.box {
+   overflow: hidden;
+}</pre></code>
+           <div class="ex toggle z-3">
+               <div class="float-left box" style="width: 250px; height: 220px; margin-right: 10px; opacity: .7;">float: left;</div>
+               <div class="wrap fragment toggle ovh" data-fragment-index="1">
+                   box
+               </div>
+           </div>
+       </section>
+        <section>
+            <h3>Что будет?</h3>
+<pre class="html size-l"><code><div class="float-left">
+    float: left;
+    <div class="float-left">float: left;</div>
+</div>
+</pre></code>
+           <div class="ex toggle z-3 " style="display: inline-block; width: 100%;">
+               <div class="float-left box fragment" style="width: 250px; margin-right: 10px; outline: none;">float: left;
+                   <div class="float-left box" style=" margin-right: 10px;  outline: none; background: rgba(255,0,0,.6); height: 200px;">float: left;</div>
+               </div>
+           </div>
+       </section>
+        <section>
+            <h3>Меняем порядок</h3>
+<pre class="html size-l"><code><div>b1</div>
+<div>b2</div>
+<div>b3</div>
+<div>b4</div>
+</code></pre>
+<pre class="css size-l fragment" data-fragment-index="1"><code>div { float: right }</code></pre>
+<div class="ex toggle reversed fragment" style="display: inline-block; width: 100%;" data-fragment-index="1">
+   <div class="float-right box" style="width: 200px; height: 100px; margin-right: 10px; outline: none;">b1</div>
+   <div class="float-right box" style="width: 200px; height: 100px; margin-right: 10px; outline: none;">b2</div>
+   <div class="float-right box" style="width: 200px; height: 100px; margin-right: 10px; outline: none;">b3</div>
+   <div class="float-right box" style="width: 200px; height: 100px; margin-right: 10px; outline: none;">b4</div>
+</div>
+        </section>
+
+        <section>
+            <h3>Трехколоночный макет</h3>
+<pre class="html size-l"><code><div class="left">left</div>
+<div class="right">right</div>
+<div class="center">center</div></code></pre>
+<pre class="css size-l"><code data-noescape><span class="fragment" data-fragment-index="1">.left { float: left }</span>
+<span class="fragment" data-fragment-index="2">.right { float: right }</span>
+<span class="fragment" data-fragment-index="3">.center { overflow: hidden }</span>
+<span class="fragment" data-fragment-index="4">body { width: 50% }</span>
+</code></pre>
+
+            <div class="fragment three-column-float-left" data-fragment-index="1"></div>
+            <div class="fragment three-column-float-right" data-fragment-index="2"></div>
+            <div class="fragment three-column-center" data-fragment-index="3"></div>
+            <div class="fragment three-column-size" data-fragment-index="4"></div>
+<div class="ex three-column">
+    <div class="box left">left</div>
+    <div class="box right">right</div>
+    <div class="box center">center</div>
+</div>
+        </section>
+        <section>
+           <h1>Спасибо</h1>
+            <img src="images/giphy.gif">
+           </p>
+       </section>
+</div></div><script src="../../@lib/core.js"></script></body></html>
