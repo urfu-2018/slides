@@ -1,0 +1,2586 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>06-layout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+</head><body class="white"><div class="reveal"><div class="slides">
+
+<section class="center">
+    <h1>Layout</h1>
+
+    <div class="ya-letter" style="text-align: center; font-size: .9em">Лена Рашкован</div>
+</section>
+
+<section class="center">
+    <h1>Layout (раскладка) –</h1>
+
+    <p>взаимное расположение крупных блоков страницы.</p>
+</section>
+
+<section class="center">
+    <img class="center" src="images/cnn.jpeg" style="height: 650px"/>
+</section>
+
+<section class="center">
+    <img class="center" src="images/volute.jpg" style="height: 650px"/>
+</section>
+
+<section class="center">
+    <img class="center" src="images/mag_grid.png"/>
+</section>
+
+<section class="center">
+    <img class="center" src="images/mag.png"/>
+</section>
+
+<section class="center">
+    <img class="center" src="images/modular_grid.png"/>
+</section>
+
+<section class="center" style="height: 650px">
+    <img class="center" src="images/hats.png"/>
+</section>
+
+<section class="center">
+    <div class="flow ">
+        <pre class="fragment flow__code"><code class="html"><div class="column-1">
+</div>
+<div class="column-2">
+</div>
+<div class="column-3">
+</div></code></pre>
+
+        <div class="fragment flow__normal">
+            <div class="mock column-1"></div>
+            <div class="mock column-2"></div>
+            <div class="mock column-3"></div>
+        </div>
+
+        <div class="fragment flow__changed">
+            <div class="mock column-1"></div>
+            <div class="mock column-2"></div>
+            <div class="mock column-3"></div>
+        </div>
+    </div>
+</section>
+
+<section class="center">
+    <h1>Таблицы</h1>
+</section>
+
+<section>
+    <table class="layout-ex" style="width: 100%; height: 200px;">
+        <tr>
+            <td style="width: 33%; background: rgba(255, 255, 255, 0.8);">td</td>
+            <td style="width: 33%; background: rgba(255, 255, 255, 0.8);">td</td>
+            <td style="width: 33%; background: rgba(255, 255, 255, 0.8);">td</td>
+        </tr>
+    </table>
+
+    <pre class="fragment"><code class="html"><table>
+    <tbody>
+        <tr>
+            <td style="width: 33%;">колонка раз</td>
+            <td style="width: 33%;">колонка два</td>
+            <td style="width: 33%;">колонка три</td>
+        </tr>
+    </tbody>
+</table></code></pre>
+</section>
+
+<section>
+    <table class="layout-ex " style="width: 100%;">
+        <tr>
+            <td style="width: 33%; background: rgba(255, 255, 255, 0.8); vertical-align: top">td</td>
+            <td style="width: 33%; background: rgba(255, 255, 255, 0.8); position: relative">
+                <span style="position: absolute; top: 5px; left: 15px;">td</span>
+                <img class="alex" src="images/alex.png"/>
+            </td>
+            <td style="width: 33%; background: rgba(255, 255, 255, 0.8); vertical-align: top">td</td>
+        </tr>
+    </table>
+</section>
+
+<section class="center">
+    Раскладка на таблицах:
+
+    <ul>
+        <li class="green fragment">
+            колонки выравниваются по высоте
+        </li>
+
+        <li class="green fragment">
+            адекватна при переполнении
+        </li>
+
+        <li class="red fragment">
+            куча лишней разметки
+        </li>
+
+        <li class="red fragment">
+            не семантично
+        </li>
+    </ul>
+</section>
+
+<section class="center">
+    <h1>Флоаты</h1>
+</section>
+
+<section>
+    <div class="layout-ex ">
+        <div style="width: 33%; background: rgba(255, 255, 255, 0.8); float: left; text-align: left; margin-right: 1px;">
+            float: left
+        </div>
+        <div style="width: 33%; background: rgba(255, 255, 255, 0.8); float: left; text-align: left; margin-right: 1px;">
+            <span style="position: absolute;">float: left</span>
+            <img class="alex" src="images/alex.png"/>
+        </div>
+        <div style="width: 33%; background: rgba(255, 255, 255, 0.8); float: left; text-align: left">
+            float: left
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="layout-ex ">
+        <div style="width: 33%; background: rgba(255, 255, 255, 0.8); float: left; text-align: left; margin-right: 1px;">
+            float: left
+        </div>
+        <div style="width: 33%; background: rgba(255, 255, 255, 0.8); float: left; text-align: left; margin-right: 1px;">
+            <span style="position: absolute;">float: left</span>
+            <img class="alex" src="images/alex.png"/>
+        </div>
+        <div style="width: 33%; background: rgba(255, 255, 255, 0.8); float: left; text-align: left">
+            float: left
+        </div>
+        <div class="clearfix">clear: both</div>
+    </div>
+</section>
+
+<section class="center">
+    Раскладка на флоатах:
+
+    <ul>
+        <li class="green fragment">
+            можно задавать размеры
+        </li>
+
+        <li class="green fragment">
+            переносятся
+        </li>
+
+        <li class="red fragment">
+            колонки не выравниваются по высоте
+        </li>
+
+        <li class="red fragment">
+            спецэффекты (схлопывание родителя)<br>и хаки (clearfix)
+        </li>
+
+        <li class="red fragment">
+            перекрытие контента при переполнении
+        </li>
+    </ul>
+</section>
+
+<section class="center">
+    <h1>Инлайн-блоки</h1>
+</section>
+
+<section>
+    <input type="hidden" class="fragment a1" data-fragment-index="0">
+    <style>
+        .a1.visible ~ div {
+            transition: transform 1s;
+            transform: scale(0.7);
+            transform-origin: 0 0;
+        }
+    </style>
+    <div class="layout-ex" style="text-align: left">
+        <div style="width: 33%; vertical-align: top; background: rgba(255, 255, 255, 0.8); height: 200px; display: inline-block; text-align: left; margin-right: 1px;">display: inline-block</div>
+        <div style="position: relative; width: 33%; vertical-align: top; background: rgba(255, 255, 255, 0.8); display: inline-block; text-align: left; margin-right: 1px;">
+            <span style="position: absolute; top: 5px; left: 15px; z-index: 0">display: inline-block</span>
+            <img style="position: relative" class="alex" src="images/alex.png"/>
+        </div>
+        <div style="width: 33%;vertical-align: top; background: rgba(255, 255, 255, 0.8); height: 200px; display: inline-block; text-align: left">display: inline-block</div>
+    </div>
+</section>
+
+<section>
+    Раскладка на инлайн-блоках:
+
+    <ul>
+        <li class="green fragment">
+            реагируют на выравнивание<br>(text-align и vertical-align)
+        </li>
+
+        <li class="green fragment">
+            можно задавать размеры
+        </li>
+
+        <li class="green fragment">
+            переносятся
+        </li>
+
+        <li class="red fragment">
+            лишние пробелы
+        </li>
+
+        <li class="red fragment">
+            при переполнении всё может развалиться
+        </li>
+
+        <li class="red fragment">
+            колонки не выравниваются по высоте
+        </li>
+    </ul>
+</section>
+
+<section>
+    Чем раскладывать-то тогда?
+
+    <ul class="fragment" data-fragment-index="0">
+        <li>
+            <span class="fragment strike" data-fragment-index="1">таблицы</span>
+            <span class="fragment grey" data-fragment-index="1"> — для табличных данных</span>
+        </li>
+
+        <li>
+            <span class="fragment strike" data-fragment-index="2">флоаты</span>
+            <span class="fragment grey" data-fragment-index="2"> — для обтекания текстом</span>
+        </li>
+
+        <li>
+            <span class="fragment strike" data-fragment-index="3">инлайн-блоки</span>
+            <span class="fragment grey" data-fragment-index="3"> — лучше не надо :)</span>
+        </li>
+
+        <li class="fragment" data-fragment-index="4">
+            флексбоксы &#128077;
+        </li>
+
+        <li class="fragment" data-fragment-index="4">
+            гриды &#128077;
+        </li>
+    </ul>
+</section>
+
+<section class="center">
+    <div class="flex-slide">
+        <div class="bg-blue" style="opacity: 0.8"></div>
+        <div class="bg-blue" style="opacity: 0.6"></div>
+        <div class="bg-blue" style="opacity: 0.4"></div>
+        <div class="bg-blue" style="opacity: 0.2"></div>
+    </div>
+
+    <h1>Флексбокс</h1>
+</section>
+
+<section class="center">
+    <p>flex = гибкий</p>
+
+    <p class="fragment">
+        Гибкие раскладки:<br>
+        - управление распределением места<br>
+        - мощные возможности для выравнивания</p>
+
+    <p class="fragment green">display: flex</p>
+</section>
+
+<section class="center">
+    <p class="fragment">
+        <span class="underline">флекс-контейнер</span> <span class="grey">(flex-container)</span>
+    </p>
+
+    <p class="fragment">
+        <span class="underline">флекс-элемент</span> <span class="grey">(flex-item)</span>
+    </p>
+
+    <p class="fragment">
+        <span class="underline">главная ось</span> <span class="grey">(main axis)</span>
+    </p>
+
+    <p class="fragment">
+        <span class="underline">поперечная ось</span> <span class="grey">(cross axis)</span>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        Флекс-элементы располагаются вдоль главной оси.
+    </p>
+
+    <br>
+
+    <div style="display: flex; justify-content: center">
+        <img src="images/arrow_right.png"/>
+    </div>
+
+    <p class="fragment">
+        Свойство <span class="green">flex-direction</span> меняет её направление.
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        flex-direction: <span class="red">row</span>
+
+        <br>
+
+        <div style="display: flex; justify-content: center">
+            <img src="images/arrow_right.png"/>
+        </div>
+
+        <p class="grey" style="padding: 0">по умолчанию</p>
+        <br>
+
+        <div class="flex-ex " style="height: 130px">
+            <div class="box">целовались студенты</div>
+            <div class="box">распускались тюльпаны</div>
+            <div class="box">чик-чирикало там и тут</div>
+        </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        flex-direction: <span class="red">row-reverse</span>
+
+        <br>
+
+        <div style="display: flex; justify-content: center; transform: rotate(180deg)">
+            <img src="images/arrow_right.png"/>
+        </div>
+
+        <br>
+        <br>
+
+        <div class="flex-ex " style="flex-direction: row-reverse; height: 130px">
+            <div class="box">целовались студенты</div>
+            <div class="box">распускались тюльпаны</div>
+            <div class="box">чик-чирикало там и тут</div>
+        </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        flex-direction: <span class="red">column</span>
+
+        <br>
+        <br>
+
+        <div class="two-columns">
+            <div style="display: flex; justify-content: center">
+                <img src="images/arrow_down.png"/>
+            </div>
+
+            <div class="flex-ex " style="flex-direction: column">
+                <div class="box">целовались студенты</div>
+                <div class="box">распускались тюльпаны</div>
+                <div class="box">чик-чирикало там и тут</div>
+            </div>
+        </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        flex-direction: <span class="red">column-reverse</span>
+
+        <br>
+        <br>
+
+        <div class="two-columns">
+            <div style="display: flex; justify-content: center; transform: rotate(180deg)">
+                <img src="images/arrow_down.png"/>
+            </div>
+
+            <div class="flex-ex " style="flex-direction: column-reverse">
+                <div class="box">целовались студенты</div>
+                <div class="box">распускались тюльпаны</div>
+                <div class="box">чик-чирикало там и тут</div>
+            </div>
+        </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        Свойство <span class="green">justify-content</span> управляет
+        выравниванием флекс-элементов вдоль главной оси.
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        justify-content: <span class="red">flex-start</span>
+
+        <br>
+
+        <p class="grey" style="padding: 0">по умолчанию</p>
+        <br>
+
+        <div class="flex-ex " style="height: 130px">
+            <div class="box">целовались студенты</div>
+            <div class="box">распускались тюльпаны</div>
+            <div class="box">чик-чирикало там и тут</div>
+        </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        justify-content: <span class="red">flex-end</span>
+
+        <br>
+
+        <br>
+        <br>
+
+    <div class="flex-ex " style="justify-content: flex-end; height: 130px">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box">чик-чирикало там и тут</div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        justify-content: <span class="red">center</span>
+
+        <br>
+
+        <br>
+        <br>
+
+    <div class="flex-ex " style="justify-content: center; height: 130px">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box">чик-чирикало там и тут</div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        justify-content: <span class="red">space-between</span>
+
+        <br>
+
+        <br>
+        <br>
+
+    <div class="flex-ex " style="justify-content: space-between; height: 130px">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box">чик-чирикало там и тут</div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        justify-content: <span class="red">space-around</span>
+
+        <br>
+        <br>
+        <br>
+
+    <div class="flex-ex " style="justify-content: space-around; height: 130px">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box">чик-чирикало там и тут</div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        Поперечная ось всегда перпендикулярна главной оси.
+    </p>
+
+    <br>
+
+    <div style="display: flex; justify-content: center">
+        <img src="images/arrow_right_2.png"/>
+    </div>
+
+    <p class="fragment">
+        Направление изменить нельзя.
+    </p>
+</section>
+
+<section class="center">
+    <div class="two-columns">
+        <div>
+            <img src="images/direction_row.png">
+            <br>
+
+            <img src="images/direction_row_reverse.png">
+        </div>
+        <div>
+            <img src="images/direction_column.png">
+            <br>
+            <img src="images/direction_column_reverse.png">
+        </div>
+    </div>
+</section>
+
+<section class="center">
+    <p>
+        Свойство <span class="green">align-items</span> управляет выравниванием
+        флекс-элементов вдоль поперечной оси.
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        align-items: <span class="red">stretch</span>
+
+        <br>
+
+        <p class="grey" style="padding: 0">по умолчанию</p>
+        <br>
+
+    <div class="flex-ex " style="height: 130px">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box">чик-чирикало там и тут</div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        align-items: <span class="red">flex-start</span>
+
+        <br>
+
+        <br>
+        <br>
+
+    <div class="flex-ex " style="align-items: flex-start; height: 130px">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box">чик-чирикало там и тут</div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        align-items: <span class="red">flex-end</span>
+
+        <br>
+
+        <br>
+        <br>
+
+    <div class="flex-ex " style="align-items: flex-end; height: 130px">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box">чик-чирикало там и тут</div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        align-items: <span class="red">center</span>
+
+        <br>
+
+        <br>
+        <br>
+
+    <div class="flex-ex" style="align-items: center; height: 130px">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box">чик-чирикало там и тут</div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        align-items: <span class="red">baseline</span>
+
+        <br>
+        <br>
+        <br>
+
+    <div class="flex-ex" style="align-items: baseline; height: 130px">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box" style="padding-top: 30px !important;">чик-чирикало там и тут</div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        <span class="green">align-self</span> даёт переопределить выравнивание у флекс-элемента.
+
+        <br>
+
+        <br>
+
+        Значения те же, что и у <span class="green">align-items</span>.
+    </p>
+
+    <br>
+
+    <div class="flex-ex fragment" style="align-items: flex-start; height: 130px">
+        <div class="box">нам</div>
+        <div class="box">сказали</div>
+        <div class="box">стоять</div>
+        <div class="box">в начале</div>
+        <div class="box box_active" style="align-self: center">я не с вами, ребят</div>
+    </div>
+</section>
+
+<section class="center">
+    <p>
+        Что если флекс-элементов<br> много?
+
+        <br>
+        <br>
+        <br>
+    </p>
+
+    <div class="flex-ex">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box">чик-чирикало там и тут</div>
+    </div>
+</section>
+
+<section class="center">
+    <p>
+        Будут сжиматься до предела.
+
+        <br>
+        <br>
+        <br>
+        <br>
+    </p>
+
+    <div class="flex-ex">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box">чик-чирикало там и тут</div>
+        <div class="box">я забрала документы</div>
+        <div class="box">поругалась с деканом</div>
+        <div class="box">мам, я бросила институт</div>
+    </div>
+</section>
+
+<section class="center">
+    <p>
+        Выйдут за пределы контейнера, но&nbsp;продолжат располагаться в один ряд.
+
+        <br>
+        <br>
+        <br>
+    </p>
+
+    <div class="flex-ex">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box">чик-чирикало там и тут</div>
+        <div class="box">я забрала документы</div>
+        <div class="box">поругалась с деканом</div>
+        <div class="box">мам, я бросила институт</div>
+        <div class="box">это мне сказал сделать</div>
+    </div>
+</section>
+
+<section class="center">
+    <p>
+        Переносом элементов управляет свойство <span class="green">flex-wrap</span>,
+        и по умолчанию перенос запрещён.
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        flex-wrap: <span class="red strike fragment" data-fragment-index="0">nowrap</span>
+        <span class="red fragment" data-fragment-index="0"> wrap</span>
+
+        <br>
+        <br>
+
+    <div class="flex-ex fragment wrap " data-fragment-index="0">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box">чик-чирикало там и тут</div>
+        <div class="box">я забрала документы</div>
+        <div class="box">поругалась с деканом</div>
+        <div class="box">мам, я бросила институт</div>
+        <div class="box">это мне сказал сделать</div>
+        <div class="box">Слава, мой хороший друг</div>
+        <div class="box">чемодан, вокзал, поезд</div>
+        <div class="box">Москва – Екатеринбург</div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        flex-wrap: <span class="red">wrap-reverse</span>
+
+        <br>
+        <br>
+
+    <div class="flex-ex" style="flex-wrap: wrap-reverse">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box">чик-чирикало там и тут</div>
+        <div class="box">я забрала документы</div>
+        <div class="box">поругалась с деканом</div>
+        <div class="box">мам, я бросила институт</div>
+        <div class="box">это мне сказал сделать</div>
+        <div class="box">Слава, мой хороший друг</div>
+        <div class="box">чемодан, вокзал, поезд</div>
+        <div class="box">Москва – Екатеринбург</div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        Можно комбинировать направление и&nbsp;перенос в свойстве <span class="green">flex-flow</span>:
+    </p>
+
+    <pre class="fragment" style="display: flex; justify-content: center"><code class="css">.container
+{
+    display: flex;
+    flex-flow: row wrap;
+}</code></pre>
+</section>
+
+<section class="center">
+    <p>
+        Cвойство <span class="green">align-content</span> управляет распределением <span class="magenta">рядов</span> флекс-элементов
+        вдоль поперечной оси.
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        align-content: <span class="red">stretch</span>
+
+        <br>
+        <p class="grey" style="padding: 0">по умолчанию</p>
+        <br>
+
+    <div class="flex-ex" style="height: 400px; flex-wrap: wrap">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box">чик-чирикало там и тут</div>
+        <div class="box">я забрала документы</div>
+        <div class="box">поругалась с деканом</div>
+        <div class="box">мам, я бросила институт</div>
+        <div class="box">это мне сказал сделать</div>
+        <div class="box">Слава, мой хороший друг</div>
+        <div class="box">чемодан, вокзал, поезд</div>
+        <div class="box">Москва – Екатеринбург</div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        align-content: <span class="red">flex-start</span>
+
+        <br>
+        <br>
+        <br>
+
+    <div class="flex-ex" style="height: 400px; flex-wrap: wrap; align-content: flex-start">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box">чик-чирикало там и тут</div>
+        <div class="box">я забрала документы</div>
+        <div class="box">поругалась с деканом</div>
+        <div class="box">мам, я бросила институт</div>
+        <div class="box">это мне сказал сделать</div>
+        <div class="box">Слава, мой хороший друг</div>
+        <div class="box">чемодан, вокзал, поезд</div>
+        <div class="box">Москва – Екатеринбург</div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        align-content: <span class="red">flex-end</span>
+
+        <br>
+        <br>
+        <br>
+
+    <div class="flex-ex" style="height: 400px; flex-wrap: wrap; align-content: flex-end">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box">чик-чирикало там и тут</div>
+        <div class="box">я забрала документы</div>
+        <div class="box">поругалась с деканом</div>
+        <div class="box">мам, я бросила институт</div>
+        <div class="box">это мне сказал сделать</div>
+        <div class="box">Слава, мой хороший друг</div>
+        <div class="box">чемодан, вокзал, поезд</div>
+        <div class="box">Москва – Екатеринбург</div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        align-content: <span class="red">center</span>
+
+        <br>
+        <br>
+        <br>
+
+    <div class="flex-ex" style="height: 400px; flex-wrap: wrap; align-content: center">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box">чик-чирикало там и тут</div>
+        <div class="box">я забрала документы</div>
+        <div class="box">поругалась с деканом</div>
+        <div class="box">мам, я бросила институт</div>
+        <div class="box">это мне сказал сделать</div>
+        <div class="box">Слава, мой хороший друг</div>
+        <div class="box">чемодан, вокзал, поезд</div>
+        <div class="box">Москва – Екатеринбург</div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        align-content: <span class="red">space-between</span>
+
+        <br>
+        <br>
+        <br>
+
+    <div class="flex-ex" style="height: 400px; flex-wrap: wrap; align-content: space-between">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box">чик-чирикало там и тут</div>
+        <div class="box">я забрала документы</div>
+        <div class="box">поругалась с деканом</div>
+        <div class="box">мам, я бросила институт</div>
+        <div class="box">это мне сказал сделать</div>
+        <div class="box">Слава, мой хороший друг</div>
+        <div class="box">чемодан, вокзал, поезд</div>
+        <div class="box">Москва – Екатеринбург</div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        align-content: <span class="red">space-around</span>
+
+        <br>
+        <br>
+        <br>
+
+    <div class="flex-ex" style="height: 400px; flex-wrap: wrap; align-content: space-around">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box">чик-чирикало там и тут</div>
+        <div class="box">я забрала документы</div>
+        <div class="box">поругалась с деканом</div>
+        <div class="box">мам, я бросила институт</div>
+        <div class="box">это мне сказал сделать</div>
+        <div class="box">Слава, мой хороший друг</div>
+        <div class="box">чемодан, вокзал, поезд</div>
+        <div class="box">Москва – Екатеринбург</div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        Если активно <span class="green">align-content</span>,
+        <br>то что с <span class="green">align-items</span>?
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        align-content: <span class="red">stretch</span><span class="fragment" data-fragment-index="0">; align-items: <span class="red">center</span></span>
+
+        <br>
+        <br>
+
+    <div class="flex-ex fragment align-center" data-fragment-index="0" style="height: 500px; flex-wrap: wrap">
+        <div class="box">целовались студенты</div>
+        <div class="box">распускались тюльпаны</div>
+        <div class="box">чик-чирикало там и тут</div>
+        <div class="box">я забрала документы</div>
+        <div class="box">поругалась с деканом</div>
+        <div class="box">мам, я бросила институт</div>
+        <div class="box">это мне сказал сделать</div>
+        <div class="box">Слава, мой хороший друг</div>
+        <div class="box">чемодан, вокзал, поезд</div>
+        <div class="box">Москва – Екатеринбург</div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p class="fragment">
+        С помощью свойства <span class="green">order</span> можно менять
+        порядок следования флекс-элементов.
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        order: <span class="red">0</span>
+
+        <br>
+        <p class="grey" style="padding: 0">по умолчанию</p>
+        <br>
+
+    <div class="flex-ex" style="justify-content: center">
+        <div class="box">
+            раз
+            <span class="num">0</span>
+        </div>
+        <div class="box">
+            два
+            <span class="num">0</span>
+        </div>
+        <div class="box box_active">
+            три
+            <span class="num">0</span>
+        </div>
+        <div class="box">
+            четыре
+            <span class="num">0</span>
+        </div>
+        <div class="box">
+            пять
+            <span class="num">0</span>
+        </div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        order: <span class="red">1</span>
+
+        <br>
+        <br>
+        <br>
+
+    <div class="flex-ex" style="justify-content: center">
+        <div class="box">
+            раз
+            <span class="num">0</span>
+        </div>
+        <div class="box">
+            два
+            <span class="num">0</span>
+        </div>
+        <div class="box box_active" style="order: 1">
+            три
+            <span class="num">1</span>
+        </div>
+        <div class="box">
+            четыре
+            <span class="num">0</span>
+        </div>
+        <div class="box">
+            пять
+            <span class="num">0</span>
+        </div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        order: <span class="red">-1</span>
+
+        <br>
+        <br>
+        <br>
+
+    <div class="flex-ex" style="justify-content: center">
+        <div class="box">
+            раз
+            <span class="num">0</span>
+        </div>
+        <div class="box">
+            два
+            <span class="num">0</span>
+        </div>
+        <div class="box box_active" style="order: -1">
+            три
+            <span class="num">-1</span>
+        </div>
+        <div class="box">
+            четыре
+            <span class="num">0</span>
+        </div>
+        <div class="box">
+            пять
+            <span class="num">0</span>
+        </div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        order
+
+        <br>
+        <br>
+        <br>
+
+    <div class="flex-ex" style="justify-content: center">
+        <div class="box" style="order: 1">
+            раз
+            <span class="num">1</span>
+        </div>
+        <div class="box" style="order: 2">
+            два
+            <span class="num">2</span>
+        </div>
+        <div class="box" style="order: 3">
+            три
+            <span class="num">3</span>
+        </div>
+        <div class="box" style="order: 4">
+            четыре
+            <span class="num">4</span>
+        </div>
+        <div class="box" style="order: 5">
+            пять
+            <span class="num">5</span>
+        </div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p class="fragment">
+        Как указать размер флекс-элемента?
+    </p>
+
+    <p class="fragment">
+        Cвойство <span class="green">flex-basis</span> задает размер на&nbsp;главной оси.
+    </p>
+
+    <p class="fragment">
+        Если не указать, то базовый размер возьмётся из ширины или высоты.
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        flex-basis: 50%
+
+        <br>
+        <br>
+
+    <div class="flex-ex fragment">
+        <div class="box box_active" style="flex-basis: 50%; box-sizing: border-box">50% по горизонтали</div>
+        <div class="box">auto</div>
+    </div>
+    </p>
+
+    <p>
+    <div class="flex-ex fragment" style="flex-direction: column; height: 200px">
+        <div class="box box_active" style="flex-basis: 50%; box-sizing: border-box">50% по вертикали</div>
+        <div class="box">auto</div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        Почему размер <span class="magenta">базовый</span>?
+    </p>
+
+    <p class="fragment">
+        Это исходный размер.
+    </p>
+
+    <p class="fragment">
+        Свободное место можно распределять
+        в&nbsp;соответствии с коэффициентом жадности флекс-элемента (<span class="green">flex-grow</span>).
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        flex-grow: <span class="red">0</span>
+
+        <br>
+        <p class="grey" style="padding: 0">по умолчанию</p>
+        <br>
+
+    <div class="flex-ex fragment" style="justify-content: center">
+        <div class="box">
+            &#128529;
+            <span class="num">0</span>
+        </div>
+        <div class="box box_active">
+            &#128528;
+            <span class="num">0</span>
+        </div>
+        <div class="box">
+            &#128529;
+            <span class="num">0</span>
+        </div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        flex-grow: <span class="red">1</span>
+
+        <br>
+        <br>
+        <br>
+
+    <div class="flex-ex" style="justify-content: center">
+        <div class="box">
+            &#128529;
+            <span class="num">0</span>
+        </div>
+        <div class="box box_active" style="flex-grow: 1">
+            &#128540;
+            <span class="num">1</span>
+        </div>
+        <div class="box">
+            &#128529;
+            <span class="num">0</span>
+        </div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        flex-grow: <span class="red">2</span>
+
+        <br>
+        <br>
+        <br>
+
+    <div class="flex-ex" style="justify-content: center">
+        <div class="box">
+            &#128529;
+            <span class="num">0</span>
+        </div>
+        <div class="box" style="flex-grow: 1">
+            &#128530;
+            <span class="num">1</span>
+        </div>
+        <div class="box box_active" style="flex-grow: 2">
+            &#128526;
+            <span class="num">2</span>
+        </div>
+    </div>
+    </p>
+</section>
+
+<section>
+    Как вычисляется итоговый размер?
+
+    <ol>
+        <li class="fragment">
+            Посчитаем свободное место:<br>
+            <span class="magenta">free space</span> = width - &#8721; <strong>flex-basis</strong>
+        </li>
+
+        <li class="fragment">
+            Посчитаем долю свободного места:<br>
+            <span class="green">fraction</span> = <span class="magenta">free space</span> / &#8721; <span class="red">flex-grow</span>
+        </li>
+
+        <li class="fragment">
+            Вычислим итоговый размер:<br>
+            final size = <strong>flex-basis</strong> + (<span class="green">fraction</span> &times; <span class="red">flex-grow</span>)
+        </li>
+    </ol>
+
+    <div class="fragment">На размер свободного места ещё могут влиять рамки и отступы :)</div>
+</section>
+
+<section>
+    Особенности внешних отступов:
+
+    <ul>
+        <li class="fragment">
+            не схлапываются
+        </li>
+
+        <li class="fragment">
+            не выпадают
+        </li>
+
+        <li class="fragment">
+            отступ с <span class="red">auto</span> заберет все свободное место по своему направлению
+        </li>
+
+        <li class="fragment">
+            часть базового размера элемента
+        </li>
+    </ul>
+</section>
+
+<section>
+    <br>
+
+    <div class="flex-ex" style="justify-content: center">
+        <div class="box">
+            &#128529;
+            <span class="num">0</span>
+        </div>
+        <div class="box" style="flex-grow: 1">
+            &#128530;
+            <span class="num">1</span>
+        </div>
+        <div class="box" style="flex-grow: 2">
+            &#128526;
+            <span class="num">2</span>
+        </div>
+    </div>
+
+    <div class="fragment scaled" style="padding-top: 20px">width = 980px</div>
+    <div class="fragment scaled"><strong>flex-basis</strong> = 2&times;10px + 2&times;10px + 25px = <strong>65px</strong></div>
+
+    <ul class="scaled">
+        <li class="fragment">
+            <span class="magenta">free space</span>
+            = 980px - 3 &times; <strong>65px</strong>
+            = <span class="magenta">785px</span>
+        </li>
+
+        <li class="fragment">
+            <span class="green">fraction</span>
+            = <span class="magenta">785px</span> /
+            (<span class="red">0</span> + <span class="red">1</span> + <span class="red">2</span>)
+            = ~<span class="green">262px</span>
+        </li>
+
+        <li class="fragment">
+            final size<sub class="sub">1</sub> =
+            <strong>65px</strong> + (<span class="green">262px</span> &times; <span class="red">0</span>) = 65px;
+        </li>
+
+        <li class="fragment">
+            final size<sub class="sub">2</sub> =
+            <strong>65px</strong> + (<span class="green">262px</span> &times; <span class="red">1</span>) = ~326px;
+        </li>
+
+        <li class="fragment">
+            final size<sub class="sub">3</sub> =
+            <strong>65px</strong> + (<span class="green">262px</span> &times; <span class="red">2</span>) = ~589px;
+        </li>
+    </ul>
+</section>
+
+<section class="center">
+    <p>
+        Что если сумма базовых размеров больше, чем свободного места?
+    </p>
+
+    <p class="fragment">
+        Будем делить отрицательное пространство в&nbsp;соответствии
+        с&nbsp;коэффициентами сжатия (<span class="green">flex-shrink</span>).
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        flex-shrink: <span class="red">1</span>
+
+        <br>
+        <p class="grey" style="padding: 0">по умолчанию</p>
+        <br>
+
+    <div class="flex-ex" style="justify-content: center">
+        <div class="box">
+            &#128530; ?
+            <span class="num">1</span>
+        </div>
+        <div class="box">
+            &#128540;))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+            <span class="num">1</span>
+        </div>
+        <div class="box">
+            плак ;(
+            <span class="num">1</span>
+        </div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        flex-shrink: <span class="red">0</span>
+
+        <br>
+        <br>
+        <br>
+
+    <div class="flex-ex" style="justify-content: center">
+        <div class="box box_active" style="flex-shrink: 0">
+            &#128526; !
+            <span class="num">0</span>
+        </div>
+        <div class="box">
+            &#128540;))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+            <span class="num">1</span>
+        </div>
+        <div class="box">
+            плак ;(
+            <span class="num">1</span>
+        </div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        flex-shrink: <span class="red">0</span>
+
+        <br>
+        <br>
+        <br>
+
+    <div class="flex-ex" style="justify-content: center">
+        <div class="box" style="flex-shrink: 0">
+            &#128526; !
+            <span class="num">0</span>
+        </div>
+        <div class="box">
+            &#128540;))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+            <span class="num">1</span>
+        </div>
+        <div class="box box_active" style="flex-shrink: 0">
+            не плак :)
+            <span class="num">0</span>
+        </div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        <a href="https://drafts.csswg.org/css-flexbox-1/#resolve-flexible-lengths" target="_blank">
+            Хардкорный алгоритм расчёта
+        </a>
+    </p>
+</section>
+
+<section class="center">
+    <p>
+        С помощью сокращённого свойства <span class="green">flex</span> можно одновременно
+        задать<br>флекс-элементу <span class="green">flex-grow</span>, <span class="green">flex-shrink</span><br>и <span class="green">flex-basis</span>.
+    </p>
+</section>
+
+<section class="center">
+    <p>flex: <span class="red">[flex-grow]</span> <span class="red">[flex-shrink]</span> <span class="red">[flex-basis]</span></p>
+
+    <pre><code class="css">.elem
+{
+    flex: initial; /* = 0 1 auto — все по умолчанию */
+
+
+
+
+
+
+
+
+
+}</code></pre>
+</section>
+
+<section class="center">
+    <p>flex: <span class="red">[flex-grow]</span> <span class="red">[flex-shrink]</span> <span class="red">[flex-basis]</span></p>
+
+    <pre><code class="css">.elem
+{
+    flex: initial; /* = 0 1 auto — все по умолчанию */
+    flex: auto;    /* = 1 1 auto */
+
+
+
+
+
+
+
+
+}</code></pre>
+</section>
+
+<section class="center">
+    <p>flex: <span class="red">[flex-grow]</span> <span class="red">[flex-shrink]</span> <span class="red">[flex-basis]</span></p>
+
+    <pre><code class="css">.elem
+{
+    flex: initial; /* = 0 1 auto — все по умолчанию */
+    flex: auto;    /* = 1 1 auto */
+    flex: none;    /* = 0 0 auto */
+
+
+
+
+
+
+
+}</code></pre>
+</section>
+
+<section class="center">
+    <p>flex: <span class="red">[flex-grow]</span> <span class="red">[flex-shrink]</span> <span class="red">[flex-basis]</span></p>
+
+    <pre><code class="css">.elem
+{
+    flex: initial; /* = 0 1 auto — все по умолчанию */
+    flex: auto;    /* = 1 1 auto */
+    flex: none;    /* = 0 0 auto */
+    flex: 2;       /* число -> flex-grow,
+                      = 2 1 auto */
+
+
+
+
+
+}</code></pre>
+</section>
+
+<section class="center">
+    <p>flex: <span class="red">[flex-grow]</span> <span class="red">[flex-shrink]</span> <span class="red">[flex-basis]</span></p>
+
+    <pre><code class="css">.elem
+{
+    flex: initial; /* = 0 1 auto — все по умолчанию */
+    flex: auto;    /* = 1 1 auto */
+    flex: none;    /* = 0 0 auto */
+    flex: 2;       /* число -> flex-grow,
+                      = 2 1 auto */
+    flex: 50%;     /* единица измерения длины -> flex-basis = 50%,
+                      = 0 1 50% */
+
+
+
+}</code></pre>
+</section>
+
+<section class="center">
+    <p>flex: <span class="red">[flex-grow]</span> <span class="red">[flex-shrink]</span> <span class="red">[flex-basis]</span></p>
+
+    <pre><code class="css">.elem
+{
+    flex: initial; /* = 0 1 auto — все по умолчанию */
+    flex: auto;    /* = 1 1 auto */
+    flex: none;    /* = 0 0 auto */
+    flex: 2;       /* число -> flex-grow,
+                      = 2 1 auto */
+    flex: 50%;     /* единица измерения длины -> flex-basis = 50%,
+                      = 0 1 50% */
+    flex: 2 50%;   /* flex-grow & flex-basis,
+                      = 2 1 50% */
+
+}</code></pre>
+</section>
+
+<section class="center">
+    <p>flex: <span class="red">[flex-grow]</span> <span class="red">[flex-shrink]</span> <span class="red">[flex-basis]</span></p>
+
+    <pre><code class="css">.elem
+{
+    flex: initial; /* = 0 1 auto — все по умолчанию */
+    flex: auto;    /* = 1 1 auto */
+    flex: none;    /* = 0 0 auto */
+    flex: 2;       /* число -> flex-grow,
+                      = 2 1 auto */
+    flex: 50%;     /* единица измерения длины -> flex-basis = 50%,
+                      = 0 1 50% */
+    flex: 2 50%;   /* flex-grow & flex-basis,
+                      = 2 1 50% */
+    flex: 2 0 50%;
+}</code></pre>
+</section>
+
+<section class="center">
+    <p>А самое крутое...</p>
+</section>
+
+<section class="center">
+    <p>
+        Родителю — <span class="green">display: flex</span>,<br>
+        ребёнку — <span class="green">margin: auto</span>
+
+        <br>
+        <br>
+
+    <div class="flex-ex fragment" style="height: 400px">
+        <div class="box" style="margin: auto !important;">стою по-царски по центру и чихал на все выравнивания</div>
+    </div>
+    </p>
+</section>
+
+<section class="center">
+    <a href="https://caniuse.com/#feat=flexbox">caniuse.com/#feat=flexbox</a>
+
+    <img src="images/caniuse_flex.png"/>
+</section>
+
+<section class="center">
+    <h2>Полезные ссылки</h2>
+
+    <br>
+
+    <ol>
+        <li><a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/" target="_blank">Гайд по флексбоксу</a></li>
+        <li><a href="https://codepen.io/enxaneta/full/adLPwv/" target="_blank">Flexbox Playground</a></li>
+        <li><a href="http://flexboxfroggy.com" target="_blank">Игра для изучения флексбокса</a></li>
+    </ol>
+</section>
+
+<!--GRID-->
+
+<section class="center">
+    <div class="grid-slide" style="height: 100%">
+        <div class="bg-blue" style="opacity: 0.8"></div>
+        <div class="bg-blue" style="opacity: 0.6"></div>
+        <div class="bg-blue" style="opacity: 0.4"></div>
+        <div class="bg-blue" style="opacity: 0.2"></div>
+    </div>
+
+    <h1>Грид</h1>
+</section>
+
+<section class="center">
+    <p>grid = сетка</p>
+
+    <p class="fragment">Даёт возможность располагать элементы по сетке!</p>
+
+    <p class="fragment">
+        <span class="green">display: grid</span>
+    </p>
+</section>
+
+<section class="center">
+    <p class="fragment">
+        <span class="underline">грид-контейнер</span> <span class="grey">(grid-container)</span>
+    </p>
+
+    <p class="fragment">
+        <span class="underline">грид-элемент</span> <span class="grey">(grid-item)</span>
+    </p>
+
+    <p class="fragment">
+        <span class="underline">линия</span> <span class="grey">(grid-line)</span>
+    </p>
+
+    <p class="fragment">
+        <span class="underline">ячейка</span> <span class="grey">(grid-cell)</span>
+    </p>
+
+    <p class="fragment">
+        <span class="underline">область</span> <span class="grey">(grid-area)</span>
+    </p>
+
+    <p class="fragment">
+        <span class="underline">дорожка</span> <span class="grey">(grid-track)</span>
+    </p>
+
+    <p class="fragment">
+        <span class="underline">интервал</span> <span class="grey">(grid-gap)</span>
+    </p>
+</section>
+
+<section class="center">
+    <img src="images/grid_lines.png"/>
+</section>
+
+<section class="center">
+    <img src="images/grid_lines_nums.png"/>
+</section>
+
+<section class="center">
+    <img src="images/grid_cell.png"/>
+</section>
+
+<section class="center">
+    <img src="images/grid_area.png"/>
+</section>
+
+<section class="center">
+    <img src="images/grid_track.png"/>
+</section>
+
+<section class="center">
+    <img src="images/grid_gap.png"/>
+</section>
+
+<section class="center">
+    <img src="images/mag_grid.png"/>
+</section>
+
+<section class="center">
+    <p>
+        Чтобы наполнить сетку
+        колонками и&nbsp;рядами
+        существуют свойства
+        <br><span class="green">grid-template-columns</span>
+        и <span class="green">grid-template-rows</span>.
+    </p>
+</section>
+
+<section class="center">
+<pre><code class="css">.container
+{
+    display: grid;
+    grid-template-columns: 100px auto 100px; /* ширины столбцов */
+    grid-template-rows: 100px 100px 100px;   /* высоты рядов    */
+}</code></pre>
+
+    <div class="grey " style="width: 100%; position: relative; font-size: .5em">
+        <span style="position: absolute; top: -30px; left: -5px">1</span>
+        <span style="position: absolute; top: -30px; left: 95px">2</span>
+        <span style="position: absolute; top: -30px; right: 95px">3</span>
+        <span style="position: absolute; top: -30px; right: -3px">4</span>
+    </div>
+
+    <div class="grey " style="position: relative; font-size: .5em">
+        <span style="position: absolute; top: -7px; left: -17px">1</span>
+        <span style="position: absolute; top: 84px; left: -17px">2</span>
+        <span style="position: absolute; top: 184px; left: -17px">3</span>
+        <span style="position: absolute; top: 281px; left: -17px">4</span>
+    </div>
+
+    <div class="grid-ex " style="grid-template-columns: 100px auto 100px; grid-template-rows: 100px 100px 100px;">
+    </div>
+</section>
+
+<section class="center">
+    <pre><code class="css">.container
+{
+    display: grid;
+    grid-template-columns: 100px auto 100px; /* ширины столбцов */
+    grid-template-rows: 100px 100px 100px;   /* высоты рядов    */
+}</code></pre>
+
+    <div class="grey " style="width: 100%; position: relative; font-size: .5em">
+        <span style="position: absolute; top: -30px; left: -5px">1</span>
+        <span style="position: absolute; top: -30px; left: 95px">2</span>
+        <span style="position: absolute; top: -30px; right: 95px">3</span>
+        <span style="position: absolute; top: -30px; right: -3px">4</span>
+    </div>
+
+    <div class="grey " style="position: relative; font-size: .5em">
+        <span style="position: absolute; top: -7px; left: -17px">1</span>
+        <span style="position: absolute; top: 84px; left: -17px">2</span>
+        <span style="position: absolute; top: 184px; left: -17px">3</span>
+        <span style="position: absolute; top: 281px; left: -17px">4</span>
+    </div>
+
+    <div class="grid-ex " style="grid-template-columns: 100px auto 100px; grid-template-rows: 100px 100px 100px;">
+        <div class="a">a</div>
+    </div>
+</section>
+
+<section class="center">
+    <pre><code class="css">.container
+{
+    display: grid;
+    grid-template-columns: 100px auto 100px; /* ширины столбцов */
+    grid-template-rows: 100px 100px 100px;   /* высоты рядов    */
+}</code></pre>
+
+    <div class="grey " style="width: 100%; position: relative; font-size: .5em">
+        <span style="position: absolute; top: -30px; left: -5px">1</span>
+        <span style="position: absolute; top: -30px; left: 95px">2</span>
+        <span style="position: absolute; top: -30px; right: 95px">3</span>
+        <span style="position: absolute; top: -30px; right: -3px">4</span>
+    </div>
+
+    <div class="grey " style="position: relative; font-size: .5em">
+        <span style="position: absolute; top: -7px; left: -17px">1</span>
+        <span style="position: absolute; top: 84px; left: -17px">2</span>
+        <span style="position: absolute; top: 184px; left: -17px">3</span>
+        <span style="position: absolute; top: 281px; left: -17px">4</span>
+    </div>
+
+    <div class="grid-ex " style="grid-template-columns: 100px auto 100px; grid-template-rows: 100px 100px 100px;">
+        <div class="a">a</div>
+        <div class="b">b</div>
+    </div>
+</section>
+
+<section class="center">
+    <pre><code class="css">.container
+{
+    display: grid;
+    grid-template-columns: 100px auto 100px; /* ширины столбцов */
+    grid-template-rows: 100px 100px 100px;   /* высоты рядов    */
+}</code></pre>
+
+    <div class="grey " style="width: 100%; position: relative; font-size: .5em">
+        <span style="position: absolute; top: -30px; left: -5px">1</span>
+        <span style="position: absolute; top: -30px; left: 95px">2</span>
+        <span style="position: absolute; top: -30px; right: 95px">3</span>
+        <span style="position: absolute; top: -30px; right: -3px">4</span>
+    </div>
+
+    <div class="grey " style="position: relative; font-size: .5em">
+        <span style="position: absolute; top: -7px; left: -17px">1</span>
+        <span style="position: absolute; top: 84px; left: -17px">2</span>
+        <span style="position: absolute; top: 184px; left: -17px">3</span>
+        <span style="position: absolute; top: 281px; left: -17px">4</span>
+    </div>
+
+    <div class="grid-ex " style="grid-template-columns: 100px auto 100px; grid-template-rows: 100px 100px 100px;">
+        <div class="a">a</div>
+        <div class="b">b</div>
+        <div class="c">c</div>
+    </div>
+</section>
+
+<section class="center">
+    <pre><code class="css">.container
+{
+    display: grid;
+    grid-template-columns: 100px auto 100px; /* ширины столбцов */
+    grid-template-rows: 100px 100px 100px;   /* высоты рядов    */
+}</code></pre>
+
+    <div class="grey " style="width: 100%; position: relative; font-size: .5em">
+        <span style="position: absolute; top: -30px; left: -5px">1</span>
+        <span style="position: absolute; top: -30px; left: 95px">2</span>
+        <span style="position: absolute; top: -30px; right: 95px">3</span>
+        <span style="position: absolute; top: -30px; right: -3px">4</span>
+    </div>
+
+    <div class="grey " style="position: relative; font-size: .5em">
+        <span style="position: absolute; top: -7px; left: -17px">1</span>
+        <span style="position: absolute; top: 84px; left: -17px">2</span>
+        <span style="position: absolute; top: 184px; left: -17px">3</span>
+        <span style="position: absolute; top: 281px; left: -17px">4</span>
+    </div>
+
+    <div class="grid-ex " style="grid-template-columns: 100px auto 100px; grid-template-rows: 100px 100px 100px;">
+        <div class="a">a</div>
+        <div class="b">b</div>
+        <div class="c">c</div>
+        <div class="d">d</div>
+    </div>
+</section>
+
+<section class="center">
+    <pre><code class="css">.container
+{
+    display: grid;
+    grid-template-columns: 100px auto 100px; /* ширины столбцов */
+    grid-template-rows: 100px 100px 100px;   /* высоты рядов    */
+}</code></pre>
+
+    <div class="grey " style="width: 100%; position: relative; font-size: .5em">
+        <span style="position: absolute; top: -30px; left: -5px">1</span>
+        <span style="position: absolute; top: -30px; left: 95px">2</span>
+        <span style="position: absolute; top: -30px; right: 95px">3</span>
+        <span style="position: absolute; top: -30px; right: -3px">4</span>
+    </div>
+
+    <div class="grey " style="position: relative; font-size: .5em">
+        <span style="position: absolute; top: -7px; left: -17px">1</span>
+        <span style="position: absolute; top: 84px; left: -17px">2</span>
+        <span style="position: absolute; top: 184px; left: -17px">3</span>
+        <span style="position: absolute; top: 281px; left: -17px">4</span>
+    </div>
+
+    <div class="grid-ex " style="grid-template-columns: 100px auto 100px; grid-template-rows: 100px 100px 100px;">
+        <div class="a">a</div>
+        <div class="b">b</div>
+        <div class="c">c</div>
+        <div class="d">d</div>
+        <div class="e">e</div>
+    </div>
+</section>
+
+<section class="center">
+    <pre><code class="css">.a
+{
+    grid-row: 1 / 2;
+    grid-column: 1 / 4;
+}
+
+</code></pre>
+
+    <div class="grey " style="width: 100%; position: relative; font-size: .5em">
+        <span style="position: absolute; top: -30px; left: -5px">1</span>
+        <span style="position: absolute; top: -30px; left: 95px">2</span>
+        <span style="position: absolute; top: -30px; right: 95px">3</span>
+        <span style="position: absolute; top: -30px; right: -3px">4</span>
+    </div>
+
+    <div class="grey " style="position: relative; font-size: .5em">
+        <span style="position: absolute; top: -7px; left: -17px">1</span>
+        <span style="position: absolute; top: 84px; left: -17px">2</span>
+        <span style="position: absolute; top: 184px; left: -17px">3</span>
+        <span style="position: absolute; top: 281px; left: -17px">4</span>
+    </div>
+
+    <div class="grid-ex " style="grid-template-columns: 100px auto 100px; grid-template-rows: 100px 100px 100px;">
+        <div class="a" style="grid-column: 1/4">a</div>
+        <div class="b">b</div>
+        <div class="c">c</div>
+        <div class="d">d</div>
+        <div class="e">e</div>
+    </div>
+</section>
+
+<section class="center">
+    <div class="two-columns">
+        <pre><code class="css">.a
+{
+    grid-row: 1 / 2;
+    grid-column: 1 / 4;
+}
+
+</code></pre>
+
+        <pre><code class="css">.b
+{
+    grid-row: 2 / 4;
+    grid-column: 1 / 2;
+}
+
+</code></pre>
+    </div>
+
+    <div class="grey " style="width: 100%; position: relative; font-size: .5em">
+        <span style="position: absolute; top: -30px; left: -5px">1</span>
+        <span style="position: absolute; top: -30px; left: 95px">2</span>
+        <span style="position: absolute; top: -30px; right: 95px">3</span>
+        <span style="position: absolute; top: -30px; right: -3px">4</span>
+    </div>
+
+    <div class="grey " style="position: relative; font-size: .5em">
+        <span style="position: absolute; top: -7px; left: -17px">1</span>
+        <span style="position: absolute; top: 84px; left: -17px">2</span>
+        <span style="position: absolute; top: 184px; left: -17px">3</span>
+        <span style="position: absolute; top: 281px; left: -17px">4</span>
+    </div>
+
+    <div class="grid-ex " style="grid-template-columns: 100px auto 100px; grid-template-rows: 100px 100px 100px;">
+        <div class="a" style="grid-row: 1 / 2; grid-column: 1/4">a</div>
+        <div class="b" style="grid-row: 2/4; grid-column: 1 / 2;">b</div>
+        <div class="c">c</div>
+        <div class="d">d</div>
+        <div class="e">e</div>
+    </div>
+</section>
+
+<section class="center">
+    <div class="two-columns">
+        <pre><code class="css">.a
+{
+    grid-row: 1 / 2;
+    grid-column: 1 / 4;
+}
+
+</code></pre>
+
+       <pre><code class="css">.b
+{
+    grid-row: &#10153; 1 / 4;
+    grid-column: 1 / 2;
+}
+
+</code></pre>
+    </div>
+
+    <div class="grey " style="width: 100%; position: relative; font-size: .5em">
+        <span style="position: absolute; top: -30px; left: -5px">1</span>
+        <span style="position: absolute; top: -30px; left: 95px">2</span>
+        <span style="position: absolute; top: -30px; right: 95px">3</span>
+        <span style="position: absolute; top: -30px; right: -3px">4</span>
+    </div>
+
+    <div class="grey " style="position: relative; font-size: .5em">
+        <span style="position: absolute; top: -7px; left: -17px">1</span>
+        <span style="position: absolute; top: 84px; left: -17px">2</span>
+        <span style="position: absolute; top: 184px; left: -17px">3</span>
+        <span style="position: absolute; top: 281px; left: -17px">4</span>
+    </div>
+
+    <div class="grid-ex " style="grid-template-columns: 100px auto 100px; grid-template-rows: 100px 100px 100px;">
+        <div class="a" style="grid-column: 1 / 4; grid-row: 1 / 2;">a</div>
+        <div class="b" style="grid-row: 1/4; grid-column: 1 /2">b</div>
+        <div class="c">c</div>
+        <div class="d">d</div>
+        <div class="e">e</div>
+    </div>
+</section>
+
+<section class="center">
+    <div class="two-columns">
+        <pre><code class="css">.a
+{
+    grid-row: 1 / 2;
+    grid-column: 1 / 4;
+    &#10153; z-index: 1;
+}
+</code></pre>
+
+    <pre><code class="css">.b
+{
+    grid-row: 1 / 4;
+    grid-column: 1 / 2;
+}
+</code></pre>
+    </div>
+
+    <div class="grey " style="width: 100%; position: relative; font-size: .5em">
+        <span style="position: absolute; top: -30px; left: -5px">1</span>
+        <span style="position: absolute; top: -30px; left: 95px">2</span>
+        <span style="position: absolute; top: -30px; right: 95px">3</span>
+        <span style="position: absolute; top: -30px; right: -3px">4</span>
+    </div>
+
+    <div class="grey " style="position: relative; font-size: .5em">
+        <span style="position: absolute; top: -7px; left: -17px">1</span>
+        <span style="position: absolute; top: 84px; left: -17px">2</span>
+        <span style="position: absolute; top: 184px; left: -17px">3</span>
+        <span style="position: absolute; top: 281px; left: -17px">4</span>
+    </div>
+
+    <div class="grid-ex " style="grid-template-columns: 100px auto 100px; grid-template-rows: 100px 100px 100px;">
+        <div class="a" style="grid-column: 1/4; grid-row: 1 / 2; z-index: 1">a</div>
+        <div class="b" style="grid-row: 1/4; grid-column: 1 /2">b</div>
+        <div class="c">c</div>
+        <div class="d">d</div>
+        <div class="e">e</div>
+    </div>
+</section>
+
+<section class="center">
+    <p>Размер дорожки можно указывать в <span class="green">fr</span> – долях свободного места.</p>
+
+    <p class="fragment">
+        Свободное место вычисляется после расположения всех элементов фиксированных размеров.
+    </p>
+</section>
+
+<section class="center">
+    <div class="two-columns">
+    <pre><code class="css">.container
+{
+    display: grid;
+    grid-template-columns: 100px 1fr 1fr;
+    grid-template-rows: 100px 100px 100px;
+}</code></pre>
+    </div>
+
+    <div class="grey " style="width: 100%; position: relative; font-size: .5em">
+        <span style="position: absolute; top: -30px; left: -5px">1</span>
+        <span style="position: absolute; top: -30px; left: 100px">2</span>
+        <span style="position: absolute; top: -30px; left: 535px">3</span>
+        <span style="position: absolute; top: -30px; right: -3px">4</span>
+    </div>
+
+    <div class="grey " style="position: relative; font-size: .5em">
+        <span style="position: absolute; top: -7px; left: -17px">1</span>
+        <span style="position: absolute; top: 84px; left: -17px">2</span>
+        <span style="position: absolute; top: 184px; left: -17px">3</span>
+        <span style="position: absolute; top: 281px; left: -17px">4</span>
+    </div>
+
+    <div class="grid-ex " style="grid-template-columns: 100px 1fr 1fr; grid-template-rows: 100px 100px 100px;">
+        <div class="a fragment" data-fragment-index="0">a</div>
+        <div class="b fragment" data-fragment-index="0">b</div>
+        <div class="c fragment" data-fragment-index="0">c</div>
+        <div class="d fragment" data-fragment-index="0">d</div>
+        <div class="e fragment" data-fragment-index="0">e</div>
+    </div>
+</section>
+
+<section class="center">
+    <pre><code class="css">.a
+{
+    grid-column: span 3;
+}
+
+    </code></pre>
+
+    <div class="grey " style="width: 100%; position: relative; font-size: .5em">
+        <span style="position: absolute; top: -30px; left: -5px">1</span>
+        <span style="position: absolute; top: -30px; left: 100px">2</span>
+        <span style="position: absolute; top: -30px; left: 535px">3</span>
+        <span style="position: absolute; top: -30px; right: -3px">4</span>
+    </div>
+
+    <div class="grey " style="position: relative; font-size: .5em">
+        <span style="position: absolute; top: -7px; left: -17px">1</span>
+        <span style="position: absolute; top: 84px; left: -17px">2</span>
+        <span style="position: absolute; top: 184px; left: -17px">3</span>
+        <span style="position: absolute; top: 281px; left: -17px">4</span>
+    </div>
+
+    <div class="grid-ex " style="grid-template-columns: 100px 1fr 1fr; grid-template-rows: 100px 100px 100px;">
+        <div class="a" style="grid-column: span 3">a</div>
+        <div class="b">b</div>
+        <div class="c">c</div>
+        <div class="d">d</div>
+        <div class="e">e</div>
+    </div>
+</section>
+
+<section class="center">
+    <div class="code-two-columns">
+    <pre><code class="css">.a
+{
+    grid-column: span 3;
+}
+
+    </code></pre>
+        <pre><code class="css">.b
+{
+    grid-row: span 2;
+}
+</code></pre>
+    </div>
+
+    <div class="grey " style="position: relative; font-size: .5em">
+        <span style="position: absolute; top: -7px; left: -17px">1</span>
+        <span style="position: absolute; top: 84px; left: -17px">2</span>
+        <span style="position: absolute; top: 184px; left: -17px">3</span>
+        <span style="position: absolute; top: 281px; left: -17px">4</span>
+    </div>
+
+    <div class="grey " style="position: relative; font-size: .5em">
+        <span style="position: absolute; top: -7px; left: -17px">1</span>
+        <span style="position: absolute; top: 84px; left: -17px">2</span>
+        <span style="position: absolute; top: 184px; left: -17px">3</span>
+        <span style="position: absolute; top: 281px; left: -17px">4</span>
+    </div>
+
+    <div class="grid-ex " style="grid-template-columns: 100px 1fr 1fr; grid-template-rows: 100px 100px 100px;">
+        <div class="a" style="grid-column: span 3">a</div>
+        <div class="b" style="grid-row: span 2">b</div>
+        <div class="c">c</div>
+        <div class="d" >d</div>
+        <div class="e">e</div>
+    </div>
+</section>
+
+<section class="center">
+    <p>В контейнере можно создавать именованные области с&nbsp;помощью свойства <span class="green">grid-template-areas</span>.</p>
+
+    <p class="fragment">Поместить элемент в область можно свойством <span class="green">grid-area</span>.</p>
+</section>
+
+<section class="center">
+    <div class="two-columns">
+        <pre><code class="css">.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 100px 100px 100px;
+    grid-template-areas: 'sand  water'
+                         'sand  water'
+                         'grass grass';
+}</code></pre>
+
+       <pre><code class="css">.a {
+    grid-area: grass;
+}
+.b {
+    grid-area: sand;
+}
+.c {
+   grid-area: water;
+}</code></pre>
+    </div>
+
+    <div class="grid-ex" style="grid-template-columns: 1fr 1fr; grid-template-rows: 100px 100px 100px; grid-template-areas: 'sand water' 'sand water' 'grass grass'">
+        <div class="c" style="grid-area: grass">a</div>
+        <div class="d" style="grid-area: sand">b</div>
+        <div class="e" style="grid-area: water">c</div>
+    </div>
+</section>
+
+<section class="center">
+    <div class="two-columns">
+    <pre><code class="css">.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 100px 100px 100px;
+    grid-template-areas: 'sand  water'
+                         'sand  water'
+                         '.     grass';
+}</code></pre>
+
+            <pre><code class="css">.a {
+    grid-area: grass;
+}
+.b {
+    grid-area: sand;
+}
+.c {
+   grid-area: water;
+}</code></pre>
+    </div>
+
+    <div class="grid-ex" style="grid-template-columns: 1fr 1fr; grid-template-rows: 100px 100px 100px; grid-template-areas: 'sand water' 'sand water' '. grass'">
+        <div class="c" style="grid-area: grass">a</div>
+        <div class="d" style="grid-area: sand">b</div>
+        <div class="e" style="grid-area: water">c</div>
+    </div>
+</section>
+
+<section class="center">
+    <h2>Короче!</h2>
+
+    <p class="fragment">Свойство <span class="green">grid-template</span>:</p>
+
+    <pre class="fragment"><code class="css">.container
+{
+    display: grid;
+    grid-template: 'header  header'  100px
+                   'sidebar content' 100px
+                   'footer  content'  100px
+                    / 100px auto;
+}</code></pre>
+</section>
+
+<section class="center">
+    <p>Используя свойство <span class="green">grid-gap</span>, можно управлять размером интервалов между линиями.</p>
+
+    <p class="fragment">
+        Интервал только между рядами — <span class="green">grid-row-gap</span>,
+        только между столбцами — <span class="green">grid-column-gap</span>.
+    </p>
+</section>
+
+<section class="center">
+    <pre><code class="css">.container
+{
+    grid-column-gap: 1%;
+    grid-row-gap: 16px;
+}</code></pre>
+
+    <div class="grid-ex fragment " style="grid-column-gap: 1%; grid-row-gap: 16px; grid-template-columns: 100px auto; grid-template-rows: 100px 100px 100px; grid-template-areas:'header header' 'sidebar main' 'footer footer'">
+        <div class="a">a</div>
+        <div class="b">b</div>
+        <div class="c">c</div>
+        <div class="d">d</div>
+        <div class="e">e</div>
+    </div>
+</section>
+
+<section class="center">
+    <img class="fragment" src="images/Grid_1440.jpg"/>
+
+    <p class="fragment">
+        12 колонок!
+    </p>
+</section>
+
+<section class="center">
+    <p>Писать руками?</p>
+
+    <pre><code class="css">.container
+{
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr...;
+}</code></pre>
+
+    <p class="fragment">НЕТ. <span class="fragment">Есть функция <span class="green">repeat()</span></span></p>
+
+    <pre class="fragment"><code class="css">.container
+{
+    grid-template-columns: repeat(12, 1fr);
+}</code></pre>
+</section>
+
+<section class="center">
+    <a href="https://caniuse.com/#feat=css-grid">caniuse.com/#feat=css-grid</a>
+
+    <img src="images/caniuse_grid.png"/>
+</section>
+
+<section class="center">
+    <h2>Полезные ссылки</h2>
+
+    <br>
+
+    <ol>
+        <li><a href="https://www.youtube.com/watch?v=ojKbYz0iKQE" target="_blank">Grid Explained In 7 Minutes</a></li>
+        <li><a href="https://css-tricks.com/snippets/css/complete-guide-grid/" target="_blank">Гайд по гриду</a></li>
+        <li><a href="https://gridbyexample.com/examples/" target="_blank">Grid By Example</a></li>
+        <li><a href="http://cssgridgarden.com" target="_blank">Игра для изучения грида</a></li>
+    </ol>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="center" data-background-image="images/kittens.gif">
+    <h1 style="color: #fff !important;">Флексбокс или грид?</h1>
+</section>
+
+<section>
+    <div class="two-columns">
+        <div style="width: 50%">
+            Флексбокс
+
+            <pre class="fragment"><code class="css">.container
+{
+    display: flex;
+}</code></pre>
+
+            <pre class="fragment"><code class="css">.column-i
+{
+    flex: auto;
+}</code></pre>
+        </div>
+
+        <div style="width: 50%">
+            Грид
+
+            <pre class="fragment"><code class="css">.container
+{
+    display: grid;
+    grid-template-columns:
+                1fr 1fr 1fr;
+}</code></pre>
+        </div>
+    </div>
+
+    <div class="layout-ex fragment" style="width: 100%; height: 200px; display: flex">
+        <div style="flex: auto; background: rgba(255, 255, 255, 0.4);"></div>
+        <div style="flex: auto; background: rgba(255, 255, 255, 0.6);"></div>
+        <div style="flex: auto; background: rgba(255, 255, 255, 0.8);"></div>
+    </div>
+</section>
+
+<section>
+    <div class="two-columns">
+        <div style="width: 50%">
+            Флексбокс
+            <ul style="font-size: .9em">
+                <li class="fragment" data-fragment-index="0">
+                    <span class="magenta">одно</span> измерение<br>— ряд или столбец
+                </li>
+            </ul>
+        </div>
+
+        <div style="width: 50%">
+            Грид
+            <ul style="font-size: .9em">
+                <li class="fragment" data-fragment-index="1"><span class="magenta">
+                два</span> измерения<br>— ряды и столбцы
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="two-columns">
+        <div style="width: 50%">
+            <div class="fragment" data-fragment-index="2">Флексбокс</div>
+
+            <br>
+
+            <img class="fragment" src="images/one_dimension.png" data-fragment-index="0" />
+        </div>
+
+        <div style="width: 50%">
+            <div class="fragment" data-fragment-index="2">Грид</div>
+
+            <br>
+
+            <img class="fragment" src="images/two_dimensions.png" data-fragment-index="1" />
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="two-columns">
+        <div style="width: 50%">
+            Флексбокс
+            <ul style="font-size: .9em">
+                <li>
+                    <span class="magenta">одно</span> измерение<br>— ряд или столбец
+                </li>
+                <li class="fragment" data-fragment-index="0"><strong>content</strong>-first</li>
+            </ul>
+        </div>
+
+        <div style="width: 50%">
+            Грид
+            <ul style="font-size: .9em">
+                <li><span class="magenta">
+            два</span> измерения<br>— ряды и столбцы
+                </li>
+                <li class="fragment" data-fragment-index="1"><strong>layout</strong>-first</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="center">
+    <pre><code class="html"><header class="header">
+    <div class="home">Home</div>
+    <div class="search">Search</div>
+    <div class="logout">Logout</div>
+</header></code></pre>
+
+    <img class="fragment" src="images/header_no_layout.png" />
+</section>
+
+<section>
+    <div class="two-columns">
+        <div style="width: 50%">
+            <div>Флексбокс</div>
+
+            <pre class="fragment"><code class="css">.header
+{
+    display: flex;
+    align-items: center;
+}
+
+</code></pre>
+
+            <img class="fragment" src="images/header_flex.png" />
+
+            <pre class="fragment"><code class="css">
+.logout
+{
+    margin-left: auto;
+}
+</code></pre>
+
+            <img class="fragment" src="images/header_logout.png" />
+        </div>
+
+        <div style="width: 50%">
+            <div class="fragment">Грид</div>
+
+            <pre class="fragment"><code class="css">.header
+{
+    display: grid;
+    grid-template-columns:
+                repeat(10, 1fr);
+}</code></pre>
+
+            <img class="fragment" src="images/header_grid.png" />
+
+            <pre class="fragment"><code class="css">.logout
+{
+    grid-column: 10;
+}</code></pre>
+
+            <img class="fragment" src="images/header_logout_grid.png" />
+        </div>
+    </div>
+</section>
+
+<section class="center">
+    <pre><code class="html"><div class="container">
+  <header class="header">HEADER</header>
+  <aside class="menu">MENU</aside>
+  <main class="content">CONTENT</main>
+  <footer class="footer">FOOTER</footer>
+</div></code></pre>
+
+    <img class="fragment" src="images/site.png" />
+</section>
+
+<section class="center">
+    <div class="two-columns">
+        <div>
+        <pre><code class="css">.container
+{
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: 50px 350px 50px;
+}</code></pre>
+
+       <pre class="fragment" data-fragment-index="1"><code class="css">.header
+{
+    display: flex;
+    align-items: center;
+}
+.logout
+{
+    margin-left: auto;
+}</code></pre>
+
+        </div>
+
+        <div>
+    <pre class="fragment" data-fragment-index="0"><code>.header
+{
+    grid-column: span 12;
+}
+.menu
+{
+    grid-column: span 2;
+}
+.content
+{
+    grid-column: span 10;
+}
+.footer
+{
+    grid-column: span 12;
+}</code></pre>
+        </div>
+    </div>
+</section>
+
+<section class="center">
+    <h2>Подходы можно совмещать</h2>
+
+    <img src="images/both.png" />
+</section>
+
+<section class="center">
+    <h2>Две новости</h2>
+
+    <p class="green fragment" style="white-space: normal">Используя флексбокс и грид,<br>можно сверстать всё что угодно</p>
+
+    <p class="red fragment">А таблицы пригодятся для вёрстки электронных писем</p>
+</section>
+
+<section class="center">
+    <h1>Про домашку</h1>
+</section>
+
+<section class="center">
+    <img src="images/adaptive_layout.png"/>
+</section>
+
+<section class="center">
+    <h1>Медиа-выражения –</h1>
+
+    <p>условное применение CSS-правил.</p>
+
+    <p class="fragment center">Одна разметка, разные наборы стилей.</p>
+</section>
+
+<section class="center">
+    Задаются с помощью at-правила <span class="magenta">@media</span>, за которым следует условие:
+
+    <img class="fragment" src="images/media_query_terms.png"/>
+</section>
+
+<section class="center">
+    Media Type задает тип устройства
+
+    <br>
+    <br>
+
+    <ul>
+        <li class="fragment">
+            <span class="red">all</span> – все устройства (по умолчанию)
+        </li>
+        <li class="fragment">
+            <span class="red">print</span> — принтеры и режим предпросмотра
+        </li>
+        <li class="fragment">
+            <span class="red">screen</span> — устройства с экраном
+        </li>
+        <li class="fragment">
+            <span class="red">speech</span> — скринридеры
+        </li>
+    </ul>
+</section>
+
+<section class="center">
+    Media Features задают технические характеристики устройства
+
+    <br><br>
+
+    <ul>
+        <li class="fragment">
+            <span class="red">width</span> – ширина вьюпорта
+        </li>
+        <li class="fragment">
+            <span class="red">height</span> — высота вьюпорта
+        </li>
+        <li class="fragment">
+            <span class="red">orientation</span> — ориентация вьюпорта
+        <li class="fragment">
+            <span class="red">resolution</span> — разрешение устройства вывода
+        </li>
+    </ul>
+</section>
+
+<section class="center" style="font-size: .9em">
+    Ширина вьюпорта
+
+        <pre><code class="css">/* для мобильных */
+body {
+    background: red;
+}
+
+/* для планшетов */
+@media screen and (min-width: 768px) {
+    body {
+        background: yellow;
+    }
+}
+
+/* для десктопов */
+@media screen and (min-width: 1280px) {
+    body {
+        background: blue;
+    }
+}</code></pre>
+</section>
+
+<section class="center">
+    <img class="center" src="images/simple_media_queries.png" />
+</section>
+
+<section class="center">
+    <h2>Полезные ссылки</h2>
+
+    <br>
+
+    <ol>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media">@media на MDN</a></li>
+        <li><a href="https://internetingishard.com/html-and-css/responsive-design/">Responsive Design Tutorial</a></li>
+    </ol>
+</section>
+
+</div></div><script src="../../@lib/core.js"></script></body></html>
