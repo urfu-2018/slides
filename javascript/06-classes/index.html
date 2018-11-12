@@ -1,0 +1,1023 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Конструирование объектов</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+</head>
+<body class="white"><div class="reveal"><div class="slides">
+
+<section class="center">
+    <h1>Прототипы</h1>
+</section>
+
+<section>
+    <h2>Объекты разных типов</h2>
+    <div class="code-two-columns"><pre><code data-trim data-noescape>
+        const student = {
+            name: 'Billy',
+            getName() {
+                return this.name;
+            },
+            sleep() {}
+        };
+    </code></pre><pre><code data-trim data-noescape>
+        const lecturer = {
+            name: 'Sergey',
+            getName() {
+                return this.name;
+            },
+            talk() {}
+        };
+    </code></pre></div>
+</section>
+
+<section>
+    <h2>Объекты разных типов</h2>
+    <div class="code-two-columns"><pre><code data-trim data-noescape>
+    const student = {
+        name: 'Billy',
+        <del>getName() {</del>
+            <del>return this.name;</del>
+        <del>},</del>
+        sleep() {}
+    };
+    </code></pre><pre><code data-trim data-noescape>
+        const lecturer = {
+            name: 'Sergey',
+            <del>getName() {</del>
+                <del>return this.name;</del>
+            <del>},</del>
+            talk() {}
+        };
+        </code></pre></div>
+    <div class="code-center"><pre><code data-trim>
+    const person = {
+        getName() {
+            return this.name;
+        }
+    };
+    </code></pre></div>
+</section>
+
+<section>
+    <h2><span>Прототип</span></h2>
+    <pre><code data-trim data-noescape>
+    const person = {
+        getName() {
+            return this.name;
+        }
+    };
+
+    const student = { name: 'Billy' };
+    const lecturer = { name: 'Sergey' };
+
+    Object.setPrototypeOf(student, person);
+    Object.setPrototypeOf(lecturer, person);
+
+    student.getName(); // Billy
+    lecturer.getName(); // Sergey
+    </code></pre>
+</section>
+
+<section>
+    <h2>create</h2>
+    <pre><code data-trim>
+    const person = {
+        getName() {
+            return this.name;
+        }
+    };
+
+    const student = Object.create(person, {
+        name: { value: 'Billy' }
+    });
+    </code></pre>
+</section>
+
+<section>
+    <h2>super</h2>
+    <pre><code data-trim>
+    const person = {
+        getName() {
+            return this.name;
+        }
+    };
+
+    const student = {
+        name: 'Billy',
+        getName() {
+            return 'Student ' + super.getName();
+        }
+    };
+
+    Object.setPrototypeOf(student, person);
+    student.getName(); // Student Billy
+    </code></pre>
+</section>
+
+<section>
+    <h2>Объекты одного типа</h2>
+    <div class="code-two-columns"><pre><code data-trim data-noescape>
+    const billy = {
+        name: 'Billy',
+        getName() {
+            return this.name;
+        }
+    };
+    </code></pre><pre><code data-trim data-noescape>
+    const willy = {
+        name: 'Willy',
+        getName() {
+            return this.name;
+        }
+    };
+    </code></pre></div>
+</section>
+
+<section class="center">
+    <h1>Конструирование объектов</h1>
+</section>
+
+<section>
+    <h2>Фабрика</h2>
+    <pre><code data-trim>
+    function createStudent(name) {
+        return {
+            name,
+            getName() {
+                return this.name;
+            }
+        };
+    }
+
+    const billy = createStudent('Billy');
+    </code></pre>
+
+</section>
+
+<section>
+    <h2>Фабрика</h2>
+    <pre><code data-trim>
+    const studentProto = {
+        getName() {
+            return this.name;
+        }
+    };
+
+    function createStudent(name) {
+        const student = { name };
+
+        Object.setPrototypeOf(student, studentProto);
+
+        return student;
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Фабрика</h2>
+    <pre><code data-trim>
+    const studentProto = {
+        getName() {}
+    };
+
+    function createStudent(name) {
+        return Object.create(studentProto, {
+            name: {
+                value: name
+            }
+        });
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Фабрика</h2>
+    <pre class="javascript"><code data-trim>
+    const studentProto = {
+        getName() {}
+    };
+
+    function createStudent(name) {
+        return Object.create(studentProto, {
+            name: {
+                value: name,
+                enumerable: true,
+                writable: true
+            }
+        });
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Фабрика</h2>
+    <pre><code data-trim>
+    const studentProto = {
+        getName() {}
+    };
+
+    function createStudent(name) {
+        const student = Object.create(studentProto);
+
+        student.name = name;
+
+        return student;
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Фабрика</h2>
+    <pre><code data-trim>
+    const studentProto = {
+        getName() {}
+    };
+
+    function createStudent(name) {
+        const student = Object.create(studentProto);
+
+        return Object.assign(student, { name });
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Фабрика</h2>
+    <pre><code data-trim>
+    const personProto = {
+        getName() {}
+    };
+
+    const studentProto = Object.create(personProto);
+
+    function createStudent(name) {
+        const student = Object.create(studentProto);
+
+        return Object.assign(student, { name });
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Фабрика</h2>
+    <pre><code data-trim>
+    const personProto = {
+        getName() {}
+    };
+
+    const studentProto = Object.create(personProto);
+
+    studentProto.getName = function () {
+        return 'Student ' + this.name;
+    }
+
+    function createStudent(name) {
+        const student = Object.create(studentProto);
+
+        return Object.assign(student, { name });
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Фабрика</h2>
+    <pre><code data-trim data-noescape>
+    const personProto = {
+        getName() {}
+    };
+
+    const studentProto = Object.create(personProto);
+
+    studentProto.getName = function () {
+        return 'Student ' + super.getName(); <span class="red fragment">Error</span>
+    }
+
+    function createStudent(name) {
+        const student = Object.create(studentProto);
+
+        return Object.assign(student, { name });
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Фабрика</h2>
+    <pre><code data-trim data-noescape>
+    const personProto = {
+        getName() {}
+    };
+
+    const studentProto = {
+        getName() {
+            return 'Student ' + super.getName();
+        }
+    };
+
+    Object.setPrototypeOf(studentProto, personProto);
+
+    function createStudent(name) {
+        // ...
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Фабрика</h2>
+    <pre><code data-trim data-noescape>
+    const { createServer } = require('http');
+
+    const server = createServer((req, res) => {
+        res.end('Hello, World!');
+    })
+
+    server.listen(8080);
+    </code></pre>
+</section>
+
+<section class="center">
+    <img src="images/hierarchy.svg" width="100%">
+</section>
+
+<section class="center">
+    <img src="images/deep-hierarchy.svg" width="100%">
+</section>
+
+<section class="center">
+    <img src="images/parallel-hierarchy.svg" width="100%">
+</section>
+
+<section class="center" >
+    <img src="images/mixins.svg" width="100%">
+</section>
+
+<section class="center">
+    <p>Favor <strong>object composition</strong> over class inheritance</p>
+</section>
+
+<section>
+    <h2>Миксины</h2>
+    <pre><code data-trim data-noescape>
+    const studentProto = {
+        getName() {}
+    };
+
+    const developerProto = {
+        getSalary() {}
+    };
+
+    const proto = Object.assign({}, studentProto, developerProto);
+
+    function create({ name, salary }) {
+        const instance = Object.create(proto);
+
+        return Object.assign(instance, { name, salary });
+    }
+    </code></pre>
+</section>
+
+
+
+<section class="center">
+    <p>Object.assign <strong>не</strong> переносит свойства полей, неперечисляемые поля, а также set/get</p>
+</section>
+
+<section>
+    <h2>Копирование полей со свойствами</h2>
+    <pre><code data-trim data-noescape>
+    const objTo = {};
+    const properties = Object.getOwnPropertyNames(objFrom);
+
+    for (const property of properties) {
+        Object.defineProperty(
+            objTo,
+            property,
+            Object.getOwnPropertyDescriptor(objFrom, property);
+        );
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Конструкторы</h2>
+    <pre><code data-trim data-noescape>
+    function createStudent(name) {
+        this.name = name;
+    }
+
+    const billy = new createStudent('Billy');
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Функция, вызванная оператором <strong>new</strong>, работает как конструктор объектов</p>
+</section>
+
+<section class="center">
+    <p><strong>this</strong> внутри конструкторов ссылается на создаваемый объект</p>
+</section>
+
+<section>
+    <h2>Конструкторы</h2>
+    <pre><code data-trim data-noescape>
+    function createStudent(name) {
+        // const this = {};
+        this.name = name;
+        // return this;
+    }
+
+    const billy = new createStudent('Billy');
+    </code></pre>
+</section>
+
+<section>
+    <h2>Конструкторы</h2>
+    <pre><code data-trim data-noescape>
+    function Student(name) {
+        // const this = {};
+        this.name = name;
+        // return this;
+    }
+
+    const billy = new Student('Billy');
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Чтобы отличить функции-конструкторы от простых функций принято именовать их с <strong>заглавной</strong> буквы</p>
+</section>
+
+<section>
+    <h2>Конструкторы</h2>
+    <pre><code data-trim data-noescape>
+    function Student(name) {
+        this.name = name;
+    }
+
+    const billy = Student('Billy');
+    </code></pre>
+</section>
+
+<section>
+    <h2>Конструкторы</h2>
+    <pre><code data-trim data-noescape>
+    'use strict';
+
+    function Student(name) {
+        this.name = name;
+    }
+
+    const billy = Student('Billy');
+    </code></pre>
+</section>
+
+<section>
+    <h2>Конструкторы</h2>
+    <pre><code data-trim data-noescape>
+    function Student(name) {
+        this.name = name;
+
+        return {
+            name: 'Willy'
+        };
+    }
+
+    const billy = new Student('Billy');
+    </code></pre>
+    <pre class="fragment"><code data-trim data-noescape>
+    console.info(billy.name); // Willy
+    </code></pre>
+</section>
+
+<section>
+    <h2>Конструкторы</h2>
+    <pre><code data-trim data-noescape>
+    function Student(name) {
+        this.name = name;
+
+        return 1703;
+    }
+
+    const billy = new Student('Billy');
+    </code></pre>
+    <pre class="fragment"><code data-trim data-noescape>
+    console.info(billy.name); // Billy
+    </code></pre>
+</section>
+
+<section>
+    <h2>.prototype</h2>
+    <pre><code data-trim data-noescape>
+    function Student(name) {
+        this.name = name;
+    }
+
+    Student.prototype = {
+        getName() {}
+    }
+
+    const billy = new Student('Billy');
+
+    billy.getName(); // Billy
+    </code></pre>
+</section>
+
+<section>
+    <h2>.prototype</h2>
+    <pre><code data-trim data-noescape>
+    function Student(name) {
+        // const this = {};
+        // Object.setPrototypeOf(this, Student.prototype);
+        this.name = name;
+        // return this;
+    }
+
+    Student.prototype = {
+        getName() {}
+    }
+
+    const billy = new Student('Billy');
+
+    billy.getName(); // Billy
+    </code></pre>
+</section>
+
+<section>
+    <h2>.constructor</h2>
+    <pre><code data-trim data-noescape>
+    function Student(name) {
+        this.name = name;
+    }
+
+    Student.prototype.constructor === Student; // true
+    </code></pre>
+</section>
+
+<section>
+    <h2>.prototype</h2>
+    <pre><code data-trim data-noescape>
+    function Student(name) {
+        // const this = {};
+        // Object.setPrototypeOf(this, Student.prototype);
+        this.name = name;
+        // return this;
+    }
+
+    Object.assign(Student.prototype, {
+        getName() {}
+    });
+
+    const billy = new Student('Billy');
+
+    billy.getName(); // Billy
+    </code></pre>
+</section>
+
+<section>
+    <h2>.prototype</h2>
+    <pre><code data-trim data-noescape>
+    function Student(name) {
+        // const this = {};
+        // Object.setPrototypeOf(this, Student.prototype);
+        this.name = name;
+        // return this;
+    }
+
+    Student.prototype = {
+        constructor: Student,
+        getName() {}
+    };
+
+    const billy = new Student('Billy');
+
+    billy.getName(); // Billy
+    </code></pre>
+</section>
+
+<section>
+    <h2>Object.prototype</h2>
+    <pre><code data-trim data-noescape>
+    const obj = {};
+    </code></pre>
+</section>
+
+<section>
+    <h2>Object.prototype</h2>
+    <pre><code data-trim data-noescape>
+    const obj = new Object();
+
+    function Object() {}
+
+    Object.prototype = {
+        constructor: Object,
+        hasOwnProperty() {},
+        toString() {}
+    };
+    </code></pre>
+</section>
+
+<section>
+    <h2>Конструкторы</h2>
+    <pre><code data-trim data-noescape>
+    function Person() {}
+
+    Object.assign(Person.prototype, {
+        getName() {}
+    });
+
+    function Student(name) {
+        this.name = name;
+    }
+
+    Object.assign(Student.prototype, {
+        getCourse() {}
+    });
+
+    Object.setPrototypeOf(Student.prototype, Person.prototype);
+    </code></pre>
+</section>
+
+<section>
+    <h2>«Классы»</h2>
+    <pre><code data-trim data-noescape>
+    class Student {
+        constructor(name) {
+            this.name = name;
+        }
+
+        getName() {
+            return this.name;
+        }
+    }
+    </code></pre>
+    <pre class="javascript fragment"><code data-trim data-noescape>
+        typeof Student; // function
+
+        Student.prototype.hasOwnProperty('getName'); // true
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>«Классы» нельзя использовать без <strong>new</strong></p>
+</section>
+
+<section class="center">
+    <p>«Классы» <strong>не</strong> всплывают</p>
+</section>
+
+<section>
+    <h2>«Классы» <strong>не</strong> всплывают</h2>
+    <pre><code data-trim>
+    const student = new Student();
+
+    function Student() {}
+    </code></pre>
+    <pre><code data-trim data-noescape>
+    const lecturer = new Lecturer(); <span class="red">Error</span>
+
+    class Lecturer {}
+    </code></pre>
+    <p class="red">ReferenceError: Lecturer is not defined</p>
+</section>
+
+<section>
+    <h2>get/set</h2>
+    <pre><code data-trim>
+    class Student {
+        constructor(firstName, lastName) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
+
+        get fullName() {
+            return this.firstName + ' ' + this.lastName;
+        }
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Статичный метод</h2>
+    <pre><code data-trim>
+    class User {
+        constructor(role, name) {
+            this.name = name;
+            this.role = role;
+        }
+
+        static createAdmin(name) {
+            return new User('admin', name);
+        }
+
+        static createGuest(name) {
+            return new User('guest', name);
+        }
+    }
+    User.createAdmin('Billy');
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Все методы <strong>не</strong> перечислимы</p>
+</section>
+
+<section class="center">
+    <p>Все методы поддерживают <strong>super</strong></p>
+</section>
+
+<section class="center">
+    <p>Все методы работают в <strong>строгом режиме</strong></p>
+</section>
+
+<section>
+    <h2>extends</h2>
+    <pre><code data-trim>
+    class Person {
+        constructor(name) {
+            this.name = name;
+        }
+    }
+
+    class Student extends Person {
+        constructor(name, course) {
+            super(name);
+            this.course = course;
+        }
+    }
+
+    const billy = new Student('Billy', 4);
+    </code></pre>
+</section>
+
+<section>
+    <h2>extends</h2>
+    <pre><code data-trim data-noescape>
+    class Student extends Person {
+        constructor(name, course) {
+            this.course = course;
+            super(name);
+        }
+    }
+
+    const billy = new Student('Billy', 4); <span class="red">Error</span>
+    </code></pre>
+    <p class="red">ReferenceError: Must call super constructor in derived class before accessing or returning from derived constructor</p>
+</section>
+
+<section class="center">
+    <img src="images/objects-relations.svg" width="100%">
+</section>
+
+<section class="center">
+    <p>Наследоваться можно либо от другого <strong>конструктора</strong> («класса»), либо от <strong></strong>null</strong></p>
+</section>
+
+<section>
+    <h2>extends</h2>
+    <pre><code data-trim data-noescape>
+    class Student extends null {}
+    </code></pre>
+</section>
+
+<section>
+    <h2>isPrototypeOf</h2>
+    <pre><code data-trim>
+    class Student {}
+
+    const billy = new Student();
+
+    Student.prototype.isPrototypeOf(billy); // true
+    </code></pre>
+</section>
+
+<section>
+    <h2>instanceof</h2>
+    <pre><code data-trim>
+    class Student {}
+
+    const billy = new Student();
+
+    billy instanceof Student; // true
+    </code></pre>
+</section>
+
+<section>
+    <h2>instanceof</h2>
+    <pre><code data-trim>
+    class Student extends Person {}
+
+    const billy = new Student();
+
+    billy instanceof Student; // true
+    billy instanceof Person; // true
+    </code></pre>
+</section>
+
+<section>
+    <h2>billy <strong>instanceof</strong> Person</h2>
+    <pre class="javascript"><code data-trim data-noescape>
+    billy.<span class="grey">[[Prototype]]</span> === Person.prototype; // false
+
+    // Может, там null?
+
+    billy.<span class="grey">[[Prototype]]</span> === null; // false
+
+    // Идём дальше по цепочке
+
+    billy.<span class="grey">[[Prototype]]</span>.<span class="grey">[[Prototype]]</span> === Person.prototype; // true
+
+    // Возвращаем true
+    </code></pre>
+</section>
+
+<section class="center">
+    <h1>Развитие JavaScript</h1>
+</section>
+
+<section class="center">
+    <p>TC39 (Technical Committee 39)</p>
+</section>
+
+<section class="center">
+    <p><a href="http://www.ecma-international.org/memento/ga.htm">Microsoft, Google, IBM, Intel, Yahoo, Facebook, Airbnb, Netflix, PayPal, Hewlett Packard</a></p>
+</section>
+
+<section class="center">
+    <p><a href="https://www.ecma-international.org/memento/tc39-m.htm">Переодически</a> встречаются и рассматривают <a href="https://github.com/tc39/proposals">предложения</a> (proposals)</p>
+</section>
+
+<section class="center">
+    <p>Заметки со встреч <a href="https://github.com/tc39/tc39-notes">размещаются на Github</a>, а решения принимаются большинством голосов</p>
+</section>
+
+<section class="center">
+    <h2><strong>0.</strong> Идея (Strawman)</h2>
+    <p>Идея может быть предложена командой TC39 или любым человеком <a href="https://tc39.github.io/agreements/contributor/">зарегистрированным</a> как контрибутор</p>
+</section>
+
+<section class="center">
+    <h2><strong>1.</strong> Предложение (Proposal)</h2>
+    <p>Выбирается ответственный за предложение из TC39. Подготавливается подробное описание с примерами. Пишутся полифилы.</p>
+</section>
+
+<section class="center">
+    <h2><strong>2.</strong> Черновик (Draft)</h2>
+    <p>Подготавливается описание на языке спецификации ECMAScript. Пишутся две реализации (одна из них для транспилера).</p>
+</section>
+
+<section class="center">
+    <h2><strong>3.</strong> Кандидат (Candidate)</h2>
+    <p>Описание финализируется и проходит ревью других членов TC39. Пишутся две полноценные реализации.</p>
+</section>
+
+<section class="center">
+    <h2><strong>4.</strong> Спецификация (Finished)</h2>
+    <p>Пишутся тесты <a href="https://github.com/tc39/test262">Test262</a>. Реализации проходят все тесты. Редакторы ECMAScript подписыват спецификацию.</p>
+</section>
+
+<section class="center">
+    <h2><strong>Стандарт</strong></h2>
+    <p>Раз в год в июле обновлённая спецификация становится новым стандартом</p>
+</section>
+
+<section>
+    <h2><a href="https://github.com/tc39/proposal-class-fields">Class fields</a> + <a href="https://github.com/tc39/proposal-private-methods">Private methods</a> <strong class="grey">(Candidate)</strong></h2>
+    <pre class="javascript"><code data-trim data-noescape>
+    class Student {
+        #name = null;
+
+        constructor(value) {
+            this.#name = value;
+        }
+
+        getName() {
+            return 'Student ' + this.#name;
+        }
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2><a href="https://github.com/tc39/proposal-decorators">Декораторы методов</a> <strong class="grey">(Draft)</strong></h2>
+    <pre><code data-trim>
+    class Student {
+        @enumerable(true)
+        getName() {
+            return this.name;
+        }
+    }
+
+    function enumerable(value) {
+        return (target, propertyName, descriptors) => {
+            // target === Student.prototype
+            descriptors.enumerable = value;
+        };
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2><a href="https://github.com/tc39/proposal-decorators">Декораторы классов</a> <strong class="grey">(Draft)</strong></h2>
+    <pre><code data-trim>
+    @debug
+    class Student {}
+
+    function debug(Class) {
+        return (...args) => {
+            console.trace(Class.name, args);
+
+            return new Class(...args);
+        };
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2><a href="https://babeljs.io/">Babel</a></h2>
+    <pre class="bash"><code data-trim data-noescape>
+    npm install -g babel-cli
+    babel-node --plugins transform-decorators script.js
+    </code></pre>
+</section>
+
+<section>
+    <h2><a href="https://github.com/tc39/proposal-decorators">Доступ к статичным полям через class</a> <strong class="grey">(Proposal)</strong></h2>
+    <pre><code data-trim>
+    class C {
+        static f() { ... }
+
+        g() {
+            C.f();
+        }
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2><a href="https://github.com/tc39/proposal-decorators">Доступ к статичным полям через class</a> <strong class="grey">(Proposal)</strong></h2>
+    <pre><code data-trim>
+    class C {
+        static f() { ... }
+
+        g() {
+            class.f();
+        }
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2><a href="https://github.com/tc39/proposal-decorators">Доступ к статичным полям через class</a> <strong class="grey">(Proposal)</strong></h2>
+    <pre><code data-trim>
+    module.exports = class {
+        static f() { ... }
+
+        g() {
+            class.f();
+        }
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Почитать</h2>
+    <p><strong>Speaking JavaScript</strong><br>
+    Chapter 17. Objects and Inheritance.<br>
+    <a href="http://speakingjs.com/es5/ch17.html#constructors">Layer 3: Constructors—Factories for Instances</a></p>
+    <p><strong>Speaking JavaScript</strong><br>
+    Chapter 17. Objects and Inheritance<br>
+    <a href="http://speakingjs.com/es5/ch17.html#constructor_inheritance">Layer 4: Inheritance Between Constructors</a></p>
+    <p><strong>Exploring ES6</strong><br>
+    <a href="http://exploringjs.com/es6/ch_classes.html">15. Classes</a></p>
+</section>
+
+<section>
+    <h2>Почитать</h2>
+    <p><strong>Eric Elliott</strong><br>
+    <a href="https://medium.com/javascript-scene/common-misconceptions-about-inheritance-in-javascript-d5d9bab29b0a">Common Misconceptions About Inheritance in JavaScript</a></p>
+    <p><p><strong>Лекции 2015 года</strong><br><a href="https://github.com/urfu-2015/javascript-lectures/blob/master/5-this.md">Про this</a></p>
+</section>
+
+<section>
+    <h2>Почитать</h2>
+    <p><strong>Современный учебник Javascript</strong><br>
+    <a href="http://learn.javascript.ru/prototypes">ООП в прототипном стиле</a></p>
+    <p><strong>Современный учебник Javascript</strong><br>
+    Современные возможности ES-2015<br>
+    <a href="http://learn.javascript.ru/es-class">Классы</a></p>
+</section>
+
+<section>
+    <h2>Почитать</h2>
+    <p><strong>Dr. Axel Rauschmayer</strong><br>
+    <a href="http://2ality.com/2015/11/tc39-process.html">The TC39 process for ECMAScript features</a></p>
+</section>
+
+</div></div>
+
+<script src="../../@lib/core.js"></script>
+</body>
+</html>
