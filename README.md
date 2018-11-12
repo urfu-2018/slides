@@ -11,8 +11,8 @@
 1. [Шрифты и текст](https://urfu-2018.github.io/slides/markup/03-fonts-and-text/) ([pdf](https://urfu-2018.github.io/slides/markup/03-fonts-and-text/index.pdf))
 1. [Модель отображения I](https://urfu-2018.github.io/slides/markup/04-mo-1/) ([pdf](https://urfu-2018.github.io/slides/markup/04-mo-1/index.pdf))
 1. [Модель отображения II](https://urfu-2018.github.io/slides/markup/05-mo-2/) ([pdf](https://urfu-2018.github.io/slides/markup/05-mo-2/index.pdf))
+1. [Layout](https://urfu-2018.github.io/slides/markup/06-layout/) ([pdf](https://urfu-2018.github.io/slides/markup/06-layout/index.pdf))
 1. Браузер
-1. Flex и Grid
 1. Анимация
 1. Графика 
 1. Touch
