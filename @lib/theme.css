@@ -47,6 +47,11 @@
 .reveal p
 {
     padding: 15px 0;
+}
+
+.reveal ol,
+.reveal ul
+{
     margin-left: 40px;
 }
 
