@@ -1,0 +1,245 @@
+@font-face {
+    font-family: textbook;
+    font-weight: 400;
+    src: local(textbook);
+    src: url('fonts/textbook-regular.woff'),
+    url('fonts/textbook-regular.ttf');
+}
+
+@font-face {
+    font-family: textbook-light;
+    font-weight: 200;
+    src: local(textbook-light);
+    src: url('fonts/textbook-light.woff'),
+    url('fonts/textbook-light.ttf');
+}
+
+@font-face {
+    font-family: textbook-bold;
+    font-weight: 700;
+    src: local(textbook-bold);
+    src: url('fonts/textbook-bold.woff'),
+    url('fonts/textbook-bold.ttf');
+}
+@font-face {
+    font-family: yandexsans;
+    font-weight: 400;
+    src: local(yandexsans);
+    src: url('fonts/Yandex%20Sans%20Display-Regular.woff'),
+    url('fonts/Yandex%20Sans%20Display-Regular.ttf');
+}
+@font-face {
+    font-family: yandexsans;
+    font-weight: 200;
+    src: local(yandexsans);
+    src: url('fonts/Yandex%20Sans%20Display-Light.woff'),
+    url('fonts/Yandex%20Sans%20Display-Light.ttf');
+}
+@font-face {
+    font-family: yandexsans;
+    font-weight: 700;
+    src: local(yandexsans);
+    src: url('fonts/Yandex%20Sans%20Display-Bold.woff'),
+    url('fonts/Yandex%20Sans%20Display-Bold.ttf');
+}
+
+
+.reveal {
+    font-family: yandexsans, textbook;
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+    font-family: yandexsans, textbook-bold;
+}
+
+.reveal em {
+    font-family: yandexsans, textbook-light;
+}
+
+
+section .strike {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.yandex table.tableMiddle td {
+    vertical-align: middle;
+}
+
+.yandex table.tableCenter td {
+    text-align: center;
+}
+
+.yandex table.noBorder td {
+    border: none;
+}
+
+pre.size-s {
+    font-size: 15px !important;
+}
+
+p.size-s {
+    font-size: 30px !important;
+}
+
+p.size-m {
+    font-size: 35px !important;
+}
+
+p.size-l {
+    font-size: 40px !important;
+}
+
+p.size-xl {
+    font-size: 50px !important;
+}
+
+p.size-xxl {
+    font-size: 60px !important;
+}
+
+pre.size-m {
+    font-size: 18px !important;
+}
+
+pre.size-l {
+    font-size: 25px !important;
+}
+
+pre.size-xl {
+    font-size: 30px !important;
+}
+
+pre.size-xxl {
+    font-size: 40px !important;
+}
+
+mark {
+    border-radius: 5px;
+}
+
+mark.red {
+    background: red;
+    color: #fff;
+}
+
+mark.blue {
+    background: blue;
+    color: #fff;
+}
+
+.reveal .slides section mark.fragment {
+    background: transparent;
+    visibility: visible;
+    color: white;
+    opacity: 1;
+}
+
+.reveal .slides section mark.fragment.toggle.visible {
+    color: white;
+    background: transparent;
+}
+
+.reveal .slides section mark.fragment.visible.current-fragment.toggle,
+.reveal .slides section mark.fragment.visible {
+    background: #ff0;
+    color: black;
+}
+
+.reveal .slides section mark.blue.fragment.visible {
+    background: #00f;
+    color: black;
+}
+
+.reveal .slides section mark.red.fragment.visible {
+    background: #f00;
+    color: black;
+}
+
+section.ex button.size-m,
+section.ex textarea.size-m {
+    margin-bottom: 20px;
+    font-size: 37px;
+}
+
+section.ex button:focus {
+    outline: 10px solid red;
+}
+
+section.ex button.size-l,
+section.ex input.size-l,
+section.ex textarea.size-l {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+section.ex button.zoom,
+section.ex input.zoom {
+    transform: scale(2);
+    vertical-align: middle;
+    margin: 10px;
+}
+
+.reveal .progress span {
+    color: rgb(243, 86, 38);
+    background: linear-gradient(92deg, rgb(243, 204, 35), rgb(254, 146, 11));
+    -webkit-animation: hue 100s linear infinite;
+}
+
+a {
+    color: #068ee9 !important;
+}
+
+div.body div.fragment.visible.animated {
+    -webkit-animation-name: bounceIn;
+}
+
+.deadline {
+    color: white;
+    transform: scale(.1);
+    pointer-events: none;
+    transition-property: color, transform !important;
+    transition-duration: 30s !important;
+    transition-timing-function: linear !important;
+}
+
+.deadline.visible {
+    color: red;
+    transform: scale(5);
+}
+
+
+.psy div {
+    visibility: hidden;
+}
+.psy:hover div {
+    visibility: visible;
+}
+
+
+.reveal .ex:link { color: blue !important; transition-duration: 0s !important;}
+.reveal .ex:hover { color: green !important}
+.reveal .ex:focus { color: yellow !important}
+.reveal .ex:active { color: red !important}
+.reveal .ex:visited { color: purple !important}
+
+i {
+    text-transform: lowercase;
+}
+
+.browser {
+    transform: scale(0);
+}
+.browser.visible {
+    transform: scale(1);
+}
+
+
+@-webkit-keyframes hue {
+    from {
+        -webkit-filter: hue-rotate(0deg);
+    }
+    to {
+        -webkit-filter: hue-rotate(360deg);
+    }
+}

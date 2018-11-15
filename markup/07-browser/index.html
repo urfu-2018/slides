@@ -1,0 +1,1121 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Лекция «Браузер»</title>
+
+    <meta name="description" content="Лекция #9 по курсу «вёрстка». Браузер">
+    <meta name="author" content="Олег Мохов, Артём Кувалдин">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="../css/reveal.css">
+    <link rel="stylesheet" href="../lib/css/animate.css">
+    <link rel="stylesheet" href="../css/theme/night.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <link rel="stylesheet" href="css-custom/custom.css">
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+    <script type="text/javascript"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</head>
+
+<body>
+
+<div class="reveal">
+
+    <div class="slides">
+        <section style="font-size: 70px;">
+            <div class="fragment" data-fragment-index="1">
+                <img src="img/01-browser.jpg"/>
+                <div class="fragment animated browser" data-fragment-index="2">
+                    <h2 style="font: 40px Courier, 'Courier New', monospace; position: relative; top: -300px; color: #000;">Обозреватель</h2>
+                </div>
+
+                <p style="text-align: center;">
+                    <small class="animated" data-fragment-index="2"><span style="color: red">Н</span>есмиянов Артем</small><br>
+                    <small class="animated" style="margin-top: -20px" data-fragment-index="2"><span style="color: red">Р</span>азработчик интерфейсов</small>
+                </p>
+            </div>
+        </section>
+
+
+        <!--<section data-background-transition="zoom" data-background-image="img/02-browser-wars.jpg"></section>-->
+        <!--<section data-background-transition="zoom" data-background-image="img/03-browser-wars.jpg"></section>-->
+        <!--<section data-transition="none">-->
+            <!--<iframe width="840" height="630" src="https://www.youtube.com/embed/26Uxgb-Boh4?rel=0" frameborder="0" allowfullscreen></iframe>-->
+        <!--</section>-->
+
+        <!--<section data-transition="none">-->
+            <!--<h2 style="margin-top: 100px;">-->
+                <!--<a href="http://evolutionofweb.appspot.com/?hl=ru#/evolution/day">Эволюция интернета</a>-->
+            <!--</h2>-->
+        <!--</section>-->
+
+        <section data-transition="zoom">
+            <h2>Основные группы браузеров</h2>
+            <div style="display: flex; justify-content: space-between">
+                <div class="fragment">
+                    <img style="border: none; background: none;" width="150" src="img/04-edge-logo.png"/>
+                </div>
+                <div class="fragment">
+                    <img style="border: none; background: none;" width="150" src="img/05-firefox-logo.png"/>
+                </div>
+                <div class="fragment">
+                    <img style="border: none; background: none;" width="150" src="img/06-safari-logo.png"/>
+                </div>
+                <div class="fragment">
+                    <img style="border: none; background: none;" width="150" src="img/07-chromium-logo.png"/>
+
+                    <div class="fragment" style="display: flex; align-items: flex-start">
+                        <img style="border: none; background: none;" width="100" src="img/09-chrome-logo.png"/>
+                        <img style="border: none; background: none;" width="100" src="img/10-opera-logo.png"/>
+                        <img style="border: none; background: none;" width="100" src="img/08-yabro-logo.png"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section data-transition="none">
+            <h2>Архитектура браузера</h2>
+            <img width="700" src="img/12-browser-architecture.png"/>
+        </section>
+        <section>
+            <h2>Жизненный цикл веб-страницы</h2>
+            <img src="img/life-of-web-page.png"/>
+        </section>
+        <section data-background-transition="zoom">
+            <h1 style="color: #fff; text-shadow: #000 0 0 5px;">Networking</h1>
+            <img src="img/loading-cat.gif" />
+        </section>
+        <section data-transition="none">
+            <h2>Внутри браузера</h2>
+            <img width="900" src="img/13-browser-networking-dns_1.png"/>
+        </section>
+        <section data-transition="none">
+            <h2>Внутри браузера: ввели адрес</h2>
+            <img width="900" src="img/13-browser-networking-dns_2.png"/>
+        </section>
+        <section data-transition="none">
+            <h2>Внутри браузера: кэш</h2>
+            <img width="900" src="img/13-browser-networking-dns_3.png"/>
+        </section>
+        <section data-transition="none">
+            <h2>Внутри браузера: кэш</h2>
+            <img width="900" src="img/13-browser-networking-dns_3_1.png"/>
+        </section>
+
+        <section data-transition="none">
+            <h2>Внутри браузера: DNS</h2>
+            <img width="900" src="img/13-browser-networking-dns_4.png"/>
+        </section>
+        <section data-transition="none">
+            <h2>Внутри браузера: получение IP</h2>
+            <img width="900" src="img/13-browser-networking-dns_5.png"/>
+        </section>
+        <section data-transition="none">
+            <h2>Внутри браузера: запрос</h2>
+            <img width="900" src="img/13-browser-networking-dns_6.png"/>
+        </section>
+        <section data-transition="none">
+            <h2>Внутри браузера: ответ</h2>
+            <img width="900" src="img/13-browser-networking-dns_7.png"/>
+        </section>
+        <section data-transition="none">
+            <h2>Внутри браузера: снова кэш</h2>
+            <img width="900" src="img/13-browser-networking-dns_8.png"/>
+        </section>
+        <section data-transition="none">
+            <h2>Внутри браузера: страница</h2>
+            <img width="900" src="img/13-browser-networking-dns_9.png"/>
+        </section>
+        <section data-transition="none">
+            <h2>Путь одного запроса</h2>
+            <img width="900" src="img/14-browser-dns.png"/>
+        </section>
+        <section data-transition="none">
+            <h2>Путь одного запроса</h2>
+            <img width="700" src="img/15-russia-request.png"/>
+        </section>
+        <section data-transition="none">
+            <h2>W3C resourse hints</h2>
+            <pre class="html size-xl">
+<code class="fragment"><link rel="dns-prefetch" href="//yandex.ru/"></code>
+<code class="fragment"><link rel="preconnect" href="https://yandex.ru/"></code>
+<code class="fragment"><link rel="prefetch" href="//api.maps.yandex.ru/"></code>
+<code class="fragment"><link rel="preload" href="libertad.woff2" as="font"></code>
+<code class="fragment"><link rel="prerender" href="//urfu.ru/"></code>
+            </pre>
+            <a class="fragment" href="https://w3c.github.io/resource-hints/">https://w3c.github.io/resource-hints/</a>
+        </section>
+        <section data-background-image="img/yandex-blog.png" data-background-size="contain">
+            <a class="fragment" style="position: relative; top: 40px" href="chrome://net-internals/#prerender">chrome://net-internals/#prerender</a>
+        </section>
+        <!--<section data-background-transition="zoom" data-background-image="">-->
+            <!--<h1 style="color: #fff; text-shadow: #000 0 0 5px;">User-agent</h1>-->
+            <!--<h3 class="fragment">Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 YaBrowser/15.10.2454.3654 Safari/537.36</h3>-->
+            <!--<a class="fragment" href="http://geektimes.ru/post/84222/">История user-agent</a>-->
+        <!--</section>-->
+        <section data-background-transition="zoom" data-background-image="">
+            <h1 style="color: #fff; text-shadow: #000 0 0 5px;">Браузерные движки</h1>
+            <img src="img/engine.gif" />
+        </section>
+
+        <section data-transition="zoom">
+            <div style="display: flex; justify-content: space-between">
+                <div>
+                    <img style="border: none; background: none; max-width: none; max-height: none;" width="150" src="img/04-edge-logo.png"/>
+                    <div class="fragment">EdgeHTML (ex.&nbsp;Trident)</div>
+                </div>
+                <div style="padding: 0 30px">
+                    <img style="border: none; background: none; max-width: none; max-height: none;" width="150" src="img/05-firefox-logo.png"/>
+                    <div class="fragment">Gecko</div>
+                </div>
+                <div style="padding: 0 30px">
+                    <img style="border: none; background: none; max-width: none; max-height: none;" width="150" src="img/06-safari-logo.png"/>
+                    <div class="fragment">Webkit</div>
+                </div>
+                <div>
+                    <img style="border: none; background: none; max-width: none; max-height: none;" width="150" src="img/07-chromium-logo.png"/>
+
+                    <div style="display: flex; align-items: flex-start">
+                        <img style="border: none; background: none; max-width: none; max-height: none;" width="100" src="img/09-chrome-logo.png"/>
+                        <img style="border: none; background: none; max-width: none; max-height: none;" width="100" src="img/10-opera-logo.png"/>
+                        <img style="border: none; background: none; max-width: none; max-height: none;" width="100" src="img/08-yabro-logo.png"/>
+                    </div>
+                    <div class="fragment">Blink (fork&nbsp;Webkit)</div>
+                </div>
+            </div>
+        </section>
+        <section data-transition="none">
+            <div style="display: flex; align-items: center; justify-content: center">
+                <div style="padding-right: 100px"><img style="border: none; background: none;" width="150" src="img/09-chrome-logo.png"/></div>
+                <img width="550" src="img/17-browser-rendering.png"/>
+            </div>
+            <div class="fragment" style="display: flex; align-items: center; justify-content: center">
+                <div style="padding-right: 100px"><img style="border: none; background: none;" width="150" src="img/05-firefox-logo.png"/></div>
+                <img width="550" src="img/17-browser-rendering_ff.png"/>
+            </div>
+        </section>
+
+
+        <section data-background-transition="zoom" data-background-image="img/18-go-deeper.jpg">
+            <h1 class="fragment" style="margin-top: 150px; color: #fff; text-shadow: #000 0 0 5px;">Анализ документа</h1>
+        </section>
+
+        <section data-transition="none">
+            <img src="img/how-html-parser-works.png"/>
+        </section>
+        <section data-background-transition="zoom" data-background-image="img/">
+            <h1 style="color: #fff; text-shadow: #000 0 0 5px;">HTML parsing tolerance<br/>(«Щадящий» алгоритм)</h1>
+        </section>
+        <section data-transition="none">
+            <h2>Неправильное использование тегов</h2>
+            <pre class="html size-xl">
+<code>&lt;/br&gt;</code>
+<code class="fragment"><br></code>
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h2>Неправильное вкладывание тегов</h2>
+            <pre class="html size-l" style="display: flex; justify-content: space-between">
+<code>&lt;a href="#"&gt;
+    &lt;a href="#"&gt;
+        inner link
+    &lt;/a&gt;
+    outer link
+&lt;/a&gt;</code>
+<code class="fragment">&lt;a href="#"&gt;&lt;/a&gt;
+    &lt;a href="#"&gt;
+        inner link
+    &lt;/a&gt;
+    outer link
+&lt;/a&gt;</code>
+<code class="fragment">&lt;a href="#"&gt;&lt;/a&gt;
+&lt;a href="#"&gt;
+    inner link
+&lt;/a&gt;
+outer link</code>
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h2>Использование вложенных форм</h2>
+            <pre class="html size-l" style="display: flex;">
+<code style="padding-right: 50px">&lt;form action="#a1"&gt;
+    outer form
+    &lt;form action="#a2"&gt;
+        inner form
+    &lt;/form&gt;
+&lt;/form&gt;</code>
+<code class="fragment">&lt;form action="#a1"&gt;
+    outer form
+
+        inner form
+
+&lt;/form&gt;</code>
+            </pre>
+        </section>
+        <section data-background-transition="zoom" data-background-image="">
+            <h1 style="color: #fff; text-shadow: #000 0 0 5px;">CSS parsing</h1>
+        </section>
+        <section data-transition="none">
+            <h2>CSSOM</h2>
+            <pre class="css size-l" style="">
+<code>body { font-size: 16px }
+p { font-weight: bold }
+span { color: red }
+p span { display: none }
+img { float: right }</code>
+<img class="fragment" src="img/19-cssom.png"/>
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h2>CSS error handling</h2>
+            <pre class="css size-l">
+.foo {
+    <mark class="fragment">width: 10em</mark>
+    <mark class="fragment">height: 10em;</mark>
+    background: red;
+}
+
+.bar {
+    <mark class="fragment">width: 10bem;</mark>
+    height: 10em;
+    background: red;
+    <mark class="fragment">font: 10px Arial</mark>
+    <mark class="fragment">color red;</mark>
+
+<mark class="fragment">.baz {
+    width: 10em;
+}</mark>
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h2>CSS error handling</h2>
+            <pre class="css size-l">
+.foo {
+    <span style="text-decoration: line-through">width: 10em</span>
+    <span style="text-decoration: line-through">height: 10em;</span>
+    background: red;
+}
+
+.bar {
+    <mark>width: 10bem;</mark>
+    height: 10em;
+    background: red;
+    <mark>font: 10px Arial</mark>
+    <mark>color red;</mark>
+
+<mark>.baz {
+    width: 10em;
+}</mark>
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h2>CSS error handling</h2>
+            <pre class="css size-l">
+.foo {
+    <span style="text-decoration: line-through">width: 10em</span>
+    <span style="text-decoration: line-through">height: 10em;</span>
+    background: red;
+}
+
+.bar {
+    <span style="text-decoration: line-through">width: 10bem;</span>
+    height: 10em;
+    background: red;
+    <mark>font: 10px Arial</mark>
+    <mark>color red;</mark>
+
+<mark>.baz {
+    width: 10em;
+}</mark>
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h2>CSS error handling</h2>
+            <pre class="css size-l">
+.foo {
+    <span style="text-decoration: line-through">width: 10em</span>
+    <span style="text-decoration: line-through">height: 10em;</span>
+    background: red;
+}
+
+.bar {
+    <span style="text-decoration: line-through">width: 10bem;</span>
+    height: 10em;
+    background: red;
+    font: 10px Arial color red;
+
+
+<mark>.baz {
+    width: 10em;
+}</mark>
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h2>CSS error handling</h2>
+            <pre class="css size-l">
+.foo {
+    <span style="text-decoration: line-through">width: 10em</span>
+    <span style="text-decoration: line-through">height: 10em;</span>
+    background: red;
+}
+
+.bar {
+    <span style="text-decoration: line-through">width: 10bem;</span>
+    height: 10em;
+    background: red;
+    font: 10px Arial color red;
+
+
+<span style="text-decoration: line-through">.baz {</span>
+    <span style="text-decoration: line-through">width: 10em;</span>
+}
+            </pre>
+        </section>
+
+
+        <section data-transition="none">
+            <img src="img/25-niga.jpg" width="65%" />
+        </section>
+        <section>
+            <h2>Валидность</h2>
+            <div><a href="http://validator.w3.org/">HTML Validator</a></div>
+            <div><a href="http://www.css-validator.org/">CSS Validator</a></div>
+        </section>
+        <section data-background-transition="zoom">
+            <h1 style="color: #fff; text-shadow: #000 0 0 5px;">Render Tree</h1>
+        </section>
+        <section data-transition="none">
+            <div style="display: flex; align-items: center; justify-content: center">
+                <div style="padding-right: 100px"><img style="border: none; background: none;" width="150" src="img/09-chrome-logo.png"/></div>
+                <img width="550" src="img/17-browser-rendering.png"/>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center">
+                <div style="padding-right: 100px"><img style="border: none; background: none;" width="150" src="img/05-firefox-logo.png"/></div>
+                <img width="550" src="img/17-browser-rendering_ff.png"/>
+            </div>
+        </section>
+
+        <section data-transition="none">
+            <img style="max-width: 100%; border: none; background: none;" src="img/21-dom-cssom.png"/>
+            <div style="position: relative; z-index: 1; background: #fff; height: 200px; margin-top: -232px;"></div>
+        </section>
+        <section data-transition="none">
+            <img style="max-width: 100%; border: none; background: none;" src="img/21-dom-cssom.png"/>
+        </section>
+        <section>
+            <img src="img/render-tree-meme.jpg" width="45%"/> 
+        </section>
+        <section>
+            <h2>DOM → Render Tree</h2>
+            <ul style="font-size: 40px; margin-top: 40px;">
+                <li class="fragment">Получается при складывании DOM и CSSOM</li>
+                <li class="fragment">Не все блоки из DOM попадают в Render Tree</li>
+                <li class="fragment">На один DOM-блок может создаваться несколько блоков в Render Tree</li>
+                <li class="fragment">CSS так же оказывает влияние на Render Tree (::after, ::before)</li>
+            </ul>
+        </section>
+        <section data-background-transition="zoom" data-background-image="img/07.jpg">
+            <h1 style="color: #fff; text-shadow: #000 0 0 5px;">Как применяется CSS?</h1>
+        </section>
+        <section data-background-image="img/urfu-2017.png" data-background-size="cover">
+            <h1 class="fragment" style="color: #000; text-shadow: #fff 0 0 5px;">1456</h1>
+        </section>
+        <section data-transition="none">
+            <h2>Как применяется CSS?</h2>
+            <pre class="css size-m" style="display: flex; justify-content: space-between">
+<code>.section .select .value a {
+    padding-right: 30px
+}</code>
+            <div class="fragment"><img src="img/urfu-example.png" alt=""></div>
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h2>Как применяется CSS?</h2>
+            <pre class="html size-l" style="display: flex; justify-content: space-between">
+<div><mark>.section</mark> .select .value a<br/>
+<span>/* 1456 <span class="fragment">-> found 11</span> */</span></div>
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h2>Как применяется CSS?</h2>
+            <pre class="html size-l" style="display: flex; justify-content: space-between">
+<div><mark>.section .select</mark> .value a<br/>
+<span>/* 1456 -> found 11 */</span><br/>
+<span>/* 1245 <span class="fragment">-> found 2</span> */</span></div>
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h2>Как применяется CSS?</h2>
+            <pre class="html size-l" style="display: flex; justify-content: space-between">
+<div><mark>.section .select .value</mark> a<br/>
+<span>/* 1456 -> found 11 */</span><br/>
+<span>/* 1245 -> found 2 */</span><br/>
+<span>/* 90 <span class="fragment">-> found 2</span> */</span></div>
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h2>Как применяется CSS?</h2>
+            <pre class="html size-l" style="display: flex; justify-content: space-between">
+<div><mark>.section .select .value a</mark><br/>
+<span>/* 1456 -> found 11 */</span><br/>
+<span>/* 1245 -> found 2 */</span><br/>
+<span>/* 90 -> found 2 */</span><br/>
+<span>/* 2 <span class="fragment">-> found 2</span> */</span><br/>
+<span class="fragment">/* total: 2688 lookups */</span>
+</div>
+            </pre>
+        </section>
+
+        <section data-transition="none">
+            <h2>Как применяется CSS?</h2>
+            <pre class="html size-l" style="display: flex; justify-content: space-between">
+<div>.section .select .value <mark>a</mark><br/>
+<span>/* 1456 <span class="fragment">-> found 327</span> */</span>
+</div>
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h2>Как применяется CSS?</h2>
+            <pre class="html size-l" style="display: flex; justify-content: space-between">
+<div>.section .select <mark>.value a</mark><br/>
+<span>/* 1456 -> found 327 */</span>
+<span>/* 327 * 6 = 1962 <span class="fragment">-> found 2</span> */</span>
+</div>
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h2>Как применяется CSS?</h2>
+            <pre class="html size-l" style="display: flex; justify-content: space-between">
+<div>.section <mark>.select .value a</mark><br/>
+<span>/* 1456 -> found 327 */</span>
+<span>/* 327 * 6 = 1962 -> found 2 */</span>
+<span>/* 2 * 6 = 12 <span class="fragment">-> found 2</span> */</span>
+</div>
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h2>Как применяется CSS?</h2>
+            <pre class="html size-l" style="display: flex; justify-content: space-between">
+<div><mark>.section .select .value a</mark><br/>
+<span>/* 1456 -> found 327 */</span>
+<span>/* 327 * 6 = 1962 -> found 2 */</span>
+<span>/* 2 * 6 = 12 -> found 2 */</span>
+<span>/* 2 * 5 = 10 <span class="fragment">-> found 2</span> */</span>
+<span class="fragment">/* total: 3335 lookups <span class="fragment">&gt; 2682</span> */</span>
+</div>
+            </pre>
+        </section>
+
+        <section data-background-transition="zoom" data-background-image="img/27-sloth.gif">
+            <h1 style="color: #fff; text-shadow: #000 0 0 5px;">Медленно</h1>
+        </section>
+        <section data-transition="none">
+            <h2>Как применять CSS эффективно?</h2>
+            <pre class="html size-l" style="display: flex; justify-content: space-between">
+<div><span style="text-decoration: line-through">.section .select .value a</span><br/>
+<mark>.category-value</mark><br/>
+<span class="fragment">/* 1456 vs 3335 */</span></div>
+            </pre>
+        </section>
+        <section>
+            <h2>Методологии именования классов и организации разметки</h2>
+            <ul style="font-size: 40px; margin-top: 40px;">
+                <li class="fragment"><a href="https://ru.bem.info/">БЭМ</a> (Яндекс)</li>
+                <li class="fragment"><a href="http://oocss.org/">OOCSS</a> (Youtube)</li>
+                <li class="fragment"><a href="http://operatino.github.io/MCSS/en/">MCSS</a> (Одноклассники)</li>
+                <li class="fragment"><a href="https://smacss.com/">SMACSS</a></li>
+                <li class="fragment"><a href="http://acss.io/">ACSS</a> (Yahoo, + Amazon (свой аналог))</li>
+                <li class="fragment"><a href="http://alistapart.com/article/axiomatic-css-and-lobotomized-owls">Axiomatic CSS</a> (±Wikipedia)</li>
+            </ul>
+        </section>
+          <section >
+            <h1 style="color: #fff; text-shadow: #000 0 0 5px;">BEM</h1>
+            <ul style="font-size: 50px; margin-top: 40px;">
+                <li class="fragment">Блок</li>
+                <li class="fragment">Элемент</li>
+                <li class="fragment">Модификатор</li>
+            </ul>
+        </section>
+        <section data-transition="none">
+            <h1 style="color: #fff; text-shadow: #000 0 0 5px;">
+                <mark>B</mark>EM
+            </h1>
+            <ul style="font-size: 34px; margin-top: 24px;">
+                <li class="fragment">Блок - Функционально независимый компонент страницы,
+                 который может быть повторно использован.
+                </li>
+                <li class="fragment">Название блока характеризует смысл, а не состояние</li>
+                <li class="fragment">Блок не должен влиять на свое окружение, т. е. блоку не следует задавать внешнюю геометрию (в виде отступов, границ, влияющих на размеры) и позиционирование.
+                </li>
+                <li class="fragment">Блоки можно вкладывать друг в друга.
+                </li>
+            </ul>
+        </section>
+        <section data-transition="none">
+            <h1 style="color: #fff; text-shadow: #000 0 0 5px;">
+                <mark>B</mark>EM
+            </h1>
+<pre style="display: flex; justify-content: space-between;" class="size-l" >
+<code class="html">
+
+    <!-- Верно. Семантически осмысленный блок `header` -->
+    <div class="header"></div>
+
+    <!-- Неверно. Описывается внешний вид -->
+    <div class="red-text"></div>
+</code> 
+</pre>
+<pre class="fragment size-l">
+<code class="html">
+    <!-- Блок `header` -->
+    <header class="header">
+        <!-- Вложенный блок `logo` -->
+        <div class="logo"></div>
+
+        <!-- Вложенный блок `search-form` -->
+        <form class="search-form"></form>
+    </header>
+</code>
+</pre>
+        </section>
+        <section data-background-image="img/bem1.png"></section>
+        <section data-background-image="img/bem2.png"></section>
+         <section data-transition="none">
+            <h1 style="color: #fff; text-shadow: #000 0 0 5px;">
+                B<mark>E</mark>M
+            </h1>
+             <ul style="font-size: 34px; margin-top: 24px;">
+                <li class="fragment">Элемент - Составная часть блока, которая не может использоваться в отрыве от него.
+                </li>
+                <li class="fragment">Название элемента характеризует смысл, а не состояние</li>
+                <li class="fragment">Структура полного имени элемента соответствует схеме: имя-блока__имя-элемента. 
+                </li>
+                <li class="fragment">Элементы можно вкладывать друг в друга.
+                </li>
+                <li class="fragment">
+                    Элемент — всегда часть блока, а не другого элемента. <code style="text-decoration:line-through;">block__elem1__elem2</code>.
+                </li>
+                <li class="fragment">
+                    Не обязателен
+                </li>
+            </ul>
+        </section>
+        <section data-transition="none">
+            <h1 style="color: #fff; text-shadow: #000 0 0 5px;">
+                B<mark>E</mark>M
+            </h1>
+<pre style="display: flex; justify-content: space-between;" class="size-l" >
+<code class="html">
+    <form class="search-form">
+        <div class="search-form__content">
+            <input class="search-form__input">
+            <button class="search-form__button">Найти</button>
+        </div>
+    </form>
+</code> 
+</pre>
+<pre class="fragment size-l">
+<code class="html">
+    <div class="block">
+        <div class="block__elem1">
+            <div class="block__elem2">
+                <div class="block__elem3"></div>
+            </div>
+        </div>
+    </div>
+</code>
+</pre>
+        </section>
+        <section data-background-image="img/bem2.png"></section>
+        <section data-background-image="img/bem3.png"></section>
+        <section data-transition="none">
+            <h1 style="color: #fff; text-shadow: #000 0 0 5px;">
+                BE<mark>M</mark>
+            </h1>
+             <ul style="font-size: 34px; margin-top: 24px;">
+                <li class="fragment">Модификатор - сущность, определяющая внешний вид, состояние или поведение блока либо элемента.
+                </li>
+                <li class="fragment">Имя модификатора отделяется от имени блока или элемента одним подчеркиванием (_).
+                </li>
+            </ul>
+        </section>
+        <section data-transition="none">
+            <h1 style="color: #fff; text-shadow: #000 0 0 5px;">
+                BE<mark>M</mark>
+            </h1>
+<pre style="display: flex; justify-content: space-between;" class="size-m">
+<code class="html">
+    <!-- Блок `search-form` имеет булевый модификатор `focused` -->
+    <form class="search-form search-form_focused">
+        <input class="search-form__input">
+
+        <!-- Элемент `button` имеет булевый модификатор `disabled` -->
+        <button 
+            class="search-form__button search-form__button_disabled"
+        >
+            Найти
+        </button>
+    </form>
+</code> 
+</pre>
+<pre class="fragment size-m">
+<code class="html">
+    <!-- Блок `search-form` имеет модификатор `theme` со значением `islands` -->
+    <form class="search-form search-form_theme_islands">
+        <input class="search-form__input">
+
+        <!-- Элемент `button` имеет модификатор `size` со значением `m` -->
+        <button 
+            class="search-form__button search-form__button_size_m"
+        >
+            Найти
+        </button>
+    </form>
+</code>
+</pre>
+        </section>
+        <section data-background-image="img/bem4.png"></section>
+        <section data-background-image="img/bem5.png"></section>
+        <section data-transition="none">
+            <h1 style="color: #fff; text-shadow: #000 0 0 5px;">
+                MIX
+            </h1>
+<pre class="size-l">
+<code class="html">
+    <!-- Блок `header` -->
+    <div class="header">
+        <!-- 
+           К блоку `search-form` примиксован элемент 
+           `search-form` блока `header`
+        -->
+        <div class="search-form header__search-form">
+            ...
+        </div>
+    </div>
+</code> 
+</pre>
+        </section>
+        <section>
+            <img src="img/reflow.jpg" />
+        </section>
+        <section data-transition="none">
+            <div style="display: flex; align-items: center; justify-content: center">
+                <div style="padding-right: 100px"><img style="border: none; background: none;" width="150" src="img/09-chrome-logo.png"/></div>
+                <img width="550" src="img/17-browser-rendering.png"/>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center">
+                <div style="padding-right: 100px"><img style="border: none; background: none;" width="150" src="img/05-firefox-logo.png"/></div>
+                <img width="550" src="img/17-browser-rendering_ff.png"/>
+            </div>
+        </section>
+
+        <section data-background-transition="zoom">
+            <h1 class="fragment" style="color: #fff; text-shadow: #000 0 0 5px;">Компоновка</h1>
+            <img src="img/28-tetris.gif" width="80%" />
+        </section>
+        <section>
+            <h2>Компоновка (Reflow)</h2>
+            <ul style="font-size: 40px; margin-top: 40px;">
+                <li class="fragment">Последовательно</li>
+                <li class="fragment">Элементы расставляются слева направо, сверху вниз</li>
+                <li class="fragment">Элементы, встречающиеся позже, не влияют на геометрию предыдущих (кроме таблиц и grid'ов с auto значениями)</li>
+                <li class="fragment">Элемент определяет собственную ширину</li>
+                <li class="fragment">На основании суммарной высоты дочерних элементов, полей и отступов, вычисляется высота</li>
+            </ul>
+        </section>
+        <section>
+            <iframe width="840" height="630" src="https://www.youtube.com/embed/ZTnIxIA5KGw?rel=0" frameborder="0" allowfullscreen></iframe>
+        </section>
+        <section>
+            <h2>Глобальный Reflow</h2>
+            <ul style="font-size: 40px; margin-top: 40px;">
+                <li class="fragment">Первоначальное отображение страницы</li>
+                <li class="fragment">Изменение окна браузера</li>
+                <li class="fragment">Изменение размеров шрифта</li>
+                <li class="fragment">и другие подобные глобальные события</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Инкрементный Reflow</h2>
+            <ul style="font-size: 40px; margin-top: 40px;">
+                <li class="fragment">Вставка новых элементов в DOM</li>
+                <li class="fragment">Изменение атрибутов (например, смена HTML класса)</li>
+                <li class="fragment">Смена состояния элемента (ховер, выбор чекбокса, фокус ..)</li>
+            </ul>
+        </section>
+
+
+
+
+        <section data-transition="none">
+            <h3>Инкрементный Reflow</h3>
+            <img src="img/23-incremental-reflow_1.png"/>
+            <pre class="html size-l">
+&lt;html&gt;
+    &lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;
+    &lt;div&gt;
+        &lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+&lt;/html&gt;
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h3>Инкрементный Reflow: background</h3>
+            <img src="img/23-incremental-reflow_2.png"/>
+            <pre class="html size-l">
+&lt;html&gt;
+    &lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;
+    &lt;div&gt;
+        &lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+&lt;/html&gt;
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h3>Инкрементный Reflow: transform</h3>
+            <img src="img/23-incremental-reflow_2_1.png"/>
+            <pre class="html size-l">
+&lt;html&gt;
+    &lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;
+    &lt;div&gt;
+        &lt;div&gt;&lt;/div&gt;<mark style="background: red; color: #fff">&lt;div&gt;&lt;/div&gt;</mark>&lt;div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+&lt;/html&gt;
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h3>Инкрементный Reflow: height</h3>
+            <img src="img/23-incremental-reflow_3.png"/>
+            <pre class="html size-l">
+&lt;html&gt;
+    &lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;
+    &lt;div&gt;
+        &lt;div&gt;&lt;/div&gt;<mark style="background: red; color: #fff">&lt;div&gt;&lt;/div&gt;</mark>&lt;div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+&lt;/html&gt;
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h3>Инкрементный Reflow: height</h3>
+            <img src="img/23-incremental-reflow_4.png"/>
+            <pre class="html size-l">
+&lt;html&gt;
+    &lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;
+    &lt;div&gt;
+        &lt;div&gt;&lt;/div&gt;<mark style="background: red; color: #fff">&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;</mark>
+    &lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+&lt;/html&gt;
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h3>Инкрементный Reflow: height</h3>
+            <img src="img/23-incremental-reflow_5.png"/>
+            <pre class="html size-l">
+&lt;html&gt;
+    &lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;
+    <mark style="background: red; color: #fff">&lt;div&gt;</mark>
+        &lt;div&gt;&lt;/div&gt;<mark style="background: red; color: #fff">&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;</mark>
+    <mark style="background: red; color: #fff">&lt;/div&gt;</mark>
+    &lt;div&gt;&lt;/div&gt;
+&lt;/html&gt;
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h3>Инкрементный Reflow: height</h3>
+            <img src="img/23-incremental-reflow_6.png"/>
+            <pre class="html size-l">
+&lt;html&gt;
+    &lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;
+    <mark style="background: red; color: #fff">&lt;div&gt;</mark>
+        &lt;div&gt;&lt;/div&gt;<mark style="background: red; color: #fff">&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;</mark>
+    <mark style="background: red; color: #fff">&lt;/div&gt;</mark>
+    <mark style="background: red; color: #fff">&lt;div&gt;&lt;/div&gt;</mark>
+&lt;/html&gt;
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h3>Инкрементный Reflow: height</h3>
+            <img src="img/23-incremental-reflow_7.png"/>
+            <pre class="html size-l">
+<mark style="background: red; color: #fff">&lt;html&gt;</mark>
+    &lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;
+    <mark style="background: red; color: #fff">&lt;div&gt;</mark>
+        &lt;div&gt;&lt;/div&gt;<mark style="background: red; color: #fff">&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;</mark>
+    <mark style="background: red; color: #fff">&lt;/div&gt;</mark>
+    <mark style="background: red; color: #fff">&lt;div&gt;&lt;/div&gt;</mark>
+<mark style="background: red; color: #fff">&lt;/html&gt;</mark>
+            </pre>
+        </section>
+
+        <section>
+            <img src="img/slipping-cat.gif" />
+        </section>
+        <section data-transition="none">
+            <h3>Инкрементный Reflow: height</h3>
+            <img src="img/23-incremental-reflow_7.png"/>
+            <pre class="html size-l">
+<mark style="background: red; color: #fff">&lt;html&gt;</mark>
+    &lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;
+    <mark style="background: red; color: #fff">&lt;div&gt;</mark>
+        &lt;div&gt;&lt;/div&gt;<mark style="background: red; color: #fff">&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;</mark>
+    <mark style="background: red; color: #fff">&lt;/div&gt;</mark>
+    <mark style="background: red; color: #fff">&lt;div&gt;&lt;/div&gt;</mark>
+<mark style="background: red; color: #fff">&lt;/html&gt;</mark>
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h3>Инкрементный Reflow: height</h3>
+            <img src="img/23-incremental-reflow_7-01.png"/>
+            <pre class="html size-l">
+&lt;html&gt;
+    &lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;
+    &lt;div&gt;
+        &lt;div&gt;&lt;/div&gt;<mark style="background: red; color: #fff">&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;</mark>
+    &lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+&lt;/html&gt;
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h3>Инкрементный Reflow: width</h3>
+            <img src="img/23-incremental-reflow_8.png"/>
+            <pre class="html size-l">
+&lt;html&gt;
+    &lt;p&gt;<mark style="background: red; color: #fff">&lt;span&gt;&lt;/span&gt;</mark>&lt;/p&gt;
+    &lt;div&gt;
+        &lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+&lt;/html&gt;
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h3>Инкрементный Reflow: width</h3>
+            <img src="img/23-incremental-reflow_9.png"/>
+            <pre class="html size-l">
+<mark style="background: #FFA300; color: #fff">&lt;html&gt;</mark>
+    <mark style="background: #FFA300; color: #fff">&lt;p&gt;<mark style="background: red; color: #fff">&lt;span&gt;&lt;/span&gt;</mark>&lt;/p&gt;</mark>
+    <mark style="background: #FFA300; color: #fff">&lt;div&gt;</mark>
+        &lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;
+    <mark style="background: #FFA300; color: #fff">&lt;/div&gt;</mark>
+    <mark style="background: #FFA300; color: #fff">&lt;div&gt;&lt;/div&gt;</mark>
+<mark style="background: #FFA300; color: #fff">&lt;/html&gt;</mark>
+            </pre>
+        </section>
+        <section data-transition="none">
+            <h3>Инкрементный Reflow: width</h3>
+            <img src="img/23-incremental-reflow_10.png"/>
+            <pre class="html size-l">
+<mark style="background: #FFA300; color: #fff">&lt;html&gt;</mark>
+    <mark style="background: #FFA300; color: #fff">&lt;p&gt;<mark style="background: red; color: #fff">&lt;span&gt;&lt;/span&gt;</mark>&lt;/p&gt;</mark>
+    <mark style="background: #FFA300; color: #fff">&lt;div&gt;</mark>
+        &lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;/div&gt;
+    <mark style="background: #FFA300; color: #fff">&lt;/div&gt;</mark>
+    <mark style="background: #FFA300; color: #fff">&lt;div&gt;&lt;/div&gt;</mark>
+<mark style="background: #FFA300; color: #fff">&lt;/html&gt;</mark>
+            </pre>
+        </section>
+
+        <section>
+            <h2>CSS Triggers</h2>
+            <a href="https://csstriggers.com/">https://csstriggers.com/</a>
+        </section>
+
+
+        <section data-background-transition="zoom">
+            <h1 style="color: #fff; text-shadow: #000 0 0 5px;">Painting</h1>
+            <img src="img/painting.gif"/>
+        </section>
+        <section>
+            <h2>RenderTree</h2>
+            <img src="img/render-object.png" width="100%" />
+        </section>
+        <section>
+            <h2>RenderObject</h2>
+            <ul style="font-size: 40px; margin-top: 40px;">
+                <li>Есть у каждого DOM-элемента с визуальным представлением</li>
+                <li>RenderObject хранит знание <mark class="fragment">как отобразить элемент</mark> в текущем юзер-агенте, т.е в случае браузера речь об идёт об растеризации элемента</li>
+                <li>RenderObject’ы хранятся в параллельной структуре – RenderTree</li>
+            </ul>
+        </section>
+        <section>
+            <h2>LayerTree</h2>
+            <img src="img/layer-tree.png" width="100%" />
+        </section>
+        <section>
+            <h2>RenderLayer</h2>
+            <ul style="font-size: 40px; margin-top: 40px;">
+                <li>Каждый RenderObject ассоциируется с RenderLayer</li>
+                <li>RenderLayer’ы нужны для того чтобы отображать пересекающиеся элементы</li>
+                <li>Есть условия, которые ведут к созданию нового RenderLayer’а</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Новый RenderLayer</h2>
+            <ul style="font-size: 40px; margin-top: 40px;">
+                <li>Корневой элемент страницы</li>
+                <li>position ≠ static</li>
+                <li>transform3d</li>
+                <li>opacity</li>
+                <li>overflow</li>
+                <li>CSS filter</li>
+                <li>&lt;canvas&gt; + WebGL</li>
+                <li>&lt;video&gt;</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Композитный слой</h2>
+            <p>
+                Некоторые RenderLayer’ы, но не все, создают собственную подложку отрисовки (так же её называют композитный слой).<br/>
+                Так как создавать на каждый RenderLayer композитный слой дорого и расточительно, то следующие свойства форсируют его создание:
+            </p>
+            <ul style="margin-top: 40px;">
+                <li>transform3d или перспектива</li>
+                <li>&lt;video&gt; с включенным h/a</li>
+                <li>&lt;canvas&gt; 3d или 2d с включенным h/a</li>
+                <li>анимация свойств opacity или transform</li>
+                <li>css фильтры</li>
+                <li>слои у которых потомок композитный слой</li>
+                <li>слои, вынесенные над композитным слоем</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Примеры:</h2>
+            <p style="text-align: center" class="fragment deadline">КОМПОЗИИТНЫЙ СЛОЙ</p>
+            <img style="text-align: center" class="fragment" src="img/composition.gif"/>
+        </section>
+        <section>
+            <iframe width="1120" height="630" src="https://www.youtube.com/embed/zJxPuXNHx_M?rel=0" frameborder="0" allowfullscreen></iframe>
+        </section>
+
+        <section data-background-transition="zoom" data-background-image="img/26-scripts.jpg">
+            <h1 style="margin-top: 250px; color: #fff; text-shadow: #000 0 0 5px;">JavaScript</h1>
+        </section>
+        <section data-transition="none">
+            <h3>Скрипты</h3>
+            <img src="img/24-scripts-flow.png"/>
+        </section>
+        <section data-transition="none">
+            <h3>Скрипты</h3>
+            <img src="img/24-scripts-flow_1.png"/>
+        </section>
+        <section data-transition="none">
+            <h3>Скрипты</h3>
+            <img src="img/24-scripts-flow_2.png"/>
+        </section>
+        <section data-transition="none">
+            <h3>Скрипты</h3>
+            <img width="1000" src="img/25-script-execution.svg" style="background: #fff"/>
+        </section>
+        <section>
+            <h2>Ссылки</h2>
+            <ul>
+                <li><a href="http://taligarsiel.com/Projects/howbrowserswork1.htm">How browsers work</a></li>
+                <li><a href="http://www.html5rocks.com/ru/tutorials/internals/howbrowserswork/">Принципы работы современных веб-браузеров</a></li>
+                <li>
+                    <a href="https://docs.google.com/presentation/d/1ZRIQbUKw9Tf077odCh66OrrwRIVNLvI_nhLm2Gi__F0/embed?start=false&loop=false&delayms=3000&slide=id.p">Презентация «Как работает вебкит»</a></li>
+                <li><a href="https://ru.bem.info/methodology/">БЭМ</a></li>
+            </ul>
+        </section>
+        <section data-transition="none">
+            <h3 style="text-align: center; margin-top: 300px;" class="fragment deadline">Вопросы?</h3>
+        </section>
+    </div>
+</div>
+
+<script src="../lib/js/head.min.js"></script>
+<script src="../js/reveal.js"></script>
+<script src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+
+<script>
+    $('.links a').on('mouseover', function () {
+        var text = $(this).data('content');
+        $('.output-links').text(text);
+
+    });
+    $('.links a').on('blur', function () {
+        $('.output-links').text('');
+
+    });
+
+    Reveal.addEventListener( 'fragmentshown', function( event ) {
+        if (Reveal.isFirstSlide()) {
+            var root = $(event.fragment);
+            console.log(root);
+            setTimeout(function () {
+                $(root).find('h1').addClass('bounceInDown');
+                $(root).find( 'h4').addClass('bounceInRight');
+                $(root).find('small').eq(0).addClass('bounceInLeft');
+                $(root).find('small').eq(1).addClass('bounceInUp');
+            }, 0);
+        }
+    } );
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: false,
+        progress: true,
+        history: true,
+        center: false,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+            {
+                src: '../lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            }
+            },
+            {
+                src: '../plugin/markdown/marked.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: '../plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: '../plugin/highlight/highlight.js', async: true, condition: function () {
+                return !!document.querySelector('pre code');
+            }, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+            },
+            { src: '../plugin/zoom-js/zoom.js', async: true },
+            { src: '../plugin/notes/notes.js', async: true }
+        ]
+    });
+    Reveal.configure({ slideNumber: true });
+
+</script>
+
+</body>
+</html>
