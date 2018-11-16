@@ -1,49 +1,21 @@
 <!doctype html>
 <html lang="ru">
-
 <head>
     <meta charset="utf-8">
-
-    <title>Лекция «Браузер»</title>
-
-    <meta name="description" content="Лекция #9 по курсу «вёрстка». Браузер">
-    <meta name="author" content="Олег Мохов, Артём Кувалдин">
-
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-
-    <link rel="stylesheet" href="../css/reveal.css">
-    <link rel="stylesheet" href="../lib/css/animate.css">
-    <link rel="stylesheet" href="../css/theme/night.css" id="theme">
-
-    <!-- Code syntax highlighting -->
-    <link rel="stylesheet" href="../lib/css/zenburn.css">
-
-    <!-- Printing and PDF exports -->
-    <link rel="stylesheet" href="css-custom/custom.css">
-    <script>
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
-        document.getElementsByTagName('head')[0].appendChild(link);
-    </script>
-    <script type="text/javascript"
-            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
+    <title>Браузер</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
 </head>
-
 <body>
 
-<div class="reveal">
+<div class="reveal black">
 
     <div class="slides">
         <section style="font-size: 70px;">
             <div class="fragment" data-fragment-index="1">
-                <img src="img/01-browser.jpg"/>
+                <img src="images/01-browser.jpg"/>
                 <div class="fragment animated browser" data-fragment-index="2">
                     <h2 style="font: 40px Courier, 'Courier New', monospace; position: relative; top: -300px; color: #000;">Обозреватель</h2>
                 </div>
@@ -56,8 +28,8 @@
         </section>
 
 
-        <!--<section data-background-transition="zoom" data-background-image="img/02-browser-wars.jpg"></section>-->
-        <!--<section data-background-transition="zoom" data-background-image="img/03-browser-wars.jpg"></section>-->
+        <!--<section data-background-transition="zoom" data-background-image="images/02-browser-wars.jpg"></section>-->
+        <!--<section data-background-transition="zoom" data-background-image="images/03-browser-wars.jpg"></section>-->
         <!--<section data-transition="none">-->
             <!--<iframe width="840" height="630" src="https://www.youtube.com/embed/26Uxgb-Boh4?rel=0" frameborder="0" allowfullscreen></iframe>-->
         <!--</section>-->
@@ -72,21 +44,21 @@
             <h2>Основные группы браузеров</h2>
             <div style="display: flex; justify-content: space-between">
                 <div class="fragment">
-                    <img style="border: none; background: none;" width="150" src="img/04-edge-logo.png"/>
+                    <img style="border: none; background: none;" width="150" src="images/04-edge-logo.png"/>
                 </div>
                 <div class="fragment">
-                    <img style="border: none; background: none;" width="150" src="img/05-firefox-logo.png"/>
+                    <img style="border: none; background: none;" width="150" src="images/05-firefox-logo.png"/>
                 </div>
                 <div class="fragment">
-                    <img style="border: none; background: none;" width="150" src="img/06-safari-logo.png"/>
+                    <img style="border: none; background: none;" width="150" src="images/06-safari-logo.png"/>
                 </div>
                 <div class="fragment">
-                    <img style="border: none; background: none;" width="150" src="img/07-chromium-logo.png"/>
+                    <img style="border: none; background: none;" width="150" src="images/07-chromium-logo.png"/>
 
                     <div class="fragment" style="display: flex; align-items: flex-start">
-                        <img style="border: none; background: none;" width="100" src="img/09-chrome-logo.png"/>
-                        <img style="border: none; background: none;" width="100" src="img/10-opera-logo.png"/>
-                        <img style="border: none; background: none;" width="100" src="img/08-yabro-logo.png"/>
+                        <img style="border: none; background: none;" width="100" src="images/09-chrome-logo.png"/>
+                        <img style="border: none; background: none;" width="100" src="images/10-opera-logo.png"/>
+                        <img style="border: none; background: none;" width="100" src="images/08-yabro-logo.png"/>
                     </div>
                 </div>
             </div>
@@ -94,64 +66,64 @@
 
         <section data-transition="none">
             <h2>Архитектура браузера</h2>
-            <img width="700" src="img/12-browser-architecture.png"/>
+            <img width="700" src="images/12-browser-architecture.png"/>
         </section>
         <section>
             <h2>Жизненный цикл веб-страницы</h2>
-            <img src="img/life-of-web-page.png"/>
+            <img src="images/life-of-web-page.png"/>
         </section>
         <section data-background-transition="zoom">
             <h1 style="color: #fff; text-shadow: #000 0 0 5px;">Networking</h1>
-            <img src="img/loading-cat.gif" />
+            <img src="images/loading-cat.gif" />
         </section>
         <section data-transition="none">
             <h2>Внутри браузера</h2>
-            <img width="900" src="img/13-browser-networking-dns_1.png"/>
+            <img width="900" src="images/13-browser-networking-dns_1.png"/>
         </section>
         <section data-transition="none">
             <h2>Внутри браузера: ввели адрес</h2>
-            <img width="900" src="img/13-browser-networking-dns_2.png"/>
+            <img width="900" src="images/13-browser-networking-dns_2.png"/>
         </section>
         <section data-transition="none">
             <h2>Внутри браузера: кэш</h2>
-            <img width="900" src="img/13-browser-networking-dns_3.png"/>
+            <img width="900" src="images/13-browser-networking-dns_3.png"/>
         </section>
         <section data-transition="none">
             <h2>Внутри браузера: кэш</h2>
-            <img width="900" src="img/13-browser-networking-dns_3_1.png"/>
+            <img width="900" src="images/13-browser-networking-dns_3_1.png"/>
         </section>
 
         <section data-transition="none">
             <h2>Внутри браузера: DNS</h2>
-            <img width="900" src="img/13-browser-networking-dns_4.png"/>
+            <img width="900" src="images/13-browser-networking-dns_4.png"/>
         </section>
         <section data-transition="none">
             <h2>Внутри браузера: получение IP</h2>
-            <img width="900" src="img/13-browser-networking-dns_5.png"/>
+            <img width="900" src="images/13-browser-networking-dns_5.png"/>
         </section>
         <section data-transition="none">
             <h2>Внутри браузера: запрос</h2>
-            <img width="900" src="img/13-browser-networking-dns_6.png"/>
+            <img width="900" src="images/13-browser-networking-dns_6.png"/>
         </section>
         <section data-transition="none">
             <h2>Внутри браузера: ответ</h2>
-            <img width="900" src="img/13-browser-networking-dns_7.png"/>
+            <img width="900" src="images/13-browser-networking-dns_7.png"/>
         </section>
         <section data-transition="none">
             <h2>Внутри браузера: снова кэш</h2>
-            <img width="900" src="img/13-browser-networking-dns_8.png"/>
+            <img width="900" src="images/13-browser-networking-dns_8.png"/>
         </section>
         <section data-transition="none">
             <h2>Внутри браузера: страница</h2>
-            <img width="900" src="img/13-browser-networking-dns_9.png"/>
+            <img width="900" src="images/13-browser-networking-dns_9.png"/>
         </section>
         <section data-transition="none">
             <h2>Путь одного запроса</h2>
-            <img width="900" src="img/14-browser-dns.png"/>
+            <img width="900" src="images/14-browser-dns.png"/>
         </section>
         <section data-transition="none">
             <h2>Путь одного запроса</h2>
-            <img width="700" src="img/15-russia-request.png"/>
+            <img width="700" src="images/15-russia-request.png"/>
         </section>
         <section data-transition="none">
             <h2>W3C resourse hints</h2>
@@ -164,7 +136,7 @@
             </pre>
             <a class="fragment" href="https://w3c.github.io/resource-hints/">https://w3c.github.io/resource-hints/</a>
         </section>
-        <section data-background-image="img/yandex-blog.png" data-background-size="contain">
+        <section data-background-image="images/yandex-blog.png" data-background-size="contain">
             <a class="fragment" style="position: relative; top: 40px" href="chrome://net-internals/#prerender">chrome://net-internals/#prerender</a>
         </section>
         <!--<section data-background-transition="zoom" data-background-image="">-->
@@ -174,30 +146,30 @@
         <!--</section>-->
         <section data-background-transition="zoom" data-background-image="">
             <h1 style="color: #fff; text-shadow: #000 0 0 5px;">Браузерные движки</h1>
-            <img src="img/engine.gif" />
+            <img src="images/engine.gif" />
         </section>
 
         <section data-transition="zoom">
             <div style="display: flex; justify-content: space-between">
                 <div>
-                    <img style="border: none; background: none; max-width: none; max-height: none;" width="150" src="img/04-edge-logo.png"/>
+                    <img style="border: none; background: none; max-width: none; max-height: none;" width="150" src="images/04-edge-logo.png"/>
                     <div class="fragment">EdgeHTML (ex.&nbsp;Trident)</div>
                 </div>
                 <div style="padding: 0 30px">
-                    <img style="border: none; background: none; max-width: none; max-height: none;" width="150" src="img/05-firefox-logo.png"/>
+                    <img style="border: none; background: none; max-width: none; max-height: none;" width="150" src="images/05-firefox-logo.png"/>
                     <div class="fragment">Gecko</div>
                 </div>
                 <div style="padding: 0 30px">
-                    <img style="border: none; background: none; max-width: none; max-height: none;" width="150" src="img/06-safari-logo.png"/>
+                    <img style="border: none; background: none; max-width: none; max-height: none;" width="150" src="images/06-safari-logo.png"/>
                     <div class="fragment">Webkit</div>
                 </div>
                 <div>
-                    <img style="border: none; background: none; max-width: none; max-height: none;" width="150" src="img/07-chromium-logo.png"/>
+                    <img style="border: none; background: none; max-width: none; max-height: none;" width="150" src="images/07-chromium-logo.png"/>
 
                     <div style="display: flex; align-items: flex-start">
-                        <img style="border: none; background: none; max-width: none; max-height: none;" width="100" src="img/09-chrome-logo.png"/>
-                        <img style="border: none; background: none; max-width: none; max-height: none;" width="100" src="img/10-opera-logo.png"/>
-                        <img style="border: none; background: none; max-width: none; max-height: none;" width="100" src="img/08-yabro-logo.png"/>
+                        <img style="border: none; background: none; max-width: none; max-height: none;" width="100" src="images/09-chrome-logo.png"/>
+                        <img style="border: none; background: none; max-width: none; max-height: none;" width="100" src="images/10-opera-logo.png"/>
+                        <img style="border: none; background: none; max-width: none; max-height: none;" width="100" src="images/08-yabro-logo.png"/>
                     </div>
                     <div class="fragment">Blink (fork&nbsp;Webkit)</div>
                 </div>
@@ -205,24 +177,24 @@
         </section>
         <section data-transition="none">
             <div style="display: flex; align-items: center; justify-content: center">
-                <div style="padding-right: 100px"><img style="border: none; background: none;" width="150" src="img/09-chrome-logo.png"/></div>
-                <img width="550" src="img/17-browser-rendering.png"/>
+                <div style="padding-right: 100px"><img style="border: none; background: none;" width="150" src="images/09-chrome-logo.png"/></div>
+                <img width="550" src="images/17-browser-rendering.png"/>
             </div>
             <div class="fragment" style="display: flex; align-items: center; justify-content: center">
-                <div style="padding-right: 100px"><img style="border: none; background: none;" width="150" src="img/05-firefox-logo.png"/></div>
-                <img width="550" src="img/17-browser-rendering_ff.png"/>
+                <div style="padding-right: 100px"><img style="border: none; background: none;" width="150" src="images/05-firefox-logo.png"/></div>
+                <img width="550" src="images/17-browser-rendering_ff.png"/>
             </div>
         </section>
 
 
-        <section data-background-transition="zoom" data-background-image="img/18-go-deeper.jpg">
+        <section data-background-transition="zoom" data-background-image="images/18-go-deeper.jpg">
             <h1 class="fragment" style="margin-top: 150px; color: #fff; text-shadow: #000 0 0 5px;">Анализ документа</h1>
         </section>
 
         <section data-transition="none">
-            <img src="img/how-html-parser-works.png"/>
+            <img src="images/how-html-parser-works.png"/>
         </section>
-        <section data-background-transition="zoom" data-background-image="img/">
+        <section data-background-transition="zoom" data-background-image="images/">
             <h1 style="color: #fff; text-shadow: #000 0 0 5px;">HTML parsing tolerance<br/>(«Щадящий» алгоритм)</h1>
         </section>
         <section data-transition="none">
@@ -282,7 +254,7 @@ p { font-weight: bold }
 span { color: red }
 p span { display: none }
 img { float: right }</code>
-<img class="fragment" src="img/19-cssom.png"/>
+<img class="fragment" src="images/19-cssom.png"/>
             </pre>
         </section>
         <section data-transition="none">
@@ -393,7 +365,7 @@ img { float: right }</code>
 
 
         <section data-transition="none">
-            <img src="img/25-niga.jpg" width="65%" />
+            <img src="images/25-niga.jpg" width="65%" />
         </section>
         <section>
             <h2>Валидность</h2>
@@ -405,24 +377,24 @@ img { float: right }</code>
         </section>
         <section data-transition="none">
             <div style="display: flex; align-items: center; justify-content: center">
-                <div style="padding-right: 100px"><img style="border: none; background: none;" width="150" src="img/09-chrome-logo.png"/></div>
-                <img width="550" src="img/17-browser-rendering.png"/>
+                <div style="padding-right: 100px"><img style="border: none; background: none;" width="150" src="images/09-chrome-logo.png"/></div>
+                <img width="550" src="images/17-browser-rendering.png"/>
             </div>
             <div style="display: flex; align-items: center; justify-content: center">
-                <div style="padding-right: 100px"><img style="border: none; background: none;" width="150" src="img/05-firefox-logo.png"/></div>
-                <img width="550" src="img/17-browser-rendering_ff.png"/>
+                <div style="padding-right: 100px"><img style="border: none; background: none;" width="150" src="images/05-firefox-logo.png"/></div>
+                <img width="550" src="images/17-browser-rendering_ff.png"/>
             </div>
         </section>
 
         <section data-transition="none">
-            <img style="max-width: 100%; border: none; background: none;" src="img/21-dom-cssom.png"/>
+            <img style="max-width: 100%; border: none; background: none;" src="images/21-dom-cssom.png"/>
             <div style="position: relative; z-index: 1; background: #fff; height: 200px; margin-top: -232px;"></div>
         </section>
         <section data-transition="none">
-            <img style="max-width: 100%; border: none; background: none;" src="img/21-dom-cssom.png"/>
+            <img style="max-width: 100%; border: none; background: none;" src="images/21-dom-cssom.png"/>
         </section>
         <section>
-            <img src="img/render-tree-meme.jpg" width="45%"/> 
+            <img src="images/render-tree-meme.jpg" width="45%"/>
         </section>
         <section>
             <h2>DOM → Render Tree</h2>
@@ -433,10 +405,10 @@ img { float: right }</code>
                 <li class="fragment">CSS так же оказывает влияние на Render Tree (::after, ::before)</li>
             </ul>
         </section>
-        <section data-background-transition="zoom" data-background-image="img/07.jpg">
+        <section data-background-transition="zoom" data-background-image="images/07.jpg">
             <h1 style="color: #fff; text-shadow: #000 0 0 5px;">Как применяется CSS?</h1>
         </section>
-        <section data-background-image="img/urfu-2017.png" data-background-size="cover">
+        <section data-background-image="images/urfu-2017.png" data-background-size="cover">
             <h1 class="fragment" style="color: #000; text-shadow: #fff 0 0 5px;">1456</h1>
         </section>
         <section data-transition="none">
@@ -445,7 +417,7 @@ img { float: right }</code>
 <code>.section .select .value a {
     padding-right: 30px
 }</code>
-            <div class="fragment"><img src="img/urfu-example.png" alt=""></div>
+            <div class="fragment"><img src="images/urfu-example.png" alt=""></div>
             </pre>
         </section>
         <section data-transition="none">
@@ -525,7 +497,7 @@ img { float: right }</code>
             </pre>
         </section>
 
-        <section data-background-transition="zoom" data-background-image="img/27-sloth.gif">
+        <section data-background-transition="zoom" data-background-image="images/27-sloth.gif">
             <h1 style="color: #fff; text-shadow: #000 0 0 5px;">Медленно</h1>
         </section>
         <section data-transition="none">
@@ -582,7 +554,7 @@ img { float: right }</code>
 
     <!-- Неверно. Описывается внешний вид -->
     <div class="red-text"></div>
-</code> 
+</code>
 </pre>
 <pre class="fragment size-l">
 <code class="html">
@@ -597,8 +569,8 @@ img { float: right }</code>
 </code>
 </pre>
         </section>
-        <section data-background-image="img/bem1.png"></section>
-        <section data-background-image="img/bem2.png"></section>
+        <section data-background-image="images/bem1.png"></section>
+        <section data-background-image="images/bem2.png"></section>
          <section data-transition="none">
             <h1 style="color: #fff; text-shadow: #000 0 0 5px;">
                 B<mark>E</mark>M
@@ -607,7 +579,7 @@ img { float: right }</code>
                 <li class="fragment">Элемент - Составная часть блока, которая не может использоваться в отрыве от него.
                 </li>
                 <li class="fragment">Название элемента характеризует смысл, а не состояние</li>
-                <li class="fragment">Структура полного имени элемента соответствует схеме: имя-блока__имя-элемента. 
+                <li class="fragment">Структура полного имени элемента соответствует схеме: имя-блока__имя-элемента.
                 </li>
                 <li class="fragment">Элементы можно вкладывать друг в друга.
                 </li>
@@ -631,7 +603,7 @@ img { float: right }</code>
             <button class="search-form__button">Найти</button>
         </div>
     </form>
-</code> 
+</code>
 </pre>
 <pre class="fragment size-l">
 <code class="html">
@@ -645,8 +617,8 @@ img { float: right }</code>
 </code>
 </pre>
         </section>
-        <section data-background-image="img/bem2.png"></section>
-        <section data-background-image="img/bem3.png"></section>
+        <section data-background-image="images/bem2.png"></section>
+        <section data-background-image="images/bem3.png"></section>
         <section data-transition="none">
             <h1 style="color: #fff; text-shadow: #000 0 0 5px;">
                 BE<mark>M</mark>
@@ -669,13 +641,13 @@ img { float: right }</code>
         <input class="search-form__input">
 
         <!-- Элемент `button` имеет булевый модификатор `disabled` -->
-        <button 
+        <button
             class="search-form__button search-form__button_disabled"
         >
             Найти
         </button>
     </form>
-</code> 
+</code>
 </pre>
 <pre class="fragment size-m">
 <code class="html">
@@ -684,7 +656,7 @@ img { float: right }</code>
         <input class="search-form__input">
 
         <!-- Элемент `button` имеет модификатор `size` со значением `m` -->
-        <button 
+        <button
             class="search-form__button search-form__button_size_m"
         >
             Найти
@@ -693,8 +665,8 @@ img { float: right }</code>
 </code>
 </pre>
         </section>
-        <section data-background-image="img/bem4.png"></section>
-        <section data-background-image="img/bem5.png"></section>
+        <section data-background-image="images/bem4.png"></section>
+        <section data-background-image="images/bem5.png"></section>
         <section data-transition="none">
             <h1 style="color: #fff; text-shadow: #000 0 0 5px;">
                 MIX
@@ -703,34 +675,34 @@ img { float: right }</code>
 <code class="html">
     <!-- Блок `header` -->
     <div class="header">
-        <!-- 
-           К блоку `search-form` примиксован элемент 
+        <!--
+           К блоку `search-form` примиксован элемент
            `search-form` блока `header`
         -->
         <div class="search-form header__search-form">
             ...
         </div>
     </div>
-</code> 
+</code>
 </pre>
         </section>
         <section>
-            <img src="img/reflow.jpg" />
+            <img src="images/reflow.jpg" />
         </section>
         <section data-transition="none">
             <div style="display: flex; align-items: center; justify-content: center">
-                <div style="padding-right: 100px"><img style="border: none; background: none;" width="150" src="img/09-chrome-logo.png"/></div>
-                <img width="550" src="img/17-browser-rendering.png"/>
+                <div style="padding-right: 100px"><img style="border: none; background: none;" width="150" src="images/09-chrome-logo.png"/></div>
+                <img width="550" src="images/17-browser-rendering.png"/>
             </div>
             <div style="display: flex; align-items: center; justify-content: center">
-                <div style="padding-right: 100px"><img style="border: none; background: none;" width="150" src="img/05-firefox-logo.png"/></div>
-                <img width="550" src="img/17-browser-rendering_ff.png"/>
+                <div style="padding-right: 100px"><img style="border: none; background: none;" width="150" src="images/05-firefox-logo.png"/></div>
+                <img width="550" src="images/17-browser-rendering_ff.png"/>
             </div>
         </section>
 
         <section data-background-transition="zoom">
             <h1 class="fragment" style="color: #fff; text-shadow: #000 0 0 5px;">Компоновка</h1>
-            <img src="img/28-tetris.gif" width="80%" />
+            <img src="images/28-tetris.gif" width="80%" />
         </section>
         <section>
             <h2>Компоновка (Reflow)</h2>
@@ -769,7 +741,7 @@ img { float: right }</code>
 
         <section data-transition="none">
             <h3>Инкрементный Reflow</h3>
-            <img src="img/23-incremental-reflow_1.png"/>
+            <img src="images/23-incremental-reflow_1.png"/>
             <pre class="html size-l">
 &lt;html&gt;
     &lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;
@@ -782,7 +754,7 @@ img { float: right }</code>
         </section>
         <section data-transition="none">
             <h3>Инкрементный Reflow: background</h3>
-            <img src="img/23-incremental-reflow_2.png"/>
+            <img src="images/23-incremental-reflow_2.png"/>
             <pre class="html size-l">
 &lt;html&gt;
     &lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;
@@ -795,7 +767,7 @@ img { float: right }</code>
         </section>
         <section data-transition="none">
             <h3>Инкрементный Reflow: transform</h3>
-            <img src="img/23-incremental-reflow_2_1.png"/>
+            <img src="images/23-incremental-reflow_2_1.png"/>
             <pre class="html size-l">
 &lt;html&gt;
     &lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;
@@ -808,7 +780,7 @@ img { float: right }</code>
         </section>
         <section data-transition="none">
             <h3>Инкрементный Reflow: height</h3>
-            <img src="img/23-incremental-reflow_3.png"/>
+            <img src="images/23-incremental-reflow_3.png"/>
             <pre class="html size-l">
 &lt;html&gt;
     &lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;
@@ -821,7 +793,7 @@ img { float: right }</code>
         </section>
         <section data-transition="none">
             <h3>Инкрементный Reflow: height</h3>
-            <img src="img/23-incremental-reflow_4.png"/>
+            <img src="images/23-incremental-reflow_4.png"/>
             <pre class="html size-l">
 &lt;html&gt;
     &lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;
@@ -834,7 +806,7 @@ img { float: right }</code>
         </section>
         <section data-transition="none">
             <h3>Инкрементный Reflow: height</h3>
-            <img src="img/23-incremental-reflow_5.png"/>
+            <img src="images/23-incremental-reflow_5.png"/>
             <pre class="html size-l">
 &lt;html&gt;
     &lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;
@@ -847,7 +819,7 @@ img { float: right }</code>
         </section>
         <section data-transition="none">
             <h3>Инкрементный Reflow: height</h3>
-            <img src="img/23-incremental-reflow_6.png"/>
+            <img src="images/23-incremental-reflow_6.png"/>
             <pre class="html size-l">
 &lt;html&gt;
     &lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;
@@ -860,7 +832,7 @@ img { float: right }</code>
         </section>
         <section data-transition="none">
             <h3>Инкрементный Reflow: height</h3>
-            <img src="img/23-incremental-reflow_7.png"/>
+            <img src="images/23-incremental-reflow_7.png"/>
             <pre class="html size-l">
 <mark style="background: red; color: #fff">&lt;html&gt;</mark>
     &lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;
@@ -873,11 +845,11 @@ img { float: right }</code>
         </section>
 
         <section>
-            <img src="img/slipping-cat.gif" />
+            <img src="images/slipping-cat.gif" />
         </section>
         <section data-transition="none">
             <h3>Инкрементный Reflow: height</h3>
-            <img src="img/23-incremental-reflow_7.png"/>
+            <img src="images/23-incremental-reflow_7.png"/>
             <pre class="html size-l">
 <mark style="background: red; color: #fff">&lt;html&gt;</mark>
     &lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;
@@ -890,7 +862,7 @@ img { float: right }</code>
         </section>
         <section data-transition="none">
             <h3>Инкрементный Reflow: height</h3>
-            <img src="img/23-incremental-reflow_7-01.png"/>
+            <img src="images/23-incremental-reflow_7-01.png"/>
             <pre class="html size-l">
 &lt;html&gt;
     &lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;
@@ -903,7 +875,7 @@ img { float: right }</code>
         </section>
         <section data-transition="none">
             <h3>Инкрементный Reflow: width</h3>
-            <img src="img/23-incremental-reflow_8.png"/>
+            <img src="images/23-incremental-reflow_8.png"/>
             <pre class="html size-l">
 &lt;html&gt;
     &lt;p&gt;<mark style="background: red; color: #fff">&lt;span&gt;&lt;/span&gt;</mark>&lt;/p&gt;
@@ -916,7 +888,7 @@ img { float: right }</code>
         </section>
         <section data-transition="none">
             <h3>Инкрементный Reflow: width</h3>
-            <img src="img/23-incremental-reflow_9.png"/>
+            <img src="images/23-incremental-reflow_9.png"/>
             <pre class="html size-l">
 <mark style="background: #FFA300; color: #fff">&lt;html&gt;</mark>
     <mark style="background: #FFA300; color: #fff">&lt;p&gt;<mark style="background: red; color: #fff">&lt;span&gt;&lt;/span&gt;</mark>&lt;/p&gt;</mark>
@@ -929,7 +901,7 @@ img { float: right }</code>
         </section>
         <section data-transition="none">
             <h3>Инкрементный Reflow: width</h3>
-            <img src="img/23-incremental-reflow_10.png"/>
+            <img src="images/23-incremental-reflow_10.png"/>
             <pre class="html size-l">
 <mark style="background: #FFA300; color: #fff">&lt;html&gt;</mark>
     <mark style="background: #FFA300; color: #fff">&lt;p&gt;<mark style="background: red; color: #fff">&lt;span&gt;&lt;/span&gt;</mark>&lt;/p&gt;</mark>
@@ -949,11 +921,11 @@ img { float: right }</code>
 
         <section data-background-transition="zoom">
             <h1 style="color: #fff; text-shadow: #000 0 0 5px;">Painting</h1>
-            <img src="img/painting.gif"/>
+            <img src="images/painting.gif"/>
         </section>
         <section>
             <h2>RenderTree</h2>
-            <img src="img/render-object.png" width="100%" />
+            <img src="images/render-object.png" width="100%" />
         </section>
         <section>
             <h2>RenderObject</h2>
@@ -965,7 +937,7 @@ img { float: right }</code>
         </section>
         <section>
             <h2>LayerTree</h2>
-            <img src="img/layer-tree.png" width="100%" />
+            <img src="images/layer-tree.png" width="100%" />
         </section>
         <section>
             <h2>RenderLayer</h2>
@@ -1007,30 +979,30 @@ img { float: right }</code>
         <section>
             <h2>Примеры:</h2>
             <p style="text-align: center" class="fragment deadline">КОМПОЗИИТНЫЙ СЛОЙ</p>
-            <img style="text-align: center" class="fragment" src="img/composition.gif"/>
+            <img style="text-align: center" class="fragment" src="images/composition.gif"/>
         </section>
         <section>
             <iframe width="1120" height="630" src="https://www.youtube.com/embed/zJxPuXNHx_M?rel=0" frameborder="0" allowfullscreen></iframe>
         </section>
 
-        <section data-background-transition="zoom" data-background-image="img/26-scripts.jpg">
+        <section data-background-transition="zoom" data-background-image="images/26-scripts.jpg">
             <h1 style="margin-top: 250px; color: #fff; text-shadow: #000 0 0 5px;">JavaScript</h1>
         </section>
         <section data-transition="none">
             <h3>Скрипты</h3>
-            <img src="img/24-scripts-flow.png"/>
+            <img src="images/24-scripts-flow.png"/>
         </section>
         <section data-transition="none">
             <h3>Скрипты</h3>
-            <img src="img/24-scripts-flow_1.png"/>
+            <img src="images/24-scripts-flow_1.png"/>
         </section>
         <section data-transition="none">
             <h3>Скрипты</h3>
-            <img src="img/24-scripts-flow_2.png"/>
+            <img src="images/24-scripts-flow_2.png"/>
         </section>
         <section data-transition="none">
             <h3>Скрипты</h3>
-            <img width="1000" src="img/25-script-execution.svg" style="background: #fff"/>
+            <img width="1000" src="images/25-script-execution.svg" style="background: #fff"/>
         </section>
         <section>
             <h2>Ссылки</h2>
@@ -1048,74 +1020,4 @@ img { float: right }</code>
     </div>
 </div>
 
-<script src="../lib/js/head.min.js"></script>
-<script src="../js/reveal.js"></script>
-<script src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
-
-<script>
-    $('.links a').on('mouseover', function () {
-        var text = $(this).data('content');
-        $('.output-links').text(text);
-
-    });
-    $('.links a').on('blur', function () {
-        $('.output-links').text('');
-
-    });
-
-    Reveal.addEventListener( 'fragmentshown', function( event ) {
-        if (Reveal.isFirstSlide()) {
-            var root = $(event.fragment);
-            console.log(root);
-            setTimeout(function () {
-                $(root).find('h1').addClass('bounceInDown');
-                $(root).find( 'h4').addClass('bounceInRight');
-                $(root).find('small').eq(0).addClass('bounceInLeft');
-                $(root).find('small').eq(1).addClass('bounceInUp');
-            }, 0);
-        }
-    } );
-    // Full list of configuration options available at:
-    // https://github.com/hakimel/reveal.js#configuration
-    Reveal.initialize({
-        controls: false,
-        progress: true,
-        history: true,
-        center: false,
-
-        transition: 'slide', // none/fade/slide/convex/concave/zoom
-
-        // Optional reveal.js plugins
-        dependencies: [
-            {
-                src: '../lib/js/classList.js', condition: function () {
-                return !document.body.classList;
-            }
-            },
-            {
-                src: '../plugin/markdown/marked.js', condition: function () {
-                return !!document.querySelector('[data-markdown]');
-            }
-            },
-            {
-                src: '../plugin/markdown/markdown.js', condition: function () {
-                return !!document.querySelector('[data-markdown]');
-            }
-            },
-            {
-                src: '../plugin/highlight/highlight.js', async: true, condition: function () {
-                return !!document.querySelector('pre code');
-            }, callback: function () {
-                hljs.initHighlightingOnLoad();
-            }
-            },
-            { src: '../plugin/zoom-js/zoom.js', async: true },
-            { src: '../plugin/notes/notes.js', async: true }
-        ]
-    });
-    Reveal.configure({ slideNumber: true });
-
-</script>
-
-</body>
-</html>
+<script src="../../@lib/core.js"></script></body></html>
