@@ -1,0 +1,175 @@
+.author:first-letter {
+    color: red;
+}
+
+.container {
+    display: flex;
+    margin: 0 auto !important;
+    width: 90%;
+}
+
+pre.callstack,
+pre.code {
+    height: 100%;
+    min-height: 315px;
+}
+
+pre.callstack,
+.container pre,
+pre.callback-queue {
+    background-color: #f8f8f8; /* костыль */
+}
+
+pre.callstack {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-left: 20px;
+    background-image: url("images/arrow-up.png");
+    background-repeat: no-repeat;
+    background-position: 90%;
+}
+
+pre.callstack::before {
+    position: absolute;
+    top: 0;
+    left: 5px;
+    opacity: 0.5;
+    content: 'Стек вызовов';
+}
+
+pre.callstack span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    margin-top: 5px;
+    border: solid 1px black;
+    background-color: #ccffff;
+}
+
+.console::before {
+    display: block;
+
+    text-align: center;
+    font-size: 20px;
+    line-height: initial;
+
+    color: black;
+    content: 'Console';
+
+    background-image: url("images/mac-os-x-buttons.png");
+    background-color: #d6d6d6;
+    background-repeat: no-repeat;
+    background-position-y: center;
+
+    border-left: 8px solid #d6d6d6;
+}
+
+mark {
+    color: black;
+
+    background-color: lightskyblue;
+}
+
+pre.callback-queue {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    background-image: url("images/arrow-right.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 150px 30px;
+}
+
+pre.callback-queue::before {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    opacity: 0.5;
+    content: 'Очередь событий';
+}
+
+pre.callback-queue span {
+    margin-right: 5px;
+    padding: 5px 10px;
+    border: solid 1px black;
+    background-color: #ccffff;
+}
+
+.clock {
+    position: absolute;
+    top: -30px;
+    right: 5%;
+}
+
+.API {
+    position: absolute;
+    top: -30px;
+    right: 5%;
+    font-size: 37px !important;
+}
+
+.clock::before {
+    content: '⏰ ';
+}
+
+.no-uppercase {
+    text-transform: none !important;
+}
+
+.definition {
+    text-align: left;
+}
+
+.setInterval,
+.setTimeout,
+.trouble,
+.NodeJS {
+    width: 100%;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.gif {
+    display: block;
+    width: 80%;
+    margin: 0 auto !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.small-code {
+    font-size: 18px !important;
+}
+
+.loader-gif {
+    position: relative;
+    top: 5px;
+    width: 35px;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.button {
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.off-min-height {
+    min-height: max-content !important;
+}
+
+.JS {
+    width: 70%;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.cover h3,
+.cover small {
+    color: #fff;
+}

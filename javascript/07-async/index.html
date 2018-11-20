@@ -1,0 +1,4345 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>JavaScript, async</title>
+
+    <!-- Reveal -->
+    <link rel="stylesheet" href="css/reveal.css">
+
+    <!-- Яндексовые стили -->
+    <link rel="stylesheet" href="css/yandex.css">
+
+    <!-- Подсветка кода в стиле GitHub-->
+    <link rel="stylesheet" href="css/github.css">
+
+    <!-- Лекционные стили -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <!-- Знакомство -->
+        <section>
+            <h2>Асинхронный код</h2>
+            <h4>
+                <span class="fragment">Стек вызовов.</span>
+                <span class="fragment">Очередь событий.</span>
+                <br>
+                <span class="fragment">Event Loop.</span>
+            </h4>
+            <p class="author">Игорь Савичев</p>
+        </section>
+
+        <!-- Синхронный код -->
+        <section>
+            <section>
+                <h3>Синхронный код</h3>
+            </section>
+
+            <section>
+                <h4>Синхронный код</h4>
+
+                <pre><code class="js" data-trim>
+                            function prepareBeans() {
+                                console.log('Перемолоть кофейные зерна');
+                            }
+
+                            function addWater() {
+                                console.log('Добавить немного воды');
+                            }
+
+                            function onStove() {
+                                console.log('Поставить на плиту');
+                            }
+                        </code></pre>
+            </section>
+
+            <section data-transition="slide-in">
+                <h4>Синхронный код</h4>
+
+                <pre><code class="js" data-trim>
+                            prepareBeans();
+                            addWater();
+                            onStove();
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <h4>Синхронный код</h4>
+
+                <pre><code class="js" data-trim>
+                            prepareBeans();  // 'Перемолоть кофейные зерна'
+                            addWater();
+                            onStove();
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <h4>Синхронный код</h4>
+
+                <pre><code class="js" data-trim>
+                            prepareBeans();  // 'Перемолоть кофейные зерна'
+                            addWater();      // 'Добавить немного воды'
+                            onStove();
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <h4>Синхронный код</h4>
+
+                <pre><code class="js" data-trim>
+                            prepareBeans();  // 'Перемолоть кофейные зерна'
+                            addWater();      // 'Добавить немного воды'
+                            onStove();       // 'Поставить на плиту'
+                        </code></pre>
+            </section>
+        </section>
+
+        <!-- Стек вызовов -->
+        <section>
+            <section>
+                <h3>Стек вызовов</h3>
+            </section>
+
+            <section>
+                <h4>JavaScript</h4>
+                <ul>
+                    <li>
+                        1 поток => 1 операция за раз
+                    </li>
+                    <li>
+                        1 стек вызовов
+                    </li>
+                </ul>
+            </section>
+
+            <section data-transition="none">
+                <span style="visibility: hidden;">Immediately Invoked Function Expression</span>
+                <pre><code class="js" data-trim>
+                            function prepareCoffee() {
+                                onStove();
+                            }
+
+                            function wakeUp() {
+                                prepareCoffee();
+                            }
+
+                            wakeUp();
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                Immediately Invoked Function Expression
+                <pre><code class="js" data-trim>
+                            (function () {
+                                function prepareCoffee() {
+                                    onStove();
+                                }
+
+                                function wakeUp() {
+                                    prepareCoffee();
+                                }
+
+                                wakeUp();
+                            })();
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function prepareCoffee() {
+                                    onStove();
+                                }
+
+                                function wakeUp() {
+                                    prepareCoffee();
+                                }
+
+                                wakeUp();
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                <mark>function prepareCoffee() {</mark>
+                                <mark>    onStove();</mark>
+                                <mark>}</mark>
+
+                                <mark>function wakeUp() {</mark>
+                                <mark>    prepareCoffee();</mark>
+                                <mark>}</mark>
+
+                                <mark>wakeUp();</mark>
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function prepareCoffee() {
+                                    onStove();
+                                }
+
+                                function wakeUp() {
+                                    prepareCoffee();
+                                }
+
+                                <mark>wakeUp();</mark>
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>wakeUp</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function prepareCoffee() {
+                                    onStove();
+                                }
+
+                                function wakeUp() {
+                                    <mark>prepareCoffee();</mark>
+                                }
+
+                                wakeUp();
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>prepareCoffee</span>
+                                <span>wakeUp</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function prepareCoffee() {
+                                    <mark>onStove();</mark>
+                                }
+
+                                function wakeUp() {
+                                    prepareCoffee();
+                                }
+
+                                wakeUp();
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>onStove</span>
+                                <span>prepareCoffee</span>
+                                <span>wakeUp</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function prepareCoffee() {
+                                    onStove();
+                                }
+
+                                function wakeUp() {
+                                    prepareCoffee();
+                                }
+
+                                wakeUp();
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>prepareCoffee</span>
+                                <span>wakeUp</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function prepareCoffee() {
+                                    onStove();
+                                }
+
+                                function wakeUp() {
+                                    prepareCoffee();
+                                }
+
+                                wakeUp();
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>wakeUp</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function prepareCoffee() {
+                                    onStove();
+                                }
+
+                                function wakeUp() {
+                                    prepareCoffee();
+                                }
+
+                                wakeUp();
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function prepareCoffee() {
+                                    onStove();
+                                }
+
+                                function wakeUp() {
+                                    prepareCoffee();
+                                }
+
+                                wakeUp();
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+            </section>
+
+            <section>
+                Если стек вызовов пуст, то программа успешно завершает свою работу
+            </section>
+
+            <section>
+                        <pre><code class="js" data-trim>
+                            function onStove() {
+                                throw new Error('No electricity');
+                            }
+
+                            function prepareCoffee() {
+                                onStove();
+                            }
+
+                            function wakeUp() {
+                                prepareCoffee();
+                            }
+
+                            wakeUp();
+                        </code></pre>
+                <pre class="js console fragment"><code data-trim>
+                            Uncaught Error: No electricity
+                                at onStove (&lt;anonymous&gt;:2:11)
+                                at prepareCoffee (&lt;anonymous&gt;:6:5)
+                                at wakeUp (&lt;anonymous&gt;:10:5)
+                                at &lt;anonymous&gt;:13:1
+                        </code></pre>
+            </section>
+        </section>
+
+        <!-- Откуда асинхронность? -->
+        <section>
+            <section>
+                <h3>Откуда асинхронность?</h3>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="js console"><code>
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                <mark>console.log(1);</mark>
+
+                                <mark>setTimeout(function cb() {</mark>
+                                <mark>    console.log(3);</mark>
+                                <mark>}, 5000);</mark>
+
+                                <mark>console.log(2);</mark>
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="js console"><code>
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                <mark>console.log(1);</mark>
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>console.log</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="js console"><code>
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="js console"><code>1
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                console.log(1);
+
+                                <mark>setTimeout(function cb() {</mark>
+                                    <mark>console.log(3);</mark>
+                                <mark>}, 5000);</mark>
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>setTimeout</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="js console"><code>1
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="js console"><code>1
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                <mark>console.log(2);</mark>
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>console.log</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="js console"><code>1
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="js console"><code>1
+2
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="js console"><code>1
+2
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="js console"><code>1
+2
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    <mark>console.log(3);</mark>
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>console.log</span>
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="js console"><code>1
+2
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="js console"><code>1
+2
+3</code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="js console"><code>1
+2
+3</code></pre>
+            </section>
+        </section>
+
+        <!-- Очередь событий -->
+        <section>
+            <section>
+                <h3>Очередь событий</h3>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                <mark>console.log(1);</mark>
+
+                                <mark>setTimeout(function cb() {</mark>
+                                <mark>    console.log(3);</mark>
+                                <mark>}, 5000);</mark>
+
+                                <mark>console.log(2);</mark>
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                <mark>console.log(1);</mark>
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>console.log</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>1
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                    <span class="clock">0 sec</span>
+                    <pre><code class="js" data-trim data-noescape>
+                                console.log(1);
+
+                                <mark>setTimeout(function cb() {</mark>
+                                    <mark>console.log(3);</mark>
+                                <mark>}, 5000);</mark>
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>setTimeout</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>1
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                    <span class="clock">0 sec</span>
+                    <pre><code class="js" data-trim>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>1
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                    <span class="clock">0 sec</span>
+                    <pre><code class="js" data-trim data-noescape>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                <mark>console.log(2);</mark>
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>console.log</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>1
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                    <span class="clock">0 sec</span>
+                    <pre><code class="js" data-trim>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>1
+2
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                    <span class="clock">0 sec</span>
+                    <pre><code class="js" data-trim>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>1
+2
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                    <span class="clock">5 sec</span>
+                    <pre><code class="js" data-trim>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue">
+                            <span>cb</span>
+                        </pre>
+                <pre class="js console"><code>1
+2
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>1
+2
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    <mark>console.log(3);</mark>
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>console.log</span>
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>1
+2
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>1
+2
+3</code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                console.log(1);
+
+                                setTimeout(function cb() {
+                                    console.log(3);
+                                }, 5000);
+
+                                console.log(2);
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>1
+2
+3</code></pre>
+            </section>
+
+            <section>
+                Если стек вызовов пуст, то можем выполнить функцию из очереди событий
+            </section>
+        </section>
+
+        <!-- setTimeout -->
+        <section>
+            <section>
+                <h3 class="no-uppercase">setTimeout</h3>
+
+                <pre><code class="js" data-trim>
+                            setTimeout(() => {
+                                console.log('Я выполнюсь через 5 секунд.')
+                            }, 5000);
+                        </code></pre>
+
+                <pre class="fragment"><code class="js" data-trim>
+                            setTimeout(console.log, 5000, 'Я выполнюсь через 5 секунд.');
+                        </code></pre>
+            </section>
+
+            <section>
+                <img class="setTimeout" src="images/setTimeout.svg" alt="setTimeout-example">
+            </section>
+
+            <section>
+                        <pre><code class="js" data-trim>
+                            function onStove() {
+                                console.log('Поставить на плиту');
+                            }
+
+                            function fromStove() {
+                                console.log('Снять с плиты');
+                            }
+
+                            onStove();
+                            setTimeout(fromStove, 5000);
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                        <pre><code class="js" data-trim>
+                            function onStove() {
+                                console.log('Поставить на плиту');
+                            }
+
+                            function fromStove() {
+                                console.log('Снять с плиты');
+                            }
+
+                            onStove();
+                            setTimeout(fromStove, 5000);
+                        </code></pre>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                        <pre><code class="js" data-trim data-noescape>
+                            function onStove() {
+                                console.log('Поставить на плиту');
+                            }
+
+                            function fromStove() {
+                                console.log('Снять с плиты');
+                            }
+
+                            <mark>onStove();</mark>
+                            setTimeout(fromStove, 5000);
+                        </code></pre>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Поставить на плиту'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">0 sec</span>
+                <pre><code class="js" data-trim data-noescape>
+                            function onStove() {
+                                console.log('Поставить на плиту');
+                            }
+
+                            function fromStove() {
+                                console.log('Снять с плиты');
+                            }
+
+                            onStove();
+                            <mark>setTimeout(fromStove, 5000);</mark>
+                        </code></pre>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Поставить на плиту'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">5 sec</span>
+                <pre><code class="js" data-trim>
+                            function onStove() {
+                                console.log('Поставить на плиту');
+                            }
+
+                            function fromStove() {
+                                console.log('Снять с плиты');
+                            }
+
+                            onStove();
+                            setTimeout(fromStove, 5000);
+                        </code></pre>
+                <pre class="callback-queue">
+                            <span>fromStove</span>
+                        </pre>
+                <pre class="js console"><code>'Поставить на плиту'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                        <pre><code class="js" data-trim>
+                            function onStove() {
+                                console.log('Поставить на плиту');
+                            }
+
+                            function fromStove() {
+                                console.log('Снять с плиты');
+                            }
+
+                            onStove();
+                            setTimeout(fromStove, 5000);
+                        </code></pre>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code data-trim>
+                            'Поставить на плиту'
+                            'Снять с плиты'
+                        </code></pre>
+            </section>
+
+            <section>
+                <a href="http://latentflip.com/loupe/?code=ZnVuY3Rpb24gb25TdG92ZSgpIHsKICAgIGNvbnNvbGUubG9nKCdQdXQgb24gdGhlIHN0b3ZlJyk7Cn0KCmZ1bmN0aW9uIGZyb21TdG92ZSgpIHsKICAgIGNvbnNvbGUubG9nKCdSZW1vdmUgZnJvbSB0aGUgc3RvdmUnKTsKfQoKb25TdG92ZSgpOwpzZXRUaW1lb3V0KGZyb21TdG92ZSwgNTAwMCk7Cg%3D%3D!!!" target="_blank">
+                    ДЕМО
+                </a>
+            </section>
+
+            <section>
+                        <pre><code class="lang-js" data-trim>
+                            const timerId = setTimeout(fromStove, 5000);
+
+                            clearTimeout(timerId);
+                        </code></pre>
+            </section>
+        </section>
+
+        <!-- Проблема -->
+        <section>
+            <section>
+                <h3>Проблема</h3>
+            </section>
+
+            <section data-transition="none">
+                        <pre><code class="js" data-trim>
+                            function hardWork() {
+                                const start = Date.now();
+                                while (Date.now() - start < 3000) {}
+                                console.log('Done');
+                            }
+
+                            setTimeout(function cb() {
+                                console.log('Сallback');
+                            }, 1000);
+
+                            hardWork();
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    const start = Date.now();
+                                    while (Date.now() - start < 3000) {}
+                                    console.log('Done');
+                                }
+
+                                setTimeout(function cb() {
+                                    console.log('Сallback');
+                                }, 1000);
+
+                                hardWork();
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                <mark>function hardWork() {</mark>
+                                <mark>    const start = Date.now();</mark>
+                                <mark>    while (Date.now() - start < 3000) {}</mark>
+                                <mark>    console.log('Done');</mark>
+                                <mark>}</mark>
+
+                                <mark>setTimeout(function cb() {</mark>
+                                <mark>    console.log('Callback');</mark>
+                                <mark>}, 1000);</mark>
+
+                                <mark>hardWork();</mark>
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">0 sec</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    const start = Date.now();
+                                    while (Date.now() - start < 3000) {}
+                                    console.log('Done');
+                                }
+
+                                <mark>setTimeout(function cb() {</mark>
+                                <mark>    console.log('Callback');</mark>
+                                <mark>}, 1000);</mark>
+
+                                hardWork();
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>setTimeout</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">0 sec</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    const start = Date.now();
+                                    while (Date.now() - start < 3000) {}
+                                    console.log('Done');
+                                }
+
+                                setTimeout(function cb() {
+                                    console.log('Callback');
+                                }, 1000);
+
+                                hardWork();
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">0 sec</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    const start = Date.now();
+                                    while (Date.now() - start < 3000) {}
+                                    console.log('Done');
+                                }
+
+                                setTimeout(function cb() {
+                                    console.log('Callback');
+                                }, 1000);
+
+                                <mark>hardWork();</mark>
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>hardWork</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">0 sec</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    <mark>const start = Date.now();</mark>
+                                    while (Date.now() - start < 3000) {}
+                                    console.log('Done');
+                                }
+
+                                setTimeout(function cb() {
+                                    console.log('Callback');
+                                }, 1000);
+
+                                hardWork();
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>Date.now</span>
+                                <span>hardWork</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">0 sec</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    const start = Date.now();
+                                    while (Date.now() - start < 3000) {}
+                                    console.log('Done');
+                                }
+
+                                setTimeout(function cb() {
+                                    console.log('Callback');
+                                }, 1000);
+
+                                hardWork();
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>hardWork</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">0 sec</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    const start = Date.now();
+                                    <mark>while (Date.now() - start < 3000) {}</mark>
+                                    console.log('Done');
+                                }
+
+                                setTimeout(function cb() {
+                                    console.log('Callback');
+                                }, 1000);
+
+                                hardWork();
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>Date.now</span>
+                                <span>hardWork</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">1 sec</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    const start = Date.now();
+                                    <mark>while (Date.now() - start < 3000) {}</mark>
+                                    console.log('Done');
+                                }
+
+                                setTimeout(function cb() {
+                                    console.log('Callback');
+                                }, 1000);
+
+                                hardWork();
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>Date.now</span>
+                                <span>hardWork</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue">
+                            <span>cb</span>
+                        </pre>
+                <pre class="js console"><code>
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">2 sec</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    const start = Date.now();
+                                    <mark>while (Date.now() - start < 3000) {}</mark>
+                                    console.log('Done');
+                                }
+
+                                setTimeout(function cb() {
+                                    console.log('Callback');
+                                }, 1000);
+
+                                hardWork();
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>Date.now</span>
+                                <span>hardWork</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue">
+                            <span>cb</span>
+                        </pre>
+                <pre class="js console"><code>
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">3 sec</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    const start = Date.now();
+                                    while (Date.now() - start < 3000) {}
+                                    console.log('Done');
+                                }
+
+                                setTimeout(function cb() {
+                                    console.log('Callback');
+                                }, 1000);
+
+                                hardWork();
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>hardWork</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue">
+                            <span>cb</span>
+                        </pre>
+                <pre class="js console"><code>
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">3 sec</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    const start = Date.now();
+                                    while (Date.now() - start < 3000) {}
+                                    <mark>console.log('Done');</mark>
+                                }
+
+                                setTimeout(function cb() {
+                                    console.log('Callback');
+                                }, 1000);
+
+                                hardWork();
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>console.log</span>
+                                <span>hardWork</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue">
+                            <span>cb</span>
+                        </pre>
+                <pre class="js console"><code>
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">3 sec</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    const start = Date.now();
+                                    while (Date.now() - start < 3000) {}
+                                    console.log('Done');
+                                }
+
+                                setTimeout(function cb() {
+                                    console.log('Callback');
+                                }, 1000);
+
+                                hardWork();
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>hardWork</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue">
+                            <span>cb</span>
+                        </pre>
+                <pre class="js console"><code>'Done'
+
+</code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">3 sec</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    const start = Date.now();
+                                    while (Date.now() - start < 3000) {}
+                                    console.log('Done');
+                                }
+
+                                setTimeout(function cb() {
+                                    console.log('Callback');
+                                }, 1000);
+
+                                hardWork();
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue">
+                            <span>cb</span>
+                        </pre>
+                <pre class="js console"><code>'Done'
+
+</code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">3 sec</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    const start = Date.now();
+                                    while (Date.now() - start < 3000) {}
+                                    console.log('Done');
+                                }
+
+                                setTimeout(function cb() {
+                                    console.log('Callback');
+                                }, 1000);
+
+                                hardWork();
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue">
+                            <span>cb</span>
+                        </pre>
+                <pre class="js console"><code>'Done'
+
+</code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">3 sec</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    const start = Date.now();
+                                    while (Date.now() - start < 3000) {}
+                                    console.log('Done');
+                                }
+
+                                setTimeout(function cb() {
+                                    console.log('Callback');
+                                }, 1000);
+
+                                hardWork();
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Done'
+
+</code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">3 sec</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    const start = Date.now();
+                                    while (Date.now() - start < 3000) {}
+                                    console.log('Done');
+                                }
+
+                                setTimeout(function cb() {
+                                    <mark>console.log('Callback');</mark>
+                                }, 1000);
+
+                                hardWork();
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>console.log</span>
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Done'
+
+</code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">3 sec</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    const start = Date.now();
+                                    while (Date.now() - start < 3000) {}
+                                    console.log('Done');
+                                }
+
+                                setTimeout(function cb() {
+                                    console.log('Callback');
+                                }, 1000);
+
+                                hardWork();
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Done'
+'Callback'</code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">3 sec</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    const start = Date.now();
+                                    while (Date.now() - start < 3000) {}
+                                    console.log('Done');
+                                }
+
+                                setTimeout(function cb() {
+                                    console.log('Callback');
+                                }, 1000);
+
+                                hardWork();
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Done'
+'Callback'</code></pre>
+            </section>
+
+            <section>
+                <img class="setTimeout" src="images/setTimeout-trouble.svg" alt="setTimeout-trouble">
+            </section>
+
+            <section>
+                <h4>Выводы</h4>
+                <ul>
+                    <li>
+                        setTimeout гарантирует, что событие произойдёт
+                        <span style="text-decoration: underline;">не раньше</span> указанного времени
+                    </li>
+                    <li>
+                        Разбивать большие функции на маленькие
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <img class="setTimeout" src="images/setTimeout-desicion.svg" alt="setTimeout-desicion">
+            </section>
+
+            <section>
+                <a href="https://gist.github.com/Savichev-Igor/8675e44f61158cca9ac1da0df0a1638c">
+                    Код
+                </a>
+            </section>
+        </section>
+
+        <!-- setInterval -->
+        <section>
+            <section>
+                <h3 class="no-uppercase">setInterval</h3>
+
+                <pre><code class="js" data-trim>
+                            setInterval(() => {
+                                console.log('Я буду выполняться каждые 5 секунд.')
+                            }, 5000);
+                        </code></pre>
+
+                <pre class="fragment"><code class="js" style="font-size: 20px;" data-trim>
+                            setInterval(console.log, 5000, 'Я буду выполняться каждые 5 секунд.');
+                        </code></pre>
+            </section>
+
+            <section>
+                <img class="setInterval" src="images/setInterval.svg" alt="setInterval-example">
+            </section>
+
+            <section>
+                        <pre><code class="js" data-trim>
+                            function onStove() {
+                                console.log('Поставить на плиту');
+                            }
+
+                            function stir() {
+                                console.log('Помешивать');
+                            }
+
+                            onStove();
+                            setInterval(stir, 1000);
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                        <pre><code class="js" data-trim>
+                            function onStove() {
+                                console.log('Поставить на плиту');
+                            }
+
+                            function stir() {
+                                console.log('Помешивать');
+                            }
+
+                            onStove();
+                            setInterval(stir, 1000);
+                        </code></pre>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                        <pre><code class="js" data-trim data-noescape>
+                            function onStove() {
+                                console.log('Поставить на плиту');
+                            }
+
+                            function stir() {
+                                console.log('Помешивать');
+                            }
+
+                            <mark>onStove();</mark>
+                            setInterval(stir, 1000);
+                        </code></pre>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Поставить на плиту'
+
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">0 sec</span>
+                <pre><code class="js" data-trim data-noescape>
+                            function onStove() {
+                                console.log('Поставить на плиту');
+                            }
+
+                            function stir() {
+                                console.log('Помешивать');
+                            }
+
+                            onStove();
+                            <mark>setInterval(stir, 1000);</mark>
+                        </code></pre>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Поставить на плиту'
+
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">1 sec</span>
+                <pre><code class="js" data-trim>
+                            function onStove() {
+                                console.log('Поставить на плиту');
+                            }
+
+                            function stir() {
+                                console.log('Помешивать');
+                            }
+
+                            onStove();
+                            setInterval(stir, 1000);
+                        </code></pre>
+                <pre class="callback-queue">
+                            <span>stir</span>
+                        </pre>
+                <pre class="js console"><code>'Поставить на плиту'
+
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">1 sec</span>
+                <pre><code class="js" data-trim>
+                            function onStove() {
+                                console.log('Поставить на плиту');
+                            }
+
+                            function stir() {
+                                console.log('Помешивать');
+                            }
+
+                            onStove();
+                            setInterval(stir, 1000);
+                        </code></pre>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Поставить на плиту'
+'Помешивать'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">2 sec</span>
+                <pre><code class="js" data-trim>
+                            function onStove() {
+                                console.log('Поставить на плиту');
+                            }
+
+                            function stir() {
+                                console.log('Помешивать');
+                            }
+
+                            onStove();
+                            setInterval(stir, 1000);
+                        </code></pre>
+                <pre class="callback-queue">
+                            <span>stir</span>
+                        </pre>
+                <pre class="js console"><code>'Поставить на плиту'
+'Помешивать'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">2 sec</span>
+                <pre><code class="js" data-trim>
+                            function onStove() {
+                                console.log('Поставить на плиту');
+                            }
+
+                            function stir() {
+                                console.log('Помешивать');
+                            }
+
+                            onStove();
+                            setInterval(stir, 1000);
+                        </code></pre>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Поставить на плиту'
+'Помешивать'
+'Помешивать'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">3 sec</span>
+                <pre><code class="js" data-trim>
+                            function onStove() {
+                                console.log('Поставить на плиту');
+                            }
+
+                            function stir() {
+                                console.log('Помешивать');
+                            }
+
+                            onStove();
+                            setInterval(stir, 1000);
+                        </code></pre>
+                <pre class="callback-queue">
+                            <span>stir</span>
+                        </pre>
+                <pre class="js console"><code>'Поставить на плиту'
+'Помешивать'
+'Помешивать'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">3 sec</span>
+                <pre><code class="js" data-trim>
+                            function onStove() {
+                                console.log('Поставить на плиту');
+                            }
+
+                            function stir() {
+                                console.log('Помешивать');
+                            }
+
+                            onStove();
+                            setInterval(stir, 1000);
+                        </code></pre>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Поставить на плиту'
+'Помешивать'
+'Помешивать'
+'Помешивать'</code></pre>
+            </section>
+
+            <section>
+                        <pre><code class="lang-js" data-trim>
+                            const timerId = setInterval(stir, 1000);
+
+                            clearInterval(timerId);
+                        </code></pre>
+            </section>
+        </section>
+
+        <!-- Проблема -->
+        <section>
+            <section>
+                <h3>Проблема</h3>
+            </section>
+
+            <section>
+                        <pre><code class="js" data-trim>
+                            function hardWork() {
+                                // этот код выполняется 50 мс
+                            };
+
+                            console.log('Start');
+                            setInterval(function cb() {
+                                hardWork();
+                                console.log('Done');
+                            }, 100);
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setInterval(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                <mark>function hardWork() {</mark>
+                                <mark>    // этот код выполняется 50 мс</mark>
+                                <mark>}</mark>
+
+                                <mark>console.log('Start');</mark>
+                                <mark>setInterval(function cb(){</mark>
+                                <mark>    hardWork();</mark>
+                                <mark>    console.log('Done');</mark>
+                                <mark>}, 100);</mark>
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                <mark>console.log('Start');</mark>
+                                setInterval(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>console.log</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setInterval(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">0 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                <mark>setInterval(function cb() {</mark>
+                                <mark>    hardWork();</mark>
+                                <mark>    console.log('Done');</mark>
+                                <mark>}, 100);</mark>
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>setInterval</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">0 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setInterval(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">0 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setInterval(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">100 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setInterval(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue">
+                            <span>cb</span>
+                        </pre>
+                <pre class="js console"><code>'Start'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">100 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setInterval(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">100 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setInterval(function cb() {
+                                    <mark>hardWork();</mark>
+                                    console.log('Done');
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>hardWork</span>
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">100 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    <mark>// этот код выполняется 50 мс</mark>
+                                };
+
+                                console.log('Start');
+                                setInterval(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>hardWork</span>
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">150 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setInterval(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">150 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setInterval(function cb() {
+                                    hardWork();
+                                    <mark>console.log('Done');</mark>
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>console.log</span>
+                                <span>cb</span>
+                        </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">150 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setInterval(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">150 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setInterval(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">200 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setInterval(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue">
+                            <span>cb</span>
+                        </pre>
+                <pre class="js console"><code>'Start'
+'Done'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">200 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setInterval(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">200 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setInterval(function cb() {
+                                    <mark>hardWork();</mark>
+                                    console.log('Done');
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>hardWork</span>
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">200 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    <mark>// этот код выполняется 50 мс</mark>
+                                };
+
+                                console.log('Start');
+                                setInterval(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>hardWork</span>
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">250 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setInterval(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">250 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setInterval(function cb() {
+                                    hardWork();
+                                    <mark>console.log('Done');</mark>
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>console.log</span>
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">250 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setInterval(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+'Done'</code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">250 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setInterval(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+'Done'</code></pre>
+            </section>
+
+            <section>
+                <img class="trouble" src="images/trouble-1.svg" alt="trouble-1">
+            </section>
+
+            <section>
+                <img class="trouble" src="images/trouble-2.svg" alt="trouble-2">
+            </section>
+
+            <section>
+                <h4>Выводы</h4>
+
+                <ul>
+                    <li>
+                        setInterval гарантирует, что событие произойдёт
+                        <span style="text-decoration: underline;">не раньше</span> указанного времени
+                    </li>
+                    <li>
+                        setInterval vs. setTimeout
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h4>setInterval → setTimeout</h4>
+
+                <pre><code class="js" data-trim>
+                            function hardWork() {
+                                // этот код выполняется 50 мс
+                            };
+
+                            console.log('Start');
+                            setTimeout(function cb() {
+                                hardWork();
+                                console.log('Done');
+                                setTimeout(cb, 100);
+                            }, 100);
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                <mark>function hardWork() {</mark>
+                                <mark>    // этот код выполняется 50 мс</mark>
+                                <mark>};</mark>
+
+                                <mark>console.log('Start');</mark>
+                                <mark>setTimeout(function cb() {</mark>
+                                <mark>    hardWork();</mark>
+                                <mark>    console.log('Done');</mark>
+                                <mark>    setTimeout(cb, 100);</mark>
+                                <mark>}, 100);</mark>
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                <mark>console.log('Start');</mark>
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>console.log</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+
+                            </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">0 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                <mark>setTimeout(function cb() {</mark>
+                                <mark>    hardWork();</mark>
+                                <mark>    console.log('Done');</mark>
+                                <mark>    setTimeout(cb, 100);</mark>
+                                <mark>}, 100);</mark>
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>setTimeout</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">0 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">0 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">100 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue">
+                            <span>cb</span>
+                        </pre>
+                <pre class="js console"><code>'Start'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">100 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">100 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    <mark>hardWork();</mark>
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>hardWork</span>
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">100 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    <mark>// этот код выполняется 50 мс</mark>
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>hardWork</span>
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">150 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">150 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    <mark>console.log('Done');</mark>
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>console.log</span>
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">150 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">150 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    <mark>setTimeout(cb, 100);</mark>
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>setTimeout</span>
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">150 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">150 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">250 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue">
+                            <span>cb</span>
+                        </pre>
+                <pre class="js console"><code>'Start'
+'Done'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">250 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">250 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    <mark>hardWork();</mark>
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>hardWork</span>
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">250 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    <mark>// этот код выполняется 50 мс</mark>
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>hardWork</span>
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">300 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">300 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    <mark>console.log('Done');</mark>
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>console.log</span>
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+                       </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">300 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+'Done'</code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">300 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    <mark>setTimeout(cb, 100);</mark>
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>setTimeout</span>
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+'Done'</code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">300 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+'Done'</code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">300 ms</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function hardWork() {
+                                    // этот код выполняется 50 мс
+                                };
+
+                                console.log('Start');
+                                setTimeout(function cb() {
+                                    hardWork();
+                                    console.log('Done');
+                                    setTimeout(cb, 100);
+                                }, 100);
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Start'
+'Done'
+'Done'</code></pre>
+            </section>
+
+            <section>
+                <img class="trouble" src="images/no-trouble.svg" alt="no-trouble">
+            </section>
+        </section>
+
+        <!-- Перерыв -->
+        <section>
+            <h3>Перерыв</h3>
+            <div>⏰</div>
+        </section>
+
+        <!-- Нулевая задержка-->
+        <section>
+            <section>
+                <h3>Нулевая задержка</h3>
+            </section>
+
+            <section>
+                        <pre><code class="js" data-trim>
+                            function beHappy() {
+                                console.log('Насладиться результатом');
+                            }
+
+                            setTimeout(beHappy, 0);
+
+                            console.log('Много-много дел');
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function beHappy() {
+                                    console.log('Насладиться результатом');
+                                }
+
+                                setTimeout(beHappy, 0);
+
+                                console.log('Много-много дел');
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                <mark>function beHappy() {</mark>
+                                <mark>    console.log('Насладиться результатом');</mark>
+                                <mark>}</mark>
+
+                                <mark>setTimeout(beHappy, 0);</mark>
+
+                                <mark>console.log('Много-много дел');</mark>
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">0 sec</span>
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function beHappy() {
+                                    console.log('Насладиться результатом');
+                                }
+
+                                <mark>setTimeout(beHappy, 0);</mark>
+
+                                console.log('Много-много дел');
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>setTimeout</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <span class="clock">0 sec</span>
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function beHappy() {
+                                    console.log('Насладиться результатом');
+                                }
+
+                                setTimeout(beHappy, 0);
+
+                                console.log('Много-много дел');
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue">
+                            <span>beHappy</span>
+                        </pre>
+                <pre class="js console"><code>
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function beHappy() {
+                                    console.log('Насладиться результатом');
+                                }
+
+                                setTimeout(beHappy, 0);
+
+                                <mark>console.log('Много-много дел');</mark>
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>console.log</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue">
+                            <span>beHappy</span>
+                        </pre>
+                <pre class="js console"><code>
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function beHappy() {
+                                    console.log('Насладиться результатом');
+                                }
+
+                                setTimeout(beHappy, 0);
+
+                                console.log('Много-много дел');
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue">
+                            <span>beHappy</span>
+                        </pre>
+                <pre class="js console"><code>'Много-много дел'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function beHappy() {
+                                    console.log('Насладиться результатом');
+                                }
+
+                                setTimeout(beHappy, 0);
+
+                                console.log('Много-много дел');
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue">
+                            <span>beHappy</span>
+                        </pre>
+                <pre class="js console"><code>'Много-много дел'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim data-noescape>
+                                function beHappy() {
+                                    <mark>console.log('Насладиться результатом');</mark>
+                                }
+
+                                setTimeout(beHappy, 0);
+
+                                console.log('Много-много дел');
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>beHappy</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Много-много дел'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre><code class="js" data-trim>
+                                function beHappy() {
+                                    console.log('Насладиться результатом');
+                                }
+
+                                setTimeout(beHappy, 0);
+
+                                console.log('Много-много дел');
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code>'Много-много дел'
+'Насладиться результатом'</code></pre>
+            </section>
+        </section>
+
+        <!-- Работа с файлами -->
+        <section>
+            <section>
+                <h3>Работа с файлами</h3>
+            </section>
+
+            <section>
+                        <pre><code class="js" data-trim>
+                            const fs = require('fs');
+                            const fileName = __dirname + '/data.json';
+
+                            const data = fs.readFileSync(fileName, 'utf-8');
+
+                            console.log(data);
+                        </code></pre>
+                <pre class="console fragment"><code class="js" data-trim>
+                            '{"name": "Savi"}'
+                        </code></pre>
+            </section>
+
+            <section>
+                        <pre><code class="js" data-trim data-noescape>
+                            const fs = require('fs');
+                            const fileName = __dirname + '/data.json';
+
+                            <mark>const start = Date.now();</mark>
+
+                            const data = fs.readFileSync(fileName, 'utf-8');
+                            <mark>console.log(`readFileSync: ${Date.now() - start}ms`);</mark>
+
+                            console.log(data);
+                        </code></pre>
+                <pre class="console fragment"><code class="js" data-trim>
+                            readFileSync: 4ms
+                            '{"name": "Savi"}'
+                        </code></pre>
+            </section>
+
+            <section>
+                        <pre><code class="js" data-trim data-noescape>
+                            const fs = require('fs');
+                            const fileName = __dirname + '/data.json';
+
+                            <mark>console.time('readFileSync');</mark>
+                            const data = fs.readFileSync(fileName, 'utf-8');
+                            <mark>console.timeEnd('readFileSync');</mark>
+
+                            console.log(data);
+                        </code></pre>
+                <pre class="console fragment"><code class="js" data-trim>
+                            readFileSync: 3ms
+                            '{"name": "Savi"}'
+                        </code></pre>
+            </section>
+
+            <section>
+                        <pre><code class="js" data-trim data-noescape>
+                            const fs = require('fs');
+                            const fileName = __dirname + <mark>'/bigData.json';</mark>
+
+                            console.time('readFileSync');
+                            const data = fs.readFileSync(fileName, 'utf-8');
+                            console.timeEnd('readFileSync');
+
+                            console.log(data);
+                        </code></pre>
+                <pre class="console fragment"><code class="js" data-trim>
+                            readFileSync: 3567ms
+                            &lt;Много-много текста&gt;
+                        </code></pre>
+            </section>
+
+            <section>
+                Во время синхронных операций не обрабатываются другие события:
+                таймеры, пользовательские события и т.п.
+            </section>
+
+            <section>
+                <img class="gif" src="images/some_gif_with_action.gif" alt="gif">
+
+                <button class="button" onclick="let start = Date.now(); while (Date.now() - start < 5000) {}">
+                    Синхронная операция
+                </button>
+            </section>
+
+            <section>
+                        <pre><code class="js" data-trim>
+                            const fs = require('fs');
+                            const fileName = __dirname + '/data.json';
+
+                            const data = fs.readFile(fileName, 'utf-8');
+
+                            console.log(data);
+                        </code></pre>
+                <pre class="console fragment"><code class="js" data-trim>
+                            undefined
+                        </code></pre>
+            </section>
+
+            <section>
+                        <pre><code class="js" data-trim>
+                            const fs = require('fs');
+                            const fileName = __dirname + '/data.json';
+
+                            fs.readFile(fileName, 'utf-8', function cb(err, data) {
+                                console.log(data);
+                            });
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName = __dirname + '/data.json';
+
+                                fs.readFile(fileName, 'utf-8', function cb(err, data) {
+                                    console.log(data);
+                                });
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code> </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre class="code small-code"><code class="js" data-trim data-noescape>
+                                <mark>const fs = require('fs');</mark>
+                                <mark>const fileName = __dirname + '/data.json';</mark>
+
+                                <mark>fs.readFile(fileName, 'utf-8', function cb(err, data) {</mark>
+                                <mark>    console.log(data);</mark>
+                                <mark>});</mark>
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code> </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <span class="API">
+                                API
+                                <img class="loader-gif" style="visibility: hidden;" src="images/loader.gif" alt="loader">
+                            </span>
+                    <pre class="code small-code"><code class="js" data-trim data-noescape>
+                                const fs = require('fs');
+                                const fileName = __dirname + '/data.json';
+
+                                <mark>fs.readFile(fileName, 'utf-8', function cb(err, data) {</mark>
+                                <mark>    console.log(data);</mark>
+                                <mark>});</mark>
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>fs.readFile</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code> </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <span class="API">
+                                API
+                                <img class="loader-gif" src="images/loader.gif" alt="loader">
+                            </span>
+                    <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName = __dirname + '/data.json';
+
+                                fs.readFile(fileName, 'utf-8', function cb(err, data) {
+                                    console.log(data);
+                                });
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code> </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <span class="API">
+                                API
+                                <img class="loader-gif" src="images/loader.gif" alt="loader">
+                            </span>
+                    <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName = __dirname + '/data.json';
+
+                                fs.readFile(fileName, 'utf-8', function cb(err, data) {
+                                    console.log(data);
+                                });
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code> </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <span class="API">
+                                API
+                                <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                            </span>
+                    <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName = __dirname + '/data.json';
+
+                                fs.readFile(fileName, 'utf-8', function cb(err, data) {
+                                    console.log(data);
+                                });
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue">
+                            <span>cb</span>
+                        </pre>
+                <pre class="js console"><code> </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <span class="API">
+                                API
+                                <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                            </span>
+                    <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName = __dirname + '/data.json';
+
+                                fs.readFile(fileName, 'utf-8', function cb(err, data) {
+                                    console.log(data);
+                                });
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code> </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <span class="API">
+                                API
+                                <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                            </span>
+                    <pre class="code small-code"><code class="js" data-trim data-noescape>
+                                const fs = require('fs');
+                                const fileName = __dirname + '/data.json';
+
+                                fs.readFile(fileName, 'utf-8', function cb(err, data) {
+                                    <mark>console.log(data);</mark>
+                                });
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>console.log</span>
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code> </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <span class="API">
+                                API
+                                <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                            </span>
+                    <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName = __dirname + '/data.json';
+
+                                fs.readFile(fileName, 'utf-8', function cb(err, data) {
+                                    console.log(data);
+                                });
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code data-trim>
+                            '{"name": "Savi"}'
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <span class="API">
+                                API
+                                <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                            </span>
+                    <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName = __dirname + '/data.json';
+
+                                fs.readFile(fileName, 'utf-8', function cb(err, data) {
+                                    console.log(data);
+                                });
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+                <pre class="js console"><code data-trim>
+                            '{"name": "Savi"}'
+                        </code></pre>
+            </section>
+
+            <section>
+                        <pre><code class="js" data-trim>
+                            const fs = require('fs');
+                            const fileName1 = __dirname + '/data_1.json';
+                            const fileName2 = __dirname + '/data_2.json';
+                            const fileName3 = __dirname + '/data_3.json';
+
+                            fs.readFileSync(fileName1, 'utf-8');
+                            fs.readFileSync(fileName2, 'utf-8');
+                            fs.readFileSync(fileName3, 'utf-8');
+                        </code></pre>
+            </section>
+
+            <section>
+                        <pre><code class="js" data-trim data-noescape>
+                            const fs = require('fs');
+                            const fileName1 = __dirname + '/data_1.json';
+                            const fileName2 = __dirname + '/data_2.json';
+                            const fileName3 = __dirname + '/data_3.json';
+
+                            <mark>console.time('readFileSync')</mark>
+                            fs.readFileSync(fileName1, 'utf-8');
+                            fs.readFileSync(fileName2, 'utf-8');
+                            fs.readFileSync(fileName3, 'utf-8');
+                            <mark>console.timeEnd('readFileSync')</mark>
+                        </code></pre>
+                <pre class="js console fragment"><code data-trim>
+                            readFileSync: 9217ms
+                        </code></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName1 = __dirname + '/data_1.json';
+                                const fileName2 = __dirname + '/data_2.json';
+                                const fileName3 = __dirname + '/data_3.json';
+
+                                fs.readFile(fileName1, 'utf-8', cb1);  // читается 5 секунд
+                                fs.readFile(fileName2, 'utf-8', cb2);  // читается 1 секунду
+                                fs.readFile(fileName3, 'utf-8', cb3);  // читается 3 секунды
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+            </section>
+
+            <section data-transition="none">
+                <div class="container">
+                            <pre class="code small-code"><code class="js" data-trim data-noescape>
+                                <mark>const fs = require('fs');</mark>
+                                <mark>const fileName1 = __dirname + '/data_1.json';</mark>
+                                <mark>const fileName2 = __dirname + '/data_2.json';</mark>
+                                <mark>const fileName3 = __dirname + '/data_3.json';</mark>
+
+                                <mark>fs.readFile(fileName1, 'utf-8', cb1);</mark>  // читается 5 секунд
+                                <mark>fs.readFile(fileName2, 'utf-8', cb2);</mark>  // читается 1 секунду
+                                <mark>fs.readFile(fileName3, 'utf-8', cb3);</mark>  // читается 3 секунды
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+            </section>
+
+            <section data-transition="none">
+                        <span class="API">
+                            API
+                            <img class="loader-gif" style="visibility: hidden;" src="images/loader.gif" alt="loader">
+                            <img class="loader-gif" style="visibility: hidden;" src="images/loader.gif" alt="loader">
+                            <img class="loader-gif" style="visibility: hidden;" src="images/loader.gif" alt="loader">
+                        </span>
+                <div class="container">
+                            <pre class="code small-code"><code class="js" data-trim data-noescape>
+                                const fs = require('fs');
+                                const fileName1 = __dirname + '/data_1.json';
+                                const fileName2 = __dirname + '/data_2.json';
+                                const fileName3 = __dirname + '/data_3.json';
+
+                                <mark>fs.readFile(fileName1, 'utf-8', cb1);</mark>  // читается 5 секунд
+                                fs.readFile(fileName2, 'utf-8', cb2);  // читается 1 секунду
+                                fs.readFile(fileName3, 'utf-8', cb3);  // читается 3 секунды
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>fs.readFile</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+            </section>
+
+            <section data-transition="none">
+                        <span class="API">
+                            API
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                            <img class="loader-gif" style="visibility: hidden;" src="images/loader.gif" alt="loader">
+                            <img class="loader-gif" style="visibility: hidden;" src="images/loader.gif" alt="loader">
+                        </span>
+                <div class="container">
+                            <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName1 = __dirname + '/data_1.json';
+                                const fileName2 = __dirname + '/data_2.json';
+                                const fileName3 = __dirname + '/data_3.json';
+
+                                fs.readFile(fileName1, 'utf-8', cb1);  // читается 5 секунд
+                                fs.readFile(fileName2, 'utf-8', cb2);  // читается 1 секунду
+                                fs.readFile(fileName3, 'utf-8', cb3);  // читается 3 секунды
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+            </section>
+
+            <section data-transition="none">
+                        <span class="API">
+                            API
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                            <img class="loader-gif" style="visibility: hidden;" src="images/loader.gif" alt="loader">
+                            <img class="loader-gif" style="visibility: hidden;" src="images/loader.gif" alt="loader">
+                        </span>
+                <div class="container">
+                            <pre class="code small-code"><code class="js" data-trim data-noescape>
+                                const fs = require('fs');
+                                const fileName1 = __dirname + '/data_1.json';
+                                const fileName2 = __dirname + '/data_2.json';
+                                const fileName3 = __dirname + '/data_3.json';
+
+                                fs.readFile(fileName1, 'utf-8', cb1);  // читается 5 секунд
+                                <mark>fs.readFile(fileName2, 'utf-8', cb2);</mark>  // читается 1 секунду
+                                fs.readFile(fileName3, 'utf-8', cb3);  // читается 3 секунды
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>fs.readFile</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+            </section>
+
+            <section data-transition="none">
+                        <span class="API">
+                            API
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                            <img class="loader-gif" style="visibility: hidden;" src="images/loader.gif" alt="loader">
+                        </span>
+                <div class="container">
+                            <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName1 = __dirname + '/data_1.json';
+                                const fileName2 = __dirname + '/data_2.json';
+                                const fileName3 = __dirname + '/data_3.json';
+
+                                fs.readFile(fileName1, 'utf-8', cb1);  // читается 5 секунд
+                                fs.readFile(fileName2, 'utf-8', cb2);  // читается 1 секунду
+                                fs.readFile(fileName3, 'utf-8', cb3);  // читается 3 секунды
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+            </section>
+
+            <section data-transition="none">
+                        <span class="API">
+                            API
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                            <img class="loader-gif" style="visibility: hidden;" src="images/loader.gif" alt="loader">
+                        </span>
+                <div class="container">
+                            <pre class="code small-code"><code class="js" data-trim data-noescape>
+                                const fs = require('fs');
+                                const fileName1 = __dirname + '/data_1.json';
+                                const fileName2 = __dirname + '/data_2.json';
+                                const fileName3 = __dirname + '/data_3.json';
+
+                                fs.readFile(fileName1, 'utf-8', cb1);  // читается 5 секунд
+                                fs.readFile(fileName2, 'utf-8', cb2);  // читается 1 секунду
+                                <mark>fs.readFile(fileName3, 'utf-8', cb3);</mark>  // читается 3 секунды
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>fs.readFile</span>
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+            </section>
+
+            <section data-transition="none">
+                        <span class="API">
+                            API
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                        </span>
+                <div class="container">
+                            <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName1 = __dirname + '/data_1.json';
+                                const fileName2 = __dirname + '/data_2.json';
+                                const fileName3 = __dirname + '/data_3.json';
+
+                                fs.readFile(fileName1, 'utf-8', cb1);  // читается 5 секунд
+                                fs.readFile(fileName2, 'utf-8', cb2);  // читается 1 секунду
+                                fs.readFile(fileName3, 'utf-8', cb3);  // читается 3 секунды
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>IIFE</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+            </section>
+
+            <section data-transition="none">
+                        <span class="API">
+                            API
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                        </span>
+                <div class="container">
+                            <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName1 = __dirname + '/data_1.json';
+                                const fileName2 = __dirname + '/data_2.json';
+                                const fileName3 = __dirname + '/data_3.json';
+
+                                fs.readFile(fileName1, 'utf-8', cb1);  // читается 5 секунд
+                                fs.readFile(fileName2, 'utf-8', cb2);  // читается 1 секунду
+                                fs.readFile(fileName3, 'utf-8', cb3);  // читается 3 секунды
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+            </section>
+
+            <section data-transition="none">
+                        <span class="API">
+                            API
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                            <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                        </span>
+                <div class="container">
+                            <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName1 = __dirname + '/data_1.json';
+                                const fileName2 = __dirname + '/data_2.json';
+                                const fileName3 = __dirname + '/data_3.json';
+
+                                fs.readFile(fileName1, 'utf-8', cb1);  // читается 5 секунд
+                                fs.readFile(fileName2, 'utf-8', cb2);  // читается 1 секунду
+                                fs.readFile(fileName3, 'utf-8', cb3);  // читается 3 секунды
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue">
+                            <span>cb2</span>
+                        </pre>
+            </section>
+
+            <section data-transition="none">
+                        <span class="API">
+                            API
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                            <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                        </span>
+                <div class="container">
+                            <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName1 = __dirname + '/data_1.json';
+                                const fileName2 = __dirname + '/data_2.json';
+                                const fileName3 = __dirname + '/data_3.json';
+
+                                fs.readFile(fileName1, 'utf-8', cb1);  // читается 5 секунд
+                                fs.readFile(fileName2, 'utf-8', cb2);  // читается 1 секунду
+                                fs.readFile(fileName3, 'utf-8', cb3);  // читается 3 секунды
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb2</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+            </section>
+
+            <section data-transition="none">
+                        <span class="API">
+                            API
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                            <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                        </span>
+                <div class="container">
+                            <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName1 = __dirname + '/data_1.json';
+                                const fileName2 = __dirname + '/data_2.json';
+                                const fileName3 = __dirname + '/data_3.json';
+
+                                fs.readFile(fileName1, 'utf-8', cb1);  // читается 5 секунд
+                                fs.readFile(fileName2, 'utf-8', cb2);  // читается 1 секунду
+                                fs.readFile(fileName3, 'utf-8', cb3);  // читается 3 секунды
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+            </section>
+
+            <section data-transition="none">
+                        <span class="API">
+                            API
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                            <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                            <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                        </span>
+                <div class="container">
+                            <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName1 = __dirname + '/data_1.json';
+                                const fileName2 = __dirname + '/data_2.json';
+                                const fileName3 = __dirname + '/data_3.json';
+
+                                fs.readFile(fileName1, 'utf-8', cb1);  // читается 5 секунд
+                                fs.readFile(fileName2, 'utf-8', cb2);  // читается 1 секунду
+                                fs.readFile(fileName3, 'utf-8', cb3);  // читается 3 секунды
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue">
+                            <span>cb3</span>
+                        </pre>
+            </section>
+
+            <section data-transition="none">
+                        <span class="API">
+                            API
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                            <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                            <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                        </span>
+                <div class="container">
+                            <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName1 = __dirname + '/data_1.json';
+                                const fileName2 = __dirname + '/data_2.json';
+                                const fileName3 = __dirname + '/data_3.json';
+
+                                fs.readFile(fileName1, 'utf-8', cb1);  // читается 5 секунд
+                                fs.readFile(fileName2, 'utf-8', cb2);  // читается 1 секунду
+                                fs.readFile(fileName3, 'utf-8', cb3);  // читается 3 секунды
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb3</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+            </section>
+
+            <section data-transition="none">
+                        <span class="API">
+                            API
+                            <img class="loader-gif" src="images/loader.gif" alt="loader">
+                            <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                            <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                        </span>
+                <div class="container">
+                            <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName1 = __dirname + '/data_1.json';
+                                const fileName2 = __dirname + '/data_2.json';
+                                const fileName3 = __dirname + '/data_3.json';
+
+                                fs.readFile(fileName1, 'utf-8', cb1);  // читается 5 секунд
+                                fs.readFile(fileName2, 'utf-8', cb2);  // читается 1 секунду
+                                fs.readFile(fileName3, 'utf-8', cb3);  // читается 3 секунды
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+            </section>
+
+            <section data-transition="none">
+                        <span class="API">
+                            API
+                            <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                            <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                            <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                        </span>
+                <div class="container">
+                            <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName1 = __dirname + '/data_1.json';
+                                const fileName2 = __dirname + '/data_2.json';
+                                const fileName3 = __dirname + '/data_3.json';
+
+                                fs.readFile(fileName1, 'utf-8', cb1);  // читается 5 секунд
+                                fs.readFile(fileName2, 'utf-8', cb2);  // читается 1 секудну
+                                fs.readFile(fileName3, 'utf-8', cb3);  // читается 3 секунды
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue">
+                            <span>cb1</span>
+                        </pre>
+            </section>
+
+            <section data-transition="none">
+                        <span class="API">
+                            API
+                            <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                            <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                            <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                        </span>
+                <div class="container">
+                            <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName1 = __dirname + '/data_1.json';
+                                const fileName2 = __dirname + '/data_2.json';
+                                const fileName3 = __dirname + '/data_3.json';
+
+                                fs.readFile(fileName1, 'utf-8', cb1);  // читается 5 секунд
+                                fs.readFile(fileName2, 'utf-8', cb2);  // читается 1 секудну
+                                fs.readFile(fileName3, 'utf-8', cb3);  // читается 3 секунды
+                            </code></pre>
+                    <pre class="callstack">
+                                <span>cb1</span>
+                            </pre>
+                </div>
+                <pre class="callback-queue"></pre>
+            </section>
+
+            <section data-transition="none">
+                        <span class="API">
+                            API
+                            <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                            <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                            <img class="loader-gif" src="images/loader-done.png" alt="loader-done">
+                        </span>
+                <div class="container">
+                            <pre class="code small-code"><code class="js" data-trim>
+                                const fs = require('fs');
+                                const fileName1 = __dirname + '/data_1.json';
+                                const fileName2 = __dirname + '/data_2.json';
+                                const fileName3 = __dirname + '/data_3.json';
+
+                                fs.readFile(fileName1, 'utf-8', cb1);  // читается 5 секунд
+                                fs.readFile(fileName2, 'utf-8', cb2);  // читается 1 секудну
+                                fs.readFile(fileName3, 'utf-8', cb3);  // читается 3 секунды
+                            </code></pre>
+                    <pre class="callstack"></pre>
+                </div>
+                <pre class="callback-queue"></pre>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h3>Проблема</h3>
+            </section>
+
+            <section>
+                        <pre class="code off-min-height"><code class="js" data-trim>
+                            const fs = require('fs');
+                            const fileName1 = __dirname + '/data_1.json';
+                            const fileName2 = __dirname + '/data_2.json';
+                            const fileName3 = __dirname + '/data_3.json';
+
+                            fs.readFile(fileName1, 'utf-8', cb1);  // читается 5 секунд
+                            fs.readFile(fileName2, 'utf-8', cb2);  // читается 1 секудну
+                            fs.readFile(fileName3, 'utf-8', cb3);  // читается 3 секунды
+                        </code></pre>
+                <pre class="callback-queue">
+                            <span>cb2</span>
+                            <span>cb3</span>
+                            <span>cb1</span>
+                        </pre>
+            </section>
+        </section>
+
+        <!-- Event Loop -->
+        <section>
+            <section>
+                <h3>Event Loop</h3>
+            </section>
+
+            <section>
+                <p class="definition">
+                    Цикл событий (Event Loop) — это то, что позволяет Node.js выполнять
+                    блокирующие операции ввода/вывода путем выгрузки операций в ядро системы,
+                    не блокируя основной поток.
+                </p>
+            </section>
+
+            <section>
+                        <pre><code class="js" data-trim>
+                            while (queue.waitForMessage()) {
+                                queue.processNextMessage();
+                            }
+                        </code></pre>
+            </section>
+
+            <section>
+                <img class="JS" src="images/JS.png" alt="JS">
+            </section>
+
+            <section>
+                <img class="JS" src="images/JS-empty.png" alt="JS">
+            </section>
+
+            <section>
+                Если стек вызовов и очередь событий пусты, и при этом не планировалось
+                никаких асинхронных операций, то программа успешно завершается
+            </section>
+
+            <section>
+                        <pre><code style="max-height: 500px;" data-trim>
+                               ┌───────────────────────┐
+                            ┌─>│        таймеры        │  [cb1, cb2, cb3, ..]
+                            │  └──────────┬────────────┘
+                            │  ┌──────────┴────────────┐
+                            │  │      I/O коллбэки     │  [cb1, cb2, cb3, ..]
+                            │  └──────────┬────────────┘
+                            │  ┌──────────┴────────────┐
+                            │  │ ожидание, подготовка  │
+                            │  └──────────┬────────────┘      ┌───────────────┐
+                            │  ┌──────────┴────────────┐      │   входящие:   │
+                            │  │        опрос          │<─────┤   соединения, │  [cb1, ..]
+                            │  └──────────┬────────────┘      │   данные, итд.│
+                            │  ┌──────────┴────────────┐      └───────────────┘
+                            │  │       проверка        │  [cb1, cb2, cb3, ..]
+                            │  └──────────┬────────────┘
+                            │  ┌──────────┴────────────┐
+                            └──┤    коллбэки 'close'   │  [cb1, cb2, cb3, ..]
+                               └───────────────────────┘
+                        </code></pre>
+            </section>
+
+            <section>
+                <h4>Фаза "таймеры"</h4>
+
+                <pre class="fragment"><code class="js" data-trim>
+                            setTimeout
+                        </code></pre>
+                <pre class="fragment"><code class="js" data-trim>
+                            setInterval
+                        </code></pre>
+            </section>
+
+            <section>
+                <h4>Фаза "I/O коллбэки"</h4>
+
+                <pre class="fragment"><code class="js" data-trim>
+                            const fs = require('fs');
+                            const fileName = __dirname + '/data.json';
+
+                            fs.readFile(fileName, 'utf-8', function (err, data) {
+                                console.log(data);
+                            });
+                        </code></pre>
+                <pre class="js console fragment"><code data-trim>
+                            '{"engine": "V8"}'
+                        </code></pre>
+            </section>
+        </section>
+
+        <!-- Почитать -->
+        <section>
+            <h3>Почитать</h3>
+
+            <ul>
+                <li>
+                    <a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/EventLoop">
+                        Параллельная модель и цикл событий
+                    </a>
+                </li>
+                <li>
+                    <a href="https://learn.javascript.ru/settimeout-setinterval">
+                        setTimeout и setInterval
+                    </a>
+                </li>
+                <li>
+                    <a href="https://habrahabr.ru/company/wrike/blog/302896/">
+                        Асинхронность в JavaScript: Пособие для тех, кто хочет разобраться
+                    </a>
+                </li>
+                <li>
+                    <a href="https://habrahabr.ru/post/336498/">
+                        Знай свой инструмент: Event Loop в libuv
+                    </a>
+                </li>
+                <li>
+                    <a href="https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/">
+                        The Node.js Event Loop, Timers, and process.nextTick()
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Посмотреть -->
+        <section>
+            <h3>Посмотреть</h3>
+
+            <ul>
+                <li>
+                    <a href="https://www.youtube.com/watch?v=8cV4ZvHXQL4&feature=share">
+                        Про цикл событий в JavaScript или "как на самом деле работает асинхронность"?
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <!-- ДЗ -->
+        <section>
+            <h3>Домашнее задание</h3>
+            <a href="https://goo.gl/forms/bmeaSUXOyEP3OCp62">Тест</a>
+        </section>
+
+        <!-- Вопросы -->
+        <section class="cover" data-background="images/constancy-of-time.jpg">
+            <h3>Вопросы?</h3>
+            <small>Сальвадор Дали «Постоянство времени»</small>
+        </section>
+    </div>
+</div>
+
+<script src="js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+<script>
+    /* Initialize Reveal.js and Hightlight.js */
+    Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: false,
+
+        // Hides the address bar on mobile devices
+        hideAddressBar: true,
+
+        dependencies: [
+            { src: 'js/highlight.js', async: true, callback:() => hljs.initHighlightingOnLoad() }
+        ]
+    });
+</script>
+</body>
+</html>
