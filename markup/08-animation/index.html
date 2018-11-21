@@ -1,0 +1,1416 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Анимации</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="./css/reveal.css">
+    <link rel="stylesheet" href="./css/animate.css">
+    <link rel="stylesheet" href="./css/magic.min.css">
+    <link rel="stylesheet" href="./css/night-2.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="./css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <link rel="stylesheet" href="index.css">
+
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+    <script type="text/javascript"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</head>
+
+<body>
+
+<div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+        <section style="font-size: 70px;">
+            <div class="firstSlide">
+                <h2 class="fragment textillate" data-effect="flipInY" data-shuffle="true" data-delay="100">Анимации</h2>
+
+                <p style="text-align: center;">
+                    <small class="fragment textillate" data-effect="bounceInUp" data-shuffle="true">Кувалдин Артем</small>
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Сначала был GIF</h2>
+            <img src="img/cube.gif" height="550" style="border: 0;">
+        </section>
+
+        <section data-state="state1">
+            <h2>JS анимации</h2>
+<pre><code>var foo = null; // object
+
+function doMove() {
+foo.style.left = parseInt(foo.style.left) + 1 + 'px';
+setTimeout(doMove, 20); // call doMove in 20msec
+}
+function init() {
+// get the "foo" object
+foo = document.getElementById('superman');
+foo.style.left = '0px'; // set its initial position to 0px
+doMove(); // start animating
+}
+window.onload = init;</code></pre>
+            <div id="fooObject" class="superman"></div>
+            <script>
+                var foo = null; // object
+
+                function doMove() {
+                    foo.style.left = parseInt(foo.style.left) + 1 + 'px';
+                    setTimeout(doMove, 20); // call doMove in 20msec
+                }
+
+                function init() {
+                    foo = document.getElementById('fooObject'); // get the "foo" object
+                    foo.style.left = '0px'; // set its initial position to 0px
+                    doMove(); // start animating
+                }
+            </script>
+        </section>
+        <section>
+            <h2>CSS-анимации</h2>
+
+            <div class="view">
+              <div class="plane maina">
+                <div class="circle-aa"></div>
+                <div class="circle-aa"></div>
+                <div class="circle-aa"></div>
+                <div class="circle-aa"></div>
+                <div class="circle-aa"></div>
+                <div class="circle-aa"></div>
+              </div>
+            </div>
+        </section>
+        <section>
+            <h2>Преобразования</h2>
+
+            <p>На текущий момент нам доступны:</p>
+
+            <div class="ex">
+                <div class="box linear blue move fragment toggle" style="width: 300px;">Перемещение</div>
+                <div class="box linear blue zoom fragment toggle" style="width: 300px; margin-left: 200px;">Масштабирование</div>
+                <br>
+
+                <div class="box linear blue rotate fragment toggle" style="width: 300px; margin-top: 200px;">Вращение</div>
+                <div class="box linear blue skew fragment toggle" style="width: 300px; margin-left: 200px;">Наклон</div>
+            </div>
+        </section>
+        <section>
+            <h2>Свойство transform</h2>
+<pre class="css size-l"><code>.box {
+    transform: тип_трансформации(значение);
+}</code></pre>
+            <p class="fragment" data-fragment-index="1"> не влияет на окружение</p>
+
+            <div class="ex"><div class="box linear blue move toggle">Бокс 1</div><div class="box linear red zoom fragment toggle" data-fragment-index="1">Бокс 2</div><div class="box linear blue toggle">Бокс 3</div><br><div class="box linear  blue toggle">Бокс 4</div>
+            </div>
+        </section>
+        <section>
+            <h2>Перемещение</h2>
+<pre class="css size-l"><code>.box {
+    width: 300px;
+    height: 100px;
+  /*transform: translate(X    , Y    );*/
+    transform: translate(100px, 100px);
+}</code></pre>
+
+        <div class="">
+            <div class="container-move fragment toggle">
+                <div class="coordinate box linear move gray" style="color:#000">300x100</div><div class="box x-y blue linear move ">translate(300px, 100px)</div><div class="box -x-y blue linear move ">translate(-300px, -100px)</div><div class="box y linear move red">translate(0, 100px)</div><div class="box x linear move green">translate(300px, 0)</div>
+            </div>
+        </div>
+
+        </section>
+        <section>
+            <h2>Перемещение в %</h2>
+<pre class="css size-l"><code>.box {
+    transform: translate(100%, 100%);
+}</code></pre>
+
+        <div class="">
+            <div class="container-move fragment toggle">
+                <div class="box linear move gray" style="color:#000;">200x100</div>
+                <div class="box x-y blue linear move ">translate(100%, 100%)</div>
+                <div class="box -x-y blue linear move ">translate(-100%, -100%)</div>
+                <div class="box y linear move red">translate(0, 100%)</div>
+                <div class="box x linear move green">translate(100%, 0)</div>
+            </div>
+        </div>
+        </section>
+
+        <section>
+<pre class="css size-l"><code>.box-blue {
+    transform: translateX(100%);
+}
+.box-red {
+    transform: translateY(100%);
+}</code></pre>
+
+        <div class="">
+            <div class="container-move fragment toggle">
+                <div class="box linear move gray" style="color:#000;">200x100</div>
+                <div class="box x linear blue move ">translateX(100%)</div>
+                <div class="box y linear move red">translateY(100%)</div>
+            </div>
+        </div>
+        </section>
+
+        <section>
+            <h2>Масштабирование</h2>
+<pre class="css size-l"><code>.blue {
+    /*Размер элемента = 150%*/
+    transform: scale(1.5);
+}
+.red {
+    /*Размер элемента = 50%*/
+    transform: scale(0.5);
+}</code></pre>
+
+        <div class="">
+            <div class="container-zoom fragment toggle">
+                <div class="box linear zoom red">scale(1)</div>
+                <div class="box linear zoom blue scale-1-5">scale(1.5)</div>
+                <div class="box linear move green  scale-0-5">scale(.5)</div>
+            </div>
+        </div>
+        </section>
+
+        <section>
+            <h2>Масштабирование</h2>
+<pre class="css size-l"><code>.blue {
+    /*         scale(X, Y  )*/
+    transform: scale(1, 1.5);
+}
+.green {
+    /*Размер элемента по оси X = 50%*/
+    transform: scaleX(0.5);
+}
+.red {
+    /*Размер элемента по оси Y = 50%*/
+    transform: scaleY(0.5);
+}</code></pre>
+
+        <div class="">
+            <div class="container-zoom fragment toggle">
+                <div class="box linear zoom gray" style="width: 200px; color: #000; outline: 1px solid white;">scale(1, 1)</div>
+                <div class="box linear zoom blue scale-1-1-5" style="width: 200px;">scale(1, 1.5)</div>
+                <div class="box linear move green scale-x-0-5" style="width: 200px;">scaleX(.5)</div>
+                <div class="box linear move red scale-y-0-5" style="width: 200px;">scaleY(.5)</div>
+            </div>
+        </div>
+        </section>
+        <section>
+            <h2>Отрицательные значения</h2>
+<pre class="css size-l"><code>.blue {
+    transform: scale(1, -1);
+}
+.green {
+    transform: scale(-1, 1);
+}
+.red {
+    transform: scale(-2);
+}</code></pre>
+
+        <div class="">
+            <div class="container-zoom fragment toggle">
+                <div class="box linear zoom blue scale-1--1" style="width: 200px;">scale(1, -1)</div>
+                <div class="box linear zoom green scale--1-1" style="width: 200px;">scale(-1, 1)</div>
+                <div class="box linear zoom red scale--2" style="width: 200px;">scale(-2)</div>
+            </div>
+        </div>
+        </section>
+
+        <section>
+            <h2>Вращение</h2>
+<pre class="css size-l fragment toggle" data-fragment-index="1"><code>.like {
+    /*Поворот элемента вокруг оси на 180°*/
+    transform: rotate(180deg);
+}</code></pre>
+<pre class="css size-l fragment" data-fragment-index="2"><code>.like {
+    transform: rotate(-180deg);
+}</code></pre>
+
+        <div class="">
+            <div class="container-zoom ">
+                <div data-fragment-index="1" class="box linear fragment like toggle rotate-180" style="display: inline-block;"></div>
+                <div data-fragment-index="2" class="box linear fragment like like-revert toggle rotate--180" style="display: inline-block;"></div>
+            </div>
+        </div>
+        <div class="">
+            <div class="container-zoom ">
+            </div>
+        </div>
+        </section>
+
+        <section>
+            <h2>Другие единицы измерения</h2>
+<pre class="css size-l"><code>.like {
+    /*Полтора оборота по часовой стрелке*/
+    transform: rotate(1.5turn);
+    /*1.5turn = 540deg = 600grad ≈ 9,42478rad*/
+}</code></pre>
+
+        <div class="">
+            <div class="container-zoom toggle">
+                <div class="box linear fragment like toggle rotate-1-5" style="width: 200px; height: 200px;"></div>
+            </div>
+        </div>
+        </section>
+
+        <section>
+            <h2>Наклон</h2>
+<pre class="css size-l"><code>.red {
+    transform: skew(45deg, 0); /*skew(45deg)*/
+}
+.green {
+    transform: skew(0, 45deg); /*skewY(45deg)*/
+}
+.blue {
+    transform: skew(25deg, 25deg);
+}</code></pre>
+
+        <div class="" style="font-size: 15px;">
+            <div class="b-col">
+                <div class="b-quatro">
+                  <div class="b-block fragment toggle box red b-block_skew_45_0">
+                    <div class="b-guides b-guides_vertical"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="b-col">
+                <div class="b-quatro">
+                  <div class="b-block fragment toggle box green b-block_skew_0_45">
+                    <div class="b-guides b-guides_horizontal"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="b-col">
+                <div class="b-quatro">
+                  <div class="b-block fragment toggle box blue b-block_skew_25">
+                    <div class="b-guides b-guides_vertical"></div>
+                    <div class="b-guides b-guides_horizontal"></div>
+                  </div>
+                </div>
+              </div>
+        </div>
+        </section>
+
+        <section>
+            <h2>Множественные преобразования</h2>
+<pre class="css size-l"><code>.box {
+    transform: scale(2) translateX(100px) rotate(45deg);
+}</pre></code>
+            <div class="ex">
+                <div class="container-zoom toggle">
+                    <div class="box linear fragment toggle scale-2-translateX-100-rotate-45" style="width: 100px; height: 100px; margin: 100px 0;">Box</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Что будет?</h2>
+<pre class="css size-l"><code>.box {
+    transform: rotate(45deg) translateX(100px) scale(2);
+}</pre></code>
+            <div class="ex">
+                <div class="container-zoom toggle">
+                    <div class="box linear fragment toggle rotate-45-translateX-100-scale-2" style="width: 100px; height: 100px; margin: 100px 0;">Box</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="b-wrapper b-wrapper_transformed fragment toggle rotate-45-translateX-100-scale-2">
+              <div class="b-coordinate">
+                <div class="b-coordinate__x"></div>
+                <div class="b-coordinate__y"></div>
+              </div>
+              <div class="b-block box red" style="color: rgba(255,255,255, .9); margin-top: 20px;">rotate(45deg)<br>translateX(100px)<br>scale(2)</div>
+            </div>
+        </section>
+
+        <section>
+            <div class="b-wrapper b-wrapper_transformed fragment toggle translateX-100-skew-translateY-100">
+              <div class="b-coordinate">
+                <div class="b-coordinate__x"></div>
+                <div class="b-coordinate__y"></div>
+              </div>
+              <div class="b-block box red" style="color: rgba(255,255,255, .9); margin-top: 20px;">translateX(100px)<br>skew(45deg)<br>translateY(100px)<br></div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Исходная точка</h2>
+<pre class="css size-l"><code>.box {
+    transform: rotate(45deg);
+    transform-origin: left top;
+    /*transform-origin: 0;*/
+    /*transform-origin: 0 0;*/
+    /*transform-origin: 0% 0%;*/
+}</pre></code>
+
+            <div class="b-wrapper b-wrapper_transformed">
+              <div class="pseudo" style="color: rgba(255,255,255, .9);">
+                  <div class="box green fragment toggle origin-0-0 rotate-45" style="color: rgba(255,255,255, .9);">box 1</div>
+                    <div class="origin" style="left: -10px; top: -10px;"></div>
+              </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>rotate(45deg)</h2>
+            <div style="text-align: left; margin-top: 150px;">
+            <div class="pseudo" style="color: rgba(255,255,255, .9); margin-left: 30px;">
+                <div class="box green fragment toggle rotate-45" style="color: rgba(255,255,255, .9); font-size: 20px;" data-fragment-index="1"></div>
+                <div class="origin fragment" style="left: 50%; top: 50%; margin-left: -10px; margin-top: -10px;" data-fragment-index="1"></div>
+            </div>
+            <div class="pseudo" style="color: rgba(255,255,255, .9); margin-left: 30px;">
+                <div class="box green fragment toggle origin-50-100 rotate-45" style="color: rgba(255,255,255, .9); font-size: 20px;" data-fragment-index="2">transform-origin: 50% 100%;</div>
+                <div class="origin fragment" style="left: 50%; bottom: -10px; margin-left: -10px;" data-fragment-index="2"></div>
+          </div>
+            <div class="pseudo" style="color: rgba(255,255,255, .9); margin-left: 30px;">
+                <div class="box green fragment toggle origin-100-100 rotate-45" style="color: rgba(255,255,255, .9); font-size: 20px;" data-fragment-index="3">transform-origin: right bottom;</div>
+                <div class="origin fragment" style="right: -10px; bottom: -10px;" data-fragment-index="3"></div>
+            </div>
+
+            <div class="pseudo" style="color: rgba(255,255,255, .9); margin-left: 30px; margin-top: 60px;">
+                <div class="box green fragment toggle origin-50-50 rotate-45" style="color: rgba(255,255,255, .9); font-size: 20px;" data-fragment-index="4">transform-origin: 50px;</div>
+                <div class="origin fragment" style="left: 40px; top: 40px;" data-fragment-index="4"></div>
+            </div>
+            <div class="pseudo" style="color: rgba(255,255,255, .9); margin-left: 30px;  margin-top: 60px;">
+                <div class="box green fragment toggle origin-0-100 rotate-45" style="color: rgba(255,255,255, .9); font-size: 20px;" data-fragment-index="5">transform-origin: 0 100%;</div>
+                <div class="origin fragment" style="left: -10px; bottom: -10px;" data-fragment-index="5"></div>
+            </div>
+                <div class="pseudo" style="opacity: 0">
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h1>3D</h1>
+            <img src="img/glass-3d.png" style="background: transparent; border: 0">
+        </section>
+        <section>
+            <h2>rotateX(360deg)</h2>
+
+            <div class="b-coord b-coord_3d_yes  fragment toggle">
+              <div class="b-coord__axis b-coord__axis_x"></div>
+              <div class="b-coord__axis b-coord__axis_y"></div>
+              <div class="b-coord__axis b-coord__axis_z"></div>
+
+              <div class="box3d rotate-3d-X"></div>
+            </div>
+        </section>
+        <section>
+            <h2>rotateY(360deg)</h2>
+
+            <div class="b-coord b-coord_3d_yes  fragment toggle">
+              <div class="b-coord__axis b-coord__axis_x"></div>
+              <div class="b-coord__axis b-coord__axis_y"></div>
+              <div class="b-coord__axis b-coord__axis_z"></div>
+
+              <div class="box3d rotate-3d-Y"></div>
+            </div>
+        </section>
+        <section>
+            <h2>rotateZ(360deg)</h2>
+
+            <div class="b-coord b-coord_3d_yes  fragment toggle">
+              <div class="b-coord__axis b-coord__axis_x"></div>
+              <div class="b-coord__axis b-coord__axis_y"></div>
+              <div class="b-coord__axis b-coord__axis_z"></div>
+
+              <div class="box3d rotate-3d-Z"></div>
+            </div>
+        </section>
+        <section>
+            <h2>translateX(100%)</h2>
+
+            <div class="b-coord b-coord_3d_yes  fragment toggle">
+              <div class="b-coord__axis b-coord__axis_x"></div>
+              <div class="b-coord__axis b-coord__axis_y"></div>
+              <div class="b-coord__axis b-coord__axis_z"></div>
+
+              <div class="box3d translate-3d-X"></div>
+            </div>
+        </section>
+        <section>
+            <h2>translateY(100%)</h2>
+
+            <div class="b-coord b-coord_3d_yes  fragment toggle">
+              <div class="b-coord__axis b-coord__axis_x"></div>
+              <div class="b-coord__axis b-coord__axis_y"></div>
+              <div class="b-coord__axis b-coord__axis_z"></div>
+
+              <div class="box3d translate-3d-Y"></div>
+            </div>
+        </section>
+        <section>
+            <h2>translateZ(200px)</h2>
+
+            <div class="b-coord b-coord_3d_yes  fragment toggle">
+              <div class="b-coord__axis b-coord__axis_x"></div>
+              <div class="b-coord__axis b-coord__axis_y"></div>
+              <div class="b-coord__axis b-coord__axis_z"></div>
+
+              <div class="box3d translate-3d-Z"></div>
+            </div>
+        </section>
+        <section>
+            <h2>scale(2)</h2>
+
+            <div class="b-coord b-coord_3d_yes  fragment toggle">
+              <div class="b-coord__axis b-coord__axis_x"></div>
+              <div class="b-coord__axis b-coord__axis_y"></div>
+              <div class="b-coord__axis b-coord__axis_z"></div>
+
+              <div class="box3d scale-3d-XY"></div>
+            </div>
+        </section>
+        <section>
+            <h2>Перспектива</h2>
+
+            <p>создает иллюзию глубины и позволяет перемещать в двумерном пространстве экрана точку вдоль и вокруг оси Z (как бы вглубь экрана и из него).</p>
+            <img src="img/perspective.jpg" height="400">
+        </section>
+
+        <section>
+        <h2>Перспектива</h2>
+<pre class="html size-l"><code> <div class="3d_perspective">
+    <div class="b-block"></div>
+    <div class="b-block"></div>
+    <div class="b-block"></div>
+  </div></code></pre>
+<pre class="css size-l"><code>.3d_perspective {
+    perspective: 200px;
+}</code></pre>
+            <!--<a href="http://codepen.io/anon/pen/ZbwNwM?editors=110">perspective</a>-->
+        </section>
+        <section>
+            <video data-autoplay loop>
+                <source src="img/perspective3.webm">
+            </video>
+        </section>
+
+        <section>
+            <img src="img/perspective_distance.png" style="background: #fff">
+        </section>
+
+        <section>
+        <h2>Расположение точки</h2>
+<pre class="html size-l"><code><div class="b-3d b-3d_perspective_lt">
+    <div class="b-block"></div>
+    <div class="b-block"></div>
+    <div class="b-block"></div>
+  </div></code></pre>
+<pre class="css size-l"><code>.3d_perspective {
+    /* по-умолчанию: perspective-origin: 50% 50%; */
+}
+.3d_perspective_lt {
+    perspective-origin: 0 0;
+}
+.3d_perspective_ct {
+    perspective-origin: 50% 0%;
+}
+.3d_perspective_rt {
+    perspective-origin: right top;
+}</code></pre>
+
+        </section>
+        <section>
+            <img src="img/perspective-orig.png">
+        </section>
+        <section>
+            <h2>transform-style</h2>
+
+            <p>Сообщает о том что дочерние элементы позиционируются в 3D-пространстве.</p>
+<pre class="css size-l"><code>.wrapper {
+    /*по умолчанию flat*/
+    transform-style: preserve-3d;
+}</code></pre>
+            <!--<a href="https://jsbin.com/pakemoweye">Пример</a><br>-->
+        </section>
+        <section>
+           <img src="img/style-3d.gif" height="500" style="border: 0;">
+        </section>
+        <section>
+           <img src="img/style-3d-2.gif" height="400" style="border: 0;">
+        </section>
+        <section>
+            <h2>backface-visibility</h2>
+
+            <p>Определяет видимость задней стороны объекта.</p>
+            <div style="height: 45px; font-size: 20px; position: relative;">
+                <div class="label">backface-visibility: visible;</div>
+                <div class="label" style="top: 0; right: 0;">backface-visibility: hidden;</div>
+            </div>
+            <div class="ex pattern-toggle fragment toggle" style="font-size: 20px; position: relative;">
+                <div class="b-cube" style="margin: 100px;">
+                    <div class="b-side b-side_back"></div>
+                    <div class="b-side b-side_left"></div>
+                    <div class="b-side b-side_right"></div>
+                    <div class="b-side b-side_top"></div>
+                    <div class="b-side b-side_bottom"></div>
+                    <div class="b-side b-side_front"></div>
+                </div>
+                <div class="b-cube back-invisible" style="margin: 100px;">
+                    <div class="b-side b-side_back"></div>
+                    <div class="b-side b-side_left"></div>
+                    <div class="b-side b-side_right"></div>
+                    <div class="b-side b-side_top"></div>
+                    <div class="b-side b-side_bottom"></div>
+                    <div class="b-side b-side_front"></div>
+                </div>
+            </div>
+        </section>
+        <section>
+           <h2>Свойства transform</h2>
+           <table>
+               <thead>
+               <tr>
+                   <th>2D</th>
+                   <th>3D</th>
+               </tr>
+               </thead>
+               <tbody>
+               <tr>
+                   <td>translate(x,y)</td>
+                   <td>translate3d(x,y,z)</td>
+               </tr>
+               <tr>
+                   <td>scale(x,y)</td>
+                   <td>scale3d(x,y,z)</td>
+               </tr>
+               <tr>
+                   <td>rotate(angle)</td>
+                   <td>rotate3d(x,y,z,angle)</td>
+               </tr>
+               <tr>
+                   <td>matrix(a, b, c, d, e, f)</td>
+                   <td>matrix3d(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p)</td>
+               </tr>
+               </tbody>
+           </table>
+
+       </section>
+
+        <section>
+            <h2>rotate3d(1, 1, 1, 180deg)</h2>
+            <div class="b-coord b-coord_3d_yes  fragment toggle">
+              <div class="b-coord__axis b-coord__axis_x"></div>
+              <div class="b-coord__axis b-coord__axis_y"></div>
+              <div class="b-coord__axis b-coord__axis_z"></div>
+
+              <div class="box3d rotate-3d-XY"></div>
+            </div>
+        </section>
+        <section>
+            <h2>Матрица преобразований</h2>
+<pre class="css size-l"><code>.matrix {
+    /*         matrix(a, c, b, d, tx, ty);*/
+    transform: matrix(2, 0, 0, 1, 0, 0);
+}</code></pre>
+            <img src="img/example-18.png" style="border: 0; vertical-align: top; background: transparent;">
+            <img src="img/example-19.png" style="border: 0; vertical-align: top; background: transparent;">
+        </section>
+        <section>
+<pre class="css size-l"><code>.matrix {
+    /*         matrix(a, c, b, d, tx, ty);*/
+    transform: matrix(2, 0, 0, 1, 0, 0);
+}</code></pre>
+            <table>
+                <thead>
+                <tr>
+                    <th>Коэффициент</th>
+                    <th>Преобразование</th>
+                    <th>Аналог</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>a</td>
+                    <td>Изменение размера по горизонтали</td>
+                    <td>scaleX()</td>
+                </tr>
+                <tr>
+                    <td>b</td>
+                    <td>Наклон по горизонтали</td>
+                    <td>skewX()</td>
+                </tr>
+                <tr>
+                    <td>c</td>
+                    <td>Наклон по вертикали</td>
+                    <td>skewY()</td>
+                </tr>
+                <tr>
+                    <td>d</td>
+                    <td>Изменение размера по вертикали</td>
+                    <td>scaleY()</td>
+                </tr>
+                <tr>
+                    <td>tx</td>
+                    <td>Смещение по горизонтали в пикселах</td>
+                    <td>translateX()</td>
+                </tr>
+                <tr>
+                    <td>ty</td>
+                    <td>Смещение по вертикали в пикселах</td>
+                    <td>translateY()</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <style>
+            	 #matrix {
+            		width: 750px;
+            		padding: 20px;
+            		border: 1px solid #333;
+            		/*overflow: hidden;*/
+                    margin: auto;
+            		}
+            		#a, #b, #c, #d, #tx, #ty {
+            			width: 50px;
+                        font-size: 20px;
+            		}
+            		#matrix_example {
+            			float: left;
+            			margin: 10px;
+            			width: 200px;
+            			position: relative;
+            			z-index: 1;
+            		}
+            		#matrix_store {
+            			margin-left: 250px;
+            			position: relative;
+            			z-index: 2;
+            		}
+            		#matrix label {
+            			width: 100px;
+            			display: inline-block;
+            			text-align: right;
+                        margin-right: 20px;
+            		}
+              </style>
+             <div id="matrix">
+            		<div id="matrix_example"><img src="http://htmlbook.ru/example/images/igels.png" alt="Ёжик" id="igels"></div>
+            		<div id="matrix_store">
+            			<p><label>a:</label> <input type="number" id="a" value="1" min="-5" max="5"> <label>b:</label> <input type="number" id="b" value="0" min="-5" max="5"></p>
+            			<p><label>c:</label> <input type="number" id="c" value="0" min="-5" max="5"> <label>d:</label> <input type="number" id="d" value="1" min="-5" max="5"></p>
+            			<p><label>tx:</label> <input type="number" id="tx" value="0" min="-50" max="50"> <label>ty:</label> <input type="number" id="ty" value="0" min="-50" max="50"></p>
+            		</div>
+            	</div>
+            <table>
+                            <thead>
+                            <tr>
+                                <th>Коэффициент</th>
+                                <th>Преобразование</th>
+                                <th>Аналог</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>a</td>
+                                <td>Изменение размера по горизонтали</td>
+                                <td>scaleX()</td>
+                            </tr>
+                            <tr>
+                                <td>b</td>
+                                <td>Наклон по горизонтали</td>
+                                <td>skewX()</td>
+                            </tr>
+                            <tr>
+                                <td>c</td>
+                                <td>Наклон по вертикали</td>
+                                <td>skewY()</td>
+                            </tr>
+                            <tr>
+                                <td>d</td>
+                                <td>Изменение размера по вертикали</td>
+                                <td>scaleY()</td>
+                            </tr>
+                            <tr>
+                                <td>tx</td>
+                                <td>Смещение по горизонтали в пикселах</td>
+                                <td>translateX()</td>
+                            </tr>
+                            <tr>
+                                <td>ty</td>
+                                <td>Смещение по вертикали в пикселах</td>
+                                <td>translateY()</td>
+                            </tr>
+                            </tbody>
+                        </table>
+            <a href="https://dev.opera.com/articles/ru/understanding-the-css-transforms-matrix/">https://clck.ru/AMugB</a>
+        </section>
+
+        <section data-background-image="img/переход_3.jpg">
+            <h1>Переходы</h1>
+        </section>
+        <section>
+            <p>Переходы – это анимация от одного набора CSS свойств к другому. Для перехода необходимо:</p>
+            <ul>
+                <li>Два набора свойств:
+                <ul>
+                    <li>начальный набор свойств(color: <span style=" color: red">#f00</span>;)</li>
+                    <li>конечный набор свойств(color: <span style=" color: blue">#00f</span>;)</li>
+                </ul>
+                </li>
+                <li>Свойство transition – описание свойств и характеристик анимации перехода</li>
+                <li>Инициатор – действие, которое вызывает изменение от одного набора свойств к другому(:hover, :target, :focus, :active)</li>
+            </ul>
+            <a href="http://www.w3.org/TR/css3-transitions/#animatable-properties">https://clck.ru/AMugp</a>
+        </section>
+        <section>
+<pre class="css size-l"><code>.button {
+    /*Свойство перехода*/
+    transition-property: transform;
+    /*Длительность перехода*/
+    transition-duration: .3s;
+}
+.button:hover {
+    transform: scale(1.2);
+}</code></pre>
+            <div class="ex">
+                <div class="button fragment toggle hover-scale-1-2 transition-3">button</div>
+            </div>
+        </section>
+        <section>
+            <h2>Несколько свойств</h2>
+<pre class="css size-l"><code>.button {
+    transition-property: transform, background-color;
+    transition-duration: 0.3s, 300ms;
+    /*                    .3s, .3s  ; */
+    background-color: #ccc;
+}
+.button:hover {
+    transform: scale(1.2);
+    background-color: #f00;
+}</code></pre>
+            <div class="ex">
+                <div class="button fragment toggle hover-scale-1-2-background transition-3-3">button</div>
+            </div>
+        </section>
+        <section>
+            <h2>Задержка перехода</h2>
+<pre class="css size-l"><code>.button {
+    transition-property: transform, background-color;
+    transition-duration: 0.3s, 500ms;
+    transition-delay: 0s, 0.5s;
+    background-color: #ccc;
+}
+.button:hover {
+    transform: scale(1.2);
+    background-color: #f00;
+}</code></pre>
+            <div class="ex">
+                <div class="button fragment toggle hover-scale-1-2-background transition-3-5 dur-0-3">button</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Тип перехода</h2>
+
+<pre class="css size-l"><code>.button {
+    transition-property: transform;
+    /*функция положения объекта от времени.*/
+    transition-timing-function: linear;
+    transition-duration: 0.3s;
+}
+.button:hover {
+    transform: translateX(800px);
+    background-color: #f00;
+}</code></pre>
+            <div class="fragment toggle" style="text-align: left;">
+                <img class="box linear move-x-800" src="img/linear.png" style="height: 250px; width: 250px;">
+            </div>
+        </section>
+        <section>
+            <h2>transition-timing-function:</h2>
+            <div class="ex fragment toggle" style="text-align: left;">
+                <div class="box linear move-x-800">linear</div>
+                <div class="box ease move-x-800">ease</div>
+                <div class="box ease-in move-x-800">ease-in</div>
+                <div class="box ease-out move-x-800">ease-out</div>
+                <div class="box ease-in-out move-x-800">ease-in-out</div>
+                <div class="box green step-start move-x-800">step-start</div>
+                <div class="box green step-end move-x-800">step-end</div>
+                <div class="box green steps-10 move-x-800">steps(10)</div>
+                <div class="box green steps-10-start move-x-800">steps(10, start)</div>
+            </div>
+        </section>
+        <section>
+            <h2>Кривая Безье</h2>
+
+            <p>P = (1−t)<sup style="font-size: .6em;">2</sup>P<sub style="font-size: .6em;">1</sub> + 2(1−t)tP<sub style="font-size: .6em;">2</sub> + t<sup style="font-size: .6em;">2</sup>P<sub style="font-size: .6em;">3</sub></p>
+            <img src="img/cubic-bezier_points_values.png" style="height: 350px; background: #fff"><br>
+            <a href="http://cubic-bezier.com/">cubic-bezier.com</a><br>
+            <a href="http://easings.net/">easings.net</a>
+        </section>
+
+        <section>
+<pre class="css size-l"><code>.rocket {
+transition-property: transform;
+/*                                      (x1, y1, x2, y2);*/
+transition-timing-function: cubic-bezier(.98, 0, 1, .28);
+transition-duration: 3s;
+}</code></pre>
+            <div class="ex">
+                <span class="rocket fragment toggle"></span>
+            </div>
+            <a href="http://codepen.io/stephengreig/pen/vbqBh">https://clck.ru/AMuiZ</a>
+        </section>
+        <section>
+            <h2>Краткая запись</h2>
+<pre class="css size-l"><code>.long {
+   transition-property: transform;
+   transition-duration: .5s;
+   transition-delay: 1s;
+   transition-timing-function: ease-in;
+}</code></pre>
+<pre class="css size-l fragment"><code>.short {
+    /*     property  duration [timing-function] [delay]*/
+   transition: transform .5s ease-in 1s;
+}</code></pre>
+<pre class="css size-l fragment"><code>.multi-short {
+    transition: transform .5s ease-in,
+                background-color .5s ease-in 1s;
+}</code></pre>
+<pre class="css size-l fragment"><code>.super-short {
+    transition: all .5s;
+}</code></pre>
+        </section>
+        <section>
+            <h1>Анимации</h1>
+            <div class="rise">
+                <div class="stage">
+                    <div class="sun"></div>
+                    <div class="grass"></div>
+                    <div class="square"></div>
+                    <div class="round"></div>
+                  </div>
+            </div>
+        </section>
+        <section>
+            <h2>Свойство animation</h2>
+            <p>Позволяет анимировать переходы между ключевыми кадрами. <br>Для создания анимации необходимо:</p>
+            <ol>
+                <li>Определить ключевые кадры - содержат свойства, которые применяются в определенный момент времени при анимации.</li>
+                <li>Применение анимации к элементу.</li>
+            </ol>
+        </section>
+        <section>
+            <h2>Ключевые кадры</h2>
+<pre class="css size-l"><code>@keyframes animationName {
+    from {
+        /*css свойства для первого кадра*/
+    }
+    to {
+        /*css свойства для второго кадра*/
+    }
+}</code></pre>
+        </section>
+        <section>
+<pre class="css size-l"><code>.box.visible {
+    animation-name: show;
+    animation-duration: 2s;
+}
+@keyframes show {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}</code></pre>
+            <div class="ex">
+                <div class="box green fragment toggle show-1 center">box visible</div>
+            </div>
+        </section>
+        <section>
+<pre class="css size-l"><code>.box {
+    opacity: 0;
+}
+.box.visible {
+    animation-name: show;
+    animation-duration: 2s;
+}
+@keyframes show {
+    to {
+        opacity: 1
+    }
+}</code></pre>
+            <div class="ex">
+                <div class="box red fragment show-1  center" style="opacity: 0">box visible</div>
+            </div>
+        </section>
+
+        <section>
+<pre class="css size-l"><code>.box1:hover { animation-name: blink;
+   animation-duration: 1s;
+}
+.box2:hover { animation-name: blink;
+   animation-duration: 5s;
+}
+@keyframes blink {
+    from {
+        background-color: blue;
+    }
+    to {
+        background-color: green;
+    }
+}</code></pre>
+           <div class="ex">
+               <div class="box fragment toggle hover-1 blink" style="display: inline-block;">box 1 visible</div>
+               <div class="box fragment toggle hover-2 blink" style="display: inline-block;">box 2 visible</div>
+           </div>
+       </section>
+        <section>
+<pre class="css size-l"><code>.box:hover { animation-name: blink;
+   animation-duration: 2s;
+}
+@keyframes blink {
+    from {
+        background-color: blue;
+    }
+    50% {
+        background-color: red;
+    }
+    to {
+        background-color: green;
+    }
+}</code></pre>
+           <div class="ex">
+               <div class="box fragment toggle hover-1 blink-2">box visible</div>
+           </div>
+       </section>
+        <section>
+<pre class="css size-l"><code>.box:hover { animation-name: blink;
+    animation-duration: 3s;
+}
+@keyframes blink {
+    0% { background-color: blue; }
+    25% { background-color: green; }
+    50% { background-color: red; }
+    75% { background-color: yellow; }
+    100% { background-color: grey; }
+}</code></pre>
+           <div class="ex">
+               <div class="box fragment toggle hover-1 blink-3">box visible</div>
+           </div>
+       </section>
+        <section>
+<pre class="css size-l"><code>.box:hover { animation-name: blink;
+    animation-duration: 10s;
+}
+@keyframes blink {
+    0%, 50% {
+        background-color: blue;
+    }
+    25%, 75% {
+        background-color: green;
+    }
+    100% {
+        background-color: grey;
+    }
+}</code></pre>
+           <div class="ex">
+               <div class="box fragment toggle hover-1 blink-4">box visible</div>
+           </div>
+       </section>
+        <section>
+<pre class="css size-l"><code>.box:hover { animation-name: blink;
+    animation-duration: 4s;
+}
+@keyframes blink {
+    0% {
+        background-color: blue;
+    }
+    25%, 75% {
+        background-color: green;
+    }
+    100% {
+        background-color: grey;
+    }
+}</code></pre>
+           <div class="ex">
+               <div class="box fragment toggle hover-1  blink-5">box visible</div>
+           </div>
+       </section>
+        <section>
+<pre class="css size-l"><code>.box.visible { animation-name: show;
+    animation-duration: 2s;
+}
+@keyframes show {
+    0% {
+        opacity: 0;
+        background-color: blue;
+    }
+    50% { background-color: green; }
+    100% {
+        opacity: 1;
+        background-color: red;
+    }
+}</code></pre>
+           <div class="ex">
+               <div class="box fragment toggle show center">box visible</div>
+           </div>
+       </section>
+        <section>
+            <h2>Задержка анимации</h2>
+<pre class="css size-l"><code>.box.move {
+    animation-name: move;
+    animation-duration: 2s;
+    animation-delay: 1s;
+}
+@keyframes move {
+    25%, 75% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(200%);
+    }
+}</code></pre>
+           <div class="ex">
+               <div class="box fragment toggle move-delay ">box visible</div>
+           </div>
+       </section>
+        <section>
+            <h2>Тип анимации</h2>
+<pre class="css size-l"><code>.box.move {
+    animation-name: move;
+    animation-duration: 8s;
+    animation-timing-function: cubic-bezier(...);
+}
+@keyframes move {
+    0% { transform: translate(0, 0); }
+    25% {
+        transform: translate(100%, 0);
+        animation-timing-function: linear;
+    }
+    50% { transform: translate(100%, 200%); }
+    75% {
+        transform: translate(0, 200%);
+        animation-timing-function: linear;
+    }
+    100% { transform: translate(0, 0); }
+}</code></pre>
+       </section>
+
+        <section>
+           <div class="ex">
+               <div class="box fragment toggle show-3 ">box visible</div>
+           </div>
+        </section>
+
+        <section>
+            <h2>Повторение анимации</h2>
+<pre class="css size-l"><code>.circle:hover {
+    animation-name: zoom;
+    animation-duration: 1s;
+    animation-iteration-count: 3;
+}
+@keyframes zoom {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(2);
+    }
+}</code></pre>
+           </section>
+
+       <section>
+            <div class="ex">
+               <div class="circle fragment toggle  hover-3 zoom center">hover me</div>
+           </div>
+       </section>
+
+        <section>
+            <h2>Повторение анимации</h2>
+<pre class="css size-l"><code>.seconds {
+    animation-name: seconds;
+    animation-duration: 60s;
+    animation-iteration-count: infinite;
+}</code></pre>
+            <img src="img/clock.gif" height="300">
+           </section>
+
+        <section>
+            <h2>Скачки между повторениями</h2>
+<pre class="css size-l"><code>.circle {
+    animation-name: seconds;
+    animation-duration: 1s;
+    animation-iteration-count: 3;
+    animation-direction: alternate;
+}</code></pre>
+
+        <div class="ex">
+           <div class="circle fragment toggle hover-4 zoom center">hover me</div>
+        </div>
+           </section>
+
+        <section>
+            <h2>Скачки после завершения</h2>
+<pre class="css size-l"><code>.circle {
+    animation-name: seconds;
+    animation-duration: 1s;
+    animation-iteration-count: 3;
+    animation-direction: alternate;
+    animation-fill-mode: forwards;
+}</code></pre>
+
+        <div class="ex">
+           <div class="circle fragment toggle hover-5 zoom center">hover me</div>
+        </div>
+           </section>
+
+        <section>
+            <h2>Краткая запись</h2>
+<pre class="css size-l"><code>.long {
+    animation-name: scale;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 3;
+    animation-direction: alternate;
+    animation-delay: 5s;
+    animation-fill-mode: forwards;
+}</code></pre>
+<pre class="css fragment size-l"><code>.short {
+animation: scale 2s ease-in-out 3 alternate 5s forwards;
+}</code></pre>
+<pre class="css fragment size-l"><code>.multi-short {
+animation: scale 2s ease-in, move 2s ease-out;
+}</code></pre>
+        </section>
+
+        <section>
+            <h2>Управление анимацией</h2>
+<pre class="css size-l"><code>.b-heart {
+    ...
+    animation: heartBeat 1s ease infinite;
+}
+.b-heart:hover {
+    animation-play-state: paused;
+}</code></pre>
+                <div class="b-wr fragment toggle">
+                  <div class="b-heart"></div>
+                </div>
+        </section>
+        <section>
+            <h2>Эффект печати</h2>
+            <div class="ex"><div class="typing fragment toggle">css is awesome</div></div>
+<pre class="css fragment"><code>typing {
+    width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 1px solid;
+}
+.typing.visible {
+    animation: typing 4s steps(15) forwards,
+               caret 1s steps(1) infinite;
+}
+@keyframes typing { to { width: 15ch; } }
+@keyframes caret { 50% { border-color: transparent; } }
+</code></pre>
+        </section>
+        <section>
+            <h2>Движение по кругу</h2>
+            <div class="circle-wrong fragment toggle">
+                <img src="img/winter-is-coming-funny-cat-picture.jpg">
+            </div>
+<pre class="html"><code><div class="circle"><img src="cat"></div></code></pre>
+<pre class="css"><code>.circle.run { animation: spin 4s linear infinite; }
+@keyframes spin { to { transform: rotate(1turn); } }</code></pre>
+        </section>
+        <section>
+            <h2>Движение по кругу</h2>
+            <div class="circle-move fragment toggle">
+                <img src="img/winter-is-coming-funny-cat-picture.jpg">
+            </div>
+        </section>
+        <section>
+            <h2>Движение по кругу</h2>
+<pre class="html"><code><div class="circle"><img src="cat"></div></code></pre>
+<pre class="css"><code>
+.circle.run img {
+    animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0turn)
+                   translateY(-150px)
+                   rotate(1turn);
+    }
+    100% {
+        transform: rotate(1turn)
+                   translateY(-150px)
+                   rotate(0turn);
+    }
+}</code></pre>
+        </section>
+        <section>
+            <h2>Движение по кругу</h2>
+            <div class="circle-move steps fragment toggle">
+                <img src="img/winter-is-coming-funny-cat-picture.jpg">
+            </div>
+        </section>
+        <section>
+            <h2>Блокировка свойств</h2>
+<pre class="html"><code><div class="box" style="background: #fff !important;"></div></code></pre>
+<pre class="css"><code>.box:hover {
+    animation: break-style 1s infinite;
+}
+@keyframes break-style {
+    from { background: red }
+    to { background: red }
+}
+</code></pre>
+            <div class="ex">
+                <div class="box break-style fragment toggle" style="background: white !important; color: #000">box</div>
+            </div>
+        </section>
+        <section>
+            <h2>Solar System</h2>
+            <video data-autoplay loop>
+                <source src="img/solar.webm">
+            </video>
+        </section>
+        <section>
+            <h2>Заключение</h2>
+            <a href="http://tympanus.net/Development/CreativeLinkEffects/#cl-effect-1">Creative Link Effects</a><br>
+            <a href="http://codepen.io/Catagen/pen/PqYdXR#0">Day night</a><br>
+            <a href="http://codepen.io/juliangarnier/pen/idhuG">Solar System</a><br>
+            <a href="http://www.keithclark.co.uk/labs/css-fps/nojs/">Pure css</a><br>
+            <a href="https://codepen.io/keithclark/pen/JycFw">Pure css paralax</a><br>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties">Animatable CSS properties</a>
+        </section>
+        <section>
+            <h1>Спасибо</h1>
+            <img src="img/giphy.gif">
+        </section>
+    </div>
+</div>
+
+<script src="./js/head.min.js"></script>
+<script src="../../@lib/core.js"></script>
+<script src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+<script src="./js/jquery.lettering.js"></script>
+<script src="./js/jquery.textillate.js"></script>
+<script>
+            		$(document).ready(function () {
+            			$("#a, #b, #c, #d, #tx, #ty").change(function(){
+            				a  = $('#a').val();
+            				b  = $('#b').val();
+            				c  = $('#c').val();
+            				d  = $('#d').val();
+            				tx  = $('#tx').val();
+            				ty  = $('#ty').val();
+            				document.getElementById('igels').style.MozTransform = 'matrix('+a+','+c+','+b+','+d+','+tx+','+ty+')';
+            				document.getElementById('igels').style.WebkitTransform = 'matrix('+a+','+c+','+b+','+d+','+tx+','+ty+')';
+            				document.getElementById('igels').style.OTransform = 'matrix('+a+','+c+','+b+','+d+','+tx+','+ty+')';
+            				document.getElementById('igels').style.transform = 'matrix('+a+','+c+','+b+','+d+','+tx+','+ty+')';
+
+            			});
+            		});
+
+            	</script>
+<script>
+
+    Reveal.addEventListener('fragmentshown', function (e) {
+        var fr = $(e.fragment);
+        if (fr.hasClass('textillate')) {
+            var effect = fr.data('effect');
+            var shuffle = fr.data('shuffle');
+            var delay = fr.data('delay');
+            fr.textillate({
+                delay: delay || 50,
+                in: {
+                    effect: effect,
+                    shuffle: !!shuffle
+                }
+            });
+        }
+        // event.fragment = the fragment DOM element
+    });
+
+    Reveal.addEventListener('fragmenthidden', function (e) {
+        // event.fragment = the fragment DOM element
+    });
+
+    Reveal.addEventListener('state1', function (e) {
+        init();
+        // event.fragment = the fragment DOM element
+    });
+
+    $('.links a').on('mouseover', function () {
+        var text = $(this).data('content');
+        $('.output-links').text(text);
+
+    });
+    $('.links a').on('blur', function () {
+        $('.output-links').text('');
+
+    });
+
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: false,
+        progress: true,
+        history: true,
+        center: false,
+
+        transition: 'fade', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+            {
+                src: '../lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            }
+            },
+            {
+                src: '../plugin/markdown/marked.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: '../plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: '../plugin/highlight/highlight.js', async: true, condition: function () {
+                return !!document.querySelector('pre code');
+            }, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+            },
+            { src: '../plugin/zoom-js/zoom.js', async: true },
+            { src: '../plugin/notes/notes.js', async: true }
+        ]
+    });
+    Reveal.configure({ slideNumber: true });
+
+</script>
+
+</body>
+</html>
