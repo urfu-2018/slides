@@ -1,37 +1,17 @@
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <title>Анимации</title>
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-
-    <link rel="stylesheet" href="./css/reveal.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
     <link rel="stylesheet" href="./css/animate.css">
     <link rel="stylesheet" href="./css/magic.min.css">
     <link rel="stylesheet" href="./css/night-2.css" id="theme">
-
-    <!-- Code syntax highlighting -->
     <link rel="stylesheet" href="./css/zenburn.css">
-
-    <!-- Printing and PDF exports -->
     <link rel="stylesheet" href="index.css">
-
-    <script>
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
-        document.getElementsByTagName('head')[0].appendChild(link);
-    </script>
-    <script type="text/javascript"
-            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
 </head>
-
 <body>
-
 <div class="reveal">
 
     <!-- Any section element inside of this container is displayed as a slide -->
@@ -48,7 +28,7 @@
 
         <section>
             <h2>Сначала был GIF</h2>
-            <img src="img/cube.gif" height="550" style="border: 0;">
+            <img src="images/cube.gif" height="550" style="border: 0;">
         </section>
 
         <section data-state="state1">
@@ -403,7 +383,7 @@ window.onload = init;</code></pre>
 
         <section>
             <h1>3D</h1>
-            <img src="img/glass-3d.png" style="background: transparent; border: 0">
+            <img src="images/glass-3d.png" style="background: transparent; border: 0">
         </section>
         <section>
             <h2>rotateX(360deg)</h2>
@@ -486,7 +466,7 @@ window.onload = init;</code></pre>
             <h2>Перспектива</h2>
 
             <p>создает иллюзию глубины и позволяет перемещать в двумерном пространстве экрана точку вдоль и вокруг оси Z (как бы вглубь экрана и из него).</p>
-            <img src="img/perspective.jpg" height="400">
+            <img src="images/perspective.jpg" height="400">
         </section>
 
         <section>
@@ -503,12 +483,12 @@ window.onload = init;</code></pre>
         </section>
         <section>
             <video data-autoplay loop>
-                <source src="img/perspective3.webm">
+                <source src="images/perspective3.webm">
             </video>
         </section>
 
         <section>
-            <img src="img/perspective_distance.png" style="background: #fff">
+            <img src="images/perspective_distance.png" style="background: #fff">
         </section>
 
         <section>
@@ -533,7 +513,7 @@ window.onload = init;</code></pre>
 
         </section>
         <section>
-            <img src="img/perspective-orig.png">
+            <img src="images/perspective-orig.png">
         </section>
         <section>
             <h2>transform-style</h2>
@@ -546,10 +526,10 @@ window.onload = init;</code></pre>
             <!--<a href="https://jsbin.com/pakemoweye">Пример</a><br>-->
         </section>
         <section>
-           <img src="img/style-3d.gif" height="500" style="border: 0;">
+           <img src="images/style-3d.gif" height="500" style="border: 0;">
         </section>
         <section>
-           <img src="img/style-3d-2.gif" height="400" style="border: 0;">
+           <img src="images/style-3d-2.gif" height="400" style="border: 0;">
         </section>
         <section>
             <h2>backface-visibility</h2>
@@ -625,8 +605,8 @@ window.onload = init;</code></pre>
     /*         matrix(a, c, b, d, tx, ty);*/
     transform: matrix(2, 0, 0, 1, 0, 0);
 }</code></pre>
-            <img src="img/example-18.png" style="border: 0; vertical-align: top; background: transparent;">
-            <img src="img/example-19.png" style="border: 0; vertical-align: top; background: transparent;">
+            <img src="images/example-18.png" style="border: 0; vertical-align: top; background: transparent;">
+            <img src="images/example-19.png" style="border: 0; vertical-align: top; background: transparent;">
         </section>
         <section>
 <pre class="css size-l"><code>.matrix {
@@ -760,7 +740,7 @@ window.onload = init;</code></pre>
             <a href="https://dev.opera.com/articles/ru/understanding-the-css-transforms-matrix/">https://clck.ru/AMugB</a>
         </section>
 
-        <section data-background-image="img/переход_3.jpg">
+        <section data-background-image="images/переход_3.jpg">
             <h1>Переходы</h1>
         </section>
         <section>
@@ -838,7 +818,7 @@ window.onload = init;</code></pre>
     background-color: #f00;
 }</code></pre>
             <div class="fragment toggle" style="text-align: left;">
-                <img class="box linear move-x-800" src="img/linear.png" style="height: 250px; width: 250px;">
+                <img class="box linear move-x-800" src="images/linear.png" style="height: 250px; width: 250px;">
             </div>
         </section>
         <section>
@@ -859,7 +839,7 @@ window.onload = init;</code></pre>
             <h2>Кривая Безье</h2>
 
             <p>P = (1−t)<sup style="font-size: .6em;">2</sup>P<sub style="font-size: .6em;">1</sub> + 2(1−t)tP<sub style="font-size: .6em;">2</sub> + t<sup style="font-size: .6em;">2</sup>P<sub style="font-size: .6em;">3</sub></p>
-            <img src="img/cubic-bezier_points_values.png" style="height: 350px; background: #fff"><br>
+            <img src="images/cubic-bezier_points_values.png" style="height: 350px; background: #fff"><br>
             <a href="http://cubic-bezier.com/">cubic-bezier.com</a><br>
             <a href="http://easings.net/">easings.net</a>
         </section>
@@ -1149,7 +1129,7 @@ transition-duration: 3s;
     animation-duration: 60s;
     animation-iteration-count: infinite;
 }</code></pre>
-            <img src="img/clock.gif" height="300">
+            <img src="images/clock.gif" height="300">
            </section>
 
         <section>
@@ -1233,7 +1213,7 @@ animation: scale 2s ease-in, move 2s ease-out;
         <section>
             <h2>Движение по кругу</h2>
             <div class="circle-wrong fragment toggle">
-                <img src="img/winter-is-coming-funny-cat-picture.jpg">
+                <img src="images/winter-is-coming-funny-cat-picture.jpg">
             </div>
 <pre class="html"><code><div class="circle"><img src="cat"></div></code></pre>
 <pre class="css"><code>.circle.run { animation: spin 4s linear infinite; }
@@ -1242,7 +1222,7 @@ animation: scale 2s ease-in, move 2s ease-out;
         <section>
             <h2>Движение по кругу</h2>
             <div class="circle-move fragment toggle">
-                <img src="img/winter-is-coming-funny-cat-picture.jpg">
+                <img src="images/winter-is-coming-funny-cat-picture.jpg">
             </div>
         </section>
         <section>
@@ -1269,7 +1249,7 @@ animation: scale 2s ease-in, move 2s ease-out;
         <section>
             <h2>Движение по кругу</h2>
             <div class="circle-move steps fragment toggle">
-                <img src="img/winter-is-coming-funny-cat-picture.jpg">
+                <img src="images/winter-is-coming-funny-cat-picture.jpg">
             </div>
         </section>
         <section>
@@ -1290,7 +1270,7 @@ animation: scale 2s ease-in, move 2s ease-out;
         <section>
             <h2>Solar System</h2>
             <video data-autoplay loop>
-                <source src="img/solar.webm">
+                <source src="images/solar.webm">
             </video>
         </section>
         <section>
@@ -1304,36 +1284,33 @@ animation: scale 2s ease-in, move 2s ease-out;
         </section>
         <section>
             <h1>Спасибо</h1>
-            <img src="img/giphy.gif">
+            <img src="images/giphy.gif">
         </section>
     </div>
 </div>
 
-<script src="./js/head.min.js"></script>
 <script src="../../@lib/core.js"></script>
-<script src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+<script src="./js/jquery.min.js"></script>
 <script src="./js/jquery.lettering.js"></script>
 <script src="./js/jquery.textillate.js"></script>
 <script>
-            		$(document).ready(function () {
-            			$("#a, #b, #c, #d, #tx, #ty").change(function(){
-            				a  = $('#a').val();
-            				b  = $('#b').val();
-            				c  = $('#c').val();
-            				d  = $('#d').val();
-            				tx  = $('#tx').val();
-            				ty  = $('#ty').val();
-            				document.getElementById('igels').style.MozTransform = 'matrix('+a+','+c+','+b+','+d+','+tx+','+ty+')';
-            				document.getElementById('igels').style.WebkitTransform = 'matrix('+a+','+c+','+b+','+d+','+tx+','+ty+')';
-            				document.getElementById('igels').style.OTransform = 'matrix('+a+','+c+','+b+','+d+','+tx+','+ty+')';
-            				document.getElementById('igels').style.transform = 'matrix('+a+','+c+','+b+','+d+','+tx+','+ty+')';
+    $(document).ready(function () {
+        $("#a, #b, #c, #d, #tx, #ty").change(function(){
+            a  = $('#a').val();
+            b  = $('#b').val();
+            c  = $('#c').val();
+            d  = $('#d').val();
+            tx  = $('#tx').val();
+            ty  = $('#ty').val();
+            document.getElementById('igels').style.MozTransform = 'matrix('+a+','+c+','+b+','+d+','+tx+','+ty+')';
+            document.getElementById('igels').style.WebkitTransform = 'matrix('+a+','+c+','+b+','+d+','+tx+','+ty+')';
+            document.getElementById('igels').style.OTransform = 'matrix('+a+','+c+','+b+','+d+','+tx+','+ty+')';
+            document.getElementById('igels').style.transform = 'matrix('+a+','+c+','+b+','+d+','+tx+','+ty+')';
 
-            			});
-            		});
-
-            	</script>
+        });
+    });
+</script>
 <script>
-
     Reveal.addEventListener('fragmentshown', function (e) {
         var fr = $(e.fragment);
         if (fr.hasClass('textillate')) {
@@ -1365,50 +1342,12 @@ animation: scale 2s ease-in, move 2s ease-out;
         $('.output-links').text(text);
 
     });
+
     $('.links a').on('blur', function () {
         $('.output-links').text('');
-
     });
 
-    // Full list of configuration options available at:
-    // https://github.com/hakimel/reveal.js#configuration
-    Reveal.initialize({
-        controls: false,
-        progress: true,
-        history: true,
-        center: false,
 
-        transition: 'fade', // none/fade/slide/convex/concave/zoom
-
-        // Optional reveal.js plugins
-        dependencies: [
-            {
-                src: '../lib/js/classList.js', condition: function () {
-                return !document.body.classList;
-            }
-            },
-            {
-                src: '../plugin/markdown/marked.js', condition: function () {
-                return !!document.querySelector('[data-markdown]');
-            }
-            },
-            {
-                src: '../plugin/markdown/markdown.js', condition: function () {
-                return !!document.querySelector('[data-markdown]');
-            }
-            },
-            {
-                src: '../plugin/highlight/highlight.js', async: true, condition: function () {
-                return !!document.querySelector('pre code');
-            }, callback: function () {
-                hljs.initHighlightingOnLoad();
-            }
-            },
-            { src: '../plugin/zoom-js/zoom.js', async: true },
-            { src: '../plugin/notes/notes.js', async: true }
-        ]
-    });
-    Reveal.configure({ slideNumber: true });
 
 </script>
 

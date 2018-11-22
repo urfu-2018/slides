@@ -13,7 +13,7 @@
 1. [Модель отображения II](https://urfu-2018.github.io/slides/markup/05-mo-2/) ([pdf](https://urfu-2018.github.io/slides/markup/05-mo-2/index.pdf))
 1. [Layout](https://urfu-2018.github.io/slides/markup/06-layout/) ([pdf](https://urfu-2018.github.io/slides/markup/06-layout/index.pdf))
 1. [Браузер](https://urfu-2018.github.io/slides/markup/07-browser/) ([pdf](https://urfu-2018.github.io/slides/markup/07-browser/index.pdf))
-1. Анимация
+1. [Анимация](https://urfu-2018.github.io/slides/markup/08-animation/) ([pdf](https://urfu-2018.github.io/slides/markup/08-animation/index.pdf))
 1. Графика 
 1. Touch
 

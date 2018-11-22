@@ -3,8 +3,6 @@
  *
  * Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
  */
-@import url(https://fonts.googleapis.com/css?family=Montserrat:700);
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic,700italic);
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
@@ -13,7 +11,7 @@ body {
   background-color: #111; }
 
 .reveal {
-  font-family: yandex-sans, sans-serif;
+  font-family: sourcesanspro-light, sans-serif;
   font-size: 30px;
   font-weight: normal;
   color: #eee; }
@@ -39,7 +37,7 @@ body {
 .reveal h6 {
   margin: 0 0 20px 0;
   color: #eee;
-  font-family: yandex-sans-display, Impact, sans-serif;
+  font-family: sourcesanspro-light, Impact, sans-serif;
   font-weight: normal;
   line-height: 1.2;
   letter-spacing: -0.03em;
@@ -143,13 +141,13 @@ body {
   margin: 20px auto;
   text-align: left;
   font-size: 0.55em;
-  font-family: monospace;
+  font-family: sourcecodepro-light;
   line-height: 1.2em;
   word-wrap: break-word;
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3); }
 
 .reveal code {
-  font-family: monospace; }
+  font-family: sourcecodepro-light; }
 
 .reveal pre code {
   display: block;
