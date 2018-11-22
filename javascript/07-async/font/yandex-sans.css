@@ -1,0 +1,59 @@
+@font-face {
+    font-family: "Yandex Sans Display";
+    src: url("Yandex Sans Display-Thin.eot");
+    src: url("Yandex Sans Display-Thin.eot?#iefix") format("embedded-opentype"),
+         url("Yandex Sans Display-Thin.woff2") format("woff2"),
+         url("Yandex Sans Display-Thin.woff") format("woff"),
+         url("Yandex Sans Display-Thin.ttf") format("truetype"),
+         url("Yandex Sans Display-Thin.svg#YandexSansDisplay-Thin") format("svg");
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Yandex Sans Display";
+    src: url("Yandex Sans Display-Light.eot");
+    src: url("Yandex Sans Display-Light.eot?#iefix") format("embedded-opentype"),
+         url("Yandex Sans Display-Light.woff2") format("woff2"),
+         url("Yandex Sans Display-Light.woff") format("woff"),
+         url("Yandex Sans Display-Light.ttf") format("truetype"),
+         url("Yandex Sans Display-Light.svg#YandexSansDisplay-Light") format("svg");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Yandex Sans Display";
+    src: url("Yandex Sans Display-Regular.eot");
+    src: url("Yandex Sans Display-Regular.eot?#iefix") format("embedded-opentype"),
+         url("Yandex Sans Display-Regular.woff2") format("woff2"),
+         url("Yandex Sans Display-Regular.woff") format("woff"),
+         url("Yandex Sans Display-Regular.ttf") format("truetype"),
+         url("Yandex Sans Display-Regular.svg#YandexSansDisplay-Regular") format("svg");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Yandex Sans Display";
+    src: url("Yandex Sans Display-Regular Italic.eot");
+    src: url("Yandex Sans Display-Regular Italic.eot?#iefix") format("embedded-opentype"),
+         url("Yandex Sans Display-Regular Italic.woff2") format("woff2"),
+         url("Yandex Sans Display-Regular Italic.woff") format("woff"),
+         url("Yandex Sans Display-Regular Italic.ttf") format("truetype"),
+         url("Yandex Sans Display-Regular Italic.svg#YandexSansDisplay-RegularItalic") format("svg");
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Yandex Sans Display";
+    src: url("Yandex Sans Display-Bold.eot");
+    src: url("Yandex Sans Display-Bold.eot?#iefix") format("embedded-opentype"),
+         url("Yandex Sans Display-Bold.woff2") format("woff2"),
+         url("Yandex Sans Display-Bold.woff") format("woff"),
+         url("Yandex Sans Display-Bold.ttf") format("truetype"),
+         url("Yandex Sans Display-Bold.svg#YandexSansDisplay-Bold") format("svg");
+    font-weight: 700;
+    font-style: normal;
+}
