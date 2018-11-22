@@ -1,22 +1,10 @@
 <!doctype html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="utf-8">
-
+    <title>Асинхронность I</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-    <title>JavaScript, async</title>
-
-    <!-- Reveal -->
-    <link rel="stylesheet" href="css/reveal.css">
-
-    <!-- Яндексовые стили -->
-    <link rel="stylesheet" href="css/yandex.css">
-
-    <!-- Подсветка кода в стиле GitHub-->
-    <link rel="stylesheet" href="css/github.css">
-
-    <!-- Лекционные стили -->
+    <link rel="stylesheet" href="../../@lib/core.css">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
@@ -4315,31 +4303,6 @@
     </div>
 </div>
 
-<script src="js/head.min.js"></script>
-<script src="js/reveal.js"></script>
-<script>
-    /* Initialize Reveal.js and Hightlight.js */
-    Reveal.initialize({
-        // Display controls in the bottom right corner
-        controls: false,
-
-        // Display the page number of the current slide
-        slideNumber: true,
-
-        // Push each slide change to the browser history
-        history: true,
-
-        // Flags if we should show a help overlay when the questionmark
-        // key is pressed
-        help: false,
-
-        // Hides the address bar on mobile devices
-        hideAddressBar: true,
-
-        dependencies: [
-            { src: 'js/highlight.js', async: true, callback:() => hljs.initHighlightingOnLoad() }
-        ]
-    });
-</script>
+<script src="../../@lib/core.js"></script>
 </body>
 </html>
