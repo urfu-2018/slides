@@ -26,7 +26,7 @@
 1. [Прототипы и свойства полей объекта](https://urfu-2018.github.io/slides/javascript/05-prototypes/) ([pdf](https://urfu-2018.github.io/slides/javascript/05-prototypes/index.pdf))
 1. [Конструирование объектов, развитие JavaScript](https://urfu-2018.github.io/slides/javascript/06-classes/) ([pdf](https://urfu-2018.github.io/slides/javascript/06-classes/index.pdf))
 1. [Асинхронность I](https://urfu-2018.github.io/slides/javascript/07-async/) ([pdf](https://urfu-2018.github.io/slides/javascript/07-async/index.pdf))
-1. [Асинхронность II](https://urfu-2018.github.io/slides/javascript/08-async-II/) ([pdf](https://urfu-2018.github.io/slides/javascript/08-async-II/index.pdf))
+1. [Асинхронность II](https://urfu-2018.github.io/slides/javascript/08-async-2/) ([pdf](https://urfu-2018.github.io/slides/javascript/08-async-2/index.pdf))
 1. TypeScript I
 1. TypeScript II
 
