@@ -1,0 +1,102 @@
+section {
+  transform: scale(1) translate(0px, 0px) !important;
+}
+
+.projector {
+  text-align: center;
+}
+
+.indented-content {
+  margin-top: 50px !important;
+}
+
+.reveal h2,
+.reveal ul li {
+  font-size: 0.9em;
+}
+
+.reveal h3 {
+  font-size: 0.8em;
+  text-align: center;
+}
+
+.reveal h4 {
+  font-size: 0.7em;
+  text-align: center;
+}
+
+.reveal .left {
+  text-align: left;
+}
+
+.reveal .right {
+  text-align: right;
+}
+
+.reveal pre.size-M code {
+  font-size: 26px;
+  line-height: 32px;
+
+  padding: 0 13px;
+}
+
+.reveal pre.size-S code {
+  font-size: 22px;
+  line-height: 28px;
+
+  padding: 0 13px;
+}
+
+.reveal pre.size-XS code {
+  font-size: 20px;
+  line-height: 26px;
+
+  padding: 0 13px;
+}
+
+.reveal pre.size-XXS code {
+  font-size: 18px;
+  line-height: 24px;
+
+  padding: 0 13px;
+}
+
+.slide-javascript {
+  text-align: center;
+}
+
+.slide-ecmascript {
+  text-align: center;
+}
+
+.slide-browsers__screenshot {
+  text-align: center;
+}
+
+.slide-compatibility {
+  text-align: center;
+}
+
+.slide-ecma-future {
+  text-align: center;
+}
+
+.code-question-answer {
+  display: flex;
+}
+
+.slide-venn-esnext {
+  text-align: center;
+}
+
+.slide-babel__babel-logo {
+  text-align: center;
+}
+
+.slide-typescript {
+  text-align: center;
+}
+
+.slide-typescript-author {
+  text-align: center;
+}
