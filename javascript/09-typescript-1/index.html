@@ -7,8 +7,8 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <link rel="stylesheet" href="./@lib/core.css" />
-    <link rel="stylesheet" href="./@lib/theme.css" />
+    <link rel="stylesheet" href="../../@lib/core.css" />
+    <link rel="stylesheet" href="../../@lib/theme.css" />
     <link rel="stylesheet" href="index.css" />
   </head>
   <body class="white">
@@ -101,11 +101,11 @@
                     this.firstName = firstName;
                     this.lastName = lastName;
                   }
-  
+
                   get name() {
                     return `${this.firstName} ${this.lastName}`;
                   }
-  
+
                   setSkills(skills = []) {
                     this.skills = skills;
                   }
@@ -120,19 +120,19 @@
               <pre class="js"><code data-trim>
                 function foo() {
                   var apples = 5;
-                }          
+                }
               </code></pre>
 
               <pre class="js fragment"><code data-trim>
                 {
                   let apples = 10;
-                }      
+                }
               </code></pre>
 
               <pre class="js fragment"><code data-trim>
                 {
                   const apples = 15;
-                }          
+                }
               </code></pre>
             </div>
           </section>
@@ -144,7 +144,7 @@
               <pre class="js"><code data-trim>
                 // краткий синтаксис
                 const func = x => x * x;
-                
+
                 // блочный синтаксис
                 const func = (x, y) => { return x + y; };
               </code></pre>
@@ -160,7 +160,7 @@
 
                 `строка текста 1
                   строка текста 2`
-                
+
                 `строка текста ${выражение} строка текста`
               </code></pre>
             </div>
@@ -180,7 +180,7 @@
 
               <pre class="js fragment"><code data-trim>
                 const numbers = ['zero', 'one', 'two'];
-                const [zero, one, two] = numbers; 
+                const [zero, one, two] = numbers;
               </code></pre>
             </div>
           </section>
@@ -191,7 +191,7 @@
               <pre class="js"><code data-trim>
                 var p, q;
                 var obj = { p: 42, q: true };
-                
+
                 p = obj.p;
                 q = obj.q;
               </code></pre>
@@ -212,11 +212,11 @@
                   setTimeout(() => resolve("result"), 1000);
                   setTimeout(() => reject(new Error("ignored")), 2000);
                 });
-                
+
                 promise.then(
                   result => alert("Fulfilled: " + result),
                   error => alert("Rejected: " + error)
-                );                                
+                );
               </code></pre>
             </div>
           </section>
@@ -232,7 +232,7 @@
                 2 ** 3 // 8
                 3 ** 2 // 9
                 3 ** 2.5 // 15.588457268119896
-                10 ** -1 // 0.1                  
+                10 ** -1 // 0.1
               </code></pre>
             </div>
           </section>
@@ -246,7 +246,7 @@
 
                 str.includes("Быть"); // true
                 str.includes("вопрос"); // true
-                str.includes("несуществующий"); // false                   
+                str.includes("несуществующий"); // false
               </code></pre>
             </div>
           </section>
@@ -262,12 +262,12 @@
                 async function getAuthorAvatar(article) {
                   const userResponse = await fetch(`/articles/${article}`);
                   const { author } = await userResponse.json();
-                
+
                   const avatarResponse = await fetch(`/avatars/${author.id}`);
                   const avatar = await avatarResponse.json();
-                  
+
                   return avatar.url;
-                }                  
+                }
               </code></pre>
             </div>
           </section>
@@ -298,10 +298,10 @@
             <h3>Операторы Rest и Spread для объектов</h3>
 
             <pre class="js "><code data-trim>
-              const numbers = { 
-                zero: 1, 
-                one: 2, 
-                three: 3, 
+              const numbers = {
+                zero: 1,
+                one: 2,
+                three: 3,
                 four: 4
               };
               const { zero, one, ...others } = numbers;
@@ -406,16 +406,16 @@
             var Student = function () {
               function Student(firstName, lastName) {
                 _classCallCheck(this, Student);
-            
+
                 this.firstName = firstName;
                 this.lastName = lastName;
               }
-            
+
               _createClass(Student, [{
                 key: "setSkills",
                 value: function setSkills() {
-                  var skills = 
-                    arguments.length > 0 && 
+                  var skills =
+                    arguments.length > 0 &&
                     arguments[0] !== undefined ? arguments[0] : [];
 
                   this.skills = skills;
@@ -615,7 +615,7 @@
               <pre class="ts"><code data-trim>
                 const color1: string = "blue";
                 const color2: string = 'red';
-  
+
                 const fullName: string = `Arkady`;
                 const sentence: string = `Hello, my name is ${fullName}.`;
               </code></pre>
@@ -652,16 +652,16 @@
             <pre class="ts size-S"><code data-trim>
                 // Объявление кортежа
                 let point: [number, number];
-  
+
                 // Некорректная инициализация
                 point = [10, 'hello']; // Error
-  
+
                 // Инициализация
                 point = [20, 10]; // OK
-  
+
                 // Обращение
                 point[1]; // 10
-  
+
                 // Деструктуризация
                 const [first, second] = point;
               </code></pre>
@@ -674,8 +674,8 @@
           <section>
             <pre class="ts"><code data-trim>
               enum Color {
-                Red, 
-                Green, 
+                Red,
+                Green,
                 Blue
               }
 
@@ -826,11 +826,11 @@
                 interface IUser {
                   login: string;
                 }
-  
+
                 function printLogin(user: IUser) {
                   console.log(user.login);
                 }
-                
+
                 const user = {
                   username: 'savichev'
                 };
@@ -846,14 +846,14 @@
               interface ISquareConfig {
                 color?: string;
               }
-  
+
               function createSquare(config: SquareConfig) {
                 const newSquare = { color: "white", area: 100 };
-                
+
                 if (config.color) {
                     newSquare.color = config.color;
                 }
-                
+
                 return newSquare;
               }
 
@@ -879,7 +879,7 @@
                 class Python implements IMakesSound {
                   private readonly _length: number;
 
-                  public get length() { 
+                  public get length() {
                     return this._length / 100;
                   }
 
@@ -901,7 +901,7 @@
                 abstract class Snake {
                   private readonly _length: number;
 
-                  public get length() { 
+                  public get length() {
                     return this._length / 100;
                   }
 
@@ -946,8 +946,8 @@
                 }
 
                 Object.defineProperty(
-                  Snake.prototype, 
-                  "length", 
+                  Snake.prototype,
+                  "length",
                   {
                     get: function() {
                       return this._length / 100;
@@ -958,7 +958,7 @@
                 );
 
                 return Snake;
-              })();                                 
+              })();
             </code></pre>
           </section>
 
@@ -982,9 +982,9 @@
                 };
 
                 Python.population = 10000;
-                
+
                 return Python;
-              })(Snake);                                 
+              })(Snake);
             </code></pre>
           </section>
         </section>
@@ -1054,6 +1054,6 @@
       </div>
     </div>
 
-    <script src="./@lib/core.js"></script>
+    <script src="../../@lib/core.js"></script>
   </body>
 </html>
