@@ -1,0 +1,1183 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Просмотр презентаций</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+</head><body class="white"><div class="reveal"><div class="slides">
+
+<section class="center">
+    <h1><span class="bold">Type</span>Script</h1>
+    <p>Часть II</p>
+    <p>&nbsp;</p>
+    <h3 class="author right">Старков Дима</h3>
+</section>
+
+<section>
+    <h2>Сегодня</h2>
+    <ul>
+        <li class="fragment">Вывод типов</li>
+        <li class="fragment">Структурная типизация</li>
+        <li class="fragment">Более сложные типы</li>
+        <li class="fragment">Обобщенные типы</li>
+        <li class="fragment">Type Guards</li>
+    </ul>
+</section>
+
+<section>
+    <h2><span class="bold">Type</span>Script?</h2>
+    <ul>
+        <li class="fragment">Спасет от выстрелов себе в ногу</li>
+        <li class="fragment">ESNext прямо сейчас</li>
+        <li class="fragment">Средство против <strong>TypeError</strong></li>
+        <li class="fragment">Пишет код за вас</li>
+        <li class="fragment">Документация к коду</li>
+    </ul>
+    <p class="fragment"><strong>Но...</strong></p>
+</section>
+
+<section class="center" data-background-image="images/everywhere-meme.jpg"></section>
+
+<section>
+    <h2>Вывод типов</h2>
+
+    <pre class="typescript"><code data-noescape>
+let n: number = 42
+let s: string = 'Hello, world!'
+let a: number[] = [1, 2, 3, 4]
+    <span class="fragment" data-fragment-index="1">
+let n = 42
+let s = 'Hello, world!'
+let a = [1, 2, 3, 4]</span></code></pre>
+
+    <p class="fragment" data-fragment-index="1">🎉</p>
+</section>
+
+<section>
+    <h2>Наиболее общий тип</h2>
+
+    <pre class="typescript"><code data-noescape>
+let shapes = [new Circle(), new Square()]
+
+
+    <span class="fragment">
+shapes.push(new Triangle())</span></code></pre>
+
+    <p><img src="images/common-type.png"/></p>
+</section>
+
+<section>
+    <h2>Наиболее общий тип</h2>
+
+    <pre class="typescript"><code data-noescape>
+let shapes = [new Circle(), new Square()]
+    <span class="type-error-comment">
+// Argument of type 'Triangle'
+// is not assignable to parameter of type 'Square | Circle'.</span>
+shapes.push(<span class="type-error">new Triangle()</span>)</code></pre>
+
+    <p><img src="images/common-type.png"/></p>
+</section>
+
+<section>
+    <h2>Наиболее общий тип</h2>
+
+    <pre class="typescript"><code>
+let shapes = [new Circle(), new Square()]
+
+
+
+shapes.push(new Triangle())</code></pre>
+
+    <p><img src="images/common-type.png"/></p>
+</section>
+
+<section>
+    <h2>Наиболее общий тип</h2>
+
+    <pre class="typescript"><code data-noescape>
+let shapes = [<mark>new Circle()</mark>, new Square()]
+
+
+
+shapes.push(new Triangle())</code></pre>
+
+    <p><img src="images/common-type-1.png"/></p>
+</section>
+
+<section>
+    <h2>Наиболее общий тип</h2>
+
+    <pre class="typescript"><code data-noescape>
+let shapes = [new Circle(), <mark>new Square()</mark>]
+
+
+
+shapes.push(new Triangle())</code></pre>
+
+    <p><img src="images/common-type-2.png"/></p>
+</section>
+
+<section>
+    <h2>Наиболее общий тип</h2>
+
+    <pre class="typescript"><code data-noescape>
+let shapes = [new Circle(), new Square()]
+<span class="type-error-comment">
+// Argument of type 'Triangle'
+// is not assignable to parameter of type 'Square | Circle'.</span>
+shapes.push(<span class="type-error">new Triangle()</span>)</code></pre>
+
+    <p><img src="images/common-type-3.png"/></p>
+</section>
+
+<section>
+    <h2>Наиболее общий тип</h2>
+
+    <pre class="typescript"><code data-noescape>
+let shapes: <mark>Shape[]</mark> = [new Circle(), new Square()]
+
+
+
+shapes.push(new Triangle())</code></pre>
+
+    <p><img src="images/common-type-4.png"/></p>
+</section>
+
+<section>
+    <h2>Совместимость типов</h2>
+
+    <pre class="typescript"><code data-noescape>
+class Human {
+    name: string
+}
+
+class Robot {
+    name: string
+}
+    <span class="fragment" data-fragment-index="1">
+let human: Human = new Robot()</span></code></pre>
+
+    <p class="fragment" data-fragment-index="1">🤖</p>
+</section>
+
+<section>
+    <h2>Проверка типа в runtime</h2>
+
+    <pre class="typescript"><code>
+function addShape(shapes: Shape[], obj: object) {
+    if (obj instanceof Shape) {
+        shapes.push(obj as Shape)
+    }
+
+    throw new TypeError('Argument is not instanceof Shape')
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Проверка типа в runtime</h2>
+
+    <pre class="typescript"><code data-noescape>
+function addShape(shapes: <mark>Shape[]</mark>, obj: <mark>object</mark>) {
+    if (obj instanceof Shape) {
+        shapes.push(obj as Shape)
+    }
+
+    throw new TypeError('Argument is not instanceof Shape')
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Проверка типа в runtime</h2>
+
+    <pre class="typescript"><code data-noescape>
+function addShape(shapes: Shape[], obj: object) {
+    if (<mark>obj instanceof Shape</mark>) {
+        shapes.push(obj as Shape)
+    }
+
+    throw new TypeError('Argument is not instanceof Shape')
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Проверка типа в runtime</h2>
+
+    <pre class="typescript"><code data-noescape>
+function addShape(shapes: Shape[], obj: object) {
+    if (obj instanceof Shape) {
+        shapes.push(<mark>obj as Shape</mark>)
+    }
+
+    throw new TypeError('Argument is not instanceof Shape')
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Проверка типа в runtime</h2>
+
+    <pre class="typescript"><code data-noescape>
+function addShape(shapes: Shape[], obj: object) {
+    if (obj instanceof Shape) {
+        shapes.push(obj as Shape)
+    }
+
+    throw new <mark>TypeError('Argument is not instanceof Shape')</mark>
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Type Guard</h2>
+
+    <pre class="typescript"><code data-noescape>
+function addShape(shapes: Shape[], obj: object) {
+    if (obj instanceof Shape) {
+        shapes.push(<mark>obj</mark>)
+    }
+
+    throw new TypeError('Argument is not instanceof Shape')
+}
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>
+        <span class="bold">Type</span>Script крут.<br>
+        Но можем ли мы описать весь JavaScript?
+    </h2>
+</section>
+
+<section>
+    <h2>Вспомним <span class="bold">Type</span>Script 1.0</h2>
+    <ul>
+        <li>Интерфейсы</li>
+        <li>Классы</li>
+        <li>Обобщенные типы</li>
+        <li>Перегрузки функций</li>
+    </ul>
+    <p class="fragment"><strong>Чего еще желать?</strong></p>
+</section>
+
+<section>
+    <pre class="typescript"><code data-noescape>
+// String.split
+split(separator: <mark>?</mark>, limit: number): string[]
+    </code></pre>
+</section>
+
+<section>
+    <pre class="typescript"><code data-noescape>
+// String.split
+split(separator: <mark>string | RegExp</mark>, limit: number): string[]
+    </code></pre>
+</section>
+
+<section>
+    <pre class="typescript"><code data-noescape>
+// String.split
+split(separator: string | RegExp, limit: number): string[]
+    </code></pre>
+    <p>&nbsp;</p>
+    <h2><strong>Решение: Union Types</strong></h2>
+</section>
+
+<section>
+    <h2>Union Type Guard</h2>
+
+    <pre class="typescript code-block"><code>
+function negate(n: string | number) {
+    if (typeof n === 'string') {
+        return '-'.concat(n);
+    } else {
+        return -n;
+    }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Union Type Guard</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+function negate(n: <mark>string | number</mark>) {
+    if (typeof n === 'string') {
+        return '-'.concat(n);
+    } else {
+        return -n;
+    }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Union Type Guard</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+function negate(n: string | number) {
+    if (<mark>typeof n === 'string'</mark>) {
+        return '-'.concat(n);
+    } else {
+        return -n;
+    }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Union Type Guard</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+function negate(n: string | number) {
+    if (typeof n === 'string') {
+        return '-'.<mark>concat</mark>(n);
+    } else {
+        return -n;
+    }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Union Type Guard</h2>
+
+    <pre class="typescript code-block"><code>
+function negate(n: string | number) {
+    if (typeof n === 'string') {
+        return '-'.concat(n);
+    }
+
+    return -n;
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Intersection Types</h2>
+
+    <div class="two-columns">
+        <pre class="typescript"><code data-noescape><span class="fragment" data-fragment-index="0">
+type Cat = {
+    purr()
+}
+        </span>
+        </code></pre>
+        <div class="diagrams">
+            <img class="fragment" data-fragment-index="0" src="images/catdog.png">
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Intersection Types</h2>
+
+    <div class="two-columns">
+        <pre class="typescript"><code>
+type Cat = {
+    purr()
+}
+
+type Dog = {
+    woof()
+}
+        </code></pre>
+        <div class="diagrams">
+            <img src="images/catdog-1.png">
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Intersection Types</h2>
+
+    <div class="two-columns">
+        <pre class="typescript"><code>
+type Cat = {
+    purr()
+}
+
+type Dog = {
+    woof()
+}
+
+type CatDog = Cat & Dog
+        </code></pre>
+        <div class="diagrams">
+            <img src="images/catdog-2.png">
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Type Alias</h2>
+
+    <pre class="typescript"><code>
+
+
+// String.split
+split(separator: string | RegExp, limit: number): string[]
+    </code></pre>
+</section>
+
+<section>
+    <h2>Type Alias</h2>
+    <pre class="typescript"><code data-noescape>
+type StringOrRegExp = string | RegExp
+
+// String.split
+split(separator: <mark>StringOrRegExp</mark>, limit: number): string[]
+    </code></pre>
+</section>
+
+<section>
+    <h2>Type vs Interface</h2>
+
+    <div class="code-two-columns">
+        <pre class="typescript"><code>
+type Point = {
+    x: number
+    y: number
+}
+        </code></pre>
+        <pre class="typescript"><code>
+interface Point {
+    x: number
+    y: number
+}
+        </code></pre>
+    </div>
+    <ul>
+        <li class="fragment">implements <span class="bold">interface</span></li>
+        <li class="fragment"><span class="bold">Type1</span> | <span class="bold">Type2</span></li>
+    </ul>
+</section>
+
+<section>
+    <h2>Тип ≡ Множество</h2>
+    <ul>
+        <li>Можем объединять типы <strong>|</strong></li>
+        <li>Можем пересекать типы <strong>&</strong></li>
+        <li>Можем вычитать из одного типа другой</li>
+    </ul>
+    <p class="fragment"><strong>Фух, теперь точно всё...</strong></p>
+</section>
+
+<section>
+    <h2>А вот и нет!</h2>
+
+    <pre class="javascript code-block"><code>
+function get(obj, keyName) {
+    return obj[keyName]
+}</code></pre><pre class="typescript fragment code-block"><code data-noescape>
+function get(obj: any, keyName: string): any {
+    return obj[keyName]
+}
+    <span class="fragment"><span class="type-error-comment">
+// TypeError: Cannot read property 'prototype' of null</span>
+get(null, 'prototype')
+    </span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>А вот и нет!</h2>
+
+    <pre class="javascript code-block"><code data-noescape>
+function get(<mark>obj</mark>, keyName) {
+    return obj[keyName]
+}</code></pre><pre class="typescript code-block"><code data-noescape>
+function get(<mark>obj: any</mark>, keyName: string): any {
+    return obj[keyName]
+}
+    <span class="type-error-comment">
+// TypeError: Cannot read property 'prototype' of null</span>
+get(null, 'prototype')
+    </code></pre>
+</section>
+
+<section>
+    <h2>А вот и нет!</h2>
+
+    <pre class="javascript code-block"><code data-noescape>
+function get(obj, <mark>keyName</mark>) {
+    return obj[keyName]
+}</code></pre><pre class="typescript code-block"><code data-noescape>
+function get(obj: any, <mark>keyName: string</mark>): any {
+    return obj[keyName]
+}
+    <span class="type-error-comment">
+// TypeError: Cannot read property 'prototype' of null</span>
+get(null, 'prototype')
+    </code></pre>
+</section>
+
+<section>
+    <h2>А вот и нет!</h2>
+
+    <pre class="javascript code-block"><code data-noescape>
+function get(obj, keyName) {
+    return obj[keyName]
+}</code></pre><pre class="typescript code-block"><code data-noescape>
+function get(obj: any, keyName: string): <mark>any</mark> {
+    return obj[keyName]
+}
+    <span class="type-error-comment">
+// TypeError: Cannot read property 'prototype' of null</span>
+get(null, 'prototype')
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>
+        Нужно уметь обрабатывать значения разных типов
+        идентичным образом
+    </h2>
+    <p class="fragment"><strong>Кажется нам нужен...</strong></p>
+</section>
+
+<section class="center" data-background-image="images/polymorphism-meme.jpg" data-background-size></section>
+
+<section>
+    <h2>Обобщенные типы</h2>
+
+    <pre class="typescript code-block"><code>
+function identity(arg: any): any {
+    return arg;
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Обобщенные типы</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+function identity<mark>&lt;T&gt;</mark>(arg: <mark>T</mark>): <mark>T</mark> {
+    return arg;
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Обобщенные функции</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+function identity&lt;T&gt;(arg: T): T {
+    return arg;
+}
+
+<span>identity('string') // T is string</span>
+<span class="fragment">identity(12131415) // T is number</span>
+<span class="fragment">identity([4, 8, 15, 16, 23, 42]) // T is number[]</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Встроенные обобщенные типы</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+const fib: Array&lt;number&gt; = [1, 1, 2, 3, 5]
+    <span class="fragment"><span class="type-error-comment">
+// Argument of type 'string'
+// is not assignable to parameter of type 'number'.</span>
+fib.push(<span class="type-error">'1'</span>)</span>
+
+<span class="fragment">const map: Map&lt;number, string&gt; = new Map()</span>
+    <span class="fragment"><span class="type-error-comment">
+// Argument of type 'number'
+// is not assignable to parameter of type 'string'.</span>
+map.set(1, <span class="type-error">1</span>)
+    </span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Обобщенные интерфейсы</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+interface IStack&lt;TItem&gt; {
+    push(item: TItem)
+    pop(): TItem
+}
+    <span class="fragment">
+let numStack: IStack&lt;number&gt; = [1, 2, 3]
+    </span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Обобщенные интерфейсы</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+interface IStack&lt;<mark>number</mark>&gt; {
+    push(item: <mark>number</mark>)
+    pop(): <mark>number</mark>
+}
+
+let numStack: IStack&lt;number&gt; = [1, 2, 3]
+    </code></pre>
+</section>
+
+<section>
+    <h2>Обобщенные типы</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+type AsyncResult&lt;TResult&gt; = Promise&lt;TResult&gt; | TResult
+    <span class="fragment">
+let result: AsyncResult&lt;string&gt; = Promise.resolve('200')
+let result: AsyncResult&lt;string&gt; = '200'
+    </span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Обобщенные типы</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+type AsyncResult&lt;<mark>string</mark>&gt; = Promise&lt;<mark>string</mark>&gt; | <mark>string</mark>
+
+let result: AsyncResult&lt;string&gt; = Promise.resolve('200')
+let result: AsyncResult&lt;string&gt; = '200'
+    </code></pre>
+</section>
+
+<section>
+    <h2>Обобщенные классы</h2>
+
+    <pre class="typescript code-block"><code data-noescape>class Stack&lt;TItem&gt; implements IStack&lt;TItem&gt; {
+    private state: TItem[]
+
+    constructor() {
+        this.state = []
+    }
+
+    push(item: TItem) {
+        this.state.push(item)
+    }
+
+    pop(): TItem {
+        return this.state.pop()
+    }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Обобщенные классы</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+class Stack&lt;TItem&gt; implements IStack&lt;TItem&gt; {
+    <mark>private state: TItem[] = []</mark>
+
+    push(item: TItem) {
+        this.state.push(item)
+    }
+
+    pop(): TItem {
+        return this.state.pop()
+    }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Обобщенные типы</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+interface ISwim {
+    swim()
+}
+    <span class="fragment">
+class Dog implements ISwim {
+    swim() { ... }
+}
+    </span><span class="fragment">
+class Duck implements ISwim {
+    swim() { ... }
+}
+    </span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Ограничения на обобщенные типы</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+function swimTogether&lt;
+    T1 implements ISwim,
+    T2 implements ISwim
+&gt;(firstPal: T1, secondPal: T2) {
+    firstPal.swim()
+    secondPal.swim()
+}
+    </code></pre>
+</section>
+
+<section data-background-image="images/swim-meme.gif"></section>
+
+<section>
+    <h2>Обобщенные типы</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+type TypeName&lt;T&gt; =
+    T extends string ? 'string' :
+    T extends number ? 'number' :
+    T extends boolean ? 'boolean' :
+    T extends undefined ? 'undefined' :
+    T extends Function ? 'function' :
+    'object'
+    </code></pre>
+</section>
+
+<section>
+    <h2>Обобщенные типы</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+type TypeName&lt;<mark>string</mark>&gt; =
+    <mark>string</mark> extends string ? <mark>'string'</mark> :
+    T extends number ? 'number' :
+    T extends boolean ? 'boolean' :
+    T extends undefined ? 'undefined' :
+    T extends Function ? 'function' :
+    'object'
+    </code></pre>
+</section>
+
+<section>
+    <h2>Обобщенные типы</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+type TypeName&lt;<mark>number</mark>&gt; =
+    <mark>number extends string</mark> ? 'string' :
+    <mark>number extends number</mark> ? <mark>'number'</mark> :
+    T extends boolean ? 'boolean' :
+    T extends undefined ? 'undefined' :
+    T extends Function ? 'function' :
+    'object'
+    </code></pre>
+</section>
+
+<section>
+    <h2>Наша функция</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+function get(obj: any, keyName: string): any {
+    return obj[keyName]
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Наша функция</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+function get&lt;<mark>T</mark>&gt;(obj: <mark>T</mark>, keyName: string): any {
+    return obj[keyName]
+}
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>
+        Хотим знать список полей объекта<br>
+        и их типы на этапе компиляции
+    </h2>
+    <p class="fragment"><strong>Решение: Lookup Types и keyof</strong></p>
+</section>
+
+<section>
+    <h2>Lookup типы</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+interface IUser {
+    login: string
+    age: number
+    gender: 'male' | 'female'
+}
+
+<span class="fragment" data-fragment-index="1">let login: IUser['login']</span>
+<span class="fragment" data-fragment-index="1">let login: string</span>
+
+<span class="fragment" data-fragment-index="2">let loginOrAge: IUser['login' | 'age']</span>
+<span class="fragment" data-fragment-index="2">let loginOrAge: string | number</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>keyof</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+interface IUser {
+    login: string
+    age: number
+    gender: 'male' | 'female'
+}
+
+<span class="fragment" data-fragment-index="1">let key: keyof IUser</span>
+<span class="fragment" data-fragment-index="1">let key: 'login' | 'age' | 'gender'</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Наша простая функция</h2>
+
+    <pre class="javascript code-block"><code>
+function get(obj, keyName) {
+    return obj[keyName]
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Наша <strike>простая</strike> функция</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+function get<mark>&lt;T&gt;</mark>(obj: <mark>T</mark>, keyName: <mark>keyof T</mark>): <mark>T[keyof T]</mark> {
+    return obj[keyName]
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Наша <strike>простая</strike> функция</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+function get&lt;T&gt;(obj: T, keyName: keyof T): T[keyof T] {
+    return obj[keyName]
+}
+
+let a: number = get({ a: 1 }, 'a')
+    </code></pre>
+</section>
+
+<section>
+    <h2>Наша <strike>простая</strike> функция</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+function get&lt;<mark>{ a: 1 }</mark>&gt;(obj: T, keyName: keyof T): T[keyof T] {
+    return obj[keyName]
+}
+
+let a: number = get({ a: 1 }, 'a')
+    </code></pre>
+</section>
+
+<section>
+    <h2>Наша <strike>простая</strike> функция</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+function get&lt;{ a: 1 }&gt;(obj: T, keyName: <mark>'a'</mark>): T[<mark>'a'</mark>] {
+    return obj[keyName]
+}
+
+let a: number = get({ a: 1 }, 'a')
+    </code></pre>
+</section>
+
+<section>
+    <h2>Наша <strike>простая</strike> функция</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+function get&lt;{ a: 1 }&gt;(obj: T, keyName: 'a'): <mark>number</mark> {
+    return obj[keyName]
+}
+
+let a: number = get({ a: 1 }, 'a')
+    </code></pre>
+</section>
+
+<section>
+    <h2>Наша <strike>простая</strike> функция</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+function get&lt;T&gt;(obj: T, keyName: keyof T): T[keyof T] {
+    return obj[keyName]
+}
+
+let a: number = get({ a: 1 }, 'a')
+    <span class="fragment"><span class="type-error-comment">
+// Argument of type '"c"'
+// is not assignable to parameter of type '"a" | "b"'.</span>
+let c: undefined = get({ a: 1, b: 2 }, <span class="type-error">'c'</span>)
+    </span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Наша <strike>простая</strike> функция</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+function get&lt;T, <mark>K extends keyof T</mark>&gt;(obj: T, keyName: <mark>K</mark>): T[<mark>K</mark>] {
+    return obj[keyName]
+}
+
+let a: number = get({ a: 1 }, 'a')
+
+
+
+let c: undefined = get({ a: 1, b: 2 }, 'c')
+    </code></pre>
+</section>
+
+<section class="center">
+    <h1>Перерыв</h1>
+</section>
+
+<section>
+    <h2>А что там в es5?</h2>
+    <pre class="typescript code-block"><code data-noescape>
+interface IUser {
+    login: string
+    age: number
+    gender: 'male' | 'female'
+}
+
+const user = { login: 'dimastark', age: 21, gender: 'male' }<span class="fragment">
+const readonlyUser: <mark>?</mark> = Object.freeze(user)
+    </span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>А что там в es5?</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+interface I<mark>Frozen</mark>User {
+    <mark>readonly</mark> login: string
+    <mark>readonly</mark> age: number
+    <mark>readonly</mark> gender: 'male' | 'female'
+}
+
+const user = { login: 'dimastark', age: 21, gender: 'male' }
+const readonlyUser: <mark>IFrozenUser</mark> = Object.freeze(user)
+    </code></pre>
+
+    <p class="fragment"><strong>Решение: Mapped Types</strong></p>
+</section>
+
+<section data-background-size="auto" data-background-image="images/what-if-i-say-meme.jpg"></section>
+
+<section>
+    <h2>Mapped Types</h2>
+
+    <pre class="typescript code-block"><code data-noescape>interface IUser {
+    login: string
+    age: number
+    gender: 'male' | 'female'
+}
+    <mark class="fragment" data-fragment-index="1">
+type Readonly&lt;T&gt; = {
+    readonly [P in 'login' | 'age' | 'gender']: T[P];
+};</mark>
+
+const user = { login: 'dimastark', age: 21, gender: 'male' }
+const readonlyUser: <mark class="fragment" data-fragment-index="1">Readonly&lt;IUser&gt;</mark> = Object.freeze(user)
+    </code></pre>
+</section>
+
+<section>
+    <h2>Mapped Types + keyof</h2>
+
+    <pre class="typescript code-block"><code data-noescape>interface IUser {
+    login: string
+    age: number
+    gender: 'male' | 'female'
+}
+
+type Readonly&lt;T&gt; = {
+    readonly [P in <mark>keyof T</mark>]: T[P];
+};
+
+const user = { login: 'dimastark', age: 21, gender: 'male' }
+const readonlyUser: Readonly&lt;IUser&gt; = Object.freeze(user)
+    </code></pre>
+</section>
+
+<section>
+    <h2>infer</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+type ValueOf&lt;T&gt; = T extends {
+    [key: string]: infer U
+} ? U : never;
+    <span class="fragment">
+ValueOf<{ a: string, b: string }>  // string
+ValueOf<{ a: string, b: number }>  // string | number
+    </span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Mapped Types</h2>
+
+    <pre class="typescript code-block"><code data-noescape>interface IUser {
+    login: string
+    birthDate: {
+        year: number
+        month: number
+        day: number
+    }
+    gender: 'male' | 'female'
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Mapped Types</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+type DeepReadonly&lt;T&gt; = {
+    [P in keyof T]:
+        T[P] extends (infer U)[] ? DeepReadonly&lt;U&gt;[] :
+        T[P] extends object ? DeepReadonly&lt;T[P]&gt; :
+        readonly T[P];
+};
+    </code></pre>
+</section>
+
+<section>
+    <h2>Mapped Types</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+type DeepReadonly&lt;<mark>T</mark>&gt; = {
+    [P in keyof T]:
+        T[P] extends (infer U)[] ? DeepReadonly&lt;U&gt;[] :
+        T[P] extends object ? DeepReadonly&lt;T[P]&gt; :
+        readonly T[P];
+};
+    </code></pre>
+</section>
+
+<section>
+    <h2>Mapped Types</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+type DeepReadonly&lt;T&gt; = {
+    [<mark>P in keyof T</mark>]:
+        T[P] extends (infer U)[] ? DeepReadonly&lt;U&gt;[] :
+        T[P] extends object ? DeepReadonly&lt;T[P]&gt; :
+        readonly T[P];
+};
+    </code></pre>
+</section>
+
+<section>
+    <h2>Mapped Types</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+type DeepReadonly&lt;T&gt; = {
+    [P in keyof T]:
+        <mark>T[P] extends (infer U)[]</mark> ? DeepReadonly&lt;U&gt;[] :
+        T[P] extends object ? DeepReadonly&lt;T[P]&gt; :
+        readonly T[P];
+};
+    </code></pre>
+</section>
+
+<section>
+    <h2>Mapped Types</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+type DeepReadonly&lt;T&gt; = {
+    [P in keyof T]:
+        T[P] extends (<mark>infer U</mark>)[] ? DeepReadonly&lt;U&gt;[] :
+        T[P] extends object ? DeepReadonly&lt;T[P]&gt; :
+        readonly T[P];
+};
+    </code></pre>
+</section>
+
+<section>
+    <h2>Mapped Types</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+type DeepReadonly&lt;T&gt; = {
+    [P in keyof T]:
+        T[P] extends (infer U)[] ? <mark>DeepReadonly&lt;U&gt;[]</mark> :
+        T[P] extends object ? DeepReadonly&lt;T[P]&gt; :
+        readonly T[P];
+};
+    </code></pre>
+</section>
+
+<section>
+    <h2>Mapped Types</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+type DeepReadonly&lt;T&gt; = {
+    [P in keyof T]:
+        T[P] extends (infer U)[] ? DeepReadonly&lt;U&gt;[] :
+        <mark>T[P] extends object</mark> ? DeepReadonly&lt;T[P]&gt; :
+        readonly T[P];
+};
+    </code></pre>
+</section>
+
+<section>
+    <h2>Mapped Types</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+type DeepReadonly&lt;T&gt; = {
+    [P in keyof T]:
+        T[P] extends (infer U)[] ? DeepReadonly&lt;U&gt;[] :
+        T[P] extends object ? <mark>DeepReadonly&lt;T[P]&gt;</mark> :
+        readonly T[P];
+};
+    </code></pre>
+</section>
+
+<section>
+    <h2>Mapped Types</h2>
+
+    <pre class="typescript code-block"><code data-noescape>
+type DeepReadonly&lt;T&gt; = {
+    [P in keyof T]:
+        T[P] extends (infer U)[] ? DeepReadonly&lt;U&gt;[] :
+        T[P] extends object ? DeepReadonly&lt;T[P]&gt; :
+        <mark>readonly T[P];</mark>
+};
+    </code></pre>
+</section>
+
+<section>
+    <h2>Ссылочки</h2>
+
+    <ul>
+        <li>
+            <a href="https://www.typescriptlang.org/docs/handbook/advanced-types.html">
+                <span class="bold">Type</span>Script Handbook. Advanced.
+            </a>
+        </li>
+        <li>
+            <a href="https://basarat.gitbooks.io/typescript/docs/types/type-system.html">
+                <span class="bold">Type</span>Script Deep Dive
+            </a>
+        </li>
+        <li>
+            <a href="https://www.youtube.com/watch?v=srqqwuqzYMM">
+                Андрей Старовойт — Эволюция <span class="bold">Type</span>Script
+            </a>
+        </li>
+        <li>
+            <a href="http://www.typescriptlang.org/play/">
+                <span class="bold">Type</span>Script Playground
+            </a>
+        </li>
+    </ul>
+</section>
+
+<section class="center">
+    <h2>Вопросы?</h2>
+</section>
+
+<section class="center">
+    <h2>Спасибо!</h2>
+</section>
+
+</div></div><script src="../../@lib/core.js"></script></body></html>

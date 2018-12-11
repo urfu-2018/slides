@@ -272,6 +272,11 @@
   background-color: #ffecec;
 }
 
+.white .hljs-built_in,
+.white .hljs-builtin-name {
+    color: #0086b3;
+}
+
 
 /* Black theme */
 
