@@ -28,30 +28,4 @@
 1. [Асинхронность I](https://urfu-2018.github.io/slides/javascript/07-async/) ([pdf](https://urfu-2018.github.io/slides/javascript/07-async/index.pdf))
 1. [Асинхронность II](https://urfu-2018.github.io/slides/javascript/08-async-2/) ([pdf](https://urfu-2018.github.io/slides/javascript/08-async-2/index.pdf))
 1. [TypeScript I](https://urfu-2018.github.io/slides/javascript/09-typescript-1/) ([pdf](https://urfu-2018.github.io/slides/javascript/09-typescript-1/index.pdf))
-1. TypeScript II
-
-## ServerSide
-
-1. Node.js I
-1. Node.js II
-1. Архитектура приложения
-1. Базы данных I (Mongo)
-1. Базы данных II (PostgreSQL)
-1. Клиент-сервер I (HTTP, REST и WebSockets)
-1. Клиент-сервер II (Protobuf и gRPC)
-1. Безопасность
-1. Авторизация, аутентификация, идентификация
-1. Паттерны разработки
-
-## ClientSide
-
-1. Организация вёрстки
-1. JavaScript в браузере
-1. Клиентская производительность
-1. Web APIs I (Service Workers, History, File)
-1. Web APIs II (Cookies, WebStorage, XMLHttpRequest, Fetch)
-1. React I
-1. Сборка приложения
-1. React II
-1. React III
-
+1. [TypeScript II](https://urfu-2018.github.io/slides/javascript/10-typescript-2/) ([pdf](https://urfu-2018.github.io/slides/javascript/10-typescript-2/index.pdf))
