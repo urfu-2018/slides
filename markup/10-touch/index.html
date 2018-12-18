@@ -1,0 +1,1136 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Touch</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="./css-lib/reveal.css">
+    <link rel="stylesheet" href="./css-lib/theme/yandex.css" id="theme">
+    <link rel="stylesheet" href="./lib/css/zenburn.css">
+    <link rel="stylesheet" href="./css/user.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+   <script type="text/javascript">
+     google.charts.load('current', {'packages':['corechart']});
+     google.charts.setOnLoadCallback(drawChart);
+     function drawChart() {
+
+       var data = google.visualization.arrayToDataTable([
+         ['Task', 'Hours per Day'],
+         ['Desktop', 43.98],
+         ['Tablets', 4.07],
+         ['Mobile',  51.95]
+       ]);
+
+       var options = {
+           is3D: true,
+//           pieSliceText: 'label',
+           backgroundColor: 'transparent',
+           legend: {textStyle:{color: 'white', fontSize: 25}},
+           slices: {  3: {offset: 0.2}}
+//         title: 'My Daily Activities'
+       };
+
+       var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+       chart.draw(data, options);
+     }
+   </script>
+</head>
+<body class="yandex nodejs">
+<div class="reveal">
+    <div class="slides">
+
+        <section class="large">
+            <h1 style="text-align: left; margin-bottom: -20px">TOUCH</h1>
+            <h2 style="text-align: left; color: #aaa" class="advice">или как верстать под "мобилки"</h2>
+            
+            <!--<p class="author">-->
+                <!--<small>Кувалдин Артем</small>-->
+            <!--</p>-->
+        </section>
+
+        <!-- Введение -->
+        <section data-background-image="./img/new/evo-phones.jpg">
+        </section>
+
+        <section>
+            <div style=" height: 600px; width: 600px; margin: 0 auto;">
+                <svg height="100%" version="1.1" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative; left: -0.5px;" viewBox="0 0 362 337" preserveAspectRatio="xMinYMin meet"><path fill="none" stroke="#ffffff" d="M273.64166666666665,284L273.64166666666665,284" stroke-width="0.6" stroke-dasharray="2.4,1.7999999999999998" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#ffffff" d="M357,248.66666666666666L42.53125,248.66666666666666M357,212.83333333333331L42.53125,212.83333333333331M357,176.99999999999997L42.53125,176.99999999999997M357,141.16666666666663L42.53125,141.16666666666663M357,105.33333333333329L42.53125,105.33333333333329M357,69.49999999999994L42.53125,69.49999999999994" stroke-width="0.6" stroke-dasharray="2.4,1.7999999999999998" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="135.03125" y="314" width="55.34375" height="16" rx="0" ry="0" fill="none" stroke="none" transform="matrix(1,0,0,1,84.3125,0)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="72.015625" y="314" width="58.015625" height="16" rx="0" ry="0" fill="none" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(1,0,0,1,84.3125,0)"></rect><rect x="3" y="314" width="64.015625" height="16" rx="0" ry="0" fill="none" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(1,0,0,1,84.3125,0)"></rect><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.2.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><text x="5" y="17.817193" text-anchor="start" font-family="Arial" font-size="22px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 22px;" transform="matrix(1,0,0,1,3.6875,0)"><tspan dy="7.676568" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Статистика мобильных устройств</tspan></text><rect x="5" y="316" width="12" height="12" rx="1" ry="1" fill="#056fa3" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(1,0,0,1,84.3125,0)"></rect><text x="21" y="322" text-anchor="start" font-family="Arial" font-size="12px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 12px;" transform="matrix(1,0,0,1,84.3125,0)"><tspan dy="4.25" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Desktop</tspan></text><rect x="74.015625" y="316" width="12" height="12" rx="1" ry="1" fill="#34a5da" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(1,0,0,1,84.3125,0)"></rect><text x="90.015625" y="322" text-anchor="start" font-family="Arial" font-size="12px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 12px;" transform="matrix(1,0,0,1,84.3125,0)"><tspan dy="4.25" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Tablets</tspan></text><rect x="137.03125" y="316" width="12" height="12" rx="1" ry="1" fill="#4a90e2" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(1,0,0,1,84.3125,0)"></rect><text x="153.03125" y="322" text-anchor="start" font-family="Arial" font-size="12px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 12px;" transform="matrix(1,0,0,1,84.3125,0)"><tspan dy="4.25" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Mobile</tspan></text><rect x="67.89839583333334" y="129.91666666666666" width="29.350416666666668" height="154.08333333333334" rx="0" ry="0" fill="#056fa3" stroke="none" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></rect><rect x="109.82756250000001" y="266.08333333333337" width="29.350416666666668" height="17.916666666666664" rx="0" ry="0" fill="#34a5da" stroke="none" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></rect><rect x="151.75672916666667" y="97.66666666666666" width="29.350416666666668" height="186.33333333333334" rx="0" ry="0" fill="#4a90e2" stroke="none" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></rect><rect x="214.65047916666666" y="84.08583333333334" width="29.350416666666668" height="199.91416666666666" rx="0" ry="0" fill="#056fa3" stroke="none" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></rect><rect x="256.57964583333336" y="264.36333333333334" width="29.350416666666668" height="19.636666666666667" rx="0" ry="0" fill="#34a5da" stroke="none" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></rect><rect x="298.5088125" y="145.2175" width="29.350416666666668" height="138.7825" rx="0" ry="0" fill="#4a90e2" stroke="none" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></rect><path fill="none" stroke="#ffffff" d="M357,284.5L42.53125,284.5" stroke-dasharray="4,3" opacity="0.6" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0.6;"></path><text x="36.53125" y="284" text-anchor="end" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: Arial; font-size: 13px;"><tspan dy="4.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0</tspan></text><text x="36.53125" y="248.16666666666666" text-anchor="end" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: Arial; font-size: 13px;"><tspan dy="4.510416666666657" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">10</tspan></text><text x="36.53125" y="212.33333333333331" text-anchor="end" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: Arial; font-size: 13px;"><tspan dy="4.505208333333314" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">20</tspan></text><text x="36.53125" y="176.49999999999997" text-anchor="end" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: Arial; font-size: 13px;"><tspan dy="4.499999999999972" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">30</tspan></text><text x="36.53125" y="140.66666666666663" text-anchor="end" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: Arial; font-size: 13px;"><tspan dy="4.510416666666629" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">40</tspan></text><text x="36.53125" y="104.83333333333329" text-anchor="end" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: Arial; font-size: 13px;"><tspan dy="4.505208333333286" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">50</tspan></text><text x="36.53125" y="69" text-anchor="end" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: Arial; font-size: 13px;"><tspan dy="4.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">60</tspan></text><path fill="none" stroke="#000000" d="M0,0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#ffffff" d="M126.88958333333333,284L126.88958333333333,284" stroke-dasharray="4,3" opacity="0.6" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0.6;"></path><text x="126.38958333333333" y="296.5" text-anchor="middle" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 13px;"><tspan dy="4.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">World</tspan></text><text x="273.14166666666665" y="296.5" text-anchor="middle" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 13px;"><tspan dy="4.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Russia</tspan></text><path fill="none" stroke="#000000" d="M0,0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="199.765625" y="304" text-anchor="middle" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 13px; font-weight: bold; opacity: 1;" font-weight="bold" opacity="1"><tspan dy="304" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></tspan></text><text x="5" y="176.5" text-anchor="middle" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 13px; font-weight: bold; opacity: 1;" font-weight="bold" opacity="1" transform="matrix(0,-1,1,0,0,0)"><tspan dy="176.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></tspan></text></svg>
+            </div>
+            <!--<div id="piechart" style="width: 900px; height: 500px;"></div>-->
+            <!--http://adaptist.ru/blog/statistika-mobile/-->
+
+        </section>
+
+        <section>
+            <h3>Разрешения экранов</h3>
+            <!--<img src="img/snapshot-resolution-02-2018-desktop_mobile_tablet_console-00.png">-->
+            <div style="display: inline-block; height: 600px; width: 450px; margin: 0 auto;">
+                <svg height="100%" version="1.1" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative; left: -0.5px;" viewBox="0 0 362 337" preserveAspectRatio="xMinYMin meet"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.2.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><text x="80" y="17.817193" text-anchor="start" font-family="Arial" font-size="22px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 22px;" transform="matrix(1,0,0,1,9.5938,0)"><tspan dy="7.676568" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Worldwide</tspan></text><g transform="translate(0 52) scale(0.853954391072295 0.8789013732833957)"><rect x="0.25" y="0.25" width="146.8564" height="29.5" rx="0" ry="0" fill="#056fa3" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"></rect><rect x="0" y="0" width="337.2" height="30" rx="0" ry="0" fill="none" stroke="#8c8c8c" stroke-width="0.9247198329457946" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)"></rect><text x="341.2" y="15" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"><tspan dy="9.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">44%</tspan></text><text x="4" y="0" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,14.7439)" stroke-width="1.8494396658915893"><tspan dy="9.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">360x640</tspan></text><rect x="0.25" y="76.22077876216586" width="31.095639999999996" height="29.5" rx="0" ry="0" fill="#0fb4bb" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"></rect><rect x="0" y="75.97077876216586" width="337.2" height="30" rx="0" ry="0" fill="none" stroke="#8c8c8c" stroke-width="0.9247198329457946" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)"></rect><text x="341.2" y="90.97077876216586" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"><tspan dy="9.502028762165864" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">9%</tspan></text><text x="4" y="75.97077876216586" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,14.7439)" stroke-width="1.8494396658915893"><tspan dy="9.502028762165864" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">375x667</tspan></text><rect x="0.25" y="152.19155752433173" width="13.055439999999997" height="29.5" rx="0" ry="0" fill="#e66b4d" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"></rect><rect x="0" y="151.94155752433173" width="337.2" height="30" rx="0" ry="0" fill="none" stroke="#8c8c8c" stroke-width="0.9247198329457946" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)"></rect><text x="341.2" y="166.94155752433173" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"><tspan dy="9.504057524331728" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">4%</tspan></text><text x="4" y="151.94155752433173" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,14.7439)" stroke-width="1.8494396658915893"><tspan dy="9.504057524331728" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">720x1280</tspan></text><rect x="0.25" y="228.16233628649758" width="12.88684" height="29.5" rx="0" ry="0" fill="#fa8163" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"></rect><rect x="0" y="227.91233628649758" width="337.2" height="30" rx="0" ry="0" fill="none" stroke="#8c8c8c" stroke-width="0.9247198329457946" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)"></rect><text x="341.2" y="242.91233628649758" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"><tspan dy="9.506086286497577" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">4%</tspan></text><text x="4" y="227.91233628649758" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,14.7439)" stroke-width="1.8494396658915893"><tspan dy="9.506086286497577" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">414x736</tspan></text><rect x="0.25" y="304.13311504866346" width="12.88684" height="29.5" rx="0" ry="0" fill="#628186" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"></rect><rect x="0" y="303.88311504866346" width="337.2" height="30" rx="0" ry="0" fill="none" stroke="#8c8c8c" stroke-width="0.9247198329457946" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)"></rect><text x="341.2" y="318.88311504866346" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"><tspan dy="9.508115048663456" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">4%</tspan></text><text x="4" y="303.88311504866346" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,14.7439)" stroke-width="1.8494396658915893"><tspan dy="9.508115048663456" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">320x568</tspan></text><rect x="0.25" y="380.10389381082933" width="10.82992" height="29.5" rx="0" ry="0" fill="#94b3b8" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"></rect><rect x="0" y="379.85389381082933" width="337.2" height="30" rx="0" ry="0" fill="none" stroke="#8c8c8c" stroke-width="0.9247198329457946" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)"></rect><text x="341.2" y="394.85389381082933" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"><tspan dy="9.510143810829334" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">3%</tspan></text><text x="4" y="379.85389381082933" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,14.7439)" stroke-width="1.8494396658915893"><tspan dy="9.510143810829334" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">320x534</tspan></text></g></svg>
+            </div>
+        <div style="display: inline-block;height: 600px; width: 450px; margin: 0 auto;">
+            <svg height="100%" version="1.1" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative; left: -0.5px;" viewBox="0 0 362 337" preserveAspectRatio="xMinYMin meet"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.2.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><text x="80" y="17.817193" text-anchor="start" font-family="Arial" font-size="22px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 22px;" transform="matrix(1,0,0,1,24.8828,0)"><tspan dy="7.676568" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Russia</tspan></text><g transform="translate(0 52) scale(0.853954391072295 0.8789013732833957)"><rect x="0.25" y="0.25" width="123.05008" height="29.5" rx="0" ry="0" fill="#0d9da3" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"></rect><rect x="0" y="0" width="337.2" height="30" rx="0" ry="0" fill="none" stroke="#8c8c8c" stroke-width="0.9247198329457946" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)"></rect><text x="341.2" y="15" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"><tspan dy="9.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">37%</tspan></text><text x="4" y="0" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,14.7439)" stroke-width="1.8494396658915893"><tspan dy="9.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">360x640</tspan></text><rect x="0.25" y="76.22077876216586" width="33.388600000000004" height="29.5" rx="0" ry="0" fill="#0fb4bb" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"></rect><rect x="0" y="75.97077876216586" width="337.2" height="30" rx="0" ry="0" fill="none" stroke="#8c8c8c" stroke-width="0.9247198329457946" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)"></rect><text x="341.2" y="90.97077876216586" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"><tspan dy="9.502028762165864" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">10%</tspan></text><text x="4" y="75.97077876216586" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,14.7439)" stroke-width="1.8494396658915893"><tspan dy="9.502028762165864" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">375x667</tspan></text><rect x="0.25" y="152.19155752433173" width="24.65512" height="29.5" rx="0" ry="0" fill="#e66b4d" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"></rect><rect x="0" y="151.94155752433173" width="337.2" height="30" rx="0" ry="0" fill="none" stroke="#8c8c8c" stroke-width="0.9247198329457946" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)"></rect><text x="341.2" y="166.94155752433173" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"><tspan dy="9.504057524331728" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">7%</tspan></text><text x="4" y="151.94155752433173" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,14.7439)" stroke-width="1.8494396658915893"><tspan dy="9.504057524331728" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">320x568</tspan></text><rect x="0.25" y="228.16233628649758" width="12.178719999999998" height="29.5" rx="0" ry="0" fill="#fa8163" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"></rect><rect x="0" y="227.91233628649758" width="337.2" height="30" rx="0" ry="0" fill="none" stroke="#8c8c8c" stroke-width="0.9247198329457946" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)"></rect><text x="341.2" y="242.91233628649758" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"><tspan dy="9.506086286497577" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">4%</tspan></text><text x="4" y="227.91233628649758" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,14.7439)" stroke-width="1.8494396658915893"><tspan dy="9.506086286497577" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">720x1280</tspan></text><rect x="0.25" y="304.13311504866346" width="10.728760000000001" height="29.5" rx="0" ry="0" fill="#628186" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"></rect><rect x="0" y="303.88311504866346" width="337.2" height="30" rx="0" ry="0" fill="none" stroke="#8c8c8c" stroke-width="0.9247198329457946" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)"></rect><text x="341.2" y="318.88311504866346" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"><tspan dy="9.508115048663456" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">3%</tspan></text><text x="4" y="303.88311504866346" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,14.7439)" stroke-width="1.8494396658915893"><tspan dy="9.508115048663456" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">320x534</tspan></text><rect x="0.25" y="380.10389381082933" width="10.05436" height="29.5" rx="0" ry="0" fill="#94b3b8" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"></rect><rect x="0" y="379.85389381082933" width="337.2" height="30" rx="0" ry="0" fill="none" stroke="#8c8c8c" stroke-width="0.9247198329457946" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)"></rect><text x="341.2" y="394.85389381082933" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,24.9789)" stroke-width="1.8494396658915893"><tspan dy="9.510143810829334" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">3%</tspan></text><text x="4" y="379.85389381082933" text-anchor="start" font-family="Arial" font-size="27px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 27px;" transform="matrix(0.5407,0,0,0.5407,99.2518,14.7439)" stroke-width="1.8494396658915893"><tspan dy="9.510143810829334" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">1080x1920</tspan></text></g></svg>
+        </div>
+    </section>
+
+        <section>
+            <h2>Размеры экранов</h2>
+            <div class="fragment" data-fragment-index="2"></div>
+            <div class="phone fr-rotate">
+                <div class="phone__content" style="background: #000">
+                    <div class="text fragment"
+                         style="border-bottom: 1px solid white; transform: translate(-118px, 130px) rotate(-58deg); width: 410px;"
+                         data-fragment-index="1">4''
+                    </div>
+                    <div class="fragment text-show-hide" data-fragment-index="3"></div>
+                    <div class="text fr-hide" style="bottom: 0; width: 100%; text-align: center;">320px</div>
+                    <div class="text fr-show" style="bottom: 0; width: 100%; text-align: center;">640px</div>
+                    <div class="text fr-hide" style="right: -40px; transform: rotate(-90deg); top: 150px;">568px</div>
+                    <div class="text fr-show" style="right: -40px; transform: rotate(-90deg); top: 150px;">1136px</div>
+                </div>
+            </div>
+            <!--<a href="http://mydevice.io/devices/#sortSmartphones">mydevice.io</a>-->
+        </section>
+
+        <section data-background-image="./img/pixels.jpg">
+            <h2 style="color: black; font-weight: 700;">Pixels</h2>
+        </section>
+        <section>
+            <h2>device pixel</h2>
+            <p>— привычные нам пиксели: самые маленькие элементы любого дисплея, каждый из которых имеет свой цвет и яркость.</p>
+        </section>
+        <section>
+            <h2>CSS pixels</h2>
+            <p> — абстрактная величина, используемая браузерами для точного отображения контента на страницах, вне зависимости от экрана</p>
+        </section>
+
+        <section>
+            <h2>Плотность пикселей</h2>
+            <p>PPI (Pixels Per Inch) - пиксели на дюйм.</p>
+            <img src="img/dpi.jpg" width="400">
+        </section>
+
+        <section>
+            <h3>Дисплеи с повышенной плотностью</h3>
+            <img src="img/iphone-retina-display-details.jpg" height="400">
+        </section>
+
+        <section>
+            <h2>Retina display</h2>
+            <blockquote>
+                — общее маркетинговое название ЖК-дисплеев, отличающихся достаточной плотностью пикселей, чтобы человеческий глаз не смог заметить, что изображение состоит из них.
+            </blockquote>
+        </section>
+
+
+        <section>
+            <h2>Retina display</h2>
+            <img src="img/retina.jpg">
+        </section>
+
+        <section>
+            <h2>Отличия</h2>
+            <img src="img/retina_example.jpg" height="500">
+        </section>
+
+        <section>
+            <h2>Какие браузеры популярны?</h2>
+            <div style="position: relative; margin-top: 100px">
+                <img style="position: absolute; top: -88px; margin-left:-100px; left: 50%; z-index: -1; width: 200px" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCAyNTYgMjU2IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyNTYgMjU2IiB4bWw6c3BhY2U9InByZXNlcnZlIj48bGluZWFyR3JhZGllbnQgaWQ9IlNWR0lEXzFfIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjEyOCIgeTE9IjEuMjA0ODk5ZS0wOCIgeDI9IjEyOCIgeTI9IjI1NiI+PHN0b3AgIG9mZnNldD0iMCIgc3R5bGU9InN0b3AtY29sb3I6I0Y1RjVGNiIvPjxzdG9wICBvZmZzZXQ9IjEiIHN0eWxlPSJzdG9wLWNvbG9yOiNFREVERUUiLz48L2xpbmVhckdyYWRpZW50PjxjaXJjbGUgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9InVybCgjU1ZHSURfMV8pIiBjeD0iMTI4IiBjeT0iMTI4IiByPSIxMjgiLz48Y2lyY2xlIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjRkZGRkZGIiBjeD0iMTI4IiBjeT0iMTI4IiByPSIxMjEuOCIvPjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjRUMxQzI0IiBkPSJNMjEwLjQsNzUuMmwtNjguNSw2N3Y4My4zYzAsMS41LTYuNSwyLjctMTMuOSwyLjhsMCwwYy03LjEtMC4xLTEzLjktMS4zLTEzLjktMi44di04My4zbC02OC41LTY3Yy0xLjEtMS4xLDIuNC02LjMsNy44LTExLjdjNS40LTUuNCwxMC43LTguOSwxMS43LTcuOGw2Mi44LDYxLjNsNjIuOC02MS4zYzEuMS0xLjEsNi4zLDIuNCwxMS43LDcuOFMyMTEuNCw3NC4xLDIxMC40LDc1LjJ6Ii8+PC9zdmc+">
+                <img src="img/browsers.png" height="300">
+            </div>
+        </section>
+        <section >
+            <!--http://caniuse.com/usage-table-->
+            <div style=" height: 600px; width: 600px; margin: 0 auto;">
+                <svg height="100%" version="1.1" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative; left: -0.5px;" viewBox="0 0 362 337" preserveAspectRatio="xMinYMin meet"><path fill="none" stroke="#ffffff" d="M276.7208333333333,284L276.7208333333333,284" stroke-width="0.6" stroke-dasharray="2.4,1.7999999999999998" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#ffffff" d="M357,248.66666666666666L54.078125,248.66666666666666M357,212.83333333333331L54.078125,212.83333333333331M357,176.99999999999997L54.078125,176.99999999999997M357,141.16666666666663L54.078125,141.16666666666663M357,105.33333333333329L54.078125,105.33333333333329M357,69.49999999999994L54.078125,69.49999999999994" stroke-width="0.6" stroke-dasharray="2.4,1.7999999999999998" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="234.140625" y="314" width="70.6875" height="16" rx="0" ry="0" fill="none" stroke="none" transform="matrix(1,0,0,1,27.0859,0)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="191.8125" y="314" width="37.328125" height="16" rx="0" ry="0" fill="none" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(1,0,0,1,27.0859,0)"></rect><rect x="135.46875" y="314" width="51.34375" height="16" rx="0" ry="0" fill="none" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(1,0,0,1,27.0859,0)"></rect><rect x="70.671875" y="314" width="59.796875" height="16" rx="0" ry="0" fill="none" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(1,0,0,1,27.0859,0)"></rect><rect x="3" y="314" width="62.671875" height="16" rx="0" ry="0" fill="none" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(1,0,0,1,27.0859,0)"></rect><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.2.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><text x="5" y="17.817193" text-anchor="start" font-family="Arial" font-size="22px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 22px;" transform="matrix(1,0,0,1,50.0547,0)"><tspan dy="7.676568" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Браузеры на мобильных</tspan></text><rect x="5" y="316" width="12" height="12" rx="1" ry="1" fill="#0d9da3" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(1,0,0,1,27.0859,0)"></rect><text x="21" y="322" text-anchor="start" font-family="Arial" font-size="12px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 12px;" transform="matrix(1,0,0,1,27.0859,0)"><tspan dy="4.25" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Chrome</tspan></text><rect x="72.671875" y="316" width="12" height="12" rx="1" ry="1" fill="#0fb4bb" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(1,0,0,1,27.0859,0)"></rect><text x="88.671875" y="322" text-anchor="start" font-family="Arial" font-size="12px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 12px;" transform="matrix(1,0,0,1,27.0859,0)"><tspan dy="4.25" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Yandex</tspan></text><rect x="137.46875" y="316" width="12" height="12" rx="1" ry="1" fill="#e66b4d" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(1,0,0,1,27.0859,0)"></rect><text x="153.46875" y="322" text-anchor="start" font-family="Arial" font-size="12px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 12px;" transform="matrix(1,0,0,1,27.0859,0)"><tspan dy="4.25" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Safari</tspan></text><rect x="193.8125" y="316" width="12" height="12" rx="1" ry="1" fill="#fa8163" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(1,0,0,1,27.0859,0)"></rect><text x="209.8125" y="322" text-anchor="start" font-family="Arial" font-size="12px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 12px;" transform="matrix(1,0,0,1,27.0859,0)"><tspan dy="4.25" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">UC</tspan></text><rect x="236.140625" y="316" width="12" height="12" rx="1" ry="1" fill="#628186" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" transform="matrix(1,0,0,1,27.0859,0)"></rect><text x="252.140625" y="322" text-anchor="start" font-family="Arial" font-size="12px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 12px;" transform="matrix(1,0,0,1,27.0859,0)"><tspan dy="4.2421875" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Samsung</tspan></text><rect x="76.81746041666668" y="144.25" width="16.963625" height="139.75" rx="0" ry="0" fill="#0d9da3" stroke="none" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></rect><rect x="101.05121041666668" y="241" width="16.963625" height="43" rx="0" ry="0" fill="#0fb4bb" stroke="none" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></rect><rect x="125.28496041666668" y="208.75" width="16.963625" height="75.25" rx="0" ry="0" fill="#e66b4d" stroke="none" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></rect><rect x="149.5187104166667" y="277.55" width="16.963625" height="6.45" rx="0" ry="0" fill="#fa8163" stroke="none" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></rect><rect x="173.75246041666668" y="268.305" width="16.963625" height="15.694999999999999" rx="0" ry="0" fill="#628186" stroke="none" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></rect><rect x="218.18100208333334" y="98.92083333333332" width="16.963625" height="185.07916666666668" rx="0" ry="0" fill="#0d9da3" stroke="none" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></rect><rect x="242.41475208333333" y="284" width="16.963625" height="0" rx="0" ry="0" fill="#0fb4bb" stroke="none" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></rect><rect x="266.6485020833333" y="217.60083333333333" width="16.963625" height="66.39916666666667" rx="0" ry="0" fill="#e66b4d" stroke="none" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></rect><rect x="290.8822520833333" y="232.04166666666666" width="16.963625" height="51.958333333333336" rx="0" ry="0" fill="#fa8163" stroke="none" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></rect><rect x="315.1160020833333" y="263.93333333333334" width="16.963625" height="20.066666666666663" rx="0" ry="0" fill="#628186" stroke="none" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></rect><path fill="none" stroke="#ffffff" d="M357,284.5L54.078125,284.5" stroke-dasharray="4,3" opacity="0.6" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0.6;"></path><text x="48.078125" y="284" text-anchor="end" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: Arial; font-size: 13px;"><tspan dy="4.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0</tspan></text><text x="48.078125" y="248.16666666666666" text-anchor="end" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: Arial; font-size: 13px;"><tspan dy="4.510416666666657" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">10</tspan></text><text x="48.078125" y="212.33333333333331" text-anchor="end" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: Arial; font-size: 13px;"><tspan dy="4.505208333333314" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">20</tspan></text><text x="48.078125" y="176.49999999999997" text-anchor="end" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: Arial; font-size: 13px;"><tspan dy="4.499999999999972" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">30</tspan></text><text x="48.078125" y="140.66666666666663" text-anchor="end" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: Arial; font-size: 13px;"><tspan dy="4.510416666666629" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">40</tspan></text><text x="48.078125" y="104.83333333333329" text-anchor="end" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: Arial; font-size: 13px;"><tspan dy="4.505208333333286" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">50</tspan></text><text x="48.078125" y="69" text-anchor="end" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: Arial; font-size: 13px;"><tspan dy="4.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">60</tspan></text><path fill="none" stroke="#000000" d="M0,0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#ffffff" d="M135.35729166666667,284L135.35729166666667,284" stroke-dasharray="4,3" opacity="0.6" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0.6;"></path><text x="134.85729166666667" y="296.5" text-anchor="middle" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 13px;"><tspan dy="4.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">russia</tspan></text><text x="276.2208333333333" y="296.5" text-anchor="middle" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 13px;"><tspan dy="4.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">world</tspan></text><path fill="none" stroke="#000000" d="M0,0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="205.5390625" y="304" text-anchor="middle" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 13px; font-weight: bold; opacity: 1;" font-weight="bold" opacity="1"><tspan dy="304" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></tspan></text><text x="5" y="176.5" text-anchor="middle" font-family="Arial" font-size="13px" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 13px; font-weight: bold; opacity: 1;" font-weight="bold" opacity="1" transform="matrix(0,-1,1,0,0,0)"><tspan dy="176.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></tspan></text></svg>
+            </div>
+        </section>
+
+        <section>
+            <img style="background: transparent" src="img/opera-mini-logo-large.png">
+            <br>
+            <img src="img/Opera_mini.png">
+        </section>
+
+        <section>
+            <h2>Макеты (layout)</h2>
+        </section>
+
+        <section>
+            <h2>Fixed design</h2>
+            <img src="img/fixed-static-layout.png" height="400">
+            <div class="advice">Ширина контента не меняется в зависимости от размеров окна браузера.</div>
+        </section>
+
+        <section>
+            <h2>Резиновый макет</h2>
+            <img src="img/Rezinovij_design.png" height="400">
+            <div class="advice">Подстраивание контента под ширину экрана путем сжатия элементов.</div>
+        </section>
+
+        <section>
+            <h2>Adaptive design</h2>
+            <img src="img/Adaptivej_design.png" height="400">
+            <div class="advice">Сайт подстраивается под разрешение и размер экрана</div>
+
+        </section>
+
+        <section>
+            <h2>Responsive design</h2>
+            <img src="img/Responsive_design.png" height="400">
+        </section>
+
+        <section data-background-image="img/rwd-vs-adapt-example.gif" data-background-size="100%">
+
+        </section>
+
+        <section>
+            <h2>Стратегии разработки</h2>
+        </section>
+
+        <section>
+            <h3>Graceful Degradation</h3>
+            <blockquote>Это способность сайта продолжать своё функционирование  в случае отказа некоторых компонентов.</blockquote>
+        </section>
+
+        <section>
+            <h2>Особенности</h2>
+            <ul>
+                <li class="positive">Гарантированная работа сайта в любом браузере</li>
+                <li class="negative fragment">Пропадает часть функциональности</li>
+                <li class="negative fragment">Трудоемкий процесс</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Progressive enhancement</h3>
+            <blockquote>Cоздание веб-интерфейса происходит поэтапно, от самого простого к сложному</blockquote>
+        </section>
+        <section  data-background-image="img/13-progressive-jpeg.gif">
+
+        </section>
+
+        <section data-background-video="img/p-en.webm">
+
+        </section>
+
+        <section>
+            <h2>Особенности</h2>
+            <ul>
+                <li class="positive">Гарантированная работа проекта в любом браузере</li>
+                <li class="positive">Выкатывать новые возможности и изменения раньше</li>
+                <li class="negative fragment">Увеличение сложности реализации back-end’а</li>
+            </ul>
+        </section>
+
+        <section>
+            <a href="http://www.lukew.com/"><h2>Mobile first</h2></a>
+            <blockquote>Начинаете проектирование сервиса с мобильной версии</blockquote>
+        </section>
+
+        <section>
+            <h2>Особенности</h2>
+            <ul>
+                <li class="positive">Фокус на самом главном</li>
+                <li class="positive">Полнофункциональная мобильная версия</li>
+                <li class="positive">Мобильная версия может хорошо работать в "большом" вебе</li>
+                <li class="negative fragment">У вас не сразу будет версия для "большого веба</li>
+                <li class="negative fragment">Подход сложно применим для больших порталов</li>
+            </ul>
+        </section>
+
+        <section>
+            <img src="img/mobile-first.png">
+        </section>
+
+        <!--https://habrahabr.ru/company/futubra/blog/136370/-->
+        <section>
+            <h2>Responsive web design</h2>
+            <blockquote>Вы делаете одну версию вашего веб-проекта для всех устройств с любым размером экрана
+            </blockquote>
+            <a href="https://abookapart.com/products/responsive-web-design">хорошая книга</a>
+        </section>
+
+        <section>
+            <h2>Особенности</h2>
+            <ul>
+                <li class="positive negative">Одна версия сайта</li>
+                <li class="positive">Преемственность интерфейса</li>
+                <li class="negative fragment">Неоптимальное использование возможностей всех устройств</li>
+                <li class="negative fragment">Возрастают требования к проработке интерфейса и дизайна</li>
+            </ul>
+        </section>
+
+        <section>
+            <a href="http://bradfrost.github.io/this-is-responsive/patterns.html"><h3>Responsive Patterns</h3></a>
+            <!--http://www.lukew.com/ff/entry.asp?1514-->
+            <ul>
+                <li class="positive"><a target="_blank" href="https://codepen.io/bradfrost/full/Iardn">Mostly Fluid</a></li>
+                <li class="positive"><a target="_blank" href="https://codepen.io/bradfrost/full/zhCwd">Column Drop</a></li>
+                <li class="positive"><a target="_blank" href="https://codepen.io/bradfrost/full/LtryA">Layout shifter</a></li>
+                <li class="positive"><a target="_blank" href="https://codepen.io/bradfrost/full/brjFH">Tiny Tweaks</a></li>
+                <li class="positive"><a target="_blank" href="https://codepen.io/grayghostvisuals/full/hemqu">Off Canvas</a></li>
+            </ul>
+        </section>
+        <section>
+            <h2>Mostly Fluid</h2>
+            <img src="img/new/mostly-fluid.svg">
+        </section>
+        <section>
+            <h2>Column Drop</h2>
+            <img src="img/new/column-drop.svg">
+        </section>
+        <section>
+            <h2>Layout shifter</h2>
+            <img src="img/new/layout-shifter.svg">
+        </section>
+        <section>
+            <h2>Tiny Tweaks</h2>
+            <img src="img/new/tiny-tweaks.svg">
+        </section>
+        <section>
+            <h2>Off Canvas</h2>
+            <img src="img/new/off-canvas.svg">
+        </section>
+        <!-- Основная часть -->
+        <!--http://mydevice.io/devices/#sortOthers-->
+        <!--https://responsivedesign.is/strategy/page-layout/defining-breakpoints-->
+        <!--http://www.quirksmode.org/mobile/viewports2.html-->
+        <section>
+            <h2>Инструменты</h2>
+        </section>
+
+        <section>
+            <a href="http://www.quirksmode.org/mobile/viewports2.html"><h2>Two viewports</h2></a>
+            <span style="display: inline-block; margin-right: 40px"">
+                <div>visual viewport </div>
+                <img src="img/mobile_visualviewport.jpg" height="400">
+            </span>
+            <span style="display: inline-block; margin-left: 40px">
+                <div>layout viewport</div>
+                <img src="img/mobile_layoutviewport.jpg" height="400">
+            </span>
+        </section>
+
+        <section>
+            <h3>Какая ширина layout viewport?</h3>
+            <p class="fragment">Safari/Chrome/Opera = 980px</p>
+        </section>
+
+        <section>
+            <h2>Meta–тэг viewport</h2>
+<pre><code>&lt;meta name="viewport" content="width=device-width">
+</code></pre>
+        </section>
+
+        <section>
+            <img src="img/mobile_mediaqueries.jpg" height="500">
+        </section>
+
+        <section>
+            <img src="img/withot_meta_viewport.png" height="500">
+            <img src="img/with_meta_viewport.png" height="500">
+        </section>
+
+        <section>
+            <h2>Другие значения</h2>
+<pre class="html size-XXS "><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+</code></pre>
+
+<pre class="html size-XXS "><code><!--Не рекомендуется-->
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0
+                                maximum-scale=1.0, user-scalable=no">
+</code></pre>
+        </section>
+
+        <section>
+            <a href="https://www.w3.org/TR/css-device-adapt/#atviewport-rule"><h2>@viewport</h2></a>
+<pre><code>@viewport {//@-ms-viewport
+  width: auto; // auto | device-width | length | %
+
+  max-width: auto;
+  min-width: auto;
+
+  zoom: auto; // auto | number | %
+
+  max-zoom: 5; // Largest allowed zoom factor.
+  min-zoom: 0.25; // Smallest allowed zoom factor.
+
+  user-zoom: zoom; // fixed | zoom
+
+  orientation: auto; // auto | portrait | landscape
+}</code></pre>
+        </section>
+        <section>
+            <h2>iPhone X</h2>
+        </section>
+        <section>
+            <img src="img/new/default-inset-behavior.png">
+            <a href="https://webkit.org/blog/7929/designing-websites-for-iphone-x/">Статья</a>
+        </section>
+        <section>
+            <h2>fit-cover</h2>
+<pre><code>&lt;meta
+    name='viewport'
+    content='initial-scale=1, viewport-fit=cover'>
+</code></pre>
+        </section>
+        <section>
+            <img src="img/new/viewport-fit-cover.png">
+        </section>
+        <section>
+            <h2>Safe Areas</h2>
+            <img src="img/new/safe-areas-1.png">
+        </section>
+        <section>
+            <h2>Safe Areas</h2>
+<pre><code>.post {
+    padding: 12px;
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+}</code></pre>
+        </section>
+        <section>
+            <img src="img/new/safe-area-constants.png">
+        </section>
+        <section>
+            <img src="img/new/no-margins.png">
+        </section>
+        <section>
+            <h2>Max</h2>
+<pre><code>.post {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+}</code></pre>
+        </section>
+        <section>
+            <img src="img/new/max-safe-areas-insets.png">
+        </section>
+        <section>
+            <h2>Но...</h2>
+        </section>
+        <section>
+            <h2>Support</h2>
+<pre><code>@supports(padding: max(0px)) {
+.post {
+  padding-left: max(12px, env(safe-area-inset-left));
+  padding-right: max(12px, env(safe-area-inset-right));
+}
+}</code></pre>
+        </section>
+
+        <section>
+<pre><code>section {
+    float: left;
+}
+
+@supports (display: -webkit-flex) or
+          (display: -moz-flex) or
+          (display: flex) {
+
+    section {
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: flex;
+        float: none;
+    }
+}</code></pre>
+        </section>
+        <section>
+            <h2>JS</h2>
+<pre><code>var supportsFlex = CSS.supports("display", "flex");
+</code></pre>
+        </section>
+        <section>
+            <img src="img/new/can-support.png">
+        </section>
+        <section>
+            <h2>@media</h2>
+            <!--<img src="img/07-media-query.png">-->
+<pre><code>@media [not|only] mediatype [and (media feature)] {
+    CSS-Code;
+}</code></pre>
+            <p class="advice">Media queries - позволяет указать тип устройства, для которого будет применяться указанный стиль.</p>
+        </section>
+
+        <section>
+            <h2>Минимум</h2>
+<pre><code>@media {
+    a {
+        color: red;
+    }
+}</code></pre>
+        </section>
+
+        <section>
+            <a href="https://drafts.csswg.org/mediaqueries-4/#media-types"><h2>Media types</h2></a>
+            <ul>
+                <li>all – все устройства(по-умолчанию)</li>
+                <li>print – принтеры и режим "Print preview"</li>
+                <li>screen – все утройства не print и не speech</li>
+                <li>speech – скринридеры</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Версия для печати</h2>
+<pre class="css"><code>body {
+  color: red
+}
+@media print {
+  body {
+    color: blue
+  }
+}</code></pre>
+        </section>
+        <section>
+            <h2>Для печати или экранов</h2>
+<pre class="css"><code>@media print, screen {
+  body {
+    color: blue
+  }
+}</code></pre>
+        </section>
+
+        <section>
+            <h2>media features</h2>
+            <blockquote>
+                – задают технические характеристики устройства, на котором отображается документ.
+            </blockquote>
+        </section>
+
+        <section>
+            <h2>Ширина</h2>
+<pre><code>@media (min-width:600px) {
+    aside {
+        float: left;
+        width: 300px;
+        margin: 10px;
+    }
+}</code></pre>
+<pre><code>@media (max-width:600px) {
+    aside {
+        float: none;
+        color: blue;
+    }
+}</code></pre>
+        <a href="http://jsbin.com/naqagaqeru/1/edit?css,output">Пример</a>
+        </section>
+
+        <section>
+            <h2>Интервал</h2>
+<pre><code>h1 {
+    font-size: 50px;
+}
+
+@media (min-width:400px) and (max-width:600px) {
+    h1 {
+        font-size: 20px;
+        color: red;
+    }
+}</code></pre>
+        <a href="http://jsbin.com/valiliwiti">Пример</a>
+        </section>
+
+        <section>
+            <h2>Интервалы</h2>
+<pre><code>h1 {
+    font-size: 50px;
+}
+
+@media (min-width:600px), (max-width:400px) {
+    h1 {
+        font-size: 20px;
+        color: red;
+    }
+}</code></pre>
+        <a href="http://jsbin.com/rutiqozevo">Пример</a>
+        </section>
+
+        <section>
+            <h2>Ориентация</h2>
+<pre><code>//landscape | portrait
+@media (orientation: landscape) {
+    body {
+        color: red;
+    }
+}</code></pre>
+
+        <a href="http://jsbin.com/zogilomiri">Пример</a>
+        </section>
+
+            <section>
+            <a href="http://egorkhmelev.github.io/retina/"><h2>Pixel ratio</h2></a>
+
+<pre class="css"><code>.selector {
+    background: url(../apple.png) no-repeat;
+}
+
+@media (min-device-pixel-ratio: 2) {
+  .selector {
+    background-image: url(../apple@2x.png);
+    background-size: cover;
+  }
+}
+</code></pre>
+            </section>
+
+
+        <section>
+            <img src="img/new/retina-display.jpg">
+        </section>
+
+        <section>
+            <h2>resolution</h2>
+<pre><code>@media (min-device-pixel-ratio:2),
+       //dpi (dots per inch) - точек на дюйм
+       //для экранов 1DPI = 1PPI
+       (min-resolution: 192dpi),
+       //dppx (dots per pixel) - точек на пиксель
+       (min-resolution: 2dppx) { ... }</code></pre>
+            <a href="https://output.jsbin.com/bozujob" target="_blank">Пример</a>
+        </section>
+
+        <section>
+            <a href="http://htmlbook.ru/css/value/media"><h3>Остальные media features</h3></a>
+            <ul>
+                <li>min-height, max-height</li>
+                <li class="fragment">grid – устройство с фиксированным размером символов</li>
+                <li class="fragment">min-resolution, max-resolution</li>
+                <li class="fragment">display-mode: [fullscreen | standalone | minimal-ui | browser]</li>
+                <li class="fragment">color (min-color, max-color)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Отрицание</h2>
+<pre><code>@media not all and (monochrome) { ... }</code></pre>
+            <div class="fragment positive">
+                То же самое что:
+<pre><code>@media not (all and (monochrome)) { ... }</code></pre>
+            </div>
+            <div class="fragment negative">
+                Но не:
+<pre><code>@media (not all) and (monochrome) { ... }</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Но</h2>
+
+<pre><code>@media not screen and (color), print and (color) { ... }</code></pre>
+<div class="fragment positive">
+                То же самое что:
+<pre><code>@media (not (screen and (color))), print and (color) { ... }</code></pre>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Аттрибут media</h2>
+<pre class="html size-XXS"><code>&lt;link rel="stylesheet" media="(max-width: 640px)" href="max-640px.css">
+&lt;link rel="stylesheet" media="(min-width: 640px)" href="min-640px.css">
+&lt;link rel="stylesheet" media="(orientation: portrait)" href="portrait.css">
+&lt;link rel="stylesheet" media="(orientation: landscape)" href="landscape.css">
+</code></pre>
+        </section>
+
+  <section>
+            <h2>Перерыв</h2>
+            <img src="img/new/pause-cat.gif">
+        </section>
+
+            <section>
+                <h2>Практика</h2>
+            </section>
+            <section>
+                <h3>Автоопределение телефонов</h3>
+                <pre><code class="html hljs">
+<span>+73191111110</span>
+                </code></pre>
+                <p class="fragment"><a href="https://jsfiddle.net/14euzh53/1/">https://jsfiddle.net/14euzh53/1/</a></p>
+            </section>
+            <section>
+                <img style="position: absolute" width=350 src="img/example-phone.png"/>
+                <img style="position: relative" class="fragment" width=350 src="img/example-phone_2.png"/>
+            </section>
+            <section>
+                <h3>Автоопределение телефонов</h3>
+                <pre><code class="html hljs">&lt;head&gt;
+    <meta name="format-detection" content="telephone=no">
+&lt;/head&gt;
+                </code><code class="fragment"><a href="tel:+73191111110">Позвонить</a></code></pre>
+            </section>
+
+            <section>
+                <h2>input</h2>
+            </section>
+            <section>
+                <h3>&lt;input type="..."&gt;</h3>
+                <p class="fragment">button, checkbox, color, date, datetime-local, email, file, hidden, image, month, number, password, number, radio, range, reset, search, submit, tel, text, time, url, week</p>
+            </section>
+            <section>
+                <img width=450 src="img/controls-browser.jpg"/>
+                <p><a href="https://jsfiddle.net/z8ubygof/1/">https://jsfiddle.net/z8ubygof/1/</a></p>
+            </section>
+            <section>
+                <input style="transform: scale(3)" type="email"/>
+                <p class="fragment">email</p>
+            </section>
+            <section>
+                <h3>email</h3>
+                <img width=300 src="img/kbd/email.png"/>
+            </section>
+            <section>
+                <h3>url</h3>
+                <img width=300 src="img/kbd/url.png"/>
+            </section>
+            <section>
+                <h3>number</h3>
+                <img width=300 src="img/kbd/number.png"/>
+            </section>
+            <section>
+                <h3>tel</h3>
+                <img width=300 src="img/kbd/tel.png"/>
+            </section>
+            <section>
+                <h3>date</h3>
+                <img width=300 src="img/kbd/date.png"/>
+            </section>
+            <section>
+                <h3>datetime-local</h3>
+                <img width=300 src="img/kbd/datetime-local.png"/>
+            </section>
+            <section>
+                <h3>month</h3>
+                <img width=300 src="img/kbd/month.png"/>
+            </section>
+            <section>
+                <h3>time</h3>
+                <img width=300 src="img/kbd/time.png"/>
+            </section>
+
+            <section>
+                <h3>input</h3>
+                <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input">MDN::&lt;input&gt;</a></p>
+            </section>
+
+            <section>
+                <h3>Подсветка элемента</h3>
+                <img src="img/webkit-tap-highlight-color-before.png"/>
+            </section>
+
+            <section>
+                <h3>-webkit-tap-highlight-color</h3>
+                <p>Устанавливает цвет подсветки ссылки или любого кликабельного элемента</p>
+                <pre><code class="css hljs">
+.wrapper {
+    –webkit-tap-highlight-color: transparent
+}
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>-webkit-appearance</h3>
+                <p>Изменяет внешний вид кнопок и других элементов управления, чтобы походить на стандартные средства управления. </p>
+                <pre><code class="css hljs">
+.element {
+    –webkit-appearance: none | button | radio | ...;
+}
+                </code></pre>
+                <p><a href="http://www.xiper.net/manuals/css-extensions/webkit/properties/webkit-appearance.html">Все значения</a></p>
+            </section>
+            <section>
+                <img width=350 src="img/webkit-appearance.png"/>
+            </section>
+            <section>
+                <img width=350 style="position: absolute" src="img/webkit-appearance-1.png"/>
+                <img class=fragment style="position: absolute" width=350 src="img/webkit-appearance-2.png"/>
+                <img class=fragment style="position: relative" width=350 src="img/webkit-appearance-3.png"/>
+            </section>
+            <section>
+                <h3>-webkit-overflow-scrolling</h3>
+                <pre><code class="css hljs">
+.element {
+    -webkit-overflow-scrolling: touch;
+}
+                </code></pre>
+                <img class="fragment" src="img/touch-scrolling.gif"/>
+            </section>
+
+            <section>
+                <h2>Ретина</h2>
+            </section>
+            <section>
+                <h2>1. Всегда x2</h2>
+                <pre class="fragment"><code class="html hljs">
+<img width="200" src="image-400px.jpg">
+                </code></pre>
+            </section>
+            <section>
+                <h2>2. media-queries</h2>
+                <pre class="fragment"><code class="css hljs">
+.logo {
+    background: url(image.png);
+}
+
+@media screen and (device-pixel-ratio: 2) {
+    .logo {
+        background: url(image-x2.png);
+    }
+}
+                </code></pre>
+            </section>
+            <section>
+                <h2>3. Вектор</h2>
+                <pre class="fragment"><code class="css hljs">
+.logo {
+    background: url(logo.svg);
+    background-size: 100px 60px;
+}
+                </code></pre>
+            </section>
+            <section>
+                <h2>4. «Стандартный»</h2>
+            </section>
+            <section>
+                <h2>4.1. image-set</h2>
+                <pre class="fragment"><code class="css hljs">.logo {
+    background-image: image-set(
+        "logo.png" 1x,
+        "logo-2x.png" 2x,
+        "logo-print.png" 600dpi);
+}</code></pre>
+            </section>
+
+        <section>
+            <div><img src="img/new/image-set.png" alt=""/></div>
+            <p><a href="http://caniuse.com/#feat=css-image-set">Can I Use CSS image set</a></p>
+        </section>
+            <section>
+                <h2>4.2. srcset</h2>
+                <pre class="fragment"><code class="html hljs"><img src="logo.png" srcset="logo-1x.png 1x,
+                            logo-2x.png 2x"></code></pre>
+            </section>
+            <section>
+                <div><img src="img/new/can-srceset.png" alt=""/></div>
+                <p><a href="http://caniuse.com/#feat=srcset">Can I Use srcset</a></p>
+            </section>
+            <section>
+                <h2>4.3. &lt;picture&gt;</h2>
+                <pre class="fragment"><code class="html hljs"><picture>
+    <source srcset="logo-x2.png" media="(min-width: 600px)">
+    <img src="logo.png">
+</picture></code></pre>
+            </section>
+            <section>
+                <div><img src="img/new/can-picture.png" alt=""/></div>
+                <p><a href="http://caniuse.com/#feat=picture">Can I Use tag Picture</a></p>
+            </section>
+
+            <section>
+                <h2>JavaScript на touch-устройствах</h2>
+            </section>
+            <section data-background-image="img/new/javascript-sucks.jpg"></section>
+            <section>
+                <p><a href="http://habrahabr.ru/post/188580/">Почему веб-приложения на мобильных платформах работают медленно</a></p>
+            </section>
+            <section>
+                <h2>Особенности</h2>
+                <ul>
+                    <li>Нет мышки</li>
+                    <li>Есть события «на пальцах»</li>
+                    <li>Есть события с девайсом</li>
+                </ul>
+            </section>
+            <section>
+                <img src="img/touch-gestures.jpg"/>
+            </section>
+        <section>
+                <a href="https://hammerjs.github.io"><h3>HAMMER.JS</h3></a>
+            <p class="advice">– библиотека, которая помогает обработывать события, созданные при помощи мышки или touch</p>
+        </section>
+            <section>
+                <img src="img/touch-event-tap.jpg" width="600"/>
+            </section>
+            <section>
+                <img src="img/touch-event-scroll.jpg" width="300"/>
+                <p>
+                    <a href="https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariWebContent/HandlingEvents/HandlingEvents.html">Документация Apple по тач-событиям</a>
+                </p>
+            </section>
+
+            <section>
+                <h2>Чем пользуемся мы?</h2>
+            </section>
+            <section>
+                <h2><a href="https://raw.githubusercontent.com/bem/bem-bl/dev/blocks-touch/i-ua/i-ua.js">i-ua.js</a></h2>
+                <p>Своего рода modernizr. Навешивает необходимые классы на body</p>
+
+                <pre>
+                    <code class="fragment">.i-ua_svg_ yes/no</code><code class="fragment"
+>.i-ua_platform_ ios/android/wp/opera/bada/other</code><code class="fragment"
+>.i-ua_orientation_ portrait/landscape</code><code class="fragment"
+>.i-ua_size_ small/normal/big</code>
+                </pre>
+            </section>
+            <section>
+                <h2><a href="http://iscrolljs.com/">i-scroll5</a></h2>
+                <blockquote>iScroll is a high performance, small footprint, dependency free, multi-platform javascript scroller.</blockquote>
+            </section>
+
+            <section>
+                <h2>Как тестировать?</h2>
+                <ul>
+                    <li>Dev-tools</li>
+                    <li class="fragment">Подключение девайса и инспектинг (iOS, Android)</li>
+                    <li class="fragment">Эмуляторы: iOS (XCode), <a href="http://developer.android.com/sdk/index.html">Android</a>, <a href="http://www.opera.com/ru/developer/mobile-emulator">Opera Emulator</a></li>
+                    <li class="fragment">Но лучше всего</li>
+                </ul>
+            </section>
+
+            <section data-background-image="img/stand.jpg"></section>
+        <!-- Заключение -->
+
+        <section>
+            <h2>Что есть еще?</h2>
+        </section>
+
+        <section>
+            <a href="https://www.ampproject.org/"><h2>AMP ⚡</h2></a>
+            <p class="advice">Google – Accelerated Mobile Pages. <br>Технология ускоренных мобильных страниц</p>
+        </section>
+
+        <section>
+            <img src="img/new/google-amp-hemsidor.png">
+        </section>
+
+        <section>
+            <h2>Оптимизации AMP</h2>
+
+            <ul>
+                <li class="fragment">Заданы размеры картинкам, iframe, etc…</li>
+                <li class="fragment">Приоритетная загрузка ресурсов</li>
+                <li class="fragment">CSS только инлайновый и ограничен 50 Кб</li>
+                <li class="fragment">Эффективная загрузка шрифтов</li>
+                <li class="fragment">Анимация только с аппаратным ускорением</li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Из чего состоит AMP?</h2>
+            <ul>
+                <li>AMP HTML</li>
+                <li>AMP JS</li>
+                <li>Google AMP Cache</li>
+            </ul>
+        </section>
+        
+        <section>
+            <h2>AMP HTML</h2>
+<pre><code>&lt;!doctype html>
+&lt;html ⚡>
+&lt;head>
+    &lt;title> Hello World&lt;/title>
+    &lt;meta charset="utf-8">
+    &lt;meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    &lt;link rel="canonical" href="https://your.websit.ru/original-page">
+    &lt;style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps
+    &lt;script async src="https://cdn.ampproject.org/v0.js">&lt;/script>
+&lt;/head>
+&lt;body>Hello AMP!&lt;/body>
+&lt;/html>
+</code></pre>
+        </section>
+
+        <section>
+            <h2>Связь основной и AMP версии</h2>
+            <p>На AMP странице:</p>
+<pre><code>&lt;link rel="canonical" href="hello.html"></code></pre>
+            <p>На основной странице:</p>
+<pre><code>&lt;link rel="amphtml" href="hello.html"></code></pre>
+        </section>
+
+        <section>
+            <h2>amp-img</h2>
+<pre><code>
+&lt;amp-img 
+  src="/img/Border_Collie.jpg"
+  alt="Picture of a dog"
+  title="Picture of a dog, view in lightbox"
+  layout="responsive"
+  width="300"
+  height="246"></amp-img>
+</code></pre>
+        </section>
+        <section>
+            <h2>AMP JS</h2>
+            <ul>
+                <li>Пользовательские скрипты запрещены</li>
+                <li>Только асинхронные AMP скрипты</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Валидация</h2>
+            <ul>
+                <li>Консоль браузера</li>
+                <li><a href="validator.ampproject.org">validator.ampproject.org</a></li>
+                <li>Расширение для браузера</li>
+                <li><a href="https://www.npmjs.com/package/amphtml-validator">npm amphtml-validator</a></li>
+            </ul>
+        </section>
+        <section>
+            <h2>Компоненты</h2>
+            <ul>
+                <li>Ads & Analytics</li>
+                <li>Dynamic Content</li>
+                <li>Layout</li>
+                <li>Media</li>
+                <li>Presentation</li>
+                <li>Social</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Загрузка без кэша 2G</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th style="border: 1px solid white">Обычная версия</th>
+                    <th style="border: 1px solid white">AMP</th>
+                </tr>
+                </thead>
+                <tr>
+                    <td style="border: 1px solid white">Количество запросов</td>
+                    <td style="border: 1px solid white">55</td>
+                    <td style="border: 1px solid white">21</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid white">Размер</td>
+                    <td style="border: 1px solid white">835&nbsp;КБ</td>
+                    <td style="border: 1px solid white">253&nbsp;КБ</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid white">Время загрузки</td>
+                    <td style="border: 1px solid white">15.42&nbsp;сек</td>
+                    <td style="border: 1px solid white">1.6&nbsp;сек</td>
+                </tr>
+            </table>
+        </section>
+        <section>
+            <a href="https://yandex.ru/support/webmaster/turbo/connection.html"><h2>Турбо-страницы</h2></a>
+        </section>
+
+        <section>
+            <img src="img/new/turbo-link.png" style="vertical-align: top">
+            <img src="img/new/turbo-page.png" style="vertical-align: top">
+        </section>
+
+        <section>
+            <h2>Быстрый старт</h2>
+            <ol>
+                <li>Создайте RSS-канал страниц вашего сайта</li>
+                <li>В Яндекс.Вебмастере загрузите RSS-канал</li>
+                <li>Проверьте первые 10 страниц.</li>
+                <li>Обновляйте содержимое Турбо-страниц, просто изменяя RSS-канал.</li>
+            </ol>
+        </section>
+        <section>
+            <h2>Пример RSS</h2>
+<pre><code>&lt;rss
+    xmlns:yandex=&quot;http://news.yandex.ru&quot;
+    xmlns:media=&quot;http://search.yahoo.com/mrss/&quot;
+    xmlns:turbo=&quot;http://turbo.yandex.ru&quot;
+    version=&quot;2.0&quot;
+&gt;
+&lt;channel&gt;
+    &lt;item turbo=&quot;true&quot;&gt;
+        &lt;link&gt;http://www.example.com/page1.html&lt;/link&gt;
+        &lt;turbo:content&gt;
+            &lt;![CDATA[
+                &lt;header&gt;&lt;h1&gt;Заголовок страницы&lt;/h1&gt;&lt;/header&gt;
+            ]]&gt;
+        &lt;/turbo:content&gt;
+    &lt;/item&gt;
+&lt;/channel&gt;
+&lt;/rss&gt;
+</code></pre>
+        </section>
+        <section>
+            <h2>Профит</h2>
+            <ul>
+                <li class="fragment positive">Страницы быстрее загружаются</li>
+                <li class="fragment positive">Снижается нагрузка на ваш сервер</li>
+                <li class="fragment positive">Страницы создаются по алгоритмам Яндекса</li>
+                <li class="fragment positive">Изменения страниц отслеживаются автоматически</li>
+                <li class="fragment positive">Остается возможность сбора статистики</li>
+                <li class="fragment positive">Поддерживается использование рекламы</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Что есть еще?</h2>
+        </section>
+
+        <section>
+            <a href="https://instantview.telegram.org/"><h2>Instant View</h2></a>
+            <img src="img/new/instant-view.jpg" height="400">
+            <p class="advice">– моментальный просмотр блогов, новостей, статей прямо в telegram</p>
+        </section>
+        <section>
+            <h2>Как это работает?</h2>
+            <img src="img/new/instant-view-bot.jpg ">
+        </section>
+        <section>
+            <h2>Как создать шаблон?</h2>
+            <img src="img/new/instant-view-editor.jpg">
+        </section>
+        <section>
+            <a href="https://instantarticles.fb.com/"><h2>Instant Article</h2></a>
+            <img src="img/new/instant-article.jpg" height="300">
+            <p class="advice">– функция социальной сети Facebook, позволяющая просматривать материалы интернет-изданий в мобильном приложении Facebook без перехода на внешнюю веб-страницу ресурса</p>
+        </section>
+        <section>
+            <h2>Как создать?</h2>
+            <ul>
+                <li><a href="https://developers.facebook.com/docs/instant-articles/publishing/setup-rss-feed">Отдельная лента RSS</a></li>
+                <li><a href="https://developers.facebook.com/docs/instant-articles/api">API</a></li>
+                <li><a href="https://www.facebook.com/facebookmedia/get-started/instant-articles-partners">Tools</a></li>
+            </ul>
+        </section>
+        <section>
+            <h4>Спасибо! Вопрос?</h4>
+            <div><img src="img/310.gif"></div>
+            <!--<a class="fragment"-->
+               <!--href="https://github.com/urfu-2015/webdev-tasks-5">github.com/urfu-2015/webdev-tasks-5</a>-->
+        </section>
+    </div>
+</div>
+
+<script src="./lib/js/head.min.js"></script>
+<script src="./js-lib/reveal.js"></script>
+<script>
+    Reveal.initialize({
+        controls: false,
+        progress: true,
+        slideNumber: true,
+        history: true,
+        center: true,
+        hideAddressBar: true,
+        transition: 'slide',
+        dependencies: [
+            {
+                src: '../plugin/highlight/highlight.js',
+                async: true,
+                condition: function () {
+                    return Boolean(document.querySelector('pre code'));
+                },
+                callback: function () {
+                    hljs.initHighlightingOnLoad();
+                }
+            }
+        ]
+    });
+</script>
+</body>
+</html>
