@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-
-    <title>Лекция «Графика»</title>
+    <title>Графика</title>
 
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
@@ -14,22 +13,8 @@
     <link rel="stylesheet" href="../../@lib/core.css">
     <link rel="stylesheet" href="../08-animation/css/animate.css">
     <link rel="stylesheet" href="../08-animation/css/night-2.css" id="theme">
-
-    <!-- Code syntax highlighting -->
     <link rel="stylesheet" href="../08-animation/css/zenburn.css">
-
-    <!-- Printing and PDF exports -->
     <link rel="stylesheet" href="css-custom/custom.css">
-    <script>
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
-        document.getElementsByTagName('head')[0].appendChild(link);
-    </script>
-    <script type="text/javascript"
-            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
 </head>
 <body>
 
@@ -47,7 +32,7 @@
             </div>
         </section>
         <section>
-            <img src="img/Dribbble.png" style="height: 500px;">
+            <img src="images/Dribbble.png" style="height: 500px;">
         </section>
         <section>
             <h1>Цветовые модели</h1>
@@ -56,13 +41,13 @@
             <h2>Цветовая модель</h2>
 
             <p>— математическая модель описания представления цветов в виде кортежей чисел (обычно из трёх, реже — четырёх значений).</p>
-            <img src="img/color-model.png" style="background: #fff; height: 400px;">
+            <img src="images/color-model.png" style="background: #fff; height: 400px;">
         </section>
         <section>
             <h2><span  style="color:red">R</span><span  style="color:green">G</span><span  style="color:blue">B</span></h2>
 
             <p>– кодирует любой цвет, представляя в виде комбинации трех цветов (каналов): <mark class="red">красного (Red)</mark>, <mark class="green">зеленого (Green)</mark> и <mark class="blue">синего (Blue)</mark>, с разной интенсивностью.</p>
-            <img src="img/rgb.png" height="400">
+            <img src="images/rgb.png" height="400">
         </section>
         <section>
             <p>Интенсивность каждого из трех цветов – это один байт (т. е. число в диапазоне от 0 до 255):</p>
@@ -72,7 +57,7 @@
                 <li style="color:#ff0">Желтый цвет r=255; g=255; b=0</li>
                 <li  style="color:#000; background: #fff;">Черный цвет r=0; g=0; b=0</li>
             </ul><br>
-            <img src="img/rgb3d.png" height="300">
+            <img src="images/rgb3d.png" height="300">
         </section>
         <section>
             <h2>RGB в CSS</h2>
@@ -128,7 +113,7 @@
             <h2><span style="color: cyan">C</span><span style="color: magenta">M</span><span style="color:yellow">Y</span>K</h2>
 
             <p>Данная модель является вычитающей, поскольку цвета в ней образуются путем вычитания из черного цвета базовых цветов: <span style="color: cyan">голубого (Cyan)</span>, <span style="color: magenta">пурпурного (Magenta)</span>, <span style="color: yellow">желтого (Yellow)</span>.</p>
-            <img src="img/rgb_cmyk.jpg">
+            <img src="images/rgb_cmyk.jpg">
         </section>
         <section>
             <h2>HSV</h2>
@@ -139,13 +124,13 @@
                 <li class="fragment toggle saturation">Saturation — насыщенность. Чем выше этот параметр, тем «чище» будет цвет, а чем ниже, тем ближе он будет к серому (0 – 100%).</li>
                 <li class="fragment toggle brightness">Value — яркость цвета. Чем выше значение, тем ярче будет цвет. А чем ниже, тем темнее (0% — черный, 100% – яркий)</li>
             </ul>
-            <img src="img/hsl_hsv.jpg" height="250">
+            <img src="images/hsl_hsv.jpg" height="250">
         </section>
         <section>
             <h2>HSV</h2>
 
             <p>Чаще всего используется в простой обработке изображений.</p>
-            <img src="img/hsv_1.png">
+            <img src="images/hsv_1.png">
         </section>
         <section>
             <h2>HSL</h2>
@@ -156,13 +141,13 @@
                 <li class="fragment toggle saturation">Saturation — насыщенность. Чем выше этот параметр, тем «чище» будет цвет, а чем ниже, тем ближе он будет к серому (0 – 100%).</li>
                 <li class="fragment toggle lightness">Lightness — это светлота цвета (не путать с яркостью). Чем выше параметр, тем светлее цвет (100% — белый), а чем ниже, тем темнее (0% — черный).</li>
             </ul>
-            <img src="img/hsb.jpg" height="250">
+            <img src="images/hsb.jpg" height="250">
         </section>
         <section>
             <h2>HSL</h2>
 
             <p>Преимуществом HSL перед RGB является то, что HSL является гораздо более понятным. Кроме того, с помощью него легче создать палитры подходящих цветов (сохраняя оттенок и меняя яркость и насыщенность)</p>
-            <img src="img/hsl_1.jpg">
+            <img src="images/hsl_1.jpg">
         </section>
         <section>
             <h2>HSL в CSS</h2>
@@ -214,12 +199,12 @@
                 <tr>
                     <td>
                         <div class="image-container">
-                            <img class="fragment toggle zoom-image" style="transform-origin: 80%;" src="img/delorean.svg" width="477">
+                            <img class="fragment toggle zoom-image" style="transform-origin: 80%;" src="images/delorean.svg" width="477">
                         </div>
                     </td>
                     <td style="vertical-align: top">
                         <div class="image-container">
-                            <img class="fragment toggle zoom-image" style="transform-origin: 74% 13%;" src="img/delorean.jpg" width="477">
+                            <img class="fragment toggle zoom-image" style="transform-origin: 74% 13%;" src="images/delorean.jpg" width="477">
                         </div>
                     </td>
                 </tr>
@@ -280,7 +265,7 @@
 </svg></code></pre>
         </section>
         <section>
-            <img src="img/clock-svg.svg" height="500" class="fragment toggle svg-zoom-in-out" style="background: transparent; border: 0; max-height: 500px;">
+            <img src="images/clock-svg.svg" height="500" class="fragment toggle svg-zoom-in-out" style="background: transparent; border: 0; max-height: 500px;">
         </section>
         <section>
             <h2>Недостатки векторной графики</h2>
@@ -307,20 +292,20 @@
             <h2>Растровая графика</h2>
 
             <p>Изображение по вертикали и горизонтали разбивается на достаточно мелкие прямоугольники – пикселы.</p>
-            <img src="img/raster_vector.png">
+            <img src="images/raster_vector.png">
         </section>
         <section>
             <h1>Характеристики растровых изображений</h1>
         </section>
         <section>
             <h2>Разрешение</h2>
-            <img src="img/Raster-vector-circles.png" height="500">
+            <img src="images/Raster-vector-circles.png" height="500">
         </section>
         <section>
             <h2>Глубина цвета</h2>
 
             <p>– определяет то количество оттенков, в диапазоне которых точка может изменять свой цвет.</p>
-            <img src="img/glubina-cveta.png">
+            <img src="images/glubina-cveta.png">
         </section>
         <section>
             <table>
@@ -354,11 +339,11 @@
         </section>
         <section>
             <p>1 бит / 24 бита</p>
-            <img src="img/1-bit.jpg" height="300">
+            <img src="images/1-bit.jpg" height="300">
         </section>
         <section>
             <h2>Индексированный цвет</h2>
-            <img src="img/palitra.png" height="500" style="background: #fff">
+            <img src="images/palitra.png" height="500" style="background: #fff">
         </section>
         <section style="text-align: left;">
             <p>Плюсы растрового изображения:</p>
@@ -373,7 +358,7 @@
                 <li class="fragment red">зачастую может иметь больший размер, чем аналог векторного изображения</li>
             </ul>
             <div class="fragment">
-                <img src="img/clock-svg.svg" width="200" style="background: transparent; border: 0"><br><span style="font-size: 20px;">в вектор – 1.98 KБ, а в растре – 51 КБ</span>
+                <img src="images/clock-svg.svg" width="200" style="background: transparent; border: 0"><br><span style="font-size: 20px;">в вектор – 1.98 KБ, а в растре – 51 КБ</span>
             </div>
         </section>
         <section>
@@ -428,7 +413,7 @@
                 <li  class="fragment">можно сохранять черно-белые, серые полутоновые, индексные цветные и цветные изображения системы RGB</li>
                 <li class="fragment red">большой объем</li>
             </ul>
-            <img src="img/Bmp-1.bmp" height="400" title="15.6 MB" style="vertical-align: middle;">
+            <img src="images/Bmp-1.bmp" height="400" title="15.6 MB" style="vertical-align: middle;">
             <span class="fragment">15.6 MB</span>
         </section>
         <section>
@@ -440,14 +425,14 @@
                 <li class="fragment">индексная палитра</li>
                 <li class="fragment red">стандарт разрабатывался только для поддержки 256-цветовой палитры</li>
                 <div class="ex" style="text-align: center;">
-                    <div class="size-shower fragment toggle"><img src="img/gif1.gif" title="365B"><span>365B</span></div>
-                    <div class="size-shower fragment toggle"><img src="img/gif2.gif" title="2KB"><span>2KB</span></div>
-                    <img class="fragment" data-fragment-index="1" src="img/gif.gif" height="185">
+                    <div class="size-shower fragment toggle"><img src="images/gif1.gif" title="365B"><span>365B</span></div>
+                    <div class="size-shower fragment toggle"><img src="images/gif2.gif" title="2KB"><span>2KB</span></div>
+                    <img class="fragment" data-fragment-index="1" src="images/gif.gif" height="185">
                 </div>
             </ul>
         </section>
         <section>
-            <img src="img/Bmp-1.gif" height="500" title="860 KB">  <br>
+            <img src="images/Bmp-1.gif" height="500" title="860 KB">  <br>
             <table>
                 <tr>
                     <td>BMP</td>
@@ -469,10 +454,10 @@
                 <li class="fragment red"  data-fragment-index="3">появление на изображениях при высоких степенях сжатия характерных артефактов</li>
                 <li class="fragment red" data-fragment-index="4">форматом не поддерживаются анимация и прозрачный цвет</li>
             </ul>
-            <img src="img/progressive-loading.png" class="fragment" data-fragment-index="2">
+            <img src="images/progressive-loading.png" class="fragment" data-fragment-index="2">
         </section>
         <section>
-            <img src="img/Bmp-1-DMSC9112086_JPG.jpg" height="500" title="980 KB">  <br>
+            <img src="images/Bmp-1-DMSC9112086_JPG.jpg" height="500" title="980 KB">  <br>
             <table>
                 <tr>
                     <td>BMP</td>
@@ -487,14 +472,14 @@
             </table>
         </section>
         <section>
-            <img src="img/JPEG_example_down.jpg" height="600" title="980 KB">
+            <img src="images/JPEG_example_down.jpg" height="600" title="980 KB">
         </section>
         <section>
-            <img src="img/grid-block.png" height="600" title="980 KB">
+            <img src="images/grid-block.png" height="600" title="980 KB">
         </section>
         <section>
             <h2>Множественное сохранение</h2>
-            <img src="img/jpg_d.jpg" height="500" title="980 KB"><br>
+            <img src="images/jpg_d.jpg" height="500" title="980 KB"><br>
             <a href="http://www.artlebedev.ru/tools/technogrette/img/jpeg-1/">https://clck.ru/AMF7p</a>
         </section>
         <section>
@@ -509,10 +494,10 @@
             </ul>
         </section>
         <section>
-            <img src="img/PNG_vs_JPEG.png">
+            <img src="images/PNG_vs_JPEG.png">
         </section>
         <section>
-            <img src="img/Bmp-1.png" title="4.9MB" height="400"> <br>
+            <img src="images/Bmp-1.png" title="4.9MB" height="400"> <br>
             <table>
                 <tr>
                     <td>BMP</td>
@@ -537,10 +522,10 @@
                 </tr>
                 <tr>
                     <td>
-                        <img src="img/png.png" title="19KB">
+                        <img src="images/png.png" title="19KB">
                     </td>
                     <td>
-                        <img src="img/png.gif" title="17KB">
+                        <img src="images/png.gif" title="17KB">
                     </td>
                 </tr>
                 <tr>
@@ -553,7 +538,7 @@
         <section>
             <h2>WebP</h2>
             <p>– обеспечивает сжатие изображений как с потерями, так и без потерь.</p>
-            <img src="img/Bmp-1.webp" title="450KB" height="300"> <br>
+            <img src="images/Bmp-1.webp" title="450KB" height="300"> <br>
             <table>
                 <tr>
                     <td>BMP</td>
@@ -583,20 +568,20 @@
         </section>
         <section>
             <h2 class="red">Поддержка</h2>
-            <img src="img/webp.png">
+            <img src="images/webp.png">
         </section>
         <section style="text-align: left">
             <h2>Инструменты сжатия</h2>
             <div>
-                <img src="img/jpegmini.png" width="100"  style="border: 0; background: transparent; vertical-align: middle; margin-right: 20px;">JPEGmini
+                <img src="images/jpegmini.png" width="100"  style="border: 0; background: transparent; vertical-align: middle; margin-right: 20px;">JPEGmini
             </div>
             <div>
-                <img src="img/ImageOptimIcon.png"  width="100" style="border: 0; background: transparent; vertical-align: middle; margin-right: 20px;">imageOptim
+                <img src="images/ImageOptimIcon.png"  width="100" style="border: 0; background: transparent; vertical-align: middle; margin-right: 20px;">imageOptim
             </div>
             <div>
-                <img src="img/kraken-logo-4.png"  width="100" style="border: 0; background: transparent; vertical-align: middle; margin-right: 20px;"><a href="https://kraken.io/">Kraken.io</a> (online)
+                <img src="images/kraken-logo-4.png"  width="100" style="border: 0; background: transparent; vertical-align: middle; margin-right: 20px;"><a href="https://kraken.io/">Kraken.io</a> (online)
             </div>
-            <img src="img/799093.png"  width="100" style="border: 0; background: transparent;  vertical-align: middle; margin-right: 20px;"><a href="https://github.com/imgo/imgo">imgo</a> (node.js)
+            <img src="images/799093.png"  width="100" style="border: 0; background: transparent;  vertical-align: middle; margin-right: 20px;"><a href="https://github.com/imgo/imgo">imgo</a> (node.js)
             <br><a href="https://tinypng.com/">tiny png</a> (online, plugin photoshop, API)
         </section>
         <section>
@@ -661,19 +646,6 @@
 
 
 
-        <section>
-            <h2>Перерыв</h2>
-            <div>
-                <img src="https://media.giphy.com/media/XHHqlsBaWptMk/giphy.gif">
-            </div>
-        </section>
-
-        <section>
-            <h2>Графика в HTML</h2>
-            <div>
-                <img src="https://media.giphy.com/media/oLh9Wmf10GKNq/giphy.gif">
-            </div>
-        </section>
 
         <section>
             <h2>img</h2>
@@ -685,7 +657,7 @@
 
         <section>
             <h2>Retina дисплей</h2>
-            <img src="img/retina.png" style="margin-top: 80px">
+            <img src="images/retina.png" style="margin-top: 80px">
         </section>
 
         <section>
@@ -693,13 +665,13 @@
             <div>
                 <figure style="display: inline-block; vertical-align: middle" >
                     <figcaption>нормального человека</figcaption>
-                    <img src="img/cat.jpg" width=400>
+                    <img src="images/cat.jpg" width=400>
                 </figure>
                 <figure style="display: inline-block; vertical-align: middle">
                     <figcaption>человека с Apple</figcaption>
-                    <img src="img/cat-mini.jpg" width=400>
+                    <img src="images/cat-mini.jpg" width=400>
                 </figure>
-                
+
             </div>
         </section>
 
@@ -708,11 +680,11 @@
             <div style="display: flex; align-content: stretch">
                 <figure style="display: inline-block; vertical-align: middle" >
                     <figcaption>нормального человека</figcaption>
-                    <img src="img/cat.jpg" width=400>
+                    <img src="images/cat.jpg" width=400>
                 </figure>
                 <figure style="display: inline-block; vertical-align: middle">
                     <figcaption>человека с Apple</figcaption>
-                    <img src="img/minecraft-cat.jpg" width=400 style="height: calc(100% - 86px);">
+                    <img src="images/minecraft-cat.jpg" width=400 style="height: calc(100% - 86px);">
                 </figure>
 
             </div>
@@ -730,7 +702,7 @@
      srcset="img800.png 800w, img1500.png 1500w"&gt;
         </code></pre>
 
-            <img class="fragment" data-fragment-index="2" src="img/filter-cat.jpg" srcset="img/cat.jpg 800w, img/filter-cat.jpg 1500w" width="400">
+            <img class="fragment" data-fragment-index="2" src="images/filter-cat.jpg" srcset="images/cat.jpg 800w, images/filter-cat.jpg 1500w" width="400">
         </section>
 
         <section>
@@ -748,16 +720,16 @@
             <pre class="html size-l"><code data-trim>
 <picture>
     &lt;source media="(min-width: 800px)"
-            srcset="img/filter-cat.jpg" type="image/jpeg"&gt;
+            srcset="images/filter-cat.jpg" type="image/jpeg"&gt;
     &lt;source media="(max-width: 799px)"
-            srcset="img/cat.png" type="image/png"&gt;
+            srcset="images/cat.png" type="image/png"&gt;
     &lt;img src="img.png"  alt="котик" height=100 width=200&gt;
 </picture>
             </code></pre>
             <picture>
-                <source media="(min-width: 800px)" srcset="img/filter-cat.jpg" type="image/jpeg">
-                <source media="(max-width: 799px)" srcset="img/cat.jpg" type="image/jpeg">
-                 <img src="img/cat.jpg"  alt="картинка" width=400>
+                <source media="(min-width: 800px)" srcset="images/filter-cat.jpg" type="image/jpeg">
+                <source media="(max-width: 799px)" srcset="images/cat.jpg" type="image/jpeg">
+                 <img src="images/cat.jpg"  alt="картинка" width=400>
             </picture>
         </section>
 
@@ -766,22 +738,22 @@
             <div style="display: flex; justify-content: center" class="fragment">
                 <div style="width: 300px; height: 200px; margin: 30px;">
                     <p>fill</p>
-                    <img style="object-fit: fill; width: 100%; height: 200px; margin: 0; border: none;" src="img/cat.jpg">
+                    <img style="object-fit: fill; width: 100%; height: 200px; margin: 0; border: none;" src="images/cat.jpg">
                 </div>
                 <div style="width: 300px; height: 200px; margin: 30px;" class="fragment">
                     <p>contain</p>
-                    <img style="object-fit: contain; width: 100%; height: 200px; margin: 0; border: none" src="img/cat.jpg">
+                    <img style="object-fit: contain; width: 100%; height: 200px; margin: 0; border: none" src="images/cat.jpg">
                 </div>
             </div>
 
             <div style="display: flex; justify-content: center; margin-top: 20px;">
                 <div style="width: 300px; height: 200px; margin: 30px;" class="fragment">
                     <p>cover</p>
-                    <img style="object-fit: cover; width: 100%; height: 200px; margin: 0; border: none" src="img/cat.jpg">
+                    <img style="object-fit: cover; width: 100%; height: 200px; margin: 0; border: none" src="images/cat.jpg">
                 </div>
                 <div style="width: 300px; height: 200px; margin: 30px;" class="fragment">
                     <p>none</p>
-                    <img style="object-fit: none; width: 100%; height: 200px; margin: 0; border: none" src="img/cat.jpg">
+                    <img style="object-fit: none; width: 100%; height: 200px; margin: 0; border: none" src="images/cat.jpg">
                 </div>
             </div>
 
@@ -795,7 +767,7 @@
             <div class="fragment" data-fragment-index="0">
                 <div class="fragment" data-fragment-index="1">Картинка 250х250, содежащий блок 200x200</div>
                 <div class="ex">
-                    <div class="image-css" style="background: url(img/pusheencat.png); width: 200px;height: 200px;"></div>
+                    <div class="image-css" style="background: url(images/pusheencat.png); width: 200px;height: 200px;"></div>
                 </div>
             </div>
         </section>
@@ -808,7 +780,7 @@
 }</code></pre>
             Картинка 250х250, содежащий блок 200x200
             <div class="ex">
-                <div class="image-css fragment toggle image-width-height"  data-fragment-index="0" style="background: url(img/pusheencat.png);  background-size: 100%; width: 200px; height: 200px;"></div>
+                <div class="image-css fragment toggle image-width-height"  data-fragment-index="0" style="background: url(images/pusheencat.png);  background-size: 100%; width: 200px; height: 200px;"></div>
             </div>
         </section>
         <section>
@@ -820,7 +792,7 @@
 }</code></pre>
             Картинка 250х250, содежащий блок 200x200
             <div class="ex">
-                <div class="image-css fragment toggle image-width-height" style="background: url(img/pusheencat.png);  background-size: 100% 100%; width: 200px; height: 200px;" data-fragment-index="0"></div>
+                <div class="image-css fragment toggle image-width-height" style="background: url(images/pusheencat.png);  background-size: 100% 100%; width: 200px; height: 200px;" data-fragment-index="0"></div>
             </div>
         </section>
         <section>
@@ -836,8 +808,8 @@
 }</span></code></pre>
             <!--Картинка 250х250, содежащий блок 200x200-->
             <div class="ex">
-                <div class="image-css cover-change toggle fragment" style="background: url(img/pusheencat.png); display: inline-block;  background-size: cover; width: 60px; height: 200px;" data-fragment-index="1"></div>
-                <div class="image-css contain-change toggle fragment" style="background: url(img/pusheencat.png); display: inline-block;  background-size: contain; width: 60px; height: 200px;" data-fragment-index="3"></div>
+                <div class="image-css cover-change toggle fragment" style="background: url(images/pusheencat.png); display: inline-block;  background-size: cover; width: 60px; height: 200px;" data-fragment-index="1"></div>
+                <div class="image-css contain-change toggle fragment" style="background: url(images/pusheencat.png); display: inline-block;  background-size: contain; width: 60px; height: 200px;" data-fragment-index="3"></div>
             </div>
             <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-size">https://clck.ru/9QAEL</a>
         </section>
@@ -857,10 +829,10 @@
     background-repeat: repeat-y;
 }</span></code></pre>
             <div class="ex">
-                <div class="image-css fragment" style="background: url(img/pusheencat.png); display: inline-block; background-repeat: repeat;  background-size: 30%; width: 150px; height: 150px;" data-fragment-index="0"></div>
-                <div class="image-css fragment" style="background: url(img/pusheencat.png); display: inline-block; background-repeat: no-repeat;  background-size: 30%; width: 150px; height: 150px;" data-fragment-index="1"></div>
-                <div class="image-css fragment" style="background: url(img/pusheencat.png); display: inline-block; background-repeat: repeat-x;  background-size: 30%; width: 150px; height: 150px;" data-fragment-index="2"></div>
-                <div class="image-css fragment" style="background: url(img/pusheencat.png); display: inline-block; background-repeat: repeat-y;  background-size: 30%; width: 150px; height: 150px;" data-fragment-index="3"></div>
+                <div class="image-css fragment" style="background: url(images/pusheencat.png); display: inline-block; background-repeat: repeat;  background-size: 30%; width: 150px; height: 150px;" data-fragment-index="0"></div>
+                <div class="image-css fragment" style="background: url(images/pusheencat.png); display: inline-block; background-repeat: no-repeat;  background-size: 30%; width: 150px; height: 150px;" data-fragment-index="1"></div>
+                <div class="image-css fragment" style="background: url(images/pusheencat.png); display: inline-block; background-repeat: repeat-x;  background-size: 30%; width: 150px; height: 150px;" data-fragment-index="2"></div>
+                <div class="image-css fragment" style="background: url(images/pusheencat.png); display: inline-block; background-repeat: repeat-y;  background-size: 30%; width: 150px; height: 150px;" data-fragment-index="3"></div>
             </div>
         </section>
         <section>
@@ -871,25 +843,25 @@
     /*top | center | bottom | <проценты> | <значение>*/
     background-position: 75% 50%;
 }</code></pre>
-            <img src="img/bg-pos.png"><br>
+            <img src="images/bg-pos.png"><br>
             <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-position">https://clck.ru/AMT8o</a>
             <!--Картинка 250х250, содежащий блок 200x200-->
         </section>
 
         <section>
             <div class="ex">
-                <div class="image-css" style="background: url(img/pusheencat.png); display: inline-block;background-size: 30%; background-repeat: no-repeat; width: 200px; height: 200px;"></div>
+                <div class="image-css" style="background: url(images/pusheencat.png); display: inline-block;background-size: 30%; background-repeat: no-repeat; width: 200px; height: 200px;"></div>
                 <pre class="css size-l"><code>background-position: 0 0;</code></pre>
             </div>
             <div class="ex" style="margin-top: 12px">
-                <div class="image-css" style="background: url(img/pusheencat.png); background-position: 50px 50px; display: inline-block;background-size: 30%; background-repeat: no-repeat; width: 200px; height: 200px;"></div>
+                <div class="image-css" style="background: url(images/pusheencat.png); background-position: 50px 50px; display: inline-block;background-size: 30%; background-repeat: no-repeat; width: 200px; height: 200px;"></div>
                 <pre class="css size-l"><code>background-position: 50px 50px;</code></pre>
             </div>
         </section>
 
         <section>
             <div class="ex">
-                <div class="image-css fragment toggle move-bg" style="background: url(img/pusheencat.png); display: inline-block;background-size: 30%; background-repeat: no-repeat; width: 200px; height: 200px;"></div>
+                <div class="image-css fragment toggle move-bg" style="background: url(images/pusheencat.png); display: inline-block;background-size: 30%; background-repeat: no-repeat; width: 200px; height: 200px;"></div>
                 <pre class="css move-bg-state-1 size-l"><code>background-position: 100% 0;</code></pre>
                 <pre class="css move-bg-state-2 size-l"><code>background-position: 100% 100%;</code></pre>
                 <pre class="css move-bg-state-3 size-l"><code>background-position: 0 100%;</code></pre>
@@ -955,7 +927,7 @@
                            no-repeat #290;
 }</code></pre>
             <div class="ex">
-                <div class="image-css" style="background: url(img/pusheencat.png) 50% 10% / 50px 80px no-repeat #290; display: inline-block; width: 150px; height: 150px;"></div>
+                <div class="image-css" style="background: url(images/pusheencat.png) 50% 10% / 50px 80px no-repeat #290; display: inline-block; width: 150px; height: 150px;"></div>
             </div>
             <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/background">https://clck.ru/AMKMc</a>
         </section>
@@ -1066,28 +1038,28 @@ background-color: red;</code></pre>
             <pre class="css size-l fragment" data-fragment-index=1><code>.cat {
     opacity: .5;
 }</code></pre>
-            <div style="opacity: .3" data-fragment-index=1 class="fragment"><img src="img/filter-cat.jpg" width="600"></div>
+            <div style="opacity: .3" data-fragment-index=1 class="fragment"><img src="images/filter-cat.jpg" width="600"></div>
         </section>
 
         <section>
             <div style="display: flex; justify-content: center; position: relative">
                 <div class="fragment" data-fragment-index=1 style="">
                     <div class="about-filter">filter: grayscale(1);</div>
-                    <img style="filter: grayscale(100%);" src="img/filter-cat.jpg" width="450">
+                    <img style="filter: grayscale(100%);" src="images/filter-cat.jpg" width="450">
                 </div>
                 <div class="fragment" data-fragment-index=2>
                     <div class="about-filter">filter: sepia(1)</div>
-                    <img style="filter: sepia(100%)" src="img/filter-cat.jpg" width="450">
+                    <img style="filter: sepia(100%)" src="images/filter-cat.jpg" width="450">
                 </div>
             </div>
             <div style="display: flex; justify-content: center; position: relative">
                 <div class="fragment" data-fragment-index=3 style="">
                     <div class="about-filter">filter: saturate(2);</div>
-                    <img style="filter: saturate(2);" src="img/filter-cat.jpg" width="450">
+                    <img style="filter: saturate(2);" src="images/filter-cat.jpg" width="450">
                 </div>
                 <div class="fragment" data-fragment-index=4>
                     <div class="about-filter">filter: hue-rotate(180deg)</div>
-                    <img style="filter: hue-rotate(180deg)" src="img/filter-cat.jpg" width="450">
+                    <img style="filter: hue-rotate(180deg)" src="images/filter-cat.jpg" width="450">
                 </div>
             </div>
         </section>
@@ -1096,21 +1068,21 @@ background-color: red;</code></pre>
             <div style="display: flex; justify-content: center; position: relative">
                 <div class="fragment" data-fragment-index=1 style="">
                     <div class="about-filter">filter: invert(1);</div>
-                    <img style="filter: invert(100%);" src="img/filter-cat.jpg" width="450">
+                    <img style="filter: invert(100%);" src="images/filter-cat.jpg" width="450">
                 </div>
                 <div class="fragment" data-fragment-index=2>
                     <div class="about-filter">filter: brightness(2)</div>
-                    <img style="filter: brightness(200%)" src="img/filter-cat.jpg" width="450">
+                    <img style="filter: brightness(200%)" src="images/filter-cat.jpg" width="450">
                 </div>
             </div>
             <div style="display: flex; justify-content: center; position: relative">
                 <div class="fragment" data-fragment-index=3 style="">
                     <div class="about-filter">filter: contrast(2);</div>
-                    <img style="filter: contrast(2);" src="img/filter-cat.jpg" width="450">
+                    <img style="filter: contrast(2);" src="images/filter-cat.jpg" width="450">
                 </div>
                 <div class="fragment" data-fragment-index=4>
                     <div class="about-filter">filter: blur(20px)</div>
-                    <img style="filter: blur(20px)" src="img/filter-cat.jpg" width="450">
+                    <img style="filter: blur(20px)" src="images/filter-cat.jpg" width="450">
                 </div>
             </div>
         </section>
@@ -1120,15 +1092,15 @@ background-color: red;</code></pre>
             <pre class="css size-l fragment" data-fragment-index=1><code>.cat {
     filter: invert(100%) sepia(100%);
 }</code></pre>
-            <div style="filter: invert(100%) sepia(100%)" class="fragment" data-fragment-index=1><img src="img/filter-cat.jpg" width="600"></div>
+            <div style="filter: invert(100%) sepia(100%)" class="fragment" data-fragment-index=1><img src="images/filter-cat.jpg" width="600"></div>
         </section>
 
         <section>
             <h2>Поддержка</h2>
-            <img src="img/filter-support.png">
+            <img src="images/filter-support.png">
         </section>
 
-        <section data-background-image="img/filter-back.jpg">
+        <section data-background-image="images/filter-back.jpg">
             <h2>backdrop-filter</h2>
             <pre class="css size-l fragment" data-fragment-index=1><code>.text {
     backdrop-filter: brightness(40%) sepia(100%);
@@ -1141,33 +1113,33 @@ background-color: red;</code></pre>
 
         <section>
             <h2>Поддержка</h2>
-            <img src="img/backdrop-support.png">
+            <img src="images/backdrop-support.png">
         </section>
 
         <section>
             <h2>Спрайты</h2>
-            <img class="ps" src="img/sprite.png" height="260">
-            <img class="ps" src="img/sprite.png" height="260">
-            <img class="ps" src="img/sprite.png" height="260">
-            <img class="ps" src="img/sprite.png" height="260">
-            <img class="ps" src="img/sprite.png" height="260">
-            <img class="ps" src="img/sprite.png" height="260">
-            <img class="ps" src="img/sprite.png" height="260">
-            <img class="ps" src="img/sprite.png" height="260">
-            <img class="ps" src="img/sprite.png" height="260">
-            <img class="ps" src="img/sprite.png" height="260">
-            <img class="ps" src="img/sprite.png" height="260">
-            <img class="ps" src="img/sprite.png" height="260">
-            <img class="ps" src="img/sprite.png" height="260">
-            <img class="ps" src="img/sprite.png" height="260">
-            <img class="ps" src="img/sprite.png" height="260">
-            <img class="ps" src="img/sprite.png" height="260">
+            <img class="ps" src="images/sprite.png" height="260">
+            <img class="ps" src="images/sprite.png" height="260">
+            <img class="ps" src="images/sprite.png" height="260">
+            <img class="ps" src="images/sprite.png" height="260">
+            <img class="ps" src="images/sprite.png" height="260">
+            <img class="ps" src="images/sprite.png" height="260">
+            <img class="ps" src="images/sprite.png" height="260">
+            <img class="ps" src="images/sprite.png" height="260">
+            <img class="ps" src="images/sprite.png" height="260">
+            <img class="ps" src="images/sprite.png" height="260">
+            <img class="ps" src="images/sprite.png" height="260">
+            <img class="ps" src="images/sprite.png" height="260">
+            <img class="ps" src="images/sprite.png" height="260">
+            <img class="ps" src="images/sprite.png" height="260">
+            <img class="ps" src="images/sprite.png" height="260">
+            <img class="ps" src="images/sprite.png" height="260">
         </section>
         <section>
             <h2>Спрайты</h2>
 
             <p>– прием объединить много изображений в одно.</p>
-            <img class="ps" src="img/f0113.png"> <br>
+            <img class="ps" src="images/f0113.png"> <br>
         </section>
         <section>
             <h2>Спрайты в css</h2>
@@ -1181,7 +1153,7 @@ background-color: red;</code></pre>
                     <div class="social inst"></div>
                 </div>
             </div>
-            <img class="fragment" src="img/social-icons.example.png">
+            <img class="fragment" src="images/social-icons.example.png">
         </section>
         <section>
 <pre class="css size-l"><code>.social {
@@ -1291,21 +1263,21 @@ background-color: red;</code></pre>
         <section>
             <h2>Цвета в проекте</h2>
             <div>
-                <img src="img/zeplin-colors.png">
+                <img src="images/zeplin-colors.png">
             </div>
         </section>
 
         <section>
             <h2>Экспорт изображений</h2>
             <div>
-                <img src="img/zeplin-images.png">
+                <img src="images/zeplin-images.png">
             </div>
         </section>
 
         <section>
             <h2>Работа с элементом</h2>
             <div>
-                <img src="img/zeplin-element.png">
+                <img src="images/zeplin-element.png">
             </div>
         </section>
 
@@ -1320,7 +1292,7 @@ background-color: red;</code></pre>
 
         <section>
             <h2>favicon</h2>
-            <img src="img/favicon.png">
+            <img src="images/favicon.png">
         </section>
 
         <section>
@@ -1338,77 +1310,7 @@ background-color: red;</code></pre>
     </div>
 </div>
 
-<script src="./head.min.js"></script>
-
 <script src="../../@lib/core.js"></script>
-<script src="../08-animation/js/jquery.min.js"></script>
-<script src="../08-animation/js/jquery.lettering.js"></script>
-<script src="../08-animation/js/jquery.textillate.js"></script>
-
-<script>
-    $('.links a').on('mouseover', function () {
-        var text = $(this).data('content');
-        $('.output-links').text(text);
-
-    });
-    $('.links a').on('blur', function () {
-        $('.output-links').text('');
-
-    });
-
-    Reveal.addEventListener('fragmentshown', function (event) {
-        if (Reveal.isFirstSlide()) {
-            var root = $(event.fragment);
-            console.log(root);
-            setTimeout(function () {
-                $(root).find('h1').addClass('bounceInDown');
-                $(root).find('h4').addClass('bounceInRight');
-                $(root).find('small').eq(0).addClass('bounceInLeft');
-                $(root).find('small').eq(1).addClass('bounceInUp');
-            }, 0);
-        }
-    });
-    // Full list of configuration options available at:
-    // https://github.com/hakimel/reveal.js#configuration
-    Reveal.initialize({
-        controls: false,
-        progress: true,
-        history: true,
-        center: false,
-
-        transition: 'slide', // none/fade/slide/convex/concave/zoom
-
-        // Optional reveal.js plugins
-        dependencies: [
-            {
-                src: '../lib/js/classList.js', condition: function () {
-                return !document.body.classList;
-            }
-            },
-            {
-                src: '../plugin/markdown/marked.js', condition: function () {
-                return !!document.querySelector('[data-markdown]');
-            }
-            },
-            {
-                src: '../plugin/markdown/markdown.js', condition: function () {
-                return !!document.querySelector('[data-markdown]');
-            }
-            },
-            {
-                src: '../plugin/highlight/highlight.js', async: true, condition: function () {
-                return !!document.querySelector('pre code');
-            }, callback: function () {
-                hljs.initHighlightingOnLoad();
-            }
-            },
-            { src: '../plugin/zoom-js/zoom.js', async: true },
-            { src: '../plugin/notes/notes.js', async: true }
-        ]
-    });
-    Reveal.configure({ slideNumber: true });
-
-</script>
 
 </body>
 </html>

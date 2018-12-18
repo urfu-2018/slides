@@ -557,7 +557,7 @@ img.ps {
     width: 96px;
     height: 96px;
     display: inline-block;
-    background-image: url(../img/social-icons.example.png);
+    background-image: url(../images/social-icons.example.png);
     background-repeat: no-repeat;
 }
 .social.fb {
@@ -690,7 +690,7 @@ img.ps {
 
 .fix-back
 {
-    background: url(../img/windows.jpg);
+    background: url(../images/windows.jpg);
     margin: 32px auto !important;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -716,7 +716,7 @@ img.ps {
     width: 180px;
     height: 180px;
     border: 30px #b1c97c solid !important;
-    background-color: #7db4bd; 
+    background-color: #7db4bd;
     position: absolute;
     z-index: 1000;
 }
@@ -724,10 +724,10 @@ img.ps {
 .push {
     position: relative;
     display: inline-block;
-    background: url(../img/pusheencat-mini.png);
-    height: 180px; 
-    width: 180px; 
-    padding: 30px !important; 
+    background: url(../images/pusheencat-mini.png);
+    height: 180px;
+    width: 180px;
+    padding: 30px !important;
     border: 20px solid #e6c47c !important;
     background-repeat: no-repeat;
 }
