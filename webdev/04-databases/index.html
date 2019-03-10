@@ -1,0 +1,1419 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Базы данных, часть I</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+</head><body class="white"><div class="reveal"><div class="slides">
+
+<section class="center">
+    <h1>Базы данных, часть I</h1>
+    <p><span class="red">Б</span>аженова Анна</p>
+</section>
+
+<section class="center">
+    <h1>Какие бывают базы данных?</h1>
+</section>
+
+<section class="center">
+    <h1>I. Традиционные базы данных</h1>
+</section>
+
+<section class="center little">
+    <h2>Реляционная модель данных</h2>
+
+    <ul>
+        <li class="fragment">данные хранятся в таблицах с колонками определенного типа (схема). Каждая строка - один объект</li>
+        <li class="fragment">можно создавать связи между таблицами</li>
+        <li class="fragment">данные предпочтительно хранить в нормализованном виде</li>
+    </ul>
+</section>
+
+<section class="center little">
+    <h2>Нормализация</h2>
+
+    <ul>
+        <li class="fragment">в каждой таблице хранится минимальное необходимое количество данных</li>
+        <li class="fragment">без дублирования и избыточности</li>
+    </ul>
+
+    <p class="fragment hor-center very-small"><a href="https://habr.com/ru/post/254773">Нормальные формы</a></p>
+</section>
+
+<section class="center">
+    <h1>SQL</h1>
+
+    <blockquote cite="https://ru.wikipedia.org/wiki/SQL">
+        англ. structured query language — «язык структурированных запросов»
+    </blockquote>
+</section>
+
+<section class="center">
+    <p>Данные хранятся в <span class="green">консистентном</span> состоянии</p>
+    <p class="fragment">Как это можно реализовать?</p>
+</section>
+
+<section class="center">
+    <h2>Транзакции (ACID)</h2>
+
+    <ul style="font-size: 90%;">
+        <li class="fragment">атомарность (atomicity)</li>
+        <li class="fragment">консистентность (consistency)</li>
+        <li class="fragment">изолированность (isolation)</li>
+        <li class="fragment">надежность (durability)</li>
+    </ul>
+</section>
+
+<section class="center little">
+    <h2>Преимущества традиционных БД</h2>
+
+    <ul>
+        <li>гарантируют сохранность и консистентность данных</li>
+        <li>позволяют при запросе соединять данные из нескольких таблиц так, как удобно (JOIN)</li>
+        <li>проверены временем</li>
+        <li>распространенные - есть клиенты под все возможные языки</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h2>Примеры</h2>
+
+    Microsoft SQL Server, PostgreSQL, MySQL, Oracle DB
+</section>
+
+<section class="center">
+    <h1>II. NoSQL</h1>
+    <h2>NoSQL = Not only SQL</h2>
+</section>
+
+<section class="center little">
+    <h2>Недостатки традиционной БД</h2>
+
+    <ul>
+        <li class="fragment">сложности с горизонтальным масштабированием</li>
+        <li style="visibility: hidden;">относительно медленные из-за сложной логики обработки параллельных транзакций и проверки консистентности</li>
+        <li style="visibility: hidden;">реляционная модель данных не всегда удобна</li>
+    </ul>
+</section>
+
+<section class="center hor-center">
+    <h2>Масштабирование</h2>
+
+    <img src="images/scaling.png">
+</section>
+
+<section class="center little">
+    <h2>Недостатки традиционной БД</h2>
+
+    <ul>
+        <li>сложности с горизонтальным масштабированием</li>
+        <li>относительно медленные из-за сложной логики обработки параллельных транзакций и проверки консистентности</li>
+        <li class="fragment">реляционная модель данных не всегда удобна</li>
+    </ul>
+</section>
+
+<section class="center little">
+    <h2>Мы можем отказаться от:</h2>
+
+    <ul>
+        <li>транзакций (частично или полностью)</li>
+        <li>гарантий консистентности</li>
+        <li>нормализованных таблиц</li>
+    </ul>
+</section>
+
+<section class="center little">
+    <h2>Чтобы получить:</h2>
+
+    <ul>
+        <li class="fragment">увеличение производительности</li>
+        <li class="fragment">(почти) бесконечное горизонтальное масштабирование</li>
+        <li class="fragment">более подходящую модель данных для задачи</li>
+        <li class="fragment">отсутствие схемы данных</li>
+        <li class="fragment">...</li>
+    </ul>
+</section>
+
+<section class="center little">
+    <h2><img class="logo" src="images/mongodb.jpg" alt="mongodb"></h2>
+
+    <ul>
+        <li class="fragment">документоориентированная БД</li>
+        <li class="fragment">получение данных из связанных коллекций по простому условию</li>
+        <li class="fragment">язык запросов - JS</li>
+        <li class="fragment">сценарий использования близок к традиционным</li>
+        <li class="fragment">транзакции (?)</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h2><img class="logo" src="images/redis.jpg" alt="redis"></h2>
+
+    <ul style="font-size: 70%;">
+        <li class="fragment">не совсем БД, скорее легковесное хранилище</li>
+        <li class="fragment">хранит данные в формате "ключ-значение"</li>
+        <li class="fragment">только примитивные значения: строка, список строк, множество строк и т.д</li>
+        <li class="fragment">язык состоит из примитивных операций GET/SET/ADD...</li>
+        <li class="fragment">быстро выполняет операции</li>
+        <li class="fragment">хранит данные в памяти и ничего не гарантирует</li>
+        <li class="fragment">подходит для хранения данных, которые легко восстановить (кэш)</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h2><img class="logo" src="images/cassandra.png" alt="cassandra"></h2>
+
+    <ul style="font-size: 65%;">
+        <li class="fragment">модель данных <span class="bold">внешне</span> похожа на реляционную (таблицы со схемой)</li>
+        <li class="fragment">язык CQL - почти SQL</li>
+        <li class="fragment">"под капотом" почти "ключ-значение" (запросы, не затрагивающие ключ, работают плохо)</li>
+        <li class="fragment">один запрос = одна таблица</li>
+        <li class="fragment">требуется серьезный подход к проектированию схемы данных</li>
+        <li class="fragment">нет транзакций</li>
+        <li class="fragment">отличное горизонтальное масштабирование и отказоустойчивость</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h1>III. NewSQL</h1>
+</section>
+
+<section class="center">
+    <h2>SQL + NoSQL</h2>
+
+    <ul>
+        <li class="fragment">масштабируемость</li>
+        <li class="fragment">отказоустойчивость</li>
+        <li class="fragment">транзакции</li>
+        <li class="fragment">полноценный SQL + JOIN</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h2>Идеальная БД? <span class="fragment">Да, но...</span></h2>
+
+    <p class="small left fragment">
+        КРАЙНЕ сложна в реализации из-за распределенных транзакций и не только.
+    </p>
+
+    <div class="fragment">
+        <p class="small left">На данный момент есть несколько развивающихся решений:</p>
+        <p class="left">
+            <img class="logo-newdb" src="images/cockroachdb.png" alt="cockroachdb">
+            <a href="https://www.cockroachlabs.com">CockroachDB</a>
+        </p>
+        <p class="left">
+            <img class="logo-newdb" src="images/ya_db.png" alt="yandex database">
+            <a href="https://events.yandex.ru/lib/talks/6700/">Yandex Database</a>
+        </p>
+    </div>
+</section>
+
+<section class="center">
+    <h2>Масштабирование и отказоустойчивость</h2>
+</section>
+
+<section data-transition="none-in none-out" class="center">
+    <h2>Репликация</h2>
+
+    <p class="very-small left fragment">
+        <span class="red">Проблема:</span> в любой момент на сервер может упасть метеорит,
+        мы не должны терять данные в такой ситуации
+    </p>
+
+    <p class="very-small left fragment">
+        <span class="green">Решение:</span> сделаем несколько серверов, каждый из которых
+        будет хранить полную копию данных
+    </p>
+</section>
+
+<section data-background-transition="none-in none-out" data-background="./images/replication_base.svg" data-background-size="contain"></section>
+
+<section data-transition="none-in none-out" class="center">
+    <h2>Репликация = отказоустойчивость</h2>
+
+    <div class="fragment">
+        <p class="left small">Хотим:</p>
+        <ul class="little">
+            <li>не потерять данные при поломке одного сервера</li>
+            <li>максимально быстро восстанавливать работу</li>
+        </ul>
+    </div>
+</section>
+
+<section data-background-transition="none-in none-out" data-background="./images/master_died.svg" data-background-size="contain"></section>
+
+<section data-background-transition="none-in none-out" data-background="./images/replicas_thinks.svg" data-background-size="contain"></section>
+
+<section data-background-transition="none-in none-out" data-background="./images/new_master.svg" data-background-size="contain"></section>
+
+<section data-background-transition="none-in none-out" data-background="./images/old_master_alive.svg" data-background-size="contain"></section>
+
+<section data-background-transition="none-in none-out" data-background="./images/master_to_replica.svg" data-background-size="contain"></section>
+
+<section class="center">
+    <h2>Репликация = масштабирование?</h2>
+</section>
+
+<section data-background-transition="none-in none-out" data-background="./images/replication_with_read.svg" data-background-size="contain"></section>
+
+<section class="center">
+    <h2>Актуальность данных</h2>
+
+    <div class="fragment">
+        <p class="left small">2 вида репликации:</p>
+        <ul class="little">
+            <li>Асинхронная</li>
+            <li>Синхронная</li>
+        </ul>
+    </div>
+</section>
+
+<section class="center">
+    <h2>Асинхронная</h2>
+
+    <ol class="little">
+        <li class="fragment">мастер получает запрос на изменение данных</li>
+        <li class="fragment">сохраняет эти изменения к себе</li>
+        <li class="fragment">отвечает пользователю</li>
+        <li class="fragment">отправляет изменения на реплику (возможно, не сразу)</li>
+    </ol>
+</section>
+
+<section class="center">
+    <h2>Асинхронная. <span class="red">Проблемы</span></h2>
+
+    <ul class="little">
+        <li>если между пунктами 3 и 4 что-то случится, мы потеряем данные навсегда</li>
+        <li>на асинхронной реплике данные <span class="bold">могут быть устаревшими</span></li>
+    </ul>
+</section>
+
+<section class="center">
+    <h2>Синхронная</h2>
+
+    <ol class="little">
+        <li class="fragment">мастер получает запрос на изменение данных</li>
+        <li class="fragment">отправляет изменения на реплику</li>
+        <li class="fragment"><span class="bold">дожидается подтверждения</span>, что данные сохранены</li>
+        <li class="fragment">в случае успеха сохраняет изменения к себе</li>
+        <li class="fragment">отвечает пользователю</li>
+    </ol>
+</section>
+
+<section class="center">
+    <h2>Компромисс</h2>
+
+    <p class="small left">
+        Одна синхронная реплика, остальные асинхронные.
+        Если с мастером что-то случается, синхронная реплика заменяет его.
+        Если что-то случается с синхронной репликой,
+        одна из асинхронных занимает ее место.
+    </p>
+</section>
+
+<section class="center">
+    <h1>Шардирование</h1>
+</section>
+
+<section data-background-transition="none-in none-out" data-background="./images/writes_and_reads.svg" data-background-size="contain"></section>
+
+<section data-transition="none-in none-out" class="center">
+    <p class="very-small left">
+        <span class="red">Проблема:</span> хотим, чтобы один запрос затрагивал как можно меньше шардов
+    </p>
+    <br>
+    <div class="very-small left fragment">
+        <span class="green">Решение:</span>
+        <ol>
+            <li>назначим одну из колонок таблицы ключом</li>
+            <li>придумаем отображение ключ ⟶ шард</li>
+        </ol>
+    </div>
+</section>
+
+<section class="center hor-center">
+    <h2>По диапазонам значений ключа</h2>
+
+    <img style="width: 45%;" src="images/key_shard.svg" alt="the ranges of key values">
+</section>
+
+<section class="center">
+    <h2>По диапазонам значений ключа</h2>
+
+    <ul class="little">
+        <li>можем быстро получать выборку по диапазону значений ключа</li>
+        <li>данные могут распределиться неравномерно по шардам</li>
+        <li>запросы тоже могут неравномерно распределяться по шардам</li>
+    </ul>
+</section>
+
+<section class="center hor-center">
+    <h2>По хэшу от значения ключа</h2>
+
+    <img style="width: 45%;" src="images/mod_shard.svg" alt="hash from value of key">
+</section>
+
+<section class="center">
+    <h2>По хэшу от значения ключа</h2>
+
+    <ul class="little">
+        <li>данные распределяются равномерно</li>
+        <li>запросы вида key = 7 распределяюся равномерно</li>
+        <li>запросы по диапазону (13 < key < 37) приходится выполнять на всех шардах</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h2>Шардирование</h2>
+
+    <ul class="very-small">
+        <li class="fragment">лучше всего масштабируюся БД типа "ключ-значение" (Cassandra)</li>
+        <li class="fragment">запросы, не касающиеся ключа, нужно запускать на всех шардах, поэтому они работают медленно</li>
+        <li class="fragment">нет гарантий консистентности, так как шард не знает про транзакции на других шардах</li>
+        <li class="fragment">разработчик должен думать о том, как именно распределять запросы по шардам(*)</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h2>Итоги. Репликация</h2>
+
+    <ul class="small">
+        <li>Отказоустойчивость</li>
+        <li>Масштабирование при нагрузке <span class="bold">на чтение</span></li>
+        <li>Поддерживается во всех БД и обычно несложно настраивается</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h2>Итоги. Шардирование</h2>
+
+    <ul class="small">
+        <li>Масштабирование при любой нагрузке</li>
+        <li>Если поддержка не заложена в архитектуру БД, сложно внедрять</li>
+        <li>Много нюансов</li>
+    </ul>
+</section>
+
+<section class="center hor-center">
+    <h2>Репликация + шардирование</h2>
+
+    <img style="width: 60%;" src="images/replicas_and_shards.svg" alt="replication and sharding">
+</section>
+
+<section class="center">
+    <h1>Relax &#9200;</h1>
+</section>
+
+<section class="center hor-center">
+    <img src="images/postgresql-logo.png" alt="postgresql logo">
+</section>
+
+<section class="center">
+    <ol>
+        <li>Устанавливаем <a href="https://www.postgresql.org/download/">PostgreSQL</a></li>
+        <li>
+            <p class="left">Подключаемся:</p>
+            <ul>
+                <li>psql</li>
+                <li><a href="https://www.jetbrains.com/datagrip/download/">DataGrip</a></li>
+            </ul>
+        </li>
+    </ol>
+</section>
+
+<section class="center">
+    <h1>База данных для приложения "Заметки"</h1>
+</section>
+
+<section class="center">
+    <h2>Структура базы данных</h2>
+</section>
+
+<section>
+    <h2>database</h2>
+
+    <pre><code data-trim>
+┌{ notebook }
+├
+│
+│
+│
+│
+├
+│
+│
+├
+│
+│
+│
+    </code></pre>
+</section>
+
+<section>
+    <h2>database</h2>
+
+    <pre class="sql"><code data-trim>
+CREATE DATABASE notebook;
+    </code></pre>
+</section>
+
+<section>
+    <h2>tables</h2>
+
+    <pre><code data-trim>
+┌{ notebook }
+├─┬{ notes }
+│ ├
+│ ├
+│ ├
+│ ├
+├─┬{ users }
+│ ├
+│ ├
+├─┬{ categories }
+│ ├
+│ ├
+│ ├
+    </code></pre>
+</section>
+
+<section>
+    <h2>tables</h2>
+
+    <pre class="sql"><code data-trim>
+CREATE TABLE notes (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    text TEXT NOT NULL,
+    owner_id INTEGER
+);
+    </code></pre>
+</section>
+
+<section>
+    <h2>tables</h2>
+
+    <pre class="sql"><code data-trim>
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+    </code></pre>
+
+    <pre class="sql fragment"><code data-trim>
+CREATE TABLE categories (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    best_note_id INTEGER
+);
+    </code></pre>
+</section>
+
+<section>
+    <h2>tables</h2>
+
+    <pre class="sql"><code data-noescape data-trim>
+CREATE TABLE users (
+    id SERIAL <mark>PRIMARY KEY</mark>,
+    name VARCHAR(255) NOT NULL
+);
+    </code></pre>
+
+    <pre class="sql"><code data-noescape data-trim>
+CREATE TABLE categories (
+    id SERIAL <mark>PRIMARY KEY</mark>,
+    name VARCHAR(255) NOT NULL,
+    best_note_id INTEGER
+);
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>PRIMARY KEY</h2>
+
+    <ul>
+        <li>уникальность</li>
+        <li>создается индекс</li>
+        <li>ограничение NOT NULL</li>
+    </ul>
+</section>
+
+<section>
+    <h2>fields</h2>
+
+    <pre><code class="black-text" data-trim>
+┌{ notebook }
+├─┬{ notes }
+│ ├──{ id: Integer }
+│ ├──{ name: String }
+│ ├──{ text: String }
+│ ├──{ owner_id: Integer }
+├─┬{ users }
+│ ├──{ id: Integer }
+│ ├──{ name: String }
+├─┬{ categories }
+│ ├──{ id: Integer }
+│ ├──{ name: String }
+│ ├──{ best_note_id: Integer }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h1>Типы данных</h1>
+</section>
+
+<section class="center">
+    <h2>Строковые</h2>
+
+    <table>
+        <tr>
+            <td>CHAR(4)</td>
+            <td>"abc  "</td>
+        </tr>
+        <tr>
+            <td>VARCHAR(4)</td>
+            <td>"abc"</td>
+        </tr>
+        <tr>
+            <td>TEXT</td>
+            <td>"abcdef"</td>
+        </tr>
+    </table>
+</section>
+
+<section class="center">
+    <h2>Числовые. Целые</h2>
+
+    <table>
+        <tr>
+            <td>SMALLINT</td>
+            <td>[-2<sup>15</sup>, 2<sup>15</sup> - 1]</td>
+        </tr>
+        <tr>
+            <td>INTEGER</td>
+            <td>[-2<sup>31</sup>, 2<sup>31</sup> - 1]</td>
+        </tr>
+        <tr>
+            <td>BIGINT</td>
+            <td>[-2<sup>63</sup>, 2<sup>63</sup> - 1]</td>
+        </tr>
+    </table>
+</section>
+
+<section class="center">
+    <h2>Числовые. С плавающей точкой</h2>
+
+    <table>
+        <tr>
+            <td>REAL</td>
+            <td>[10<sup>-37</sup>, 10<sup>37</sup>]</td>
+        </tr>
+        <tr>
+            <td>DOUBLE PRECISION</td>
+            <td>[10<sup>-307</sup>, 10<sup>308</sup>]</td>
+        </tr>
+    </table>
+</section>
+
+<section class="center">
+    <h2>Числовые. С произвольной точностью</h2>
+
+    <table>
+        <tr>
+            <td>NUMERIC [(p[,s])]</td>
+        </tr>
+        <tr>
+            <td>DECIMAL [(p[,s])]</td>
+        </tr>
+    </table>
+
+    <div class="fragment hor-center">
+        <p>1 <= p <= 1000, 0 <= s <= p</p>
+        <img style="border: 0;" src="images/precision_scale.png">
+    </div>
+</section>
+
+<section class="center">
+    <h2>Числовые. Последовательные</h2>
+
+    <table>
+        <tr>
+            <td>SMALLSERIAL</td>
+            <td>[1, 2<sup>15</sup> - 1]</td>
+        </tr>
+        <tr>
+            <td>SERIAL</td>
+            <td>[1, 2<sup>31</sup> - 1]</td>
+        </tr>
+        <tr>
+            <td>BIGSERIAL</td>
+            <td>[1, 2<sup>63</sup> - 1]</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Числовые. Последовательные</h2>
+
+    <pre class="sql"><code data-trim>
+CREATE TABLE users (
+    id SERIAL
+);
+    </code></pre>
+
+    <div class="fragment">
+        <div class="arrow-bottom">⇩</div>
+        <pre class="sql"><code data-trim>
+CREATE SEQUENCE users_id_seq;
+CREATE TABLE users (
+    id integer NOT NULL DEFAULT nextval('users_id_seq')
+);
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+        </code></pre>
+    </div>
+</section>
+
+<section class="center hor-center">
+    <h2>Последовательность</h2>
+
+    <pre class="sql"><code data-trim>
+SELECT * FROM users_id_seq;
+    </code></pre>
+
+    <pre><code data-trim>
++------------+-----+-----------+
+| last_value | ... | is_called |
++------------+-----+-----------+
+|      1     | ... |     f     |
++------------+-----+-----------+
+    </code></pre>
+</section>
+
+<section class="center hor-center">
+    <h2>Последовательность</h2>
+
+    <pre class="sql"><code data-trim>
+SELECT * FROM users_id_seq;
+    </code></pre>
+
+    <pre><code data-trim data-noescape>
++------------+-----+-----------+
+| last_value | ... | is_called |
++------------+-----+-----------+
+|      1     | ... |     <mark>f</mark>     |
++------------+-----+-----------+
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Логический тип. BOOLEAN</h2>
+
+    <table class="small hor-center">
+        <tr>
+            <td>TRUE</td>
+            <td>FALSE</td>
+        </tr>
+        <tr>
+            <td>'t'</td>
+            <td>'f'</td>
+        </tr>
+        <tr>
+            <td>'true'</td>
+            <td>'false'</td>
+        </tr>
+        <tr>
+            <td>'y'</td>
+            <td>'n'</td>
+        </tr>
+        <tr>
+            <td>'yes'</td>
+            <td>'no'</td>
+        </tr>
+        <tr>
+            <td>'on'</td>
+            <td>'off'</td>
+        </tr>
+        <tr>
+            <td>'1'</td>
+            <td>'0'</td>
+        </tr>
+    </table>
+</section>
+
+<section class="center">
+    <h2>Даты</h2>
+
+    <table>
+        <tr>
+            <td>timestamp [without time zone]</td>
+            <td>8 bytes</td>
+        </tr>
+        <tr>
+            <td>timestamp with time zone</td>
+            <td>8 bytes</td>
+        </tr>
+        <tr>
+            <td>date</td>
+            <td>4 bytes</td>
+        </tr>
+    </table>
+</section>
+
+<section class="center">
+    <h2>Даты</h2>
+
+    <table class="little">
+        <tr>
+            <td>time [without time zone]</td>
+            <td>8 bytes</td>
+        </tr>
+        <tr>
+            <td>time with time zone</td>
+            <td>12 bytes</td>
+        </tr>
+        <tr>
+            <td>interval</td>
+            <td>16 bytes</td>
+        </tr>
+    </table>
+</section>
+
+<section class="center">
+    <h2>Даты. Примеры</h2>
+
+    <table class="small">
+        <tr>
+            <td>timestamp</td>
+            <td>'2004-10-19 10:23:54'</td>
+        </tr>
+        <tr>
+            <td>timestamp with time zone</td>
+            <td>'2004-10-19 10:23:54+02'</td>
+        </tr>
+        <tr>
+            <td>date</td>
+            <td>'2018-04-03'</td>
+        </tr>
+        <tr>
+            <td>time</td>
+            <td>'04:05:06.789'</td>
+        </tr>
+        <tr>
+            <td>time with time zone</td>
+            <td>'04:05:06.789-3'</td>
+        </tr>
+        <tr>
+            <td>interval</td>
+            <td>'1 12:59:10'</td>
+        </tr>
+    </table>
+</section>
+
+<section class="center">
+    <h1>Другие</h1>
+</section>
+
+<section class="center">
+    <h2>Массивы</h2>
+
+    <ul>
+        <li class="fragment">integer[]</li>
+        <li class="fragment">integer[][]</li>
+        <li class="fragment">text[][]</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h2>Массивы</h2>
+
+    <pre class="sql"><code data-trim>
+'{ значение1 разделитель значение2 разделитель ... }'
+    </code></pre>
+
+    <pre class="sql"><code data-trim>
+integer[][] -> '{{1,2,3},{4,5,6},{7,8,9}}'
+    </code></pre>
+
+    <pre class="sql fragment"><code data-trim>
+text[] -> '{"apple", "orange", "cheese"}'
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>JSON(B) <span class="fragment">vs TEXT</span></h2>
+
+    <ul>
+        <li class="fragment">получение конкретного значения</li>
+        <li class="fragment">быстрый поиск</li>
+        <li class="fragment">много функций и операторов</li>
+        <li class="fragment">B → BINARY</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h2>JSON(B)</h2>
+
+    <pre class="sql"><code data-trim>
+'{ "bar": "baz", "number": 7, "active": false }'
+    </code></pre>
+</section>
+
+<section style="font-size: 90%;">
+    <h2>Модификация</h2>
+
+    <pre class="sql"><code data-trim>
+CREATE TABLE notes (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    text VARCHAR(255)
+);
+    </code></pre>
+
+    <pre class="sql fragment"><code data-trim>
+ALTER TABLE notes ADD COLUMN owner_id INTEGER;
+ALTER TABLE notes DROP COLUMN owner_id;
+    </code></pre>
+
+    <pre class="sql fragment"><code data-trim>
+ALTER TABLE notes ALTER COLUMN text TYPE TEXT;
+ALTER TABLE notes ALTER COLUMN text SET NOT NULL;
+    </code></pre>
+
+    <pre class="sql fragment"><code data-trim>
+ALTER TABLE notes RENAME TO personal_notes;
+    </code></pre>
+
+    <pre class="sql fragment"><code data-trim>
+DROP TABLE notes;
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Миграции</h2>
+
+    <p class="small left">
+        Механизм модификации структуры и данных в БД.
+        Очень похоже на систему контроля версий.
+        Если что-то пошло не так, то миграции можно откатить.
+    </p>
+</section>
+
+<section class="center hor-center">
+    <h1>CRUD</h1>
+
+    <blockquote cite="https://ru.wikipedia.org/wiki/CRUD">
+        от англ. create, read, update, delete — «создать, прочесть, обновить, удалить»
+    </blockquote>
+</section>
+
+<section class="center">
+    <h2>Create</h2>
+
+    <pre class="slq"><code data-trim>
+INSERT INTO notes
+(id, name, text)
+VALUES
+(1, 'Books', 'Books to read');
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Read</h2>
+
+    <pre class="slq"><code data-trim>
+SELECT id, name AS title, text FROM notes;
+    </code></pre>
+
+    <pre class="fragment"><code data-trim>
++----+-------+---------------+
+| id | title |     text      |
++----+-------+---------------+
+|  1 | Books | Books to read |
++----+-------+---------------+
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Read</h2>
+
+    <pre class="slq"><code data-trim>
+SELECT * FROM notes;
+    </code></pre>
+
+    <pre><code data-trim>
++----+-------+---------------+----------+
+| id | name  |     text      | owner_id |
++----+-------+---------------+----------+
+|  1 | Books | Books to read |   NULL   |
++----+-------+---------------+----------+
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Auto increment</h2>
+
+    <pre class="slq "><code data-trim>
+SELECT * FROM notes_id_seq;
+    </code></pre>
+
+    <pre class="slq"><code data-trim>
++------------+-----+-----------+
+| last_value | ... | is_called |
++------------+-----+-----------+
+|      1     | ... |     f     |
++------------+-----+-----------+
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Auto increment</h2>
+
+    <pre class="slq "><code data-trim>
+SELECT * FROM notes_id_seq;
+    </code></pre>
+
+    <pre class="slq"><code data-noescape data-trim>
++------------+-----+-----------+
+| last_value | ... | is_called |
++------------+-----+-----------+
+|      1     | ... |     <mark>f</mark>     |
++------------+-----+-----------+
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Auto increment</h2>
+
+    <pre class="slq"><code data-trim>
+INSERT INTO notes (name, text)
+VALUES ('Films', 'Films to watch');
+    </code></pre>
+    <pre style="margin-top: 10px;" class="fragment"><code class="red" data-trim>
+ERROR:  duplicate key value violates
+        unique constraint "notes_pkey"
+DETAIL:  Key (id)=(1) already exists.
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Auto increment</h2>
+
+    <pre class="slq"><code data-trim>
+SELECT * FROM notes_id_seq;
+    </code></pre>
+
+    <pre><code data-trim data-noescape>
++------------+-----+-----------+
+| last_value | ... | is_called |
++------------+-----+-----------+
+|      1     | ... |     <mark>t</mark>     |
++------------+-----+-----------+
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Auto increment</h2>
+
+    <pre class="slq"><code data-trim>
+INSERT INTO notes (name, text)
+VALUES ('Films', 'Films to watch');
+    </code></pre>
+
+    <div class="fragment">
+        <pre style="margin-top: 10px;" class="slq"><code data-trim>
+SELECT * FROM notes;
+        </code></pre>
+        <pre><code data-trim>
++----+-------+----------------+----------+
+| id | name  |     text       | owner_id |
++----+-------+----------------+----------+
+|  1 | Books | Books to read  |   NULL   |
+|  2 | Films | Films to watch |   NULL   |
++----+-------+----------------+----------+
+        </code></pre>
+    </div>
+</section>
+
+<section class="center">
+    <h2>Auto increment</h2>
+
+    <pre class="slq "><code data-trim>
+SELECT * FROM notes_id_seq;
+    </code></pre>
+
+    <pre class="slq"><code data-trim>
++------------+-----+-----------+
+| last_value | ... | is_called |
++------------+-----+-----------+
+|      2     | ... |     t     |
++------------+-----+-----------+
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Read. Where</h2>
+
+    <pre class="slq"><code data-trim>
+SELECT id, name, text FROM notes
+WHERE name = 'Films';
+    </code></pre>
+    <pre><code data-trim>
++----+-------+----------------+
+| id | name  |      text      |
++----+-------+----------------+
+|  2 | Films | Films to watch |
++----+-------+----------------+
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Read. Where + AS</h2>
+
+    <pre class="slq"><code data-trim>
+SELECT id, name AS title, text FROM notes
+WHERE title = 'Films';
+    </code></pre>
+
+    <pre style="margin-top: 10px;" class="fragment"><code class="red" data-trim>
+ERROR:  column "title" does not exist
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Read. Sort, offset, limit</h2>
+
+    <div class="row">
+        <pre class="slq"><code data-trim>
+SELECT name FROM notes;
+        </code></pre>
+        <pre><code data-trim>
++----------+
+|   name   |
++----------+
+|  Books   |
+|  Films   |
+|  Music   |
+|  Rules   |
+| Markdown |
++----------+
+        </code></pre>
+    </div>
+    <div class="row fragment">
+        <pre class="slq"><code data-trim>
+SELECT name FROM notes
+ORDER BY name DESC
+OFFSET 2
+LIMIT 2;
+        </code></pre>
+        <pre><code data-trim>
++----------+
+|   name   |
++----------+
+| Markdown |
+|  Films   |
++----------+
+        </code></pre>
+    </div>
+</section>
+
+<section class="center">
+    <h2>Read. Count</h2>
+
+    <pre class="slq"><code data-trim>
+SELECT count(*) FROM notes;
+    </code></pre>
+
+    <pre><code data-trim>
++-------+
+| count |
++-------+
+|   5   |
++-------+
+        </code></pre>
+</section>
+
+<!--https://postgrespro.ru/docs/postgrespro/10/queries-table-expressions#QUERIES-GROUP-->
+<section class="center">
+    <h2>Read. Group by</h2>
+
+    <div class="row">
+        <pre class="slq"><code data-trim>
+SELECT name, owner_id
+FROM notes;
+        </code></pre>
+        <pre><code data-trim>
++----------+----------+
+|   name   | owner_id |
++----------+----------+
+|  Books   |     3    |
+|  Films   |     1    |
+|  Music   |     2    |
+|  Rules   |   NULL   |
+| Markdown |     1    |
++----------+----------+
+        </code></pre>
+    </div>
+
+    <div class="row fragment">
+        <pre class="slq"><code data-trim>
+SELECT owner_id, count(*)
+FROM notes
+GROUP BY owner_id;
+        </code></pre>
+        <pre><code data-trim>
++----------+-------+
+| owner_id | count |
++----------+-------+
+|    1     |   2   |
+|    2     |   1   |
+|    3     |   1   |
+|   NULL   |   1   |
++----------+-------+
+    </code></pre>
+    </div>
+</section>
+
+<section class="center hor-center">
+    <h2>Подзапросы</h2>
+
+    <div class="row">
+        <pre><code data-trim>
++----------+----------+
+|   name   | owner_id |
++----------+----------+
+|  Books   |     3    |
+|  Films   |     1    |
+|  Music   |     2    |
+|  Rules   |   NULL   |
+| Markdown |     4    |
++----------+----------+
+        </code></pre>
+    </div>
+    <div class="row">
+        <pre><code data-trim>
++------+--------+
+|  id  |  name  |
++------+--------+
+|   1  | Антон  |
+|   2  | Михаил |
+|   3  |  Олег  |
+|   4  | Андрей |
++------+--------+
+        </code></pre>
+    </div>
+</section>
+
+<section class="center">
+    <h2>Подзапросы</h2>
+
+    <div class="row">
+        <pre class="slq"><code data-trim>
+SELECT n.name
+FROM notes n
+WHERE owner_id IN (
+    SELECT id
+    FROM users u
+    WHERE u.name LIKE 'А%'
+);
+        </code></pre>
+    </div>
+    <div class="row">
+        <pre><code data-trim>
++----------+
+|   name   |
++----------+
+|  Films   |
+| Markdown |
++----------+
+        </code></pre>
+    </div>
+</section>
+
+<section class="center wide">
+    <h2>Read. Массивы</h2>
+
+    <div class="row">
+        <pre class="sql"><code data-trim>
+CREATE TABLE example_arrays
+(numbers integer[]);
+        </code></pre>
+        <pre class="sql fragment"><code data-trim>
+INSERT INTO example_arrays
+(numbers)
+VALUES ('{1,2,3}'),
+       ('{4,5,6}');
+        </code></pre>
+    </div>
+    <div class="row fragment">
+        <pre class="sql"><code data-trim>
+SELECT numbers
+FROM example_arrays;
+        </code></pre>
+        <pre><code data-trim>
++-----------+
+|  numbers  |
++-----------+
+|  {1,2,3}  |
+|  {4,5,6}  |
++-----------+
+        </code></pre>
+    </div>
+</section>
+
+<section class="center wide">
+    <h2>Read. Массивы</h2>
+
+    <div class="row fragment">
+        <pre><code data-trim>
+SELECT numbers[2]
+FROM example_arrays;
++-----------+
+|  numbers  |
++-----------+
+|     2     |
+|     5     |
++-----------+
+        </code></pre>
+    </div>
+    <div class="row fragment">
+        <pre class="sql"><code data-trim>
+SELECT numbers[1:2]
+FROM example_arrays;
++------------+
+|   numbers  |
++------------+
+|  { 1, 2 }  |
+|  { 4, 5 }  |
++------------+
+        </code></pre>
+    </div>
+</section>
+
+<section class="center wide">
+    <h2>Read. JSON</h2>
+
+    <div class="row" style="width: 50%; margin-left: -5%; margin-right: 6%;">
+        <pre class="sql"><code data-trim>
+CREATE TABLE example_json
+(info JSON);
+        </code></pre>
+        <pre class="sql fragment"><code data-trim>
+INSERT INTO example_json
+(info)
+VALUES
+('{"bar":"baz","number":7}'),
+('{"bar":"foo","some":{"val":13}}');
+        </code></pre>
+    </div>
+    <div class="row fragment">
+        <pre class="sql"><code data-trim>
+SELECT info FROM example_json;
+        </code></pre>
+        <pre><code data-trim>
++-------------------------------+
+|               info            |
++-------------------------------+
+|    {"bar":"baz","number":7}   |
+|{"bar":"foo","some":{"val":13}}|
++-------------------------------+
+        </code></pre>
+    </div>
+</section>
+
+<section class="center">
+    <h2>Read. JSON</h2>
+
+    <div class="row">
+        <pre><code data-trim>
+SELECT info->>'bar' AS bar
+FROM example_json;
++-------+
+|  bar  |
++-------+
+|  baz  |
+|  foo  |
++-------+
+        </code></pre>
+    </div>
+    <div class="row fragment">
+        <pre class="sql"><code data-trim>
+SELECT info->'some' AS some
+FROM example_json
+WHERE info->>'bar' = 'foo';
++--------------+
+|     some     |
++--------------+
+| {"value":13} |
++--------------+
+        </code></pre>
+    </div>
+
+    <p class="fragment very-small">
+        <a href="https://www.postgresql.org/docs/10/functions-json.html">Functions and Operators</a>
+    </p>
+</section>
+
+<section class="center">
+    <h2>Update</h2>
+
+    <pre class="sql"><code data-trim>
+UPDATE notes
+SET text = 'My favorite books to read', owner_id = 4
+WHERE id = 1;
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Delete</h2>
+
+    <pre class="sql"><code data-trim>
+DELETE FROM notes
+WHERE id = 1;
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Транзакции</h2>
+
+    <pre class="sql fragment"><code data-trim>
+BEGIN;
+    </code></pre>
+    <pre style="margin-top: 10px;" class="sql fragment"><code data-trim>
+UPDATE users SET account = account - 10000
+WHERE id = 3;
+    </code></pre>
+    <pre style="margin-top: 10px;" class="sql fragment"><code data-trim>
+UPDATE users SET account = account + 10000
+WHERE id = 4;
+    </code></pre>
+    <pre style="margin-top: 10px;" class="sql fragment"><code data-trim>
+{ COMMIT | ROLLBACK };
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Расширения для PG</h2>
+
+    <ul>
+        <li>Полнотекстовый поиск (Full-Text Search, FTS)</li>
+        <li>PostGIS (geographic objects)</li>
+        <li>Быстрый поиск по элементам массива</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h2>На почитать:</h2>
+
+    <ul>
+        <li><a href="https://habr.com/ru/company/oleg-bunin/blog/413557/">NewSQL: SQL никуда не уходит</a></li>
+        <li><a href="https://habrahabr.ru/post/305926/">Как думать на SQL?</a></li>
+        <li><a href="https://habr.com/ru/post/254773">Нормальные формы</a></li>
+        <li><a href="https://www.postgresql.org/docs/manuals/">Документация PostgreSQL</a></li>
+    </ul>
+</section>
+
+</div></div><script src="../../@lib/core.js"></script></body></html>
