@@ -1,0 +1,16 @@
+.white .cli code
+{
+    border-left: 5px solid #dedede !important;
+    background: #efefef !important
+}
+
+.black .cli code
+{
+    border-left: 5px solid #343434 !important;
+    background: #232323 !important
+}
+
+.white .invert
+{
+    filter: invert(100%);
+}

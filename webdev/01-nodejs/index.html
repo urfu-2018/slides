@@ -1,0 +1,1345 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Node.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="white"><div class="reveal"><div class="slides">
+
+<section class="center">
+    <h1>Node.js</h1>
+</section>
+
+<section class="center">
+    <p>Платформа для исполнения программ, написанных на JavaScript</p>
+</section>
+
+<section class="center">
+    <p>Программы можно разделить по степени потребления разных ресурсов – <br>CPU, mem, I/O</p>
+</section>
+
+<section class="center">
+    <p>Это определяется набором операций программы, зависимых от тех или иных видов ресурсов <strong>(bound)</strong></p>
+</section>
+
+<section class="center">
+    <p>Вычисление числа Фибоначчи – <strong>CPU bound</strong>, подсчёт строк в файле – <strong>I/O bound</strong></p>
+</section>
+
+<section>
+    <h2>Операции в web-приложении</h2>
+    <table>
+        <tr><td>Чтение HTTP запроса</td><td><span class="red">I/O</span></td></tr>
+        <tr><td>Парсинг HTTP запроса</td><td><span class="green">CPU</span></td></tr>
+        <tr><td>Запрос к базе данных</td><td><span class="red">I/O</span></td></tr>
+        <tr><td>Запрос к API</td><td><span class="red">I/O</span></td></tr>
+        <tr><td>Генерация HTML</td><td><span class="green">CPU</span></td></tr>
+        <tr><td>Отправка HTML</td><td><span class="red">I/O</span></td></tr>
+    </table>
+</section>
+
+<section>
+    <h2>Поток выполнения</h2>
+    <p><img src="images/one-thread.svg" width="10%"></p>
+</section>
+
+<section class="center">
+    <p>В <strong>одном потоке</strong> одновременно выполняется только <strong>одна операция</strong></p>
+</section>
+
+<section>
+    <h2>Один поток, один пользователь</h2>
+    <p><img src="images/one-thread-one-user.svg" width="25%"></p>
+</section>
+
+<section class="center">
+    <p>Изначально I/O-операции были <strong>блокирующими</strong></p>
+    <p class="grey">Управление передаётся ОС и возвращается приложению только после того, как ОС закончит чтение или запись данных</p>
+</section>
+
+<section>
+    <h2>Один поток, несколько пользователей</h2>
+    <p><img src="images/one-thread-two-user.svg" width="25%"></p>
+</section>
+
+<section class="center">
+    <p>Блокирующее I/O нерационально расходует ресурс <strong>CPU</strong></p>
+</section>
+
+<section class="center">
+    <p>Ресурс CPU – <strong>очень дорогой</strong></p>
+</section>
+
+<section class="center">
+    <p>Чтение 1 Кб данных c SSD – <strong>28 000</strong> циклов на одном 2Ghz ядре</p>
+    <p>1 cетевое соединение – <strong>132 000 000</strong> циклов на одном 2Ghz ядре</p>
+</section>
+
+<section class="center">
+    <p>C ростом числа одновременных пользователей блокирующее I/O тормозит обработку новых запросов</p>
+</section>
+
+<section>
+    <h2>Multithreading</h2>
+    <p><img src="images/two-thread-two-user.svg" width="45%"></p>
+</section>
+
+<section>
+    <h2>Multithreading</h2>
+    <ul>
+        <li>Поднятие потока – дорогая операция, но обычно используется <span class="green">пулл уже поднятых</span></span></li>
+        <li>Ограничение на количество</li>
+        <li>Каждый поток – дополнительная память</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Non-blocking I/O</h2>
+    <p><img src="images/non-block.svg" width="25%"></p>
+</section>
+
+
+<section class="center">
+    <p>При использовании интерфейса не блокирующего I/O, ОС <strong>сразу</strong> возвращает управлению приложению</p>
+    <p>Как только ресурс будет прочитан или записан, ОС уведомит об этом приложение</p>
+</section>
+
+<section class="center">
+    <p>Один из популярных подходов в работе с non-blocking I/O – паттерн <strong>Reactor</strong> для однопоточных приложений</p>
+</section>
+
+<section class="center">
+    <p>Включает в себя использование другого паттерна – <strong>Callback</strong></p>
+</section>
+
+<section>
+    <h2>Синхронное выполнение операции</h2>
+    <pre class="javascript"><code data-trim>
+    try {
+        const data = readFileSync('data.json');
+
+        console.log(data);
+    } catch(err) {
+        console.error(err);
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2><strong>А</strong>синхронное выполнение операции</h2>
+    <pre class="javascript"><code data-trim>
+    readFileAsync('data.json', (err, data) => {
+        if (err) {
+            console.error(err);
+        }
+
+        console.log(data);
+    });
+    </code></pre>
+</section>
+
+<section class="center">
+    <p><strong>callback</strong> всегда идёт <strong>последним</strong> аргументом асинхронной функции</p>
+</section>
+
+<section class="center">
+    <p><strong>Ошибка</strong> приходит в callback <strong>первым</strong> аргументом</p>
+</section>
+
+<section class="center">
+    <p><img width="60%" src="images/reactor-1.svg"></p>
+</section>
+
+<section class="center">
+    <p><img width="30%" src="images/reactor-3.svg"></p>
+</section>
+
+<section class="center">
+    <p><img width="90%" src="images/reactor-2.svg"></p>
+</section>
+
+<section class="center">
+    <p><img width="50%" src="images/reactor-4.svg"></p>
+</section>
+
+<section class="center">
+    <p><strong>Nginx</strong> использует паттерн <strong>Reactor</strong></p>
+</section>
+
+<section>
+    <h2>Apache <span>vs</span> Nginx</h2>
+    <img class="invert" src="images/nginx-vs-apache.png">
+</section>
+
+<section>
+    <h2>Apache <span>vs</span> Nginx</h2>
+    <img class="invert" src="images/nginx-vs-apache2.png">
+</section>
+
+<section class="center">
+    <p><img width="30%" src="images/reactor-6.svg"></p>
+</section>
+
+<section class="center">
+    <p>Node.js последовательно проходит <strong>фазы</strong> в каждом цикле</p>
+</section>
+
+<section class="center">
+    <p>К каждой фазе привязана <strong>отдельная</strong> очередь событий</p>
+</section>
+
+<section class="center">
+    <p><img width="30%" src="images/reactor-6.svg"></p>
+</section>
+
+<section class="center">
+    <p><strong>Timers</strong> – фаза, в которой последовательно вызываются обработчики истёкших таймеров</p>
+</section>
+
+<section class="center">
+    <pre><code>
+                setTimeout(handler, 2000);
+
+                setInterval(handler, 2000);
+    </code></pre>
+</section>
+
+<section class="center">
+    <p><img width="30%" src="images/reactor-6.svg"></p>
+</section>
+
+<section class="center">
+    <p><strong>I/O Callback</strong> – фаза, в которой последовательно вызываются обработчики выполненных асинхронных операций</p>
+</section>
+
+<section class="center">
+    <pre><code>
+                fs.readFile(path, handler);
+    </code></pre>
+</section>
+
+<section class="center">
+    <p><img width="30%" src="images/reactor-6.svg"></p>
+</section>
+
+<section class="center">
+    <p><strong>I/O polling</strong> – фаза, в которой происходит ожидание завершения I/O операций<br><br><span class="grey">Event Demultiplexer</span></p>
+</section>
+
+<section class="center">
+    <p>I/O polling происходит, если <strong><br>нет событий в других очередях</strong></p>
+</section>
+
+<section class="center">
+    <p>Время допустимое для I/O polling расчитывается<br> как время до <strong>ближайшего</strong> таймера</p>
+</section>
+
+<section class="center">
+    <p><img width="30%" src="images/reactor-6.svg"></p>
+</section>
+
+<section class="center">
+    <p><strong>Immediates</strong> – фаза, в которой последовательно вызываются обработчики созданные setImmediate</p>
+</section>
+
+<section class="center">
+    <pre><code>
+                    setImmediate(handler);
+    </code></pre>
+</section>
+
+<section class="center">
+    <p><img width="30%" src="images/reactor-6.svg"></p>
+</section>
+
+<section class="center">
+    <p><strong>Close callbacks</strong> – фаза, в которой последовательно вызываются обработчики связанные c закрытием I/O процесса</p>
+</section>
+
+<section class="center">
+    <pre><code>
+                socket.on('close', handler)
+    </code></pre>
+</section>
+
+<section class="center">
+    <p><img width="30%" src="images/reactor-7.svg"></p>
+</section>
+
+<section class="center">
+    <p>Очередь <strong>микрозадач</strong> разбирается между каждой фазой пока не опустеет</p>
+</section>
+
+<section class="center">
+    <p>В ходе разбора очереди микрозадач, она может полнять себя бесконечно</p>
+</section>
+
+<section class="center">
+    <p>Цель микрозадач – <strong>уменьшать задержку</strong> между исполняемыми участками кода</p>
+</section>
+
+<section class="center">
+    <p><img width="30%" src="images/reactor-8.svg"></p>
+</section>
+
+<section class="center">
+    <pre><code>
+                  process.nextTick(handler)
+    </code></pre>
+</section>
+
+<section class="center">
+    <pre><code>
+                  Promise.resolve(handler)
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>В 2009 <strong>Ryan Dahl</strong> cоздаёт Node.js</p>
+</section>
+
+<section class="center">
+    <p>В разных операционных системах <strong>Event notification interface</strong> реализован по разному</p>
+
+    <p><strong>I/O Completion Port API</strong> в windows,<br> <strong>epoll</strong> в linux, <strong>kqueue</strong> в osx</p>
+</section>
+
+<section class="center">
+    <p>Библиотека <strong>libuv</strong> скрывает разную реализацию за единым интерфейсом</p>
+</section>
+
+<section class="center">
+    <p><strong>libuv</strong> так же включает в себя реализацию Event Demultiplexer, Event Queue и Event Loop</p>
+</section>
+
+<section>
+    <h2>Особенности <strong>libuv</strong></h2>
+    <ul>
+    <li>В linux операции над локальными файлами <strong>всегда блокирующие</strong> (в отличие от сетевых операций)</li>
+    <li>Для эмуляции неблокирующего поведения libuv использует потоки</li>
+    <li>По умолчанию создаётся пулл <strong>4</strong> потоков</li>
+    </ul>
+    <p><a href="https://www.future-processing.pl/blog/on-problems-with-threads-in-node-js/">On problems with threads in Node.js</a></p>
+</section>
+
+<section>
+    <h2>Почитать про <strong>libuv</strong></h4>
+    <p><a href="https://www.youtube.com/watch?v=nGn60vDSxQ4">About libuv</a><br> Bert Belder</p>
+    <p><a href="http://docs.libuv.org/en/v1.x/design.html">Design overview</a><br>docs.libuv.org</p>
+    <p><a href="http://nikhilm.github.io/uvbook/basics.html">Basics of libuv</a><br>docs.libuv.org</p>
+</section>
+
+<section class="center">
+    <p><img width="30%" src="images/nodejs.svg"></p>
+</section>
+
+<section>
+    <h2>JavaScript и v8</h2>
+    <ul>
+    <li><a href="https://ru.wikipedia.org/wiki/%D0%A4%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D0%B8_%D0%BF%D0%B5%D1%80%D0%B2%D0%BE%D0%B3%D0%BE_%D0%BA%D0%BB%D0%B0%D1%81%D1%81%D0%B0">Функции первого класса</a> и замыкания</li>
+    <li>Готов к EventLoop (DOM events, setTimeout)</li>
+    <li>Отсутствие багажа в виде синхронных библиотек (как у Lua, например)</li>
+    <li>Быстрый интерпретатор <strong>v8</strong></li>
+    </ul>
+</section>
+
+<section>
+    <h2>Core API</h2>
+    <p>API для работы с файловой системой, для общения по http, логирования и другие</p>
+</section>
+
+<section>
+    <p>Почитать про Node.js</p>
+    <p><a href="https://www.youtube.com/watch?v=ztspvPYybIY">Original Node.js presentation</a><br> Ryan Dahl</p>
+    <p><a href="https://blog.risingstack.com/node-js-at-scale-understanding-node-js-event-loop/">Event Loop and the Big Picture</a><br> Deepal Jayasekara</p>
+    <p><a href="https://blog.ghaiklor.com/how-nodejs-works-bfe09efc80ca">How does NodeJS work</a><br> Eugene Obrezkov</p>
+    <p><a href="https://www.packtpub.com/web-development/nodejs-design-patterns-second-edition">Node.js Design Patterns</a><br> Mario Casciaro, Luciano Mammino</p>
+</section>
+
+<section class="center">
+    <h1>Getting started</h1>
+</section>
+
+<section class="center">
+    <p>Для установки Node.js рекомендуется использовать <a href="https://github.com/creationix/nvm#installation">Node Version Manager</a></p>
+    <p>Позволяет одновременно установить несколько разных версий Node.js</p>
+</section>
+
+<section class="center">
+    <p><a href="https://github.com/coreybutler/nvm-windows#installation--upgrades">Установка на Windows</a></p>
+    <p><a href=" https://github.com/creationix/nvm#installation">Установка на osx/nix</a></p>
+</section>
+
+<section>
+    <h2>Node Version Manager</h2>
+    <pre class="cli js"><code data-trim data-noescape>
+    $ nvm install 9
+    <span class="grey">Downloading and installing node v9.2.0...
+    Downloading https://nodejs.org/dist/v9.2.0/node-v9.2.0-darwin-x64.tar.xz...
+    ######################################################################## 100.0%
+    Computing checksum with sha256sum
+    Checksums matched!</span>
+    </code></pre>
+    <pre class="cli js"><code data-trim data-noescape class="fragment">
+    $ nvm use 9
+    <span class="grey">Now using node v9.2.0 (npm v5.5.1)</span>
+    </code></pre>
+    <pre class="cli js"><code data-trim data-noescape class="fragment">
+    $ nvm ls<span class="grey">
+        v8.9.1
+    ->  v9.2.0</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Node</h2>
+    <pre class="cli js"><code data-trim data-noescape>
+    $ node -v
+    <span class="grey">v9.2.0</span>
+    </code></pre>
+    <pre class="cli js"><code data-trim data-noescape class="fragment">
+    $ node -h
+    <span class="grey">Usage: node [options] [ -e script | script.js | - ] [arguments]
+            node inspect script.js [arguments]
+    Options:
+            -v, --version              print Node.js version</span>
+    </code></pre>
+    <pre class="cli js"><code data-trim data-noescape class="fragment">
+    $ node -p '2 + 2'
+    <span class="grey">4</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Node</h2>
+    <pre class="cli js"><code data-trim data-noescape>
+    $ node --v8-options<span class="grey">
+    Options:
+        --use_strict (enforce strict mode)
+                type: bool  default: false
+        --harmony (enable all completed harmony features)
+                type: bool  default: false</span>
+    </code></pre>
+    <pre class="cli js"><code data-trim data-noescape class="fragment">
+    $ node --use-strict --max-old-space-size=4096 index.js
+    </code></pre>
+</section>
+
+<section>
+    <h2>REPL</h2>
+    <pre class="cli js"><code data-trim data-noescape>
+    $ node<span class="grey">
+    > 2 + 2
+    4
+    > .help
+    .break    Sometimes you get stuck, this gets you out
+    .clear    Alias for .break
+    .editor   Enter editor mode
+    .exit     Exit the repl
+    .help     Print this help message
+    .load     Load JS from a file into the REPL session
+    .save     Save all evaluated commands to a file
+    </span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>REPL</h2>
+    <pre class="cli js"><code data-trim data-noescape>
+    $ node<span class="grey">
+    > .editor
+    // Entering editor mode (^D to finish, ^C to cancel)
+    let a = 2;
+    a * 2;
+    <span class="fragment">
+    4
+    ></span></span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h1>Модули</h1>
+</section>
+
+<section class="center">
+    <p>Чтобы упростить разработку и тестирование приложения – код разделяют на небольшие <strong>изолированные</strong> модули</p>
+</section>
+
+<section class="center">
+    <p>Модуль для платформы Node.js – отдельный файл с кодом на JavaScript</p>
+</section>
+
+<section class="center">
+    <p>Node.js добавляет возможность <strong>экпортировать</strong> функциональность из одного модуля и <strong>импортировать</strong> её в другом</p>
+</section>
+
+<section class="center">
+    <p>Возможности импорта и экспорта описаны спецификацией <a href="http://wiki.commonjs.org/wiki/Modules/1.1.1">Modules/1.1.1</a></p>
+</section>
+
+<section class="center">
+    <p>Спецификация разрабатывается группой <a href="http://wiki.commonjs.org/wiki/CommonJS">CommonJS</a>, которая пытается стандартизировать различные API</p>
+</section>
+
+<section>
+    <h2>Модуль</h2>
+    <pre><code data-trim>
+    // file: index.js
+
+    function sum(nums) {
+        return nums.reduce((acc, num) => acc + num);
+    }
+
+    function average(...nums) {
+        return sum(nums) / nums.length;
+    }
+
+    average(1, 2, 3);  // 2
+    </code></pre>
+</section>
+
+<section>
+    <h2>Экспорт из модуля</h2>
+    <pre><code data-trim>
+    // file: average.js
+
+    function sum(nums) {
+        return nums.reduce((acc, num) => acc + num);
+    }
+
+    module.exports = function average(...nums) {
+        return sum(nums) / nums.length;
+    }
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Node.js для каждого модуля делает доступным объект <strong>module</strong>, который описывает модуль</p>
+</section>
+
+<section class="center">
+    <p>Из модуля экпортируется значение помещённое в поле <strong>module.exports</strong></p>
+    <p>Это может быть функция, конструктор, объект, число, «класс» – что угодно</p>
+</section>
+
+<section class="center">
+    <p>По умолчанию <strong>exports</strong> хранит <strong>пустой объект</strong></p>
+</section>
+
+<section>
+    <h2>Импорт модуля</h2>
+    <pre><code data-trim>
+    // file: index.js
+
+    const average = require('./average');
+
+    average(1, 2, 3); // 2
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Node.js содержит встроенные модули</p>
+    <p>Например, <strong>fs</strong> для работы с файлами<br> или <strong>util</strong> со вспомогательными утилитами</p>
+    <p>Мы можем их импортировать в свои модули</p>
+</section>
+
+<section>
+    <h2>Импорт встроенного модуля</h2>
+    <pre><code data-trim>
+    // file: index.js
+
+    const { format } = require('util');
+
+    const average = require('./average');
+
+    format('Average is %d', average(1, 2, 3)); // Average is 2
+
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Node.js поддерживает импорт из файлов разных типов – <strong>json</strong>, <strong>js</strong>, <strong>mjs</strong>.</p>
+</section>
+
+<section>
+    <h2>Импорт JSON</h2>
+    <pre><code data-trim>
+    // file: data.json
+
+    {
+      "year": 1703
+    }
+
+    // file: index.js
+
+    const data = require('./data.json');
+
+    console.log(data); // { year: 1703 }
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Существенная часть кода Node.js<br> написана на JavaScript</p>
+    <p>Код модульной системы описан в файле <a href="https://github.com/nodejs/node/blob/v9.2.0/lib/module.js">/lib/module.js</a> на GitHub</p>
+</section>
+
+<section>
+    <h2>Модули изнутри</h2>
+    <pre><code data-trim>
+    function require(path) {
+        return Module._load(path);
+    }
+
+    function Module() {
+        this.exports = {};
+        this.filename = null;
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Модули изнутри</h2>
+    <pre><code data-trim>
+    Module._load = function(path) {
+        var filename = Module._resolveFilename(path);
+
+        var module = new Module();
+
+        module.load(filename);
+
+        return module.exports;
+    }
+
+    Module._resolveFilename = function(path) {
+        // ./average -> /Users/gogoleff/lecture/average.js
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Модули изнутри</h2>
+    <pre><code data-trim>
+    const path = require('path');
+
+    Module.prototype.load = function(filename) {
+        this.filename = filename;
+
+        var extension = path.extname(filename) || '.js';
+
+        Module._extensions[extension](this, filename);
+    };
+
+    Module._extensions['.js'] = function (module, filename) {};
+    Module._extensions['.mjs'] = function (module, filename) {};
+    Module._extensions['.json'] = function (module, filename) {};
+    </code></pre>
+</section>
+
+<section>
+    <h2>Модули изнутри</h2>
+    <pre><code data-trim>
+    const fs = require('fs');
+
+    Module._extensions['.json'] = function(module, filename) {
+        var content = fs.readFileSync(filename, 'utf8');
+
+        module.exports = JSON.parse(content);
+    };
+    </code></pre>
+</section>
+
+<section>
+    <h2>Модули изнутри</h2>
+    <pre><code data-trim style="font-size: .35em">
+    const json = require('./data.json');
+
+    function require(path) {
+        return Module._load(path);
+    }
+
+    Module._load = function(path) {
+        // ... получаем полный путь до файла
+        module.load(filename);
+
+        return module.exports;
+    }
+
+    Module.prototype.load = function(filename) {
+        // ... узнаём расширение файла
+        Module._extensions[extension](this, filename);
+    };
+
+    Module._extensions['.json'] = function(module, filename) {
+        var content = fs.readFileSync(filename, 'utf8');
+        module.exports = JSON.parse(content);
+    };
+    </code></pre>
+</section>
+
+<section>
+    <h2>Модули изнутри</h2>
+    <pre><code data-trim>
+    Module._extensions['.js'] = function(module, filename) {
+        var content = fs.readFileSync(filename, 'utf8');
+
+        module._compile(content, filename);
+    };
+    </code></pre>
+</section>
+
+<section>
+    <h2>Модули изнутри</h2>
+    <pre><code data-trim style="font-size: .35em">
+    const vm = require('vm'); // Для интерпретации кода в v8
+
+    Module.prototype._compile = function(content, filename) {
+        var wrapper = Module.wrap(content);
+        // (function (exports, require, module, __filename, __dirname) {',
+        //     module.exports.average = function () {}
+        // });
+
+        var compiledWrapper = vm.runInThisContext(wrapper); // Похоже на eval
+        var dirname = path.dirname(filename);
+
+        compiledWrapper.call(
+            this.exports,   // -> this – ссылка на module.exports
+            this.exports,   // -> exports – ссылка на module.exports
+            require,        // -> require
+            this,           // -> module
+            filename,       // -> __filename – файл модуля
+            dirname         // -> __dirname – директория модуля
+        );
+    };
+    </code></pre>
+</section>
+
+<section>
+    <h2>Модуль</h2>
+    <pre><code data-trim>
+    // file: index.js
+
+    console.log(module.filename);
+    // /Users/gogoleff/lecture/index.js
+
+    console.log(__filename);
+    // /Users/gogoleff/lecture/index.js
+
+    console.log(this === module.exports);
+    // true
+
+    console.log(exports === module.exports);
+    // true
+    </code></pre>
+</section>
+
+<section>
+    <h2>Экпорт из модуля</h2>
+    <pre><code data-trim>
+    // file: average.js
+
+    function sum(nums) {}
+
+    module.exports.average = function(...nums) {}
+    </code></pre>
+    <pre><code data-trim>
+    // Можно так
+    exports.average = function(...nums) {}
+
+    // Или так
+    this.average = function(...nums) {}
+    </code></pre>
+    <pre class="fragment"><code data-trim data-noescape>
+    // <span class="red">Но не так!</span>
+    exports = function(...nums) {}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Кеширование импорта</h2>
+    <pre><code data-trim data-noescape>
+    // file: counter.js
+
+    let counter = 1;
+
+    module.exports = () => counter++;
+
+    // file: index.js
+
+    var counter = require('./counter');
+    var anotherCounter = require('./counter'); <span class="fragment red">Возьмёт из кеша</span>
+
+    console.log(counter()); // 1
+    console.log(counter()); // 2
+    console.log(anotherCounter()); // 3
+    </code></pre>
+</section>
+
+<section>
+    <h2>Модули изнутри</h2>
+    <pre><code data-trim data-noescape style="font-size: .4em;">
+    <span class="fragment red" data-fragment-index=0>Module._cache = Object.create(null);</span>
+
+    Module._load = function(path) {
+        var filename = Module._resolveFilename(path);
+
+        <span class="fragment red" data-fragment-index=0>if (Module._cache[filename])
+            return Module._cache[filename].exports;</span>
+
+        var module = new Module();
+
+        <span class="fragment red" data-fragment-index=0>Module._cache[filename] = module;</span>
+
+        module.load(filename);
+
+        return module.exports;
+    }
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Модули импортируются <strong>один раз</strong> и затем кешируются по абсолютному пути до файла</p>
+    <p>Кэш можно посмотреть в поле <strong>require.cache</strong></p>
+</section>
+
+<section>
+    <h2>Кеширование импорта</h2>
+    <pre><code data-trim data-noescape>
+    // file: index.js
+
+    const average = require('./average');
+
+    console.log(require.cache);
+    // {
+    //     '/Users/gogoleff/lecture/average.js': Module {
+    //         exports: { average: [Function: average] },
+    //         filename: '/Users/gogoleff/Downloads/average.js'
+    // }
+    </code></pre>
+    <pre class="fragment"><code data-trim data-noescape>
+        // А так можно очистить кеш
+        delete require.cache[path.resolve('./average.js')];
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Модуль, c которого начинается интерпретация, называется <strong>главным</strong></p>
+    <p>Ссылка на него хранится в поле <strong>require.main</strong></p>
+</section>
+
+<section>
+    <h2>Главный модуль</h2>
+    <pre><code data-trim data-noescape>
+    // file: average.js
+
+    const isMain = require.main === module; <span class="fragment red" data-fragment-index=1>// false</span>
+
+    // file: index.js
+
+    const average = require('./average');
+
+    const isMain = require.main === module; <span class="fragment red" data-fragment-index=1>// true</span>
+    </code></pre>
+
+    <pre class="cli"><code data-trim data-noescape class="fragment" data-fragment-index=0>
+    $ node index.js
+    </code></pre>
+</section>
+
+<section class="center">
+    <h1>CLI</h1>
+</section>
+
+<section>
+    <h2>Параметры командной строки</h2>
+    <pre class="cli"><code data-trim data-noescape>
+    $ node index.js --name=sergey
+    </code></pre>
+    <pre class="js"><code data-trim data-noescape>
+    console.log(process.argv);
+    // [ '/Users/gogoleff/.nvm/versions/node/v9.2.0/bin/node',
+    // '/Users/gogoleff/lecture/index.js',
+    // '--name=sergey' ]
+    </code></pre>
+</section>
+
+<section>
+    <h2>Параметры командной строки</h2>
+    <pre><code data-trim data-noescape>
+    const { argv } = process;
+    const nameArg = argv.find(arg => arg.startsWith('--name='));
+    const [key, value] = nameArg.slice(2).split('=');
+
+    console.log(`Hello, ${value}`);
+    </code></pre>
+    <pre class="cli fragment"><code data-trim data-noescape>
+    $ node index.js --name=Sergey
+    <span class="grey">Hello, Sergey</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Переменные окружения</h2>
+    <pre class="cli"><code data-trim data-noescape>
+    $ node NODE_ENV=production index.js
+    </code></pre>
+
+    <pre class="js"><code data-trim data-noescape>
+    console.log(process.env.NODE_ENV);
+    // production
+
+    console.log(process.env);
+    // {
+    //   ...
+    //   USER: 'gogoleff',
+    //   NODE_ENV: 'production'
+    //   ...
+    // }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Переменные окружения</h2>
+    <pre><code data-trim data-noescape>
+    const { argv, env } = process;
+    const nameArg = argv.find(arg => arg.startsWith('--name=')) || '';
+    const [key, value] = nameArg.slice(2).split('=');
+
+    console.log(`Hello, ${value || env.USER}`);
+    </code></pre>
+    <pre class="cli fragment"><code data-trim data-noescape>
+    $ node index.js
+    <span class="grey">Hello, gogoleff</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Окружение хранит множество настроек (переменных) в виде пар «ключ=значение»</p>
+    <p>При создании процесса, он получает локальную <strong>копию</strong> окружения</p>
+</section>
+
+<section class="center">
+    <p>В <strong>windows</strong> ключи переменных окружения <strong>регистронезависимы</strong>!</p>
+</section>
+
+<section>
+    <h2>Переменные окружения</h2>
+    <pre class="cli"><code data-trim data-noescape>
+    $ node NODE_ENV=production index.js
+    </code></pre>
+
+    <pre><code data-trim data-noescape>
+    // file: module.js
+
+    process.env.NODE_ENV = 'development';
+
+    // file: index.js
+
+    require('./module');
+
+    console.log(process.env.NODE_ENV);
+    // development
+    </code></pre>
+</section>
+
+<section class="center">
+    <p><strong>NODE_ENV</strong> используется многими библиотеками, чтобы определить окружение, где запускается приложение</p>
+
+    <p>Например, если <strong>React</strong> видит в этой переменной значение <strong>production</strong>, то он делает дополнительные оптимизации</p>
+</section>
+
+<section class="center">
+    <p>Node.js использует путь указанный в <strong>NODE_PATH</strong> для поиска модулей</p>
+</section>
+
+<section>
+    <h2>NODE_PATH</h2>
+    <pre><code data-trim data-noescape>
+    // Без указания NODE_PATH
+    require('/home/gogoleff/common/module.js');
+    </code></pre>
+    <pre class="cli fragment"><code data-trim data-noescape>
+    $ node NODE_PATH=/home/gogoleff/common/ index.js
+    </code></pre>
+    <pre class="fragment js"><code data-trim data-noescape>
+    // С указанием NODE_PATH
+    require('module.js');
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Увеличить количество потоков для работы с локальными файлами можно в переменной <strong>UV_THREADPOOL_SIZE</strong></p>
+</section>
+
+<section>
+    <h2>Пользовательский ввод</h2>
+    <pre><code data-trim data-noescape>
+    const { createInterface } = require('readline');
+
+    const session = createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+
+    session.question('What is your name?', name => {
+        rl.write(`Hello, ${name}`);
+        session.close();
+    });
+    </code></pre>
+    <pre class="cli fragment"><code data-trim data-noescape>
+    $ node index.js
+    <span class="grey">What is your name? Sergey
+    Hello, Sergey</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Стандартные потоки ввода/вывода</h2>
+    <pre class="javascript"><code data-trim data-noescape>
+    // Эквивалентно console.error
+    process.stderr.write('Some error');
+
+    // Эквивалентно console.log
+    process.stdout.write('Information message');
+    </code></pre>
+    <pre class="cli fragment"><code data-trim data-noescape>
+    $ node index.js 2>stderr.log 1>stdout.log
+
+    $ cat stderr.log
+    <span class="grey">Some error</span>
+
+    $ cat stdout.log
+    <span class="grey">Information message</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Стандартные потоки ввода/вывода</h2>
+    <pre><code data-trim data-noescape>
+    process.stdin.setEncoding('utf8');
+
+    process.stdin.on('readable', () => {
+        const input = process.stdin.read();
+
+        if (input) {
+            process.stdout.write(input);
+        }
+    });
+    </code></pre>
+    <pre class="cli fragment"><code data-trim data-noescape>
+    $ echo 'User input' | node index.js
+    <span class="grey">User input</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Выход из приложения</h2>
+    <pre><code data-trim data-noescape>
+    process.exit(1); // 0 по умолчанию
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>process.exit убивает процесс максимально быстро, <strong>не дожидаясь</strong> заверешения асинхронных операций!</p>
+</section>
+
+<section class="center">
+    <h1>Веб-приложение</h1>
+</section>
+
+<section>
+    <h2>Модуль <strong>events</strong></h2>
+    <pre><code data-trim data-noescape>
+    const EventEmitter = require('events');
+
+    const emitter = new EventEmitter();
+
+    emitter.on('log', console.info);
+
+    emitter.emit('log', 'Hello!'); // Hello!
+    emitter.emit('unknown event'); // Do nothing
+
+    emitter.emit('error');
+    // Uncaught, unspecified "error" event.
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Всегда привязывайте обработчик к событию <strong>error</strong></p>
+</section>
+
+<section class="center">
+    <p>Если к событию привязано более <strong>10</strong> обработчиков, Node.js заподозрит неладное</p>
+    <p>Возможно мы лишний раз привязываем один и тот же обработчик или не отвязываем, вызывая утечку памяти</p>
+    <p>Можно успокоить Node.js увеличив значение <strong>emitter.setMaxListeners(42)</strong></p>
+</section>
+
+<section>
+    <h2>http-сервер</h2>
+    <pre><code data-trim data-noescape>
+    const http = require('http');
+
+    const server = new http.Server();
+
+    server.on('request', (req, res) => {
+        res.end('Hello, Anonymous!');
+    });
+
+    server.listen(8080);
+    </code></pre>
+</section>
+
+<section>
+    <h2>http-сервер</h2>
+    <pre><code data-trim data-noescape>
+    const http = require('http');
+    const { parse: parseUrl } = require('url');
+    const { parse: parseQuery } = require('querystring');
+
+    const server = new http.Server();
+
+    server.on('request', (req, res) => {
+        const { query } = parseUrl(req.url); // name=Sergey
+        const { name } = parseQuery(query); // Sergey
+
+        res.end(`Hello, ${name}!`);
+    });
+
+    server.listen(8080);
+    </code></pre>
+</section>
+
+<section>
+    <h2>Объект <strong>req</strong></h2>
+    <pre class="javascript"><code data-trim data-noescape>
+    server.on('request', (req, res) => {
+        console.info(req.url); // /?name=Sergey
+        console.info(req.method); // GET
+        console.info(req.headers); // { 'accept-encoding': 'gzip' }
+    });
+    </code></pre>
+</section>
+
+<section>
+    <h2>Объект <strong>res</strong></h2>
+    <pre class="javascript"><code data-trim>
+    server.on('request', (req, res) => {
+        res.setHeader('content-type', 'text/html');
+
+        res.write('Hello,');
+        res.write('<strong>Anonymous</strong>');
+        res.end('!')
+    });
+    </code></pre>
+</section>
+
+<section>
+    <h2>Модуль <strong>url</strong></h2>
+    <pre class="javascript"><code data-trim data-noescape>
+    url.parse('https://yandex.ru/');
+    // {
+    //     protocol: 'https:',
+    //     host: 'yandex.ru',
+    //     path: '/',
+    //     ...
+    // }
+    </code></pre>
+    <pre class="javascript"><code data-trim data-noescape>
+    url.format({
+        protocol: 'https:',
+        host: 'yandex.ru'
+    });
+    // https://yandex.ru/
+    </code></pre>
+</section>
+
+<section>
+    <h2>Модуль <strong>querystring</strong></h2>
+    <pre class="javascript"><code data-trim data-noescape>
+    querystring.parse('foo=bar&arr=a&arr=b');
+    // {
+    //     foo: 'bar',
+    //     arr: ['a', 'b']
+    // }
+    </code></pre>
+    <pre class="javascript"><code data-trim data-noescape>
+    querystring.stringify({
+        foo: 'bar',
+        arr: ['a', 'b']
+    });
+    // foo=bar&arr=a&arr=b
+    </code></pre>
+</section>
+
+<section>
+    <h2>http-клиент</h2>
+    <pre><code data-trim data-noescape>
+    const http = require('http');
+
+    const req = http.request({
+        hostname: 'localhost',
+        port: 8080
+    });
+    </code></pre>
+</section>
+
+<section>
+    <h2>http-клиент</h2>
+    <pre><code data-trim data-noescape>
+    req.on('response', response => {
+        let body = '';
+
+        response.on('data', chunk => {
+            body += chunk; // res.write();
+        });
+
+        response.on('end', () => {
+            console.info(body); // res.end();
+        });
+    });
+    </code></pre>
+</section>
+
+<section>
+    <h2>Почитать про модули</h2>
+    <p><a href="https://nodejs.org/en/docs/guides/">Node.js Guides</a><br> nodejs.org</p>
+    <p><a href="https://nodejs.org/api/">Node.js API docs</a><br> nodejs.org</p>
+    <p><a href="http://exploringjs.com/es6/ch_modules.html">16. Modules</a><br> Exploring.js</p>
+</section>
+
+<section class="center">
+    <h1>npm</h1>
+</section>
+
+<section class="center">
+    <p>Прежде чем написать свой модуль, рассмотрите уже существующие</p>
+</section>
+
+<section class="center">
+    <p>Для того чтобы поделиться своим модулем, из него необходимо сделать <strong>пакет</strong></p>
+</section>
+
+<section class="center">
+    <p><strong>Пакет</strong> – это модуль плюс файл-манифест</p>
+</section>
+
+<section>
+    <h2>Создание файла манифеста</h2>
+    <pre class="cli"><code data-trim data-noescape>
+    $ npm init
+    <span class="grey">package name: (average)
+    version: (1.0.0)
+    description: Calculate average number
+    author: Sergey Gogolev
+    license: (ISC) MIT
+    About to write to /Users/gogoleff/lecture/average/package.json
+
+    {
+        "name": "average",
+        "version": "1.0.0",
+        "description": "Calculate average number",
+        "author": "Sergey Gogolev",
+        "license": "MIT"
+    }
+    </span>
+    </code></pre>
+</section>
+
+<section>
+    <h2><a href="https://docs.npmjs.com/files/package.json">package.json</a></h2>
+    <pre><code data-trim data-noescape>
+    {
+        "name": "average",
+        "version": "1.0.0",
+        "description": "Calculate average number",
+        "author": "Sergey Gogolev",
+        "license": "MIT"
+    }
+    </span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Установка зависимостей</h2>
+    <pre class="cli"><code data-trim data-noescape>
+    $ npm install lodash
+    <span class="grey">npm notice created a lockfile as package-lock.json. You should commit this file.
+
+    + lodash@4.17.4
+    added 1 package from 2 contributors and audited 1 package in 1.24s
+    </span>
+    </code></pre>
+    <pre class="javascript fragment"><code data-trim data-noescape>
+    const { sum } = require('lodash');
+
+    exports.average = (...nums) => sum(nums) / nums.length;
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Зависимости устанавливаются в директорию <strong>node_modules</strong></p>
+    <p>Функция <strong>require</strong> ищет в ней модули,<br> если не находит встроенного</p>
+</section>
+
+<section class="center">
+    <p>Зависимости фиксируются в <strong>package.json</strong></p>
+</section>
+
+<section>
+    <h2>package.json</h2>
+    <pre><code data-trim data-noescape>
+    {
+        "name": "average",
+        "version": "1.0.0",
+        "description": "Calculate average number",
+        "author": "Sergey Gogolev",
+        "license": "MIT",
+        "dependecies": {
+            "lodash": "4.17.4"
+        }
+    }
+    </span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Пакеты публикуются в реестр <a href="https://www.npmjs.com/">npmjs.com</a></p>
+    <p>Необходимый пакет можно поискать там или в более удобном сервисе <a href="https://npms.io/">npms.io</a></p>
+</section>
+
+<section>
+    <h2><a href="https://docs.npmjs.com/files/package-lock.json">package-lock.json</a></h2>
+    <pre class="cli"><code data-trim data-noescape>
+    $ cat package-lock.json
+    <span class="grey">
+    "name": "average",
+    "version": "1.0.0",
+    "lockfileVersion": 1,
+    "requires": true,
+    "dependencies": {
+      "lodash": {
+        "version": "4.17.4",
+        "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.17.4.tgz",
+        "integrity": "sha1-eCA6TRwyiuHYbcpkYONptX9AVa4="
+      }
+    }</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Если есть файл <strong>package-lock.json</strong>, npm установит зависимости согласно ему</p>
+    <p>Если нет, npm установит зависимости согласно <strong>package.json</strong> и сгенерирует на его основе <strong>package-lock.json</strong></p>
+</section>
+
+<section class="center">
+    <p><strong>package-lock.json</strong> гарантирует, что у всех разработчиков и на всех серверах будет установлен идентичный набор пакетов</p>
+</section>
+
+</div></div>
+
+<script src="../../@lib/core.js"></script>
+</body>
+</html>

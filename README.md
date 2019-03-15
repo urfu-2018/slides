@@ -32,3 +32,7 @@
 
 1. [TypeScript I](https://urfu-2018.github.io/slides/javascript/09-typescript-1/) ([pdf](https://urfu-2018.github.io/slides/javascript/09-typescript-1/index.pdf))
 1. [TypeScript II](https://urfu-2018.github.io/slides/javascript/10-typescript-2/) ([pdf](https://urfu-2018.github.io/slides/javascript/10-typescript-2/index.pdf))
+
+## Web-development
+
+1. [Node.js I](https://urfu-2018.github.io/slides/javascript/01-nodejs-1/) ([pdf](https://urfu-2018.github.io/slides/javascript/01-nodejs-1/index.pdf))
