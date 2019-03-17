@@ -1,0 +1,72 @@
+.hor-center
+{
+    text-align: center;
+}
+
+.reveal .left
+{
+    text-align: left;
+}
+
+.reveal code.black-text span
+{
+    color: #000;
+}
+
+.reveal .small
+{
+    font-size: 80%;
+}
+
+.reveal .very-small
+{
+    font-size: 70%;
+}
+
+.reveal table
+{
+    border-collapse: collapse;
+    margin: auto;
+}
+
+.reveal table tr:not(:last-child) td
+{
+    border-bottom: 1px solid;
+}
+
+.reveal table td:not(:last-child)
+{
+    border-right: 0;
+}
+
+.reveal .no-padding li
+{
+    padding: 0;
+}
+
+.reveal .no-margin pre
+{
+    margin: 0;
+}
+
+.reveal .pre
+{
+    font-family: sourcecodepro-light, sans-serif;
+}
+
+.reveal span.bold
+{
+    font-weight: 900;
+}
+
+.reveal .current-fragment.red-current
+{
+    color: #f00;
+}
+
+.reveal div.row
+{
+    display: inline-block;
+    vertical-align: top;
+    width: 450px;
+}
