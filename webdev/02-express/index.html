@@ -1,0 +1,924 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Express.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+</head>
+<body class="white">
+
+<div class="reveal"><div class="slides">
+
+<section class="center">
+    <h1>Node.js</h1>
+</section>
+
+<section>
+    <h2>Node.js</h2>
+    <p class="grey" style="font-size:.8em;">Приветствовать пользователя</p>
+    <pre><code data-trim>
+const http = require('http');
+const server = new http.Server();
+
+server.on('request', (req, res) => {
+    res.setHeader('content-type', 'text/html');
+
+    res.write('Hello, <b>User!</b>');
+
+    res.end();
+});
+
+server.listen(8080);
+    </code></pre>
+</section>
+
+<section>
+    <h2>Node.js</h2>
+    <p class="grey" style="font-size:.8em;">На несуществующие страницы отвечать с кодом 404</p>
+    <pre class="javascript"><code data-trim>
+server.on('request', (req, res) => {
+    if (req.url === '/') {
+        res.setHeader('Content-Type', 'text/html');
+        res.end('Hello, <b>User!</b>');
+    } else {
+        res.statusCode = 404;
+        res.setHeader('Content-Type', 'text/plain');
+        res.end('Not Found');
+    }
+});
+    </code></pre>
+</section>
+
+<section>
+    <h2>Node.js</h2>
+    <p class="grey" style="font-size:.8em;">Приветствовать пользователя по имени (<span class="green">/name/oleg</span>)</p>
+
+    <pre><code data-trim>
+server.on('request', (req, res) => {
+    const matches = req.url.match(/^\/name\/([a-z]+)/);
+    const name = matches && matches[1];
+
+    if (name) {
+        res.setHeader('Content-Type', 'text/html');
+        res.end(`Hello, <b>${name}</b>`);
+    } else {
+        res.statusCode = 404;
+        res.setHeader('Content-Type', 'text/plain');
+        res.end('Not Found');
+    }
+});
+    </code></pre>
+</section>
+
+<section class="center">
+    <h1>Express.js</h1>
+</section>
+
+<section>
+    <h2>Express.js</h2>
+    <pre><code data-trim>
+const express = require('express');
+const app = express();
+
+app.get('/name/:name', (req, res) => {
+    res.send(`Hello, <b>${req.params.name}</b>`);
+});
+
+app.all('*', (req, res) => {
+    res.sendStatus(404);
+});
+
+app.listen(8080);
+    </code></pre>
+</section>
+
+<section class="center">
+    <p class="left">Наиболее популярное решение</p>
+    <p class="left">Много готовых расширений</p>
+    <p class="left">Поддержка со стороны <a href="https://foundation.nodejs.org/about/members">Node.js Foundation</a></p>
+</section>
+
+<section class="center">
+    <h2>Сервис «Заметки»</h2>
+</section>
+
+<section class="center">
+    <pre><code data-noescape>
+          <span class="green"> GET</span> /               <span class="grey">Главная страница</span>
+
+          <span class="green"> GET</span> /notes          <span class="grey">Список заметок</span>
+
+          <span class="green">POST</span> /notes          <span class="grey">Добавление заметки</span>
+
+          <span class="green"> GET</span> /notes/films    <span class="grey">Просмотр заметки по имени</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Маршрутизация запросов</h2>
+</section>
+
+<section>
+    <h2>Маршрутизация запросов</h2>
+    <pre><code data-trim>
+const express = require('express');
+const app = express();
+
+// GET /
+app.get('/', () => {});
+    </code></pre>
+    <pre class="fragment javascript"><code data-trim>
+// GET /notes
+app.get('/notes', () => {});
+    </code></pre>
+    <pre class="fragment javascript"><code data-trim>
+// POST /notes
+app.post('/notes', () => {});
+    </code></pre>
+</section>
+
+<section>
+    <h2>Маршрутизация запросов</h2>
+    <pre><code data-trim>
+const express = require('express');
+const app = express();
+
+// GET /notes
+// POST /notes
+app
+    .route('/notes')
+    .get(() => {})
+    .post(() => {})
+    </code></pre>
+</section>
+
+<section>
+    <h2>Маршрутизация запросов</h2>
+    <pre><code data-trim>
+const express = require('express');
+const app = express();
+
+// GET /notes/books
+app.get('/notes/:name', (req, res) => {
+    const name = req.params.name;
+
+    res.send(`Note with "${name}" name`);
+});
+    </code></pre>
+</section>
+
+<section>
+    <h2>?</h2>
+    <pre class="javascript" style="padding-bottom: 40px;"><code data-trim>
+// GET /notes
+// GET /note
+app.get('/notes?', () => {});
+    </code></pre>
+
+    <h2 class="fragment" data-fragment-index=2>+</h2>
+    <pre class="fragment javascript" data-fragment-index=2><code data-trim>
+// GET /notes
+// GET /notesss
+app.get('/notes+', () => {});
+    </code></pre>
+</section>
+
+<section>
+    <h2>[]</h2>
+    <pre class="javascript" style="padding-bottom: 40px;"><code data-trim data-noescape>
+// GET /notes/films
+// GET /notes/books
+<s>// GET /notes/my_books</s>
+app.get('/notes/[a-z]+', () => {});
+    </code></pre>
+    <h2 class="fragment" data-fragment-index=2>()</h2>
+    <pre class="fragment" data-fragment-index=2><code data-trim data-noescape>
+// GET /notes/films
+<s>// GET /notes/films_westerns</s>
+app.get('/notes/:name([a-z]+)', req => {
+    console.log(req.params.name); // films
+});</code></pre>
+</section>
+
+<section>
+    <h2>404</h2>
+    <pre class="javascript" data-fragment-index=1><code data-trim>
+app.get('*', (req, res) => {
+    res.sendStatus(404)
+});
+
+app.post('*', (req, res) => {
+    res.sendStatus(404)
+});
+    </code></pre>
+</section>
+
+<section>
+    <h2>404</h2>
+    <pre class="javascript" data-fragment-index=3><code data-trim>
+app.all('*', (req, res) => {
+    res.sendStatus(404)
+});
+    </code></pre>
+</section>
+
+<section>
+    <pre><code data-noescape data-trim>
+app/
+<span class="grey">└──</span> index.js
+<span class="red"><span class="grey">└──</span> routes.js</span>
+    </code></pre>
+    <pre class="javascript"><code data-trim>
+module.exports = app => {
+    app.get('/', (req, res) => {});
+};
+    </code></pre>
+    <div class="fragment">
+    <pre><code data-noescape data-trim>
+app/
+<span class="red"><span class="grey">└──</span> index.js</span>
+<span class="grey">└──</span> routes.js
+    </code></pre>
+    <pre class="javascript"><code data-trim>
+require('./routes')(app);
+    </code></pre>
+    </div>
+    <p><a class="fragment" href="http://forbeslindesay.github.io/express-route-tester/">express-route-tester</a></p>
+</section>
+
+<section class="center">
+    <h2>Разделение ответственности</h2>
+</section>
+
+<section class="center">
+    <p><img src="images/mvc.svg"></p>
+</section>
+
+<section>
+    <pre><code data-noescape data-trim>
+app/
+<span class="grey">└──</span> index.js
+<span class="grey">└──</span> routes.js
+<span class="red"><span class="grey">└──</span> models
+    <span class="grey">└──</span> note.js</span></code></pre>
+    <pre class="fragment javascript"><code data-trim>
+class Note {
+    constructor({ name }) {
+        this.name = name;
+    }
+
+    save() {}
+
+    static find(name) {}
+
+    static findAll() {}
+}
+
+module.exports = Note;
+    </code></pre>
+</section>
+
+<section>
+    <pre><code data-noescape data-trim>
+app/
+<span class="grey">└──</span> index.js
+<span class="grey">└──</span> routes.js
+<span class="grey">└──</span> models
+<span class="red"><span class="grey">└──</span> controllers
+    <span class="grey">└──</span> notes.js</span></code></pre>
+    <pre class="fragment javascript"><code data-trim>
+const Note = require('../models/note');
+
+exports.item = (req, res) => {
+    const note = Note.find(req.params.name);
+}
+    </code></pre>
+</section>
+
+<section>
+    <pre><code data-noescape data-trim>
+app/
+<span class="grey">└──</span> index.js
+<span class="grey">└──</span> routes.js
+<span class="grey">└──</span> models
+<span class="red"><span class="grey">└──</span> controllers
+    <span class="grey">└──</span> notes.js</span></code></pre>
+    <pre class="javascript"><code data-trim>
+const Note = require('../models/note');
+
+// ...
+
+exports.list = (req, res) => {
+    const notes = Note.findAll();
+};
+    </code></pre>
+</section>
+
+<section>
+    <pre><code data-noescape data-trim>
+app/
+<span class="grey">└──</span> index.js
+<span class="grey">└──</span> routes.js
+<span class="grey">└──</span> models
+<span class="red"><span class="grey">└──</span> controllers
+    <span class="grey">└──</span> notes.js</span></code></pre>
+    <pre class="javascript"><code data-trim>
+const Note = require('../models/note');
+
+// ...
+
+exports.create = (req, res) => {
+    const note = new Note({ name: req.body.name });
+
+    note.save();
+    res.sendStatus(201);
+};
+    </code></pre>
+</section>
+
+<section>
+    <pre><code data-noescape data-trim>
+app/
+<span class="grey">└──</span> index.js
+<span class="grey">└──</span> routes.js
+<span class="grey">└──</span> models
+<span class="grey">└──</span> controllers
+    <span class="grey">└──</span> notes.js
+    <span class="red"><span class="grey">└──</span> errors.js</span></span>
+    </code></pre>
+    <pre class="javascript"><code data-trim>
+exports.error404 = (req, res) => res.sendStatus(404);
+    </code></pre>
+</section>
+
+<section>
+    <pre><code data-noescape data-trim>
+app/
+<span class="grey">└──</span> index.js
+<span class="grey">└──</span> <span class="red">routes.js</span>
+<span class="grey">└──</span> models
+<span class="grey">└──</span> controllers
+</code></pre>
+    <pre class="javascript"><code data-trim>
+const { error404 } = require('./controllers/errors');
+const { create, item, list } = require('./controllers/notes');
+
+module.exports = app => {
+    app.get('/', list);
+    app.get('/notes', list);
+    app.get('/notes/:name', item);
+    app.post('/notes', create);
+    app.all('*', error404)
+};
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Шаблонизация</h2>
+</section>
+
+<section class="center">
+    <p><span>Шаблон</span> + <span>Данные</span> = HTML</p>
+</section>
+
+<section>
+    <h2>HTML</h2>
+    <pre><code class="html" data-noescape data-trim>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;My notes&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    Hello, User!
+&lt;/body&gt;
+&lt;/html&gt;
+    </code></pre>
+</section>
+
+<section>
+    <h2>Данные</h2>
+    <pre class="javascript"><code data-trim>
+{
+    title: 'My notes',
+    message: 'Hello, User!'
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Шаблон</h2>
+    <pre><code class="html" data-noescape data-trim>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;{{ title }}&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    {{ message }}
+&lt;/body&gt;
+&lt;/html&gt;
+    </code></pre>
+</section>
+
+<section>
+<h2>1. Компиляция</h2>
+<pre class="javascript"><code data-noescape data-trim>function index(data) {
+    return `&lt;!DOCTYPE html&gt;
+    &lt;html lang="en"&gt;
+    &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;<span class="green">${data.title}</span>&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;<span class="green">${data.message}</span>&lt;/body&gt;
+    &lt;/html&gt;`;
+}
+</code></pre>
+</section>
+
+<section>
+<h2>2. Исполнение</h2>
+<pre class="javascript"><code data-noescape data-trim>index({
+    title: 'My notes',
+    message: 'Hello, User!'
+})
+</code></pre>
+</section>
+
+<section class="center">
+    <h2>Handlebars</h2>
+</section>
+
+<section>
+    <pre class=""><code data-noescape data-trim>
+app/
+<span class="grey">└──</span> <span class="red">index.js</span>
+<span class="grey">└──</span> routes.js
+<span class="grey">└──</span> models
+<span class="grey">└──</span> controllers
+    </code></pre>
+    <pre><code data-noescape>
+const express = require('express');
+const app = express();
+<span class="fragment highlight highlight-magenta init_visible">const hbs = require('hbs');</span>
+
+<span class="fragment highlight highlight-magenta init_visible">app.set('view engine', 'hbs');</span>
+require('./routes')(app);
+
+app.listen(8080);
+    </code></pre>
+</section>
+
+<section>
+    <pre class=""><code data-noescape data-trim>
+app/
+<span class="grey">└──</span> index.js
+<span class="grey">└──</span> routes.js
+<span class="grey">└──</span> models
+<span class="grey">└──</span> controllers
+<span class="red"><span class="grey">└──</span> views
+    <span class="grey">└──</span> index.hbs</span>
+    </code></pre>
+    <pre><code class="html" data-noescape>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;{{ title }}&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;{{ message }}&lt;/body&gt;
+&lt;/html&gt;
+    </code></pre>
+</section>
+
+<section>
+    <pre class=""><code data-noescape data-trim>
+app/
+<span class="grey">└──</span> index.js
+<span class="grey">└──</span> routes.js
+<span class="grey">└──</span> models
+<span class="red"><span>└──</span> controllers
+    <span>└──</span> index.js</span>
+<span><span class="grey">└──</span> views
+    <span class="grey">└──</span> index.hbs</span>
+    </code></pre>
+    <pre><code data-noescape>exports.index = (req, res) => {
+    <del>res.send('Hello, User!');</del>
+    res.render('index', {
+        title: 'Awesome notes',
+        message: '&lt;h1&gt;Hello, User!&lt;/h1&gt;'
+    });
+}</code></pre>
+</section>
+
+<section>
+    <h2>{{ }}</h2>
+    <pre><code><div>{{ message }}</div></code></pre>
+    <pre class="fragment"><code><!-- <div>&amp;lt;h1&amp;gt;Hello, User!&amp;lt;/h1&amp;gt;</div> --></code></pre>
+    <div class="fragment">
+        <h2>{{{ }}}</h2>
+        <pre><code class="html"><div>{{{ message }}}</div></code></pre>
+        <pre><code><!-- <div><h1>Hello, User!</h1></div> --></code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>{{ meta.description }}</h2>
+    <pre><code data-noescape>res.render('index', {
+    title: 'Awesome notes',
+    meta: {
+        description: 'My awesome notes',
+        charset: 'utf-8'
+    }
+});</code></pre>
+    <pre><code class="html" data-noescape>&lt;head&gt;
+    &lt;meta charset="{{ meta.charset }}"&gt;
+    &lt;meta name="description"
+          content="{{ meta.description }}"&gt;
+    &lt;title&gt;{{ title }}&lt;/title&gt;
+&lt;/head&gt;</code></pre>
+</section>
+
+<section>
+    <h2>{{#each}}</h2>
+    <pre class="javascript"><code data-trim>
+res.render('notes', {
+    notes: [
+        { name: 'Films' },
+        { name: 'Books' },
+        { name: 'Todo' }
+    ]
+});
+    </code></pre>
+    <pre><code class="html"><ul>
+    {{#each notes}}
+    <li>{{ name }}</li>
+    {{/each}}
+</ul></code></pre>
+</section>
+
+<section>
+    <h2>{{#each}}</h2>
+    <pre class="javascript"><code data-trim>
+res.render('notes', {
+    notes: [
+        { name: 'Films' },
+        { name: 'Books' },
+        { name: 'Todo' }
+    ]
+});
+    </code></pre>
+    <pre><code class="html">
+{{#each notes}}
+<p>{{ @index }}. {{ name }}</p>
+{{/each}}
+    </code></pre>
+</section>
+
+<section>
+        <h2>{{ ../ }}</h2>
+    <pre class="javascript"><code data-trim>
+res.render('notes', {
+    prefix: 'My',
+    notes: [
+        { name: 'Films' },
+        { name: 'Books' },
+        { name: 'Todo' }
+    ]
+});
+    </code></pre>
+    <pre><code class="html">
+{{#each notes}}
+<p>{{ ../prefix }}. {{ name }}</p>
+{{/each}}
+    </code></pre>
+</section>
+
+<section>
+    <h2>{{#if }}</h2>
+    <pre><code class="html" data-trim>{{#if notes.length}}
+<ul>
+    {{#each notes}}
+    <li>{{ name }}</li>
+    {{/each}}
+</ul>
+{{^}}
+<p>Notes not found!</p>
+{{/if}}
+    </code></pre>
+</section>
+
+<section class="center">
+    <p><a href="https://github.com/helpers/handlebars-helpers">189 handlebars helpers</a></p>
+</section>
+
+<section>
+    <pre class=""><code data-noescape data-trim>
+app/
+<span class="grey">└──</span> index.js
+<span class="grey">└──</span> routes.js
+<span class="grey">└──</span> models
+<span class="grey">└──</span> controllers
+<span class="grey">└──</span> views
+    <span class="grey">└──</span> index.hbs
+    <span class="red"><span class="grey">└──</span> partials
+        <span class="grey">└──</span> notes.hbs
+    </span>
+    </code></pre>
+    <pre><code data-noescape>app.set('view engine', 'hbs');
+<span class="fragment highlight highlight-magenta init_visible">hbs.registerPartials(__dirname + '/views/partials', () => {
+    app.listen(8000);
+});</span></code></pre>
+</section>
+
+<section>
+    <h2>{{> }}</h2>
+    <pre><code class="html" data-noescape>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;{{ title }}&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    {{> notes}}
+&lt;/body&gt;
+&lt;/html&gt;
+    </code></pre>
+</section>
+
+<section class="center">
+    <p><a href="http://handlebarsjs.com/">handlebarsjs.com</a></p>
+</section>
+
+<section class="center">
+    <h2>Цепочки ответственностей</h2>
+</section>
+
+<section class="center">
+    <p><img src="images/mw.svg"></p>
+</section>
+
+<section class="center">
+    <p>Запрос <span class="green">последовательно</span> проходит через обработчики в цепочке</p>
+</section>
+
+<section class="center">
+    <p>Обработчик сам принимает решение, обрабатывать запрос или пропустить дальше</p>
+</section>
+
+<section>
+    <h2>Sync middleware</h2>
+    <pre><code data-noescape>const express = require('express');
+const app = express();
+</code></pre>
+<pre><code data-noescape>// Логирует все запросы
+app.use((req, res, next) => {
+    console.log(`→ ${req.method} ${req.originalUrl}`);
+
+    next();
+});</code></pre>
+</section>
+
+<section>
+    <h2>Async middleware</h2>
+    <pre class="javascript"><code data-noescape>const express = require('express');
+const app = express();
+const fetch = require('node-fetch');
+
+// Получаем какие-либо общие данные из аpi
+app.use((req, res, next) => {
+    fetch('https://github.com/api/')
+        .then(data => {
+            // locals – рекомендованное поля для таких данных
+            res.locals.data = data;
+            next();
+        })
+        .catch(err => next(err));
+});</code></pre>
+</section>
+
+<section>
+    <h2>morgan</h2>
+    <pre><code data-noescape>const express = require('express');
+<span class="fragment highlight highlight-magenta init_visible">const morgan = require('morgan');</span>
+const app = express();
+
+<span class="fragment highlight highlight-magenta init_visible">app.use(morgan('dev'));</span>
+    </code></pre>
+    <pre class="fragment"><code data-noescape>
+GET /notes 200 18.079 ms - 301
+|       |    |      |      |
+<span class="green">method</span>  <span class="green">url</span>  <span class="green">code</span>   <span class="green">time</span>   <span class="green">bytes</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>body-parser</h2>
+    <pre class="shell"><code data-noescape><span class="green">POST</span> /notes
+<span class="magenta">Accept:</span> application/json
+<span class="magenta">Host:</span> localhost
+
+{
+    "name": "films",
+    "text": "Films to watch"
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2><span class="red">Без</span> body-parser</h2>
+    <pre class="javascript"><code data-trim>
+let body = '';
+
+req.on('data', chunk => {
+    body += chunk;
+});
+
+JSON.parse(body);
+    </code></pre>
+</section>
+
+<section>
+    <h2><span class="green">С</span> body-parser</h2>
+    <pre><code data-noescape data-trim>
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+
+app.use(bodyParser.json());
+
+app.use(() => console.log(req.body));
+    </code></pre>
+</section>
+
+<section>
+    <h2>express.static</h2>
+    <pre><code data-noescape data-trim>
+app/
+<span class="grey">└──</span> index.js
+<span class="grey">└──</span> routes.js
+<span class="grey">└──</span> models
+<span class="grey">└──</span> controllers
+<span class="grey">└──</span> views
+<span class="red"><span class="grey">└──</span> public
+    <span class="grey">└──</span> favicon.ico
+    <span class="grey">└──</span> styles.css</span>
+    </code></pre>
+    <pre><code class="javascript" data-noescape>// GET /styles.css
+app.use(express.static(__dirname + '/public')));</code></pre>
+</section>
+
+<section class="center">
+    <h2>Обработка ошибок</h2>
+</section>
+
+<section>
+    <h2>Обработка ошибок</h2>
+    <pre class="javascript"><code data-trim>
+app.use((err, req, res, next) => {
+    console.error(err);
+
+    res.sendStatus(500);
+});
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Обработчик ошибок отличается количеством аргументов – <span class="green">4</span></p>
+</section>
+
+<section class="center">
+    <p>Обработчиков ошибок может быть несколько в цепочке</p>
+</section>
+
+<section class="center">
+    <p>Если в обычном обработчике произошла ошибка, все последующие игнорируются вплоть до <span class="green">первого</span> обработчика ошибок</p>
+</section>
+
+<section class="center">
+    <p>Обработчик ошибок может не прерывать процесс, а передать управление следующей middleware (обычному обработчику)</p>
+</section>
+
+<section>
+    <h2>Обработка ошибок</h2>
+    <pre class="javascript"><code data-trim>
+app.use(bodyParser.json());
+    </code></pre>
+    <pre class="javascript"><code data-trim>
+app.use((err, req, res, next) => {
+    // Выводим ошибку
+    console.error(err);
+
+    // Но продолжаем обрабатывать запрос
+    next();
+});
+    </code></pre>
+    <pre class="javascript"><code data-trim>
+app.use((req, res, next) => {
+    // ...
+});
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Конфигурация</h2>
+</section>
+
+<section class="center">
+    <p>Секретные настройки спускаем в приложение через переменные окружения</p>
+</section>
+
+<section class="center">
+    <pre class="cli"><code data-trim data-noescape>
+        $ <span class="red">DBPASS=p@ssw0rd</span> node index.js
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Остальные настройки храним в файлах, разделённых по окружениям – локальное, тестовое, боевое</p>
+</section>
+
+<section class="center">
+    <p>Окружение определяем переменной <span class="green">NODE_ENV=production</span></p>
+</section>
+
+<section>
+<pre class="javascript"><code data-noescape data-trim>
+app/
+<span class="grey">└──</span> index.js
+<span class="grey">└──</span> routes.js
+<span class="grey">└──</span> models
+<span class="grey">└──</span> controllers
+<span class="grey">└──</span> views
+<span class="grey">└──</span> public
+<span class="red"><span class="grey">└──</span> config
+    <span class="grey">└──</span> default.js
+    <span class="grey">└──</span> production.js</span>
+    </code></pre>
+        <pre class="javascript"><code data-trim data-noescape>
+        module.exports = {
+            debug: true
+        }
+    </code></pre>
+</section>
+
+<section>
+<pre class="javascript"><code data-noescape data-trim>
+app/
+<span class="grey">└──</span> index.js
+<span class="grey">└──</span> routes.js
+<span class="grey">└──</span> models
+<span class="grey">└──</span> controllers
+<span class="grey">└──</span> views
+<span class="grey">└──</span> public
+<span class="red"><span class="grey">└──</span> config
+    <span class="grey">└──</span> default.js
+    <span class="grey">└──</span> production.js</span>
+    </code></pre>
+    <pre class="javascript"><code data-trim data-noescape>
+        module.exports = {
+            debug: false
+        }
+    </code></pre>
+</section>
+
+<section>
+<pre class="html"><code data-noescape data-trim>
+app/
+<span class="red"><span class="grey">└──</span> index.js</span>
+<span class="grey">└──</span> routes.js
+<span class="grey">└──</span> models
+<span class="grey">└──</span> controllers
+<span class="grey">└──</span> views
+<span class="grey">└──</span> public
+<span><span class="grey">└──</span> config
+    <span class="grey">└──</span> default.js
+    <span class="grey">└──</span> production.js</span>
+    </code></pre>
+    <pre class="javascript"><code data-trim data-noescape>
+        const config = require('config');
+
+        if (config.get('debug')) {
+            console.log('Some debug notes');
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <pre class="cli"><code data-trim data-noescape>
+        $ <span class="red">NODE_ENV=production</span> node index.js
+    </code></pre>
+</section>
+
+<section class="center">
+    <p><a href="https://github.com/urfu-2018/notes-app-example/">Исходный код «Заметок»</a></p>
+</section>
+
+</div></div>
+
+<script src="../../@lib/core.js"></script>
+</body>
+</html>
