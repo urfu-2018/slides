@@ -4,7 +4,7 @@
 
 1. [Просмотр презентаций](https://urfu-2018.github.io/slides/guides/00-presentations/) ([pdf](https://urfu-2018.github.io/slides/guides/00-presentations/index.pdf))
 
-## Markup
+## Вёрстка
 
 1. [HTML](https://urfu-2018.github.io/slides/markup/01-html/) ([pdf](https://urfu-2018.github.io/slides/markup/01-html/index.pdf))
 1. [CSS](https://urfu-2018.github.io/slides/markup/02-css/) ([pdf](https://urfu-2018.github.io/slides/markup/02-css/index.pdf))
@@ -33,6 +33,7 @@
 1. [TypeScript I](https://urfu-2018.github.io/slides/javascript/09-typescript-1/) ([pdf](https://urfu-2018.github.io/slides/javascript/09-typescript-1/index.pdf))
 1. [TypeScript II](https://urfu-2018.github.io/slides/javascript/10-typescript-2/) ([pdf](https://urfu-2018.github.io/slides/javascript/10-typescript-2/index.pdf))
 
-## Web-development
+## Разработка web-приложений
 
-1. [Node.js I](https://urfu-2018.github.io/slides/javascript/01-nodejs-1/) ([pdf](https://urfu-2018.github.io/slides/javascript/01-nodejs-1/index.pdf))
+1. [Node.js I](https://urfu-2018.github.io/slides/webdev/01-nodejs/) ([pdf](https://urfu-2018.github.io/slides/webdev/01-nodejs/index.pdf))
+2. [Архитектура приложения](https://urfu-2018.github.io/slides/webdev/02-express/) ([pdf](https://urfu-2018.github.io/slides/webdev/02-express/index.pdf))
