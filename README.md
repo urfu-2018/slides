@@ -37,3 +37,4 @@
 
 1. [Node.js I](https://urfu-2018.github.io/slides/webdev/01-nodejs/) ([pdf](https://urfu-2018.github.io/slides/webdev/01-nodejs/index.pdf))
 2. [Архитектура приложения](https://urfu-2018.github.io/slides/webdev/02-express/) ([pdf](https://urfu-2018.github.io/slides/webdev/02-express/index.pdf))
+2. [Эксплуатация приложения](https://urfu-2018.github.io/slides/webdev/03-operating/) ([pdf](https://urfu-2018.github.io/slides/webdev/03-operating/index.pdf))

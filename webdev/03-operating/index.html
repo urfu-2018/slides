@@ -1,0 +1,1128 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Эксплуатация приложения</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="white"><div class="reveal"><div class="slides">
+
+<section class="center">
+    <h1>Эксплуатация приложения</h1>
+</section>
+
+<section class="center">
+    <h1>Зависимости</h1>
+</section>
+
+<section class="center">
+    <p>Обновляйте устаревшие</p>
+</section>
+
+<section>
+    <h2>npm <span class=red>outdated</span></h2>
+    <pre class="cli"><code data-noescape data-trim>
+        <span class=grey>$</span> npm <span class=red>outdated</span>
+    </code></pre>
+    <pre class="html"><code data-noescape data-trim>
+        <span class=underline>Package</span>                 <span class=underline>Current</span>  <span class=underline>Wanted</span>  <span class=underline>Latest</span>
+        <span class=red>mocha</span>                     2.3.3   <span class=green>2.4.0</span>   <span class=magenta>2.4.5</span>
+        <span class=red>nodemon</span>                   1.8.0   <span class=green>1.8.0</span>   <span class=magenta>1.9.1</span>
+        <span class=red>lodash</span>                   3.10.1  <span class=green>3.10.1</span>   <span class=magenta>4.6.1</span>
+        <span class=red>supertest</span>                 1.1.0   <span class=green>1.1.0</span>   <span class=magenta>1.2.0</span>
+    </code></pre>
+    <pre class="fragment cli"><code data-noescape data-trim>
+    $</span> npm <span class=red>update</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Находите уязвимости</p>
+</section>
+
+<section>
+    <h2>npm <span class=red>audit</span></h2>
+
+    <pre class="cli html"><code data-noescape data-trim><span class=grey>$</span> npm <span class=red>audit</span></code></pre>
+
+    <pre class="html"><code data-noescape data-trim>
+found <span class=red>10</span> vulnerabilities (7 <span class=orange>moderate</span>, 3 <span class=red>high</span>)
+in 2144 scanned packages
+
+5 vulnerabilities require manual review
+    </code></pre>
+</section>
+
+<section>
+    <h2>npm <span class=red>audit</span></h2>
+
+    <pre class="cli html"><code data-noescape data-trim><span class=grey>$</span> npm <span class=red>audit</span></code></pre>
+    <pre class="html" style="font-size: .7em;"><code data-noescape data-trim>
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ Low           │ Regular Expression Denial of Service                         │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ <span class=red>braces</span>                                                       │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ ava [dev]                                                    │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ ava > chokidar > anymatch > micromatch > <span class=red>braces</span>              │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ More info     │ https://npmjs.com/advisories/786                             │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+    </code></pre>
+</section>
+
+<section>
+    <h2>npm <span class=red>audit</span></h2>
+    <pre class="cli html"><code data-noescape data-trim><span class=grey>$</span> npm <span class=red>audit</span> fix</code></pre>
+</section>
+
+<section class="center">
+    <p>Фиксируйте версии</p>
+</section>
+
+<section>
+    <h2>package.json</h2>
+    <pre><code data-trim data-noescape>
+    {
+        "name": "average",
+        "version": "1.0.0",
+        "description": "Calculate average number",
+        "author": "Sergey Gogolev",
+        "license": "MIT",
+        "dependecies": {
+            "lodash": "4.17.4"
+        },
+        "devDependecies": {
+            "eslint": "4.0.0"
+        }
+    }
+    </code></pre>
+
+</section>
+
+<section>
+    <h2><a href="http://semver.org/">Semantic Versions</a></h2>
+    <p><span class="red">3</span>.<span class="green">8</span>.<span class="magenta">0</span>-<span class="orange">alpha.1</span></p>
+    <ul style="font-size: .8em">
+    <li><span class="red">major</span> – новые возможности<br> без сохранения обратной совместимости</li>
+    <li><span class="green">minor</span> – новые возможности<br> с сохранением обратной совместимости</li>
+    <li><span class="magenta">patch</span> – исправления ошибок, рефакторинг</li>
+    <li><span class="orange">pre-release</span> – версия в разработке</li>
+    </ul>
+</section>
+
+<section>
+    <h2> <a href="https://docs.npmjs.com/misc/semver#advanced-range-syntax">Advanced Range Syntax</a></h2>
+    <pre style="font-size: .5em; line-height: 1.5em;">
+"express": "<span class="green">1.2.3</span>",
+"express": "<span class="green">>1.2.3</span>",
+"express": "<span class="green">>=1.2.3</span>",
+"express": "<span class="green">~1.2.3</span>", <span class="grey">// >=1.2.3 <1.3.0</span>
+"express": "<span class="green">^1.2.3</span>", <span class="grey">// >=1.2.3 <2.0.0</span>
+"express": "<span class="green">latest</span>",
+"express": "<span class="green">alpha</span>",
+
+"express": "<span class="green">git://github.com/expressjs/express.git</span>",
+"express": "<span class="green">git://github.com/expressjs/express.git#4.13.4</span>",
+"express": "<span class="green">git://github.com/expressjs/express.git#master</span>",
+"express": "<span class="green">git://github.com/expressjs/express.git#f3d99a4</span>",
+"express": "<span class="green">expressjs/express#f3d99a4</span>"
+    </pre>
+
+</section>
+
+<section>
+    <h2>package-lock.json</h2>
+    <pre class="cli html"><code data-noescape data-trim>
+<span class=grey># Устанавливает зависимости по данным package.json</span>
+<span class=grey># Создаёт package-lock.json по данным из package.json</span>
+<span class=grey>$</span> npm install
+
+<span class=grey># Добавляет зависимость необходимую для приложения</span>
+<span class=grey>$</span> npm install express
+
+<span class=grey># Добавляет зависимость необходимую для разработки</span>
+<span class=grey>$</span> npm install <span class=magenta>--save-dev</span> pify
+    </code></pre>
+</section>
+
+<section>
+    <h2>package-lock.json</h2>
+    <pre class="html" style="font-size: .9em;"><code data-noescape data-trim>
+"pify": {
+  "version": "2.3.0",
+  <span class=red>"resolved": "https://registry.npmjs.org/pify/-/pify-2.3.0.tgz",</span>
+  "integrity": "sha1-7RQaasBDqEnqWISY59yosVMw6Qw=",
+  "dev": true
+}
+    </code></pre>
+    <pre class="cli html">
+    <code data-noescape data-trim>
+            <span class=grey># Устанавливает зависимости строго по данным package-lock.json</span>
+            <span class=grey>$</span> npm ci</code>
+    </pre>
+</section>
+
+<section class="center">
+    <h1>Codestyle</h1>
+</section>
+
+<section class="center"><table style="margin: 0 auto;"><tr>
+    <td><pre><code data-trim>
+let foo = 1,
+    bar = 2,
+    baz = 3;
+    </code></pre></td>
+    <td style="vertical-align: middle">vs</td>
+    <td><pre><code data-trim>
+let foo = 1;
+let bar = 2;
+let baz = 3;
+    </code></pre></td>
+</tr></table></section>
+
+<section data-background="images/zerg-vs-terran.png"></section>
+
+<section>
+    <h2>Использование let и const</h2>
+    <pre class="flat"><code>const pi = 3.141592653589;
+const e = 2.71828182;
+const φ = 1.618033988;
+
+for(let i = 0; i < 10; i++) {
+    console.log(i);
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Вложенность блоков</h2>
+    <pre class="flat"><code>if (user.isAuthorized) {
+    if (notes.length > 0) {
+        for(let i = 0; i < note.length; i++) {
+            console.log(notes[i]);
+        }
+    } else {
+        console.log('Notes not found!')
+    }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2><a href="https://en.wikipedia.org/wiki/Cyclomatic_complexity">Цикломатическая сложность</a></h2>
+    <pre class="flat"><code data-noescape>function renderNotes(res, user, notes) {
+    if (!user.isAuthorized) {
+        res.sendStatus(403);
+    } else if (notes) {
+        res.render('notes', notes);
+    } else {
+        res.sendStatus(404);
+    }
+}</code></pre>
+</section>
+
+<section class="center">
+    <p><a href="https://en.wikipedia.org/wiki/Cyclomatic_complexity">Цикломатическая сложность</a> – количество независимых путей</p>
+</section>
+
+<section>
+    <h2><a href="https://en.wikipedia.org/wiki/Cyclomatic_complexity">Цикломатическая сложность</a></h2>
+    <pre class="flat"><code class="html" data-noescape>function renderNotes(res, user, notes) {
+    if (!user.isAuthorized) {
+        <span class=red>res.sendStatus(403);</span>
+    } else if (notes) {
+        <span class=red>res.render('notes', notes);</span>
+    } else {
+        <span class=red>res.sendStatus(404);</span>
+    }
+}</code></pre>
+    <p class=red>3</p>
+</section>
+
+<section>
+    <h2 style="margin-left: -120px"><span class="fragment red" data-fragment-index=1>Беc</span>полезное code review</h2>
+    <pre class="flat"><code data-noescape>exports.list = function (req, res) { <span class="fragment" data-fragment-index=1>// Используй стрелочные</span>
+    let notes = Note.findAll(); <span class="fragment" data-fragment-index=1>// Используй const</span>
+    let data = { <span class="fragment" data-fragment-index=1>// И здесь</span>
+        notes: notes,
+        meta: req['meta'] <span class="fragment" data-fragment-index=1>// Здесь можно так: req.meta</span>
+    };
+
+    res.render('notes', data);
+};
+    </code></pre>
+</section>
+
+<section>
+    <h2>Codestyle <span class="green">помогает</span></h2>
+    <p class="left fragment pros">Упростить чтение кода всей команды</p>
+    <p class="left fragment pros">Избежать конфликтов</p>
+    <p class="left fragment pros">Сделать ревью кода полезнее</p>
+    <p class="left fragment pros">Избежать типичных ошибок в коде</p>
+    <p class="left fragment pros">Сделать код качественнее</p>
+</section>
+
+<section>
+    <h2>Codestyle.md</h2>
+    <pre class="flat"><code class="markdown"># Variable declaration
+
+* Each variable should be declared:
+
+    * using a var statement;
+    * only once in the current scope;
+    * on a new line;
+    * as close as possible to the place
+      where it's first used.
+
+* Each var statement should have only
+  one variable declared in it.</code></pre>
+    <a class="fragment" href="https://github.com/ymaps/codestyle/blob/master/javascript.md">github.com/ymaps/codestyle/javascript.md</a>
+</section>
+
+<section>
+    <h2>.editorconfig</h2>
+    <p><img class="invert" src="images/editorconfig.png"></p>
+</section>
+
+<section>
+    <h2>.editorconfig</h2>
+    <pre class="flat"><code class="ini">
+[*]
+indent_size = 4
+indent_style = space
+
+[*.json]
+indent_size = 2
+    </code></pre>
+    <p><a href="http://editorconfig.org/">editorconfig.org</a></p>
+</section>
+
+<section>
+    <h2>ESLint</h2>
+    <pre class="cli html"><code data-noescape data-trim><span class=grey>$</span> npm install --save-dev <span class="red">eslint</span></code></pre>
+</section>
+
+<section>
+    <h2>.eslintrc.json</h2>
+    <pre class="flat"><code class="json" data-trim>
+    {
+        "rules": {
+            "no-unused-vars": 2,
+            "max-len": [1, 100],
+            "max-params": [2, 3]
+        }
+    }
+    </code></pre>
+    <p><a href="http://eslint.org/docs/rules/">eslint.org/docs/rules</a></p>
+</section>
+
+<section>
+    <h2>Готовые наборы правил</h2>
+    <pre class="cli html"><code data-noescape data-trim><span class=grey>$</span> npm install --save-dev <span class="red">eslint-config-xo</span></code></pre>
+    <pre><code class="json" data-trim>
+{
+    "extends": "xo",
+    "rules": {
+        "max-len": [2, 100],
+        "max-params": [2, 3]
+    }
+}
+    </code></pre>
+    <p><a href="https://npms.io/search?q=eslint-config">npms.io/search?q=eslint-config</a></p>
+</section>
+
+<section>
+    <h2>.eslintignore</h2>
+    <pre class="flat"><code data-noescape>
+/build
+**/*.min.js
+<s>/node_modules</s>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Игнорирование правил в коде</h2>
+    <pre class="flat"><code data-noescape>function onError(err, req, res, next) {
+    /* eslint no-unused-vars: 0 */
+    /* eslint max-params: [2, 4] */
+
+    res.sendStatus(500);
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Проверка кода</h2>
+    <pre class="cli"><code data-noescape data-trim><span class=grey>$</span> <span class="red">node_modules/.bin/</span>eslint .
+    </code></pre>
+    <pre class="html"><code data-noescape data-trim>
+<span class="underline">/Workspace/urfu-2017/notes-app-example/index.js</span>
+   <span class=grey>3:29</span>  <span class=red>error</span>  Missing semicolon      <span class=grey>semi</span>
+  <span class=grey>20:34</span>  <span class=red>error</span>  Missing semicolon      <span class=grey>semi</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Автоматическое исправление</h2>
+    <pre class="cli"><code data-noescape data-trim><span class=grey>$</span> node_modules/.bin/eslint . <span class="red">--fix</span></code></pre>
+</section>
+
+<section>
+    <h2>ESLint <span class=red>♥︎</span> VSCode</h2>
+    <p><img src="images/eslint-vscode.png"></p>
+</section>
+
+<section>
+    <h2>Stylelint</h2>
+    <pre class="cli html"><code data-noescape data-trim><span class=grey>$</span> npm install --save-dev <span class="red">stylelint</span></code></pre>
+</section>
+
+<section>
+    <h2>.stylelintrc.json</h2>
+    <pre class="flat"><code class="json" data-trim>
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "color-hex-case": "lower"
+  },
+  "ignoreFiles": [
+    "build/*"
+  ]
+}
+    </code></pre>
+    <p><a href="https://stylelint.io/user-guide/rules/">stylelint.io/user-guide/rules/</a></p>
+</section>
+
+<section>
+    <h2>TSLint</h2>
+    <pre class="cli html"><code data-noescape data-trim><span class=grey>$</span> npm install --save-dev <span class="red">tslint</span></code></pre>
+</section>
+
+<section>
+    <h2>tslint.json</h2>
+    <pre class="flat"><code class="json" data-trim>
+{
+  "extends": "ts:recommended",
+  "linterOptions": {
+    "exclude": [
+      "dist/types/**/*"
+    ]
+  }
+}
+    </code></pre>
+    <p><a href="https://palantir.github.io/tslint/">palantir.github.io/tslint/rules/</a></p>
+</section>
+
+<section>
+    <h2>ESLint + TypeScript</h2>
+    <pre class="cli html"><code data-noescape data-trim><span class=grey>$</span> npm install --save-dev <span class="red">@typescript-eslint/parser</span></code></pre>
+    <pre class="cli html"><code data-noescape data-trim><span class=grey>$</span> npm install --save-dev <span class="red">@typescript-eslint/eslint-plugin</span></code></pre>
+    <pre><code class="json" data-trim>
+{
+    "extends": "xo",
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "rules": {
+        "max-len": [2, 100],
+        "@typescript-eslint/no-unused-vars": 2,
+    }
+}
+    </code></pre>
+</section>
+
+
+<section class="center">
+    <h1>Скрипты</h1>
+</section>
+
+<section class="center">
+    <p>Запуск комплексных команд в виде простых запоминающихся алиасов к ним</p>
+</section>
+
+<section>
+    <h2>Makefile</h2>
+<pre><code class="makefile" data-noescape>start:
+    node index.js
+
+lint:
+    node_modules/.bin/stylelint public/*.css
+    node_modules/.bin/eslint *.js
+
+<span class="yellow">test:</span>
+    node_modules/.bin/mocha test/</code></pre>
+    <pre class="cli"><code data-noescape data-trim><span class=grey>$</span> make <span class=green>test</span></code></pre>
+    <p class="fragment"><a href="https://www.smashingmagazine.com/2015/10/building-web-applications-with-make/">Building Web Software With Make</a><br>Mark McDonnell</p>
+</section>
+
+<section>
+    <h2>Gulp</h2>
+    <pre><code>const gulp = require('gulp');
+const eslint = require('gulp-eslint');
+
+gulp.task('lint', () => {
+    gulp
+        .src('*.js')
+        .pipe(eslint())
+});</code></pre>
+    <pre class="cli"><code data-noescape data-trim><span class=grey>$</span> gulp <span class=green>lint</span></code></pre>
+    <p class="fragment"><a href="https://www.smashingmagazine.com/2014/06/building-with-gulp/">Building With Gulp</a><br>Callum Macrae</p>
+</section>
+
+<section>
+    <h2>NPM Scripts</h2>
+    <pre><code data-noescape>{
+  "name": "awesome-notes",
+  "dependencies": {
+    "mocha": "4.0.0"
+  },
+  "scripts": {
+    "test": "mocha test/",
+  }
+}</code></pre>
+    <pre class="cli html"><code data-noescape data-trim><span class=grey>$</span> npm run <span class=red>test</span></code></pre>
+    <pre class="cli html fragment"><code data-noescape data-trim><span class=grey>$</span> npm <span class=red>test</span></code></pre>
+</section>
+
+<section>
+    <h2>Команды</h2>
+    <pre class="html"><code data-noescape data-trim>{
+  "scripts": {
+    "clean": "<span class="red">rm -rf node_modules/</span>"
+  }
+}</code></pre>
+</section>
+
+<section>
+    <h2>Помним о мультиплатформе!</h2>
+    <pre class="html"><code data-noescape data-trim>{
+  "devDependencies": {
+    <span class="red">"rimraf": "2.5.2"</span>
+  },
+  "scripts": {
+    "clean": "<span class="red">rimraf</span> node_modules/"
+  }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Последовательные команд</h2>
+    <pre class="html"><code data-noescape data-trim>
+{
+  "scripts": {
+    "check:lint": "eslint .",
+    "check:test": "mocha test/",
+    "check": "npm run check:lint <span class="red">&&</span> npm run check:test"
+  }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Последовательные команд</h2>
+    <pre class="html"><code data-noescape data-trim>
+{
+  "devDependencies": {
+    <span class="red">"npm-run-all": "1.5.2"</span>
+  },
+  "scripts": {
+    "check:lint": "eslint .",
+    "check:test": "mocha test/",
+    "check": "<span class="red">npm-run-all</span> check:lint check:test"
+  }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Параллельные команды</h2>
+    <pre class="html"><code data-noescape data-trim>
+{
+  "scripts": {
+    "lint:css": "stylelint **/*.css",
+    "lint:js": "eslint .",
+    "lint": "npm run lint:css <span class="red">&</span> npm run lint:js"
+  }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Параллельные команды</h2>
+    <pre class="html"><code data-noescape data-trim>
+{
+  "scripts": {
+    "lint:css": "stylelint **/*.css",
+    "lint:js": "eslint .",
+    "lint": "npm-run-all <span class="red">--parallel</span> lint:css lint:js"
+  }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Группы команд</h2>
+    <pre class="html"><code data-noescape data-trim>
+{
+  "scripts": {
+    "<span class="red">lint:css</span>": "stylelint **/*.css",
+    "<span class="red">lint:js</span>": "eslint .",
+    "lint": "npm-run-all --parallel <span class="red">lint:*</span>"
+  }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Настройки</h2>
+    <pre class="html"><code data-noescape data-trim>
+{
+  "name": "<span class="green">app</span>",
+  <span class="red">"config": {
+    "report": "nyan"
+  },</span>
+  "scripts": {
+    "test": "mocha test/ -R <span class="red">$npm_package_config_report</span>"
+  }
+}
+    </code></pre>
+    <pre class="cli html"><code data-noescape data-trim><span class=grey>$</span> npm <span class=red>test</span> --<span class=green>app</span>:report=nyan</code></pre>
+</section>
+
+<section>
+    <h2>Внешние скрипты</h2>
+    <pre class=""><code data-noescape data-trim>// scripts/favicon.js
+const { readFileSync, writeFileSync } = require('fs');
+const toIco = require('to-ico');
+
+const logo = readFileSync('logo.png');
+
+toIco(logo).then(data => writeFileSync('favicon.ico', data));
+    </code></pre>
+    <pre class="html fragment"><code data-noescape>
+{
+  "scripts": {
+    <span class="red">"favicon": "node scripts/favicon.js"</span>
+  }
+}
+    </code></pre>
+
+
+</section>
+
+<section>
+    <h2>Аргументы</h2>
+    <pre class="html"><code data-noescape>{
+  "scripts": {
+    "dev": "node app/index.js",
+  }
+}</code></pre>
+    <pre class="cli html"><code data-noescape><span class=grey>$</span> npm run dev <span class="red">--</span> debug</code></pre>
+    <pre class="cli html fragment"><code data-noescape data-trim><span class=grey>$</span> node app/index.js debug</code></pre>
+</section>
+
+<section class="center">
+    <p><a href="https://www.youtube.com/watch?v=0RYETb9YVrk">Advanced front-end automation with npm</a><br> Kate Hudson</p>
+    <p><a href="https://www.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/">How to Use npm as a Build Tool</a><br> Keith Cirkel</p>
+</section>
+
+<section class="center">
+    <h1>Развёртывание сервиса</h1>
+</section>
+
+<section>
+    <h2>Share machine</h2>
+    <p><img src="images/deploy-share-1.svg"></p>
+</section>
+
+<section>
+    <h2>Конфликт за ресурсы</h2>
+    <p><img src="images/deploy-share-2.svg">
+</section>
+
+<section>
+    <h2>Virtualization</h2>
+    <p><img src="images/deploy-vm.svg"></p>
+</section>
+
+<section class="center">
+    <p>Полная изоляция</p>
+    <p>Разделение ресурсов (cpu, mem, disk)</p>
+</section>
+
+<section class="center">
+    <p>Тяжёлые на подъём</p>
+    <p>Требовательны к дисковому пространству</p>
+</section>
+
+<section>
+    <h2>Virtualization</h2>
+    <p><img src="images/deploy-vm.svg"></p>
+</section>
+
+<section>
+    <h2>Containers</h2>
+    <p><img src="images/deploy-containers.svg"></p>
+</section>
+
+<section>
+    <h2>Userland</h2>
+    <p><img src="images/user-vs-kernel.svg"></p>
+</section>
+
+
+<section class="center">
+    <p>Лёгкие на подъём</p>
+    <p>Экономят дисковое пространство</p>
+</section>
+
+<section class="center">
+    <p>Изоляция <a href="https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-9357">уязвима</a></p>
+    <p>Привязаны к ядру одной OS</p>
+</section>
+
+<section class="center">
+    <p><img src="images/docker.png"></p>
+</section>
+
+<section>
+    <h2>Union File System</h2>
+    <p><img src="images/ufs-2.svg"></p>
+</section>
+
+<section>
+    <h2>Union File System</h2>
+    <p><img src="images/ufs-1.svg"></p>
+</section>
+
+<section>
+    <h2>Copy-on-write</h2>
+    <p><img src="images/cow-1.svg"></p>
+</section>
+
+<section>
+    <h2>Copy-on-write</h2>
+    <p><img src="images/cow-2.svg"></p>
+</section>
+
+<section class="center">
+    <p><a href="https://hub.docker.com/explore/">Docker Hub</a><br>
+        Ubuntu, Node.js, MySQL, Mongo<p>
+</section>
+
+<section>
+    <p>Dockerfile</p>
+    <pre class="javascript"><code data-noescape data-trim>
+app/
+<span class="grey">└──</span> index.js</span>
+package-lock.json
+<span class="red">Dockerfile</span></code></pre>
+    <pre style="font-size: .6em"><code data-noescape data-trim><span class="fragment"># Базовый слой
+FROM node:10 </span>
+
+<span class="fragment"># Копируем всё что нужно из локальной папки в образ
+COPY app /app
+COPY package-lock.json /</span>
+
+<span class="fragment"># Устанавливаем зависимости, в образе появится /node_modules
+RUN npm ci --production</span>
+
+<span class="fragment"># При старте контейнер начнёт общаться через 80 порт
+EXPOSE <span class="green">80</span></span>
+
+<span class="fragment"># При старте контейнер выполнит эту команду – запустит наше приложение
+CMD node app/index.js</span>
+    </code></pre>
+</section>
+
+<section>
+    <p>Порт</p>
+    <pre class="javascript"><code data-noescape data-trim>app/
+<span class="grey">└──</span> <span class="red">index.js</span>
+package-lock.json
+    </code></pre>
+    <pre class="javascript" style="font-size: .8em"><code data-noescape>
+import express from 'express';
+
+const app = express();
+
+// Указываем порт, через который будем общаться с внешним миром
+app.listen(<span class="green">80</span>);
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Устанавливаем <a href="https://docs.docker.com/install/#Desktop">Docker</a></p>
+</section>
+
+<section>
+    <p>Docker</p>
+    <p><img src="images/docker.svg"></p>
+</section>
+
+<section>
+    <p>docker <span class="red">build</span></p>
+    <pre class="cli html"><code data-noescape data-trim><span class=grey>$</span> docker <span class="red">build</span> --tag <span class="green">my-app</span> .</code></pre>
+    <pre class="html"><code data-noescape data-trim>
+    Sending build context to Docker daemon  157.8MB
+    <span class="red">Step 1/9 : FROM node:10</span>
+    Pulling from library/node
+    <span class="red">Step 2/9 : COPY app /app</span>
+    ---> 7acbc4cf9eb3
+    ...
+    ...
+    ...
+    Successfully built <span class="red">90f0c5cc4655</span>
+    Successfully tagged <span class="green">my-app</span>:latest
+    </code></pre>
+</section>
+
+<section>
+    <p>docker <span class="red">run</span></p>
+    <pre class="cli html"><code data-noescape data-trim><span class=grey>$</span> docker <span class="red">run</span> --publish <span class="magenta">8080:80</span> <span class="green">my-app</span></code></pre>
+    <pre class="cli html"><code data-noescape data-trim><span class=grey>$</span> docker <span class="red">run</span> --publish <span class="magenta">8080:80</span> <span class="red">90f0c5cc4655</span></code></pre>
+    <p><span class="magenta">--publish</span> привязывает порт доступный для внешнего мира, к порту, через который общается контейнер</p>
+
+    <p>Теперь можем обратиться к приложению в контейнере по ссылке <a href="http://localhost:8080/">http://localhost:8080/</a></p>
+</section>
+
+<section class="center">
+    <p><img src="images/heroku.png" width=300></p>
+</section>
+
+<section>
+    <p><a href="https://devcenter.heroku.com/articles/heroku-cli">Устанавливаем Heroku</a></p>
+    <pre class="cli html"><code data-noescape><span class=grey>$</span> heroku <span class="red">login</span></code></pre>
+    <pre class="cli html"><code data-noescape><span class=grey>$</span> heroku <span class="red">help</span></code></pre>
+</section>
+
+
+<section>
+    <p>Разворачиваем приложение</p>
+    <pre class="cli html"><code data-noescape><span class=grey>$</span> heroku <span class="red">container:login</span></code></pre>
+    <pre class="cli html"><code data-noescape><span class=grey>$</span> heroku <span class="red">create</span> my-app</code></pre>
+    <pre class="html"><code data-noescape data-trim>
+Creating app... done, <span class="magenta">⬢ my-app</span>
+<span class="green">https://my-app.herokuapp.com/</span>
+    </code></pre>
+</section>
+
+<section>
+    <p>Разворачиваем приложение</p>
+    <pre class="cli html"><code data-noescape><span class=grey>$</span> heroku <span class="red">container:push</span> web</code></pre>
+    <pre class="html"><code data-noescape data-trim>
+=== Building web (/app/Dockerfile)
+> Step 1/9 : FROM node:10
+---> 8c10e6cc3f51
+...
+Your image has been successfully pushed.
+You can now release it with the '<span class="red">container:release</span>' command.
+    </code></pre>
+</section>
+
+<section>
+    <p>Разворачиваем приложение</p>
+    <pre class="cli html"><code data-noescape><span class=grey>$</span> heroku <span class="red">container:release</span> web</code></pre>
+    <pre class="cli html"><code data-noescape><span class=grey>$</span> heroku <span class="red">open</span></code></pre>
+</section>
+
+<section>
+    <p>Полезные команды</p>
+    <pre class="cli"><code data-noescape data-trim><span class=grey>$</span> heroku<span class=red> logs</span></code></pre>
+    <pre class="html"><code data-noescape data-trim>
+2019-03-19T11:42:31.796667+00:00 app[api]: Release v2 ...
+2019-03-19T11:42:31.796667+00:00 app[api]: Enable Logpl...
+    </code></pre>
+
+    <pre class="cli"><code data-noescape data-trim><span class=grey>$</span> heroku<span class=red> restart</span></code></pre>
+
+    <pre class="cli"><code data-noescape data-trim><span class=grey>$</span> heroku<span class=red> releases</span></code></pre>
+    <pre class="html"><code data-noescape data-trim>
+v6  Deployed web (28f789388337) ... (~ 47m ago)
+v5  Deployed web (ed9e5f3a25b5) ... (~ 49m ago)
+    </code></pre>
+</section>
+
+<section class="center">
+    <p><a href="https://medium.freecodecamp.com/a-beginner-friendly-introduction-to-containers-vms-and-docker-79a9e3e119b">A Beginner-Friendly Introduction to Containers, VMs and Docker</a><br>Preethi Kasireddy</p>
+    <p><a href="http://rhelblog.redhat.com/2015/07/29/architecting-containers-part-1-user-space-vs-kernel-space/">Architecting Containers</a><br>Scott McCarty</p>
+    <p><a href="https://docs.docker.com/get-started/#recap-and-cheat-sheets">Docker Get Started</a></p>
+    <p><a href="https://nodejs.org/en/docs/guides/nodejs-docker-webapp/">Dockerizing a Node.js web app</a></p>
+    <p><a href="https://devcenter.heroku.com/articles/container-registry-and-runtime">Container Registry & Runtime (Docker Deploys)</a></p>
+</section>
+
+<section class="center">
+    <h1>Размещение  статики</h1>
+</section>
+
+<section class="center">
+    <p>Изображения, иконки, таблицы стилей</p>
+</section>
+
+<section class="center">
+    <p>Не требуют <span class="green">вычислительный ресурсов</span></p>
+</section>
+
+<section class="center">
+    <p>Основная задача для статики – разместить <span class="green">ближе</span> к пользователю</p>
+</section>
+
+<section>
+    <h2>Content Delivery Network</h2>
+    <p><img class="invert" src="images/cdn-wo.png"><img class="invert"  src="images/cdn.png" style="margin: 0 0 0 30px;"></p>
+</section>
+
+<section>
+    <h2>Content Delivery Network</h2>
+    <div style="float: left;">
+        <h2 class="red">Unicast</h2>
+        <p class="grey">One Machine, One IP</p>
+        <p><img src="images/unicast.svg"></p>
+    </div>
+    <div style="float: right;">
+        <h2 class="green">Anycast</h2>
+        <p class="grey">Many Machines, One IP</p>
+        <p><img src="images/anycast.svg"></p>
+    </div>
+</section>
+
+<section>
+    <h2>Border Gateway Protocol</h2>
+    <p><img src="images/bgp.svg"></p>
+</section>
+
+<section class="center">
+    <p>Кеширование</p>
+    <p>Сжатие текстовой статики</p>
+    <p>Обеспечение <span class="green">100%</span> доступности</p>
+</section>
+
+<section class="center">
+    <p>Количество точек присутствия<br> <span class="grey">Point of Presence</span></p>
+    <p>Политика кеширования</p>
+    <p>Политика устаревания</p>
+</section>
+
+<section class="center">
+    <p><img src="images/surge.png"></p>
+</section>
+
+<section>
+    <pre><code data-noescape data-trim>
+app/
+<span class="grey">└──</span> index.js
+<span class="grey">└──</span> routes.js
+<span class="grey">└──</span> models
+<span class="grey">└──</span> controllers
+<span class="grey">└──</span> views
+<span class="red"><span class="grey">└──</span> public
+    <span class="grey">└──</span> styles.css
+    <span class="grey">└──</span> favicon.ico</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Surge</h2>
+    <pre class="cli html"><code data-noescape data-trim><span class=grey>$</span> npm install <span class="red">surge</span></code></pre>
+    <pre class="cli fragment"><code data-noescape data-trim><span class=grey>$</span> surge -p <span class="red">./public</span> -d <span class="red">my-app.surge.sh</span>
+    </code></pre>
+    <pre class="html fragment"><code data-noescape>
+          email: email@example.com
+          token: *****************
+   project path: ./app/public
+           size: 3 files, 19.2 KB
+         domain: <span class=red>my-app.surge.sh</span>
+         upload: [====================] 100%, eta: 0.0s
+propagate on CDN: [====================] 100%
+           plan: Free
+          users: email@example.com
+    </code></pre>
+</section>
+
+<section>
+    <h2>Surge</h2>
+    <pre class="python"><code data-noescape data-trim>
+&lt;head&gt;
+    <del>&lt;link rel="stylesheet"
+          href="/styles.css"&gt;</del>
+    &lt;link rel="stylesheet"
+          href="https://my-app.surge.sh/styles.css"&gt;
+&lt;/head&gt;
+    </code></pre>
+</section>
+
+<section>
+    <h2>Как работает кеширование</h2>
+    <pre class="html"><code data-noescape>HTTP/1.1 200 OK
+<span class="red">Cache-Control: public, max-age=31536000, no-cache</span>
+Content-Type: text/css; charset=UTF-8
+<span class="red">ETag: d1d3c5c4cdb2568785ba1a366b7fb048</span>
+Server:SurgeCDN/0.12.2
+
+body {
+    font-family: Arial, sans-serif;
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Как работает кеширование</h2>
+    <pre class="html"><code data-noescape>GET /styles.css HTTP/1.1
+Host: notes-app-operating.surge.sh
+<span class="red">If-None-Match: d1d3c5c4cdb2568785ba1a366b7fb048</span>
+
+</code></pre>
+</section>
+
+<section>
+    <p>Если <span class="green">ETag</span> равен <span class="green">If-None-Match</span>,<br> то ответ от Surge будет очень коротким</p>
+    <pre><code data-noescape>
+HTTP/1.1 304 Not Modified
+    </code></pre>
+</section>
+
+<section class="center">
+    <p><a href="https://habrahabr.ru/company/webzilla/blog/236511/">Знакомство с Content Delivery Network</a><br>Webzilla</p>
+    <p><a href="http://www.slashroot.in/what-anycast-and-how-it-works">What is Anycast and How it works</a><br>Sarath Pillai</p>
+    <p><a href="http://www.amazon.com/Content-Delivery-Networks-Electrical-Engineering/dp/3540778861">Content Delivery Networks</a><br>Rajkumar Buyya</p>
+</section>
+
+<section class="center">
+    <h1>Continuous Integration</h1>
+</section>
+
+<section class="center">
+    <p>Автоматизиция проверки кода и развёртывания сервиса по факту изменения кода</p>
+</section>
+
+<section class="invert" data-background="images/ci.png" data-background-size="90%"></section>
+
+<section class="center">
+    <p>Автоматизация рутины</p>
+    <p>Неизбежное тестирование кода</p>
+    <p>Быстрая доставка до конечного пользователя</p>
+</section>
+
+<section class="center">
+    <p><a href="https://travis-ci.org/"><img src="images/travis.svg" width=220></a></p>
+</section>
+
+<section class="center">
+    <p><a href="https://circleci.com/"><img src="images/circle.png" width=220></a></p>
+</section>
+
+<section class="center">
+    <p><a href="https://circleci.com/vcs-authorize/">Заходим и авторизуемся через GitHub</a></p>
+    <p><img src="images/ci-login.png"></p>
+</section>
+
+<section class="center">
+    <p>Заходим <a href="https://circleci.com/dashboard">внутрь</a> и добавляем проект</p>
+    <p><img src="images/ci-add.png"></p>
+</section>
+
+<section class="center">
+    <p>Для того, чтобы CI мог разворачивать приложение в Heroku и публиковать статику в Surge, нам нужно поделиться нашими <span class="red">секретами</span></p>
+</section>
+
+<section class="center">
+    <p>Заходим на <a href="https://circleci.com/dashboard">страницу с проектами</a>, находим репозиторий и жмём <span class="bold">шестерёнку</span></p>
+    <p><img src="images/ci-secrets-1.png" width=400></p>
+</section>
+
+<section class="center">
+    <p>Необходимо завести четыре секрета</p>
+    <p><img src="images/ci-secrets-2.png"></p>
+</section>
+
+<section>
+    <p>HEROKU_LOGIN</p>
+    <p>Ваша <span class="red">почта</span> при регистрации в Heroku</p>
+</section>
+
+<section>
+    <p>HEROKU_TOKEN</p>
+    <pre class="cli"><code data-noescape data-trim><span class=grey>$</span> heroku <span class=green>auth:token</span></code></pre>
+    <pre class="html"><code data-trim data-noescape>
+›   Warning: token will expire 03/23/2020
+<span class="red">08c12345-1723-1233-1233-bf793bd9b8</span>
+    </code></pre>
+</section>
+
+<section>
+    <p>SURGE_LOGIN</p>
+    <p>Ваша <span class="red">почта</span> при регистрации в Surge</p>
+</section>
+
+<section>
+    <p>SURGE_TOKEN</p>
+    <pre class="cli"><code data-noescape data-trim><span class=grey>$</span> surge <span class=green>token</span></code></pre>
+    <pre class="html"><code data-trim data-noescape>
+<span class="red">a46227e231dasds10fbf61b35</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Команды для выполнения Circle CI читает из специального файла <span class="red">.circleci/config.yml</span></p>
+</section>
+
+<section>
+    <h2>.circleci/config.yml</h2>
+    <pre class="yaml" style="font-size: .8em"><code data-trim data-noescape>
+jobs:
+  build:
+    # Все команды запускаются в контейнере
+    # Нам нужен с Node.js, чтобы использовать npm
+    docker:
+      - image: circleci/node:10
+
+    # Выполняемые команды
+    steps:
+      # Клонируем репозиторий с проектом
+      - checkout
+
+      # Устанавливаем зависимости
+      - run: npm ci
+
+      # Проверяем codestyle
+      - run: npm run lint
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Теперь на каждое обновление репозитория, например, <span class="bold">git push</span>, CI будет выполнять перечисленные команды</p>
+</section>
+
+<section class="center">
+    <p>За ходом можно следить на <a href="https://circleci.com/dashboard">странице с активными проектами</a></p>
+    <p><img src="images/ci-builds.png"></p>
+</section>
+
+<section class="center">
+    <p>В случае если сборка не успешно, можно зайти посмотреть в чём дело</p>
+    <p><img src="images/ci-error.png"></p>
+</section>
+
+<section class="center">
+    <p>CI отправляет в систему контроля версий статус выполнения команд</p>
+    <p><img src="images/ci-github.png"></p>
+</section>
+
+<section class="center">
+    <p>С остальной настройкой можно познакомиться в демонстрационном <a href="https://github.com/urfu-2018/notes-app-example/">приложении «Заметки»</a>
+</section>
+
+<section class="center">
+Можно смело делать fork и тренироваться</p>
+</section>
+
+</div></div>
+
+<script src="../../@lib/core.js"></script>
+</body>
+</html>

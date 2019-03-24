@@ -1,0 +1,14 @@
+.white .invert
+{
+    filter: invert(100%);
+}
+
+.orange
+{
+    color: orange !important;
+}
+
+.bold
+{
+    font-weight: bold !important;
+}
