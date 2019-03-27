@@ -1,0 +1,1608 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Базы данных, часть II</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+</head><body class="white"><div class="reveal"><div class="slides">
+
+<section class="center">
+    <h1>Базы данных, часть II</h1>
+    <p><span class="red">Б</span>аженова Анна</p>
+</section>
+
+<section class="center">
+    <h2>Сегодня в программе</h2>
+
+    <ul>
+        <li>JOIN</li>
+        <li>Индексы</li>
+        <li>ORM</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h1>JOIN</h1>
+</section>
+
+<section class="center hor-center">
+    <img src="images/tables.png" alt="tables">
+</section>
+
+<section class="center">
+    <h1>Внешние ключи</h1>
+</section>
+
+<section class="center">
+    <h2>FOREIGN KEY</h2>
+
+    <pre class="sql"><code data-trim>
+CREATE TABLE notes (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    text TEXT,
+    owner_id INTEGER,
+    CONSTRAINT fk_notes_users FOREIGN KEY (owner_id)
+        REFERENCES users (id)
+);
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>FOREIGN KEY</h2>
+
+    <pre class="sql"><code data-trim>
+CREATE TABLE notes (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    text TEXT,
+    owner_id INTEGER REFERENCES users (id)
+);
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>FOREIGN KEY</h2>
+
+    <pre class="sql"><code data-trim>
+ALTER TABLE notes
+ADD CONSTRAINT fk_notes_users
+FOREIGN KEY (owner_id)
+REFERENCES users (id);
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Виды JOIN</h2>
+
+    <ul>
+        <li>INNER</li>
+        <li>LEFT OUTER</li>
+        <li>RIGHT OUTER</li>
+        <li>FULL OUTER</li>
+        <li>CROSS</li>
+    </ul>
+</section>
+
+<section class="center hor-center">
+    <h2>Данные</h2>
+
+    <pre><code data-trim>
+  users       |            notes               |
+              |                                |
+id   name     |     id    name     owner_id    |
+--   ------   |     --    -----    --------    |
+ 1   Олег     |     1     Books       1        |
+ 2   Сергей   |     2     Films       1        |
+ 3   Михаил   |     3     Music       2        |
+              |     4     Rules      NULL      |
+              |     5    Markdown    NULL      |
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>INNER JOIN</h2>
+
+    <pre class="sql"><code data-trim data-noescape>
+SELECT users.id AS user_id,
+       users.name AS user_name,
+       notes.name AS note_name
+FROM users
+<mark>INNER JOIN</mark> notes
+ON users.id = notes.owner_id;
+    </code></pre>
+</section>
+
+<section class="center hor-center">
+    <pre><code data-noescape data-trim>
+  users       |            notes               |
+              |                                |
+id   name     |     id    name     owner_id    |
+--   ------   |     --    -----    --------    |
+ <mark>1</mark>   Олег     |     1     Books       <mark>1</mark>        |
+ 2   Сергей   |     2     Films       <mark>1</mark>        |
+ 3   Михаил   |     3     Music       2        |
+              |     4     Rules      NULL      |
+              |     5    Markdown    NULL      |
+    </code></pre>
+</section>
+
+<section class="center hor-center">
+    <pre><code data-noescape data-trim>
+  users       |            notes               |
+              |                                |
+id   name     |     id    name     owner_id    |
+--   ------   |     --    -----    --------    |
+ 1   Олег     |     1     Books       1        |
+ <mark>2</mark>   Сергей   |     2     Films       1        |
+ 3   Михаил   |     3     Music       <mark>2</mark>        |
+              |     4     Rules      NULL      |
+              |     5    Markdown    NULL      |
+    </code></pre>
+</section>
+
+<section class="center hor-center">
+    <h2>INNER JOIN</h2>
+
+    <pre class="join-result"><code data-trim>
+user_id   user_name   note_name
+-------   ---------   ---------
+1         Олег        Books
+1         Олег        Films
+2         Сергей      Music
+    </code></pre>
+    <img class="join-img" src="images/inner-join.png" alt="inner join">
+</section>
+
+<section class="center">
+    <h2>OUTER JOIN</h2>
+
+    <ul>
+        <li>LEFT OUTER JOIN</li>
+        <li>RIGHT OUTER JOIN</li>
+        <li>FULL OUTER JOIN</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h2>LEFT JOIN</h2>
+
+    <pre class="sql"><code data-trim data-noescape>
+SELECT users.id AS user_id,
+       users.name AS user_name,
+       notes.name AS note_name
+FROM users
+<mark>LEFT JOIN</mark> notes
+ON users.id = notes.owner_id;
+    </code></pre>
+</section>
+
+<section class="center hor-center">
+    <h2>LEFT JOIN</h2>
+
+    <pre class="join-result"><code class="black-text" data-noescape data-trim>
+user_id   user_name   note_name
+-------   ---------   ---------
+1         Олег        Books
+1         Олег        Films
+2         Сергей      Music
+3         Михаил       NULL
+</code></pre>
+    <img class="join-img" src="images/left-join.png" alt="left join">
+</section>
+
+<section class="center">
+    <h2>RIGHT JOIN</h2>
+
+    <pre class="sql"><code data-trim data-noescape>
+SELECT users.id AS user_id,
+       users.name AS user_name,
+       notes.name AS note_name
+FROM users
+<mark>RIGHT JOIN</mark> notes
+ON users.id = notes.owner_id;
+    </code></pre>
+</section>
+
+<section class="center hor-center">
+    <h2>RIGHT JOIN</h2>
+
+    <pre class="join-result"><code class="black-text" data-trim>
+user_id   user_name   note_name
+-------   ---------   ---------
+1         Олег        Books
+1         Олег        Films
+2         Сергей      Music
+NULL       NULL        Rules
+NULL       NULL     Markdown
+    </code></pre>
+    <img class="join-img" src="images/right-join.png" alt="right join">
+</section>
+
+<section class="center">
+    <h2>FULL JOIN</h2>
+
+    <pre class="sql"><code data-trim data-noescape>
+SELECT users.id AS user_id,
+       users.name AS user_name,
+       notes.name AS note_name
+FROM users
+<mark>FULL JOIN</mark> notes
+ON users.id = notes.owner_id;
+    </code></pre>
+</section>
+
+<section class="center hor-center" style="font-size: 90%;">
+    <h2>FULL JOIN</h2>
+
+    <pre class="join-result"><code class="black-text" data-trim>
+user_id   user_name   note_name
+-------   ---------   ---------
+1          Олег       Books
+1          Олег       Films
+2         Сергей      Music
+3         Михаил       NULL
+NULL       NULL       Rules
+  NULL       NULL      Markdown
+    </code></pre>
+    <img class="join-img" src="images/full-join.png" alt="full join">
+</section>
+
+<section class="center">
+    <h2>CROSS JOIN</h2>
+
+    <pre class="sql"><code data-trim data-noescape>
+SELECT users.id AS user_id,
+       users.name AS user_name,
+       notes.name AS note_name
+FROM users
+<mark>CROSS JOIN</mark> notes;
+</code></pre>
+
+    <pre style="margin-top: 10px;" class="sql fragment"><code data-trim data-noescape>
+SELECT users.id AS user_id,
+       users.name AS user_name,
+       notes.name AS note_name
+FROM users, notes;
+    </code></pre>
+</section>
+
+<section class="center hor-center">
+    <h2>CROSS JOIN</h2>
+
+    <pre class="join-result"><code data-trim>
+user_id   user_name   note_name
+-------   ---------   ---------
+1         Олег        Books
+1         Олег        Films
+1         Олег        Music
+1         Олег        Rules
+   1         Олег        Markdown
+2         Сергей      Books
+2         Сергей      Films
+...         ...         ...
+    </code></pre>
+</section>
+
+<section class="center">
+    <h1>Индексы</h1>
+</section>
+
+<section class="center">
+    <p class="left small">Выбираем самые важные колонки и переносим их:</p>
+
+    <ul class="small">
+        <li>в оптимальную для поиска структуру (например, дерево или хэш-таблица)</li>
+        <li>в оперативную память (для более быстрого доступа)</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h2>Создание индекса</h2>
+
+    <pre class="sql"><code data-trim>
+CREATE INDEX user_name_idx ON users (name);
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>`B-TREE` индекс</h2>
+
+    <p class="left small">
+        Создается по умолчанию для строк и чисел. Ускоряет следующие операции:
+    </p>
+
+    <ol class="center very-small">
+        <li>Сравнение
+            <ul class="no-padding no-margin">
+                <li>
+                    <pre class="sql"><code style="font-size: 70%;" data-trim>
+id = 1 (аналогично >, <, >=, <=)
+                    </code></pre>
+                </li>
+                <li>
+                    <pre class="sql"><code style="font-size: 70%;" data-trim>
+id BETWEEN 1 AND 5
+                    </code></pre>
+                </li>
+            </ul>
+        </li>
+        <li>Поиск по префиксу для строк (<code class="sql pre" style="font-size: 70%;" data-trim> name LIKE 'ab%' </code>)
+        </li>
+        <li>Сортировка ( <code class="sql pre" style="font-size: 70%;" data-trim>ORDER BY id</code> )</li>
+    </ol>
+</section>
+
+<section class="center">
+    <h2>Составные типы</h2>
+
+    <ul>
+        <li>array</li>
+        <li>point</li>
+        <li>range</li>
+        <li>hstore (словарь)</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h2>Составные типы</h2>
+
+    <p class="left small">
+        Для них есть специальные типы индексов, которые поддерживают определенные
+        операции над каждым типом.
+    </p>
+
+    <ul class="very-small">
+        <li class="fragment">Проверка на то, что в массиве строк есть строка
+            <p class="pre left" style="font-size: 80%;">
+WHERE tags @> ARRAY['javascript'];
+            </p>
+        </li>
+        <li class="fragment">Проверка на то, что точка лежит в прямоугольнике
+            <p class="pre left" style="font-size: 80%;">
+                WHERE point <@ BOX '(2,1),(7,4)'
+            </p>
+        </li>
+    </ul>
+</section>
+
+<section class="center">
+    <h2>Индексы по выражениям</h2>
+
+    <pre class="sql fragment"><code data-trim>
+CREATE INDEX users_lower_name ON users (lower(name));
+    </code></pre>
+
+    <pre class="sql fragment"><code data-trim>
+CREATE INDEX users_data ON users (data ->> 'field');
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Составной индекс</h2>
+
+    <pre class="sql"><code data-trim>
+SELECT * FROM notes
+WHERE name = 'Books' AND owner_id = 1;
+    </code></pre>
+
+    <pre class="sql fragment"><code data-trim>
+CREATE INDEX users_name_owner_id ON notes (name, owner_id);
+    </code></pre>
+</section>
+
+<section class="center">
+    <p class="center">Пример: индекс на тройку (x,y,z)</p>
+
+    <div class="very-small">
+        <div>Будет использоваться при таких запросах:</div>
+        <ul>
+            <li>x = 1</li>
+            <li>x = 1 AND y = 2</li>
+            <li>x = 1 AND y = 2 AND z = 3</li>
+        </ul>
+    </div>
+
+    <div class="fragment very-small">
+        <div>Но <span class="bold">не будет</span> использоваться при таких:</div>
+        <ul>
+            <li>y = 2</li>
+            <li>z = 3</li>
+            <li>y = 2 AND z = 3</li>
+        </ul>
+    </div>
+</section>
+
+<section class="center">
+    <h2>Уникальный индекс</h2>
+
+    <pre class="sql"><code data-trim>
+SELECT * FROM notes WHERE name = 'Unique book';
+    </code></pre>
+
+    <pre class="sql fragment"><code data-trim data-noescape>
+CREATE <mark>UNIQUE</mark> INDEX notes_name_idx ON notes (name);
+    </code></pre>
+
+    <p class="left small fragment">
+        Нюанс:&nbsp;&nbsp;&nbsp;<code class="pre" style="font-size: 85%;" data-trim="">NULL != NULL</code>
+    </p>
+</section>
+
+<section class="center">
+    <h2>Оптимизация запросов</h2>
+
+    <p class="left very-small">
+        Язык описания запросов - декларативный.
+        Это означает, что мы описываем не то, <span class="bold">как вычислить</span> результат,
+        а только то, <span class="bold">каким он должен быть</span> в
+        <a href="https://habr.com/ru/post/145381/">терминах реляционной алгебры</a>.
+    </p>
+
+    <p class="left very-small fragment">
+        Но на самом деле запрос можно выполнить разными способами,
+        дающими один результат, но разную производительность.
+    </p>
+
+    <p class="left very-small fragment">Как выбрать наилучший?</p>
+</section>
+
+<section class="center">
+    <h2>Планировщик запросов</h2>
+
+    <p class="left very-small">
+        В PostgreSQL, как и в других SQL БД, есть планировщик запросов.
+        На вход он получает SQL-запрос, а выдает наиболее оптимальный
+        <span class="bold">план выполнения</span>
+    </p>
+</section>
+
+<section class="center">
+    <p class="small">Какие факторы влияют на решение планировщика?</p>
+
+    <ul class="small">
+        <li class="fragment">индексы</li>
+        <li class="fragment">размер таблиц</li>
+        <li class="fragment">статистика по значениями в каждой колонке:
+            <ul>
+                <li>часто встречающиеся значения</li>
+                <li>гистограмма, отражающая примерное распределение</li>
+            </ul>
+        </li>
+    </ul>
+</section>
+
+<section class="center">
+    <h2>На что влияет план?</h2>
+
+    <ul class="small">
+        <li class="fragment">какие индексы будут использоваться</li>
+        <li class="fragment">как именно будет выполняться JOIN (есть несколько способов)</li>
+    </ul>
+</section>
+
+<section class="center">
+    <p class="left small">
+        Заметили, что какой-то запрос очень долго работает.
+        Как нам понять, почему?
+    </p>
+
+    <p class="very-small left fragment">
+        <code class="sql pre">EXPLAIN SELECT ...;</code> - выводит план запроса и предполагаемую "стоимость" выполнения
+    </p>
+
+    <p class="very-small left fragment">
+        <code class="sql pre">EXPLAIN ANALYZE SELECT ...;</code> - то же самое, но при этом <span class="bold">выполняет</span> запрос
+        и показывает время, затраченное на его выполнение
+    </p>
+</section>
+
+<section class="center">
+    <p>Практический пример</p>
+
+    <p class="left small">
+        Есть база с миллионом пользователей и миллионом заметок,
+        случайно распределенных между ними.
+        Хотим получить пользователя с именем "Анна" и все ее заметки
+    </p>
+</section>
+
+<section class="center">
+    <h2>Фильтрация по имени</h2>
+
+    <pre class="slq"><code data-trim>
+EXPLAIN ANALYZE
+    SELECT id, name
+    FROM users
+    WHERE name = 'Анна';
+    </code></pre>
+</section>
+
+<section class="center">
+    <p class="small">Получаем следующий план запроса</p>
+
+    <pre><code data-trim>
+Seq Scan on users (cost=20834)
+    Filter: ((name)::text = 'Анна'::text)
+    Rows Removed by Filter: 988699
+Execution Time: 98.147 ms
+    </code></pre>
+</section>
+
+<section class="center">
+    <ul class="very-small">
+        <li><code class="pre">Seq Scan</code> - мы полностью сканируем всю таблицу на диске (очень плохо)</li>
+        <li><code class="pre">Rows Removed by Filter</code> - отфильтровали почти всех пользователей</li>
+        <li><code class="pre">cost</code> - приблизительная оценка "стоимости" выполнения, вычисленная планировщиком</li>
+        <li><code class="pre">Execution Time</code> - запрос выполнялся 98 миллисекунд</li>
+    </ul>
+</section>
+
+<section class="center">
+    <p class="small">Создадим индекс на поле <code class="pre">name</code></p>
+
+    <pre class="sql"><code data-trim>
+CREATE INDEX users_name ON users (name);
+    </code></pre>
+
+    <pre class="fragment"><code data-trim>
+Index Scan using users_name on users (cost=8.44)
+    Index Cond: ((name)::text = 'Анна'::text)
+Execution Time: 0.048 ms
+    </code></pre>
+</section>
+
+<section class="center">
+    <ul class="very-small">
+        <li><code class="pre">Index Scan using users_name</code> - использовали новый индекс</li>
+        <li><code class="pre">cost</code> = 8.44 (было 20834)</li>
+        <li><code class="pre">Execution Time</code> = 0.048 мс (было 98 мс)</li>
+    </ul>
+</section>
+
+<section class="center">
+    <p class="small">Добавим в запрос заметки</p>
+
+    <pre class="slq"><code data-trim>
+EXPLAIN ANALYZE
+    SELECT u.name, n.name
+    FROM users u
+    JOIN notes n on n.owner_id = u.id
+    WHERE u.name = 'Анна';
+    </code></pre>
+</section>
+
+<section class="center">
+    <p class="left">План:</p>
+
+    <pre><code data-trim>
+Hash Join
+    Hash Cond: (n.owner_id = u.id)
+    ->  Seq Scan on notes n
+    ->  Hash
+        ->  Index Scan using users_name on users u
+                Index Cond: ((name)::text = 'Анна'::text)
+Execution Time: 252.713 ms
+    </code></pre>
+</section>
+
+<section class="center">
+    <ul class="very-small">
+        <li><code class="pre">Index Scan</code> - ищем пользователя по имени, используем индекс</li>
+        <li><code class="pre">Hash</code> - для полученных пользователей строим хэш-таблицу по значениям id</li>
+        <li><code class="pre">Seq Scan on notes</code> - сканируем все заметки (опять плохо)</li>
+        <li><code class="pre">Hash Join</code> - для каждой заметки ищем в хэш-таблице пользователя по owner_id и соединяем</li>
+        <li><code class="pre">Execution Time</code> = 252.713 мс</li>
+    </ul>
+</section>
+
+<section class="center">
+    <p class="small">Добавим индекс на поле <code class="pre">owner_id</code></p>
+
+    <pre class="sql"><code data-trim>
+CREATE INDEX notes_owner_id ON notes (owner_id);
+    </code></pre>
+
+    <pre class="fragment"><code data-trim>
+Nested Loop
+    ->  Index Scan using users_name on users u
+            Index Cond: ((name)::text = 'Анна'::text)
+    ->  Index Scan using notes_owner_id on notes n
+            Index Cond: (owner_id = u.id)
+Execution Time: 0.054 ms
+    </code></pre>
+</section>
+
+<section class="center">
+    <ul class="very-small">
+        <li><code class="pre">Nested Loop</code> - сначала находим пользователей, а затем для каждого из них в цикле ищем заметки</li>
+        <li>нет <code class="pre">Seq Scan</code></li>
+        <li><code class="pre">Execution Time</code> = 0.054 мс (было 252.713 мс)</li>
+    </ul>
+</section>
+
+<section class="center hor-center">
+    <p class="small">
+        Полезный <a href="https://tatiyants.com/pev">сервис</a> для визуализации плана запроса
+    </p>
+
+    <img src="images/query_plan.png" alt="visualization of the query plan">
+</section>
+
+<section class="center">
+    <h2>Плюсы индексов</h2>
+
+    <ul class="small">
+        <li class="fragment">позволяют фильтровать и сортировать гораздо быстрее</li>
+        <li class="fragment">позволяют гарантировать уникальность значений в колонке</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h2>Минусы индексов</h2>
+
+    <ul class="very-small">
+        <li class="fragment">значения хранятся и в таблице, и в индексе, поэтому операции изменения данных
+            будут работать медленнее из-за необходимости обновления индекса </li>
+        <li class="fragment">занимает место в оперативной памяти, которая не бесконечна, поэтому нужно
+            помещать в индексы только самые необходимые колонки</li>
+        <li class="fragment">чтобы эффективно использовать индексы, нужно хорошо знать структуру базы
+            и иметь представление о том, какие запросы она будет обрабатывать</li>
+    </ul>
+</section>
+
+<section class="center hor-center">
+    <h1>ORM</h1>
+    <h3>Object-Relational Mapping</h3>
+</section>
+
+<section class="center hor-center">
+    <img src="images/sequelize.png" alt="sequelize logo">
+</section>
+
+<section class="center">
+    <h2>Установка</h2>
+
+    <pre><code data-trim>
+npm install pg
+    </code></pre>
+
+    <pre><code data-trim>
+npm install sequelize
+    </code></pre>
+
+    <pre><code data-trim>
+npm install sequelize-typescript@canary
+    </code></pre>
+</section>
+
+<section style="font-size: 90%;">
+    <h2>Подключение к DB</h2>
+
+    <pre class="js"><code data-trim>
+import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
+    </code></pre>
+
+    <pre class="js fragment"><code data-noescape data-trim>
+const sequelizeOptions: SequelizeOptions = {
+    // connection
+    host: 'localhost',
+    port: 5432,
+    username: 'user',
+    password: 'pass',
+    database: 'dbname',
+
+    // db options
+    dialect: 'postgres' // 'mysql', 'sqlite', 'mariadb', 'mssql'
+};
+    </code></pre>
+
+    <pre class="js fragment"><code data-trim>
+const sequelize = new Sequelize(sequelizeOptions);
+    </code></pre>
+</section>
+
+<section class="center">
+    <h1>Модели</h1>
+</section>
+
+<section class="center">
+    <h2>Модели. Объявление</h2>
+
+    <pre><code class="js" data-trim>
+import { Model, Table } from 'sequelize-typescript';
+    </code></pre>
+
+    <pre><code class="js" data-trim data-noescape>
+<span class="red">@Table</span>
+class Note extends Model&lt;Note&gt; {}
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Модели. Атрибуты</h2>
+
+    <pre class="js"><code data-trim data-noescape>
+@Table
+class Note extends Model&lt;Note&gt; {
+
+    <span class="red">@Column</span>(DataType.INTEGER)
+    id: number;
+
+}
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Именование</h2>
+
+    <pre class="js"><code data-trim data-noescape>
+@Table
+class Note extends Model&lt;Note&gt; {
+
+    <span class="red">@Column</span>({
+        type: DataType.INTEGER,
+        field: 'owner_id'
+    })
+    ownerId: number;
+
+}
+    </code></pre>
+</section>
+
+<section class="center hor-center">
+    <h2>Типы данных</h2>
+
+    <div>PostgreSQL ⇒ Sequelize</div>
+</section>
+
+<section class="center">
+    <h2>Строковые</h2>
+
+    <table>
+        <tr>
+            <td>PostgreSQL</td>
+            <td>Sequelize</td>
+        </tr>
+        <tr>
+            <td>CHAR</td>
+            <td>CHAR</td>
+        </tr>
+        <tr>
+            <td>VARCHAR(255)</td>
+            <td>STRING(255)</td>
+        </tr>
+        <tr>
+            <td>TEXT</td>
+            <td>TEXT</td>
+        </tr>
+    </table>
+</section>
+
+<section class="center">
+    <h2>Числовые</h2>
+
+    <table>
+        <tr>
+            <td>PostgreSQL</td>
+            <td>Sequelize</td>
+        </tr>
+        <tr>
+            <td>INTEGER</td>
+            <td>INTEGER</td>
+        </tr>
+        <tr>
+            <td>BIGINT</td>
+            <td>BIGINT</td>
+        </tr>
+        <tr>
+            <td>REAL</td>
+            <td>REAL</td>
+        </tr>
+        <tr>
+            <td>DOUBLE PRECISION</td>
+            <td>DOUBLE</td>
+        </tr>
+        <tr>
+            <td>DECIMAL</td>
+            <td>DECIMAL</td>
+        </tr>
+    </table>
+</section>
+
+<section class="center">
+    <h2>Даты</h2>
+
+    <table style="font-size: 90%">
+        <tr>
+            <td>PostgreSQL</td>
+            <td>Sequelize</td>
+        </tr>
+        <tr>
+            <td>TIMESTAMP WITH TIME ZONE</td>
+            <td>DATE / NOW</td>
+        </tr>
+        <tr>
+            <td>DATE</td>
+            <td>DATEONLY</td>
+        </tr>
+        <tr>
+            <td>TIME</td>
+            <td>TIME</td>
+        </tr>
+    </table>
+</section>
+
+<section class="center hor-center">
+    <h2>Другие</h2>
+
+    <table>
+        <tr>
+            <td>PostgreSQL</td>
+            <td>Sequelize</td>
+        </tr>
+        <tr>
+            <td>ARRAY</td>
+            <td>ARRAY</td>
+        </tr>
+        <tr>
+            <td>JSON</td>
+            <td>JSON</td>
+        </tr>
+        <tr>
+            <td>JSONB</td>
+            <td>JSONB</td>
+        </tr>
+    </table>
+
+    <p class="small"><a href="http://docs.sequelizejs.com/manual/data-types.html">Data types</a></p>
+</section>
+
+<section class="center">
+    <h2>Модели. Атрибуты</h2>
+
+    <pre class="js"><code data-trim data-noescape>
+@Table
+class Note extends Model&lt;Note&gt; {
+    <span class="red-current fragment" data-fragment-index="2">@AutoIncrement</span>
+    <span class="red-current fragment" data-fragment-index="1">@PrimaryKey</span>
+    @Column(DataType.INTEGER)
+    id: number;
+
+    <span class="red-current fragment" data-fragment-index="3">@AllowNull(false)</span>
+    @Column(DataType.STRING)
+    name: string;
+}
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Модели. Getters &amp; setters</h2>
+
+    <pre class="js"><code data-trim>
+@Table
+class Note extends Model&lt;Note&gt; {
+    @Column(DataType.STRING)
+    get name(): string {
+        return 'It is ' + this.getDataValue('name');
+    }
+
+    set name(value: string) {
+        const text = value.replace(/\*(\w+)\*/g, '<b>$1</b>');
+        this.setDataValue('name', text);
+    }
+}
+    </code></pre>
+
+    <pre style="margin-top: 10px" class="fragment"><code data-trim>
+'films to *watch*' -> 'films to <b>watch</b>'
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Модели. Валидаторы</h2>
+
+    <pre class="js"><code data-trim>
+@Table
+class Note extends Model&lt;Note&gt; {
+    @Is('Name', (value) => {
+        if (!/^[a-z]+$/i.test(value)) {
+            throw new Error(`Name contains invalid character!`);
+        }
+    })
+    @Column(DataType.STRING)
+    name: string;
+}
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Модели. Валидаторы</h2>
+
+    <pre class="js"><code data-trim data-noescape>
+@Table
+class User extends Model&lt;User&gt; {
+    <span class="red-current fragment" data-fragment-index="2">@Contains('@yandex.ru')</span>
+    <span class="red-current fragment" data-fragment-index="1">@IsEmail</span>
+    @Column(DataType.STRING)
+    email: string;
+}
+    </code></pre>
+
+    <p class="hor-center small fragment">
+        <a href="http://docs.sequelizejs.com/manual/models-definition.html#validations">Подробнее</a>
+    </p>
+</section>
+
+<section class="center">
+    <h2>Модели. Конфигурация таблиц</h2>
+
+    <pre class="js"><code data-trim>
+@Table({
+    timestamps: true, // add 'created_at', 'updated_at'
+    paranoid: true,   // add 'deleted_at'
+
+    underscored: true,
+
+    tableName: 'notes'
+})
+class Note extends Model&lt;Note&gt; {}
+    </code></pre>
+</section>
+
+<!--Остановилась тут. Переделать дальше-->
+<section class="center">
+    <h2>Импорт моделей</h2>
+
+    <pre class="js"><code data-trim>
+const sequelize = new Sequelize({
+    ...
+    modelPaths: [__dirname + '/tables/user.ts']
+});
+    </code></pre>
+
+    <pre class="js fragment"><code data-trim>
+sequelize.addModels([User, Category, Note]);
+sequelize.addModels(['path/to/models']);
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Создание таблиц</h2>
+
+    <pre class="js"><code data-trim>
+await sequelize.sync({ force: true }); // все таблицы
+    </code></pre>
+
+    <pre class="js fragment"><code data-trim>
+await Note.sync({ force: true }); // только конкретную
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Удаление таблицы</h2>
+
+    <pre class="js"><code data-trim>
+await Note.drop();
+    </code></pre>
+</section>
+
+<section class="center">
+    <h1>CRUD</h1>
+</section>
+
+<section class="center">
+    <h2>Create</h2>
+
+    <pre class="js"><code data-trim>
+await Note.create({
+    name: 'Books',
+    text: 'Books to read'
+});
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Create. bulk</h2>
+
+    <pre class="js"><code data-trim>
+await Note.bulkCreate([
+    {
+        name: 'Books',
+        text: 'Books to read',
+        ownerId: 3
+    },
+    {
+        name: 'Films',
+        text: 'Films to watch',
+        ownerId: 1
+    }
+]);
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Read</h2>
+
+    <pre class="js"><code data-trim>
+const note = await Note.findOne({
+    where: {
+        name: 'Films'
+    }
+});
+    </code></pre>
+
+    <pre class="js fragment"><code data-trim>
+const text = note.text;
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Read. Projection</h2>
+
+    <pre class="js"><code data-trim>
+const note = await Note.findOne({
+    where: {
+        name: 'Films'
+    },
+    attributes: ['id', 'text', ['name', 'title']]
+});
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Read. Операторы</h2>
+
+    <pre class="js"><code data-trim>
+import { Op } from 'sequelize';
+    </code></pre>
+
+    <pre class="js"><code data-trim>
+const userModel = await User.findOne({
+    where: {
+        [Op.or]: [
+            { name: { [Op.like]: 'А%' } },
+            { saveDate: { [Op.gt]: '2018-04-09 13:25:13' } }
+        ]
+    }
+});
+    </code></pre>
+
+    <p class="small fragment hor-center">
+        <a href="http://docs.sequelizejs.com/manual/tutorial/querying.html#operators">Подробнее</a>
+    </p>
+</section>
+
+<section class="center">
+    <h2>Read. Поиск по id</h2>
+
+    <pre class="js"><code data-trim>
+const note = await Note.findOne({
+    where: { id: 23 }
+});
+    </code></pre>
+
+    <pre class="js fragment"><code data-trim>
+const note = await Note.findByPk(23);
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Read. Все записи</h2>
+
+    <pre class="js"><code data-trim>
+const notes = await Note.findAll({
+    where: {
+        ownerId: 1
+    },
+    attributes: ['id', 'name']
+});
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Read. Sort, skip, limit</h2>
+
+    <pre class="js"><code data-trim>
+const notes = await Note.findAll({
+    order: [
+        ['name', 'DESC']
+    ],
+    offset: 2,
+    limit: 2
+});
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Read. Count</h2>
+
+    <pre class="js"><code data-trim>
+const count = await Note.count({
+    where: {
+        ownerId: 1
+    }
+});
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Read. Group by</h2>
+
+    <pre class="js"><code data-trim>
+const count = await Note.findAll({
+    attributes: [
+        'ownerId',
+        [
+            Sequelize.fn('count', Sequelize.col('name')),
+            'countNotes'
+        ]
+    ],
+    group: ['ownerId']
+});
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Update</h2>
+
+    <pre class="js"><code data-trim>
+await Note.update(
+    {
+        text: 'My favorite books'
+    },
+    {
+        where: { name: 'Books' }
+    }
+);
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Update. Active record</h2>
+
+    <pre class="js"><code data-trim>
+const note = await Note.findOne({
+    where: { name: 'Books' }
+});
+    </code></pre>
+
+    <pre class="js fragment"><code data-trim>
+note.text = 'Important books to read';
+    </code></pre>
+
+    <pre class="js fragment"><code data-trim>
+await note.save();
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Delete</h2>
+
+    <pre class="js"><code data-trim>
+await Note.destroy({
+    where: { id: 23 }
+});
+    </code></pre>
+
+    <pre class="js fragment"><code data-trim>
+const note = await Note.findOne({
+    where: { id: 23 }
+});
+
+await note.destroy();
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Комбинации. findOrCreate</h2>
+
+    <pre class="js"><code data-trim>
+const note = await Note.findOrCreate({
+    where: { name: 'Books' },
+    defaults: {
+        name: 'Books',
+        text: 'Books to read',
+        ownerId: 1
+    }
+});
+    </code></pre>
+</section>
+
+<section class="center">
+    <h1>JOIN</h1>
+</section>
+
+<section class="center">
+    <h2>Внешние связи. ForeignKey</h2>
+
+    <pre class="js"><code data-trim data-noescape>
+class Note extends Model&lt;Note&gt; {
+    <span class="red">@ForeignKey</span>(() => User)
+    @Column({
+        type: DataType.INTEGER,
+        field: 'owner_id'
+    })
+    ownerId: number;
+}
+    </code></pre>
+</section>
+
+<section class="center hor-center">
+    <h2>Внешние связи. BelongsTo</h2>
+
+    <img src="images/owner_id.png" alt="belongs to owner id">
+</section>
+
+<section class="center">
+    <h2>Внешние связи. BelongsTo</h2>
+
+    <pre class="js"><code data-trim data-noescape>
+class Note extends Model&lt;Note&gt; {
+    ...
+
+    <span class="red">@BelongsTo</span>(() => User)
+    user: User;
+}
+    </code></pre>
+</section>
+
+<section class="center hor-center">
+    <h2>Внешние связи. HasMany</h2>
+
+    <img src="images/has_many.png" alt="has many user id">
+</section>
+
+<section class="center">
+    <h2>Внешние связи. HasMany</h2>
+
+    <pre class="js"><code data-trim data-noescape>
+class User extends Model&lt;User&gt; {
+    ...
+
+    <span class="red">@HasMany</span>(() => Note)
+    notes: Note[];
+}
+    </code></pre>
+</section>
+
+<section class="center hor-center">
+    <h2>Внешние связи. HasOne</h2>
+
+    <img src="images/best_note_id.png" alt="has one best note id">
+</section>
+
+<section class="center">
+    <h2>Внешние связи. HasOne</h2>
+
+    <pre class="js"><code data-trim data-noescape>
+class Note extends Model&lt;Note&gt; {
+    ...
+
+    <span class="red">@HasOne</span>(() => Category, 'best_note_id')
+    category: Category;
+}
+    </code></pre>
+</section>
+
+<section class="center hor-center">
+    <h2>Внешние связи</h2>
+
+    <a class="small" href="http://docs.sequelizejs.com/manual/tutorial/associations.html">Подробнее</a>
+</section>
+
+<section class="center">
+    <h2>Данные</h2>
+
+    <pre><code data-trim>
+  users     |         notes         |      categories
+            |                       |
+id   name   |  id  name   owner_id  | id  name   best_note_id
+--   ------ |  --  -----  --------  | __  _____  ____________
+ 1   Олег   |  1   Books     1      | 1   study        1
+ 2   Сергей |  2   Films     1      | 2    fun         3
+ 3   Михаил |  3   Music     2      |
+            |  4   Rules    NULL    |
+            |  5  Markdown  NULL    |
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Include</h2>
+
+    <div class="row" style="margin-top: 7%;">
+        <pre class="js"><code data-trim>
+await User.findAll({
+  attributes: ['name'],
+  include: [
+    {
+      model: Note,
+      attributes: ['name']
+    }
+  ]
+});
+        </code></pre>
+    </div>
+    <div class="row fragment" style="font-size: 85%;">
+        <pre class="js"><code data-trim>
+[
+  {
+    name: 'Олег',
+    notes: [
+      { name: 'Films' },
+      { name: 'Books' }
+    ]
+  },
+  {
+    name: 'Сергей',
+    notes: [{ name: 'Music' }]
+  },
+  {
+    name: 'Михаил',
+    notes: []
+  }
+]
+        </code></pre>
+    </div>
+</section>
+
+<section class="center">
+    <h2>Include. Where</h2>
+
+    <div class="row" style="font-size: 90%;">
+        <pre class="js"><code data-trim>
+await User.findAll({
+  attributes: ['name'],
+  include: [
+    {
+      model: Note,
+      where: {
+        name: {
+          [Op.or]: [
+            { [Op.like]: 'F%' },
+            { [Op.like]: 'M%' }
+          ]
+        }
+      },
+      attributes: ['name']
+    }
+  ]
+});
+        </code></pre>
+    </div>
+    <div class="row fragment" style="font-size: 95%;">
+        <pre class="js"><code data-trim>
+[
+  {
+    name: 'Олег',
+    notes: [
+      { name: 'Films' }
+    ]
+  },
+  {
+    name: 'Сергей',
+    notes: [
+      { name: 'Music' }
+    ]
+  }
+]
+        </code></pre>
+    </div>
+</section>
+
+<section class="center">
+    <h2>Include. Where + required</h2>
+
+    <div class="row" style="font-size: 87%;">
+        <pre class="js"><code data-trim>
+await User.findAll({
+  attributes: ['name'],
+  include: [
+    {
+      model: Note,
+      where: {
+        name: {
+          [Op.or]: [
+            { [Op.like]: 'F%' },
+            { [Op.like]: 'M%' }
+          ]
+        }
+      },
+      attributes: ['name'],
+      required: false
+    }
+  ]
+});
+        </code></pre>
+    </div>
+    <div class="row fragment" style="font-size: 85%;">
+        <pre class="js"><code data-trim>
+[
+  {
+    name: 'Олег',
+    notes: [{ name: 'Films' }]
+  },
+  {
+    name: 'Сергей',
+    notes: [{ name: 'Music' }]
+  },
+  {
+    name: 'Михаил',
+    notes: []
+  }
+]
+        </code></pre>
+    </div>
+</section>
+
+<section data-background='images/deeper.jpg' data-background-size='contain'></section>
+
+<section class="center">
+    <h2>Include. Multiple join</h2>
+
+    <pre class="js"><code data-trim>
+const users = await User.findAll({
+    attributes: ['name'],
+    include: [
+        {
+            model: Note,
+            attributes: ['name'],
+            include: [
+                {
+                    model: Category,
+                    attributes: ['name']
+                }
+            ]
+        }
+    ]
+});
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Include. Multiple join</h2>
+
+    <div class="row" style="font-size: 80%;">
+        <pre class="js"><code data-trim>
+[
+  {
+    name: 'Олег',
+    notes: [
+      {
+        name: 'Films',
+        category: null
+      },
+      {
+        name: 'Books',
+        category: {
+          name: 'study'
+        }
+      }
+    ]
+  },
+  ...
+        </code></pre>
+    </div>
+    <div class="row" style="font-size: 80%;">
+        <pre class="js"><code data-trim>
+  ...
+  {
+    name: 'Сергей',
+    notes: [
+      {
+        name: 'Music',
+        category: {
+          name: 'fun'
+        }
+      }
+    ]
+  },
+  {
+    name: 'Михаил',
+    notes: []
+  }
+]
+        </code></pre>
+    </div>
+</section>
+
+<section class="center">
+    <h2>Транзакции</h2>
+
+    <pre class="js"><code data-trim>
+await sequelize.transaction(async function(t) {
+    await User.increment(
+        'account',
+        { by: -50, where: { id: 1 }, transaction: t }
+    );
+    await User.increment(
+        'account',
+        { by: 50, where: { id: 2 }, transaction: t }
+    );
+});
+    </code></pre>
+</section>
+
+<section class="center">
+    <h1>Миграции</h1>
+</section>
+
+<section class="center">
+    <h2>Sequelize CLI</h2>
+
+    <pre class="js"><code data-trim>
+npm install sequelize-cli
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>.sequelizerc</h2>
+
+    <pre class="js"><code data-trim>
+const path = require('path');
+
+const DB_DIR = __dirname + '/db';
+
+module.exports = {
+  'config': path.resolve(DB_DIR, 'config.js'),
+  'migrations-path': path.resolve(DB_DIR, 'migrations'),
+  'models-path': path.resolve(DB_DIR + 'tables'),
+  'seeders-path': path.resolve(DB_DIR, 'seeders')
+};
+    </code></pre>
+</section>
+
+<section class="center">
+    <p class="small">migrations/1553446742822-add-user-column.ts</p>
+
+    <pre class="js" style="font-size: 90%;"><code data-trim>
+import { QueryInterface, DataTypes } from 'sequelize';
+
+export = {
+    async up(queryInterface: QueryInterface) {
+        await queryInterface.addColumn('users', 'account', {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0
+        });
+    },
+
+    async down(queryInterface: QueryInterface) {
+        await queryInterface.removeColumn('users', 'account');
+    }
+};
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Команды</h2>
+
+    <pre class="js"><code data-trim>
+npx sequelize db:migrate
+// new table SequelizeMeta
+    </code></pre>
+
+    <pre class="js fragment"><code data-trim>
+npx sequelize db:migrate:undo
+    </code></pre>
+
+    <pre class="js fragment"><code data-trim>
+npx sequelize db:migrate:status
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>На почитать:</h2>
+
+    <ul>
+        <li><a href="https://habr.com/ru/post/114154">B-tree индекс</a></li>
+        <li><a href="https://www.postgresql.org/docs/10/using-explain.html">Использование EXPLAIN</a></li>
+        <li><a href="http://docs.sequelizejs.com">Документация Sequelize</a></li>
+        <li><a href="https://github.com/RobinBuschmann/sequelize-typescript">Sequelize + TypeScript</a></li>
+    </ul>
+</section>
+
+</div></div><script src="../../@lib/core.js"></script></body></html>
