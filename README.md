@@ -39,3 +39,4 @@
 2. [Архитектура приложения](https://urfu-2018.github.io/slides/webdev/02-express/) ([pdf](https://urfu-2018.github.io/slides/webdev/02-express/index.pdf))
 3. [Эксплуатация приложения](https://urfu-2018.github.io/slides/webdev/03-operating/) ([pdf](https://urfu-2018.github.io/slides/webdev/03-operating/index.pdf))
 4. [Базы данных, часть I](https://urfu-2018.github.io/slides/webdev/04-databases/) ([pdf](https://urfu-2018.github.io/slides/webdev/04-databases/index.pdf))
+5. [Базы данных, часть II](https://urfu-2018.github.io/slides/webdev/05-databases/) ([pdf](https://urfu-2018.github.io/slides/webdev/05-databases/index.pdf))
