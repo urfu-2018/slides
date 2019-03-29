@@ -1,0 +1,50 @@
+mark
+{
+    background-color: #acf2bd;
+}
+
+span
+{
+    display: inline-block;
+}
+
+ul
+{
+    list-style: none;
+}
+
+.author:first-letter
+{
+    color: red;
+}
+
+.advantage
+{
+    color: #2cbe4e;
+}
+
+.disadvantage
+{
+    color: #d36363;
+}
+
+.left
+{
+    text-align: left;
+}
+
+.right
+{
+    text-align: right;
+}
+
+.reveal .heading
+{
+    margin-top: -15px;
+    margin-bottom: 30px;
+}
+
+.reveal .subheading
+{
+    margin-top: -30px;
+}

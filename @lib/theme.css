@@ -273,10 +273,14 @@
 }
 
 .white .hljs-built_in,
-.white .hljs-builtin-name {
+.white .hljs-builtin-name
+{
     color: #0086b3;
 }
 
+.white .hljs-subst {
+    color: #000;
+}
 
 /* Black theme */
 
@@ -440,4 +444,8 @@
 .black .hljs a:hover
 {
     color: inherit;
+}
+
+.black .hljs-subst {
+    color: #fff;
 }

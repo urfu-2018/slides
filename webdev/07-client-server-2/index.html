@@ -1,0 +1,772 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>gRPC</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="white"><div class="reveal"><div class="slides">
+
+<section class="center">
+    <h1>Клиент-Сервер</h1>
+    <p>Часть II</p>
+    <p>&nbsp;</p>
+    <h3 class="author right">Старков Дима</h3>
+</section>
+
+<section class="center">
+    <h1><img src="images/rest-api-logo.png" alt="rest-api"/></h1>
+</section>
+
+<section>
+    <h2>REST</h2>
+    <p class="advantage heading">Прост в понимании</p>
+    <pre class="fragment"><code class="html" data-noescape data-trim>
+        <span class="red">DELETE</span> /users/dimastark/posts/1
+
+        <span class="red">Удалить</span> пост №1 пользователя dimastark
+    </code></pre>
+</section>
+
+<section>
+    <h2>REST</h2>
+    <p class="advantage heading">Прост в понимании</p>
+    <pre><code class="html" data-noescape data-trim>
+        <span class="red">DELETE</span> /users/dimastark/<mark>posts</mark>/1
+
+        <span class="red">Удалить</span> <mark>пост</mark> №1 пользователя dimastark
+    </code></pre>
+</section>
+
+<section>
+    <h2>REST</h2>
+    <p class="advantage heading">Прост в понимании</p>
+    <pre><code class="html" data-noescape data-trim>
+        <span class="red">DELETE</span> /users/dimastark/posts/<mark>1</mark>
+
+        <span class="red">Удалить</span> пост <mark>№1</mark> пользователя dimastark
+    </code></pre>
+</section>
+
+<section>
+    <h2>REST</h2>
+    <p class="advantage heading">Прост в понимании</p>
+    <pre><code class="html" data-noescape data-trim>
+        <span class="red">DELETE</span> /<mark>users</mark>/dimastark/posts/1
+
+        <span class="red">Удалить</span> пост №1 <mark>пользователя</mark> dimastark
+    </code></pre>
+</section>
+
+<section>
+    <h2>REST</h2>
+    <p class="advantage heading">Прост в понимании</p>
+    <pre><code class="html" data-noescape data-trim>
+        <span class="red">DELETE</span> /users/<mark>dimastark</mark>/posts/1
+
+        <span class="red">Удалить</span> пост №1 пользователя <mark>dimastark</mark>
+    </code></pre>
+</section>
+
+<section>
+    <h2>REST</h2>
+    <p class="advantage heading">Прост в понимании</p>
+    <div style="margin-top: -15px" class="two-columns">
+        <pre><code class="html" data-noescape data-trim>
+            <span class="red">DELETE</span> /users/dimastark/posts/1
+
+            <span class="red">Удалить</span> пост №1 пользователя dimastark
+        </code></pre>
+        <pre><code class="html" data-noescape data-trim>
+        notes
+        users
+        ├─ dimastark
+        │  ├─ comments
+        │  └─ posts
+        │     ├─ <span class="red">1</span>
+        │     └─ 2
+        └─ gogoleff
+        </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>REST</h2>
+    <p class="advantage heading">Переиспользует HTTP</p>
+    <pre><code class="html" data-noescape data-trim style="margin-top: -37px">
+        <span></span>
+        <span class="red">DELETE</span> /users/dimastark/posts/1
+    </code></pre>
+</section>
+
+<section data-state="animate-methods">
+    <h2>REST</h2>
+    <p class="advantage heading">Переиспользует HTTP</p>
+    <pre><code class="html" data-noescape data-trim style="margin-top: -37px">
+        <span class="hljs-comment">// Семантичные методы</span>
+        <span id="method" class="red">DELETE</span> /users/dimastark/posts/1
+        <span class="fragment">
+        <span class="hljs-comment">// Семантичные коды ответа</span>
+        <span><span class="green">200</span> OK</span>
+        <span><span class="red">401</span> Unauthorized</span>
+        <span><span class="red">403</span> Forbidden</span>
+        <span><span class="red">404</span> Not found</span>
+        <span><span style="color: #f00">500</span> Internal Server Error</span>
+        </span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>REST</h2>
+    <p class="advantage heading">Переиспользует HTTP</p>
+    <ul>
+        <li class="fragment">Сжатие, кеширование</li>
+        <li class="fragment">Балансировка и firewall</li>
+        <li class="fragment">CORS, HTTPS</li>
+    </ul>
+</section>
+
+<section>
+    <h2>REST</h2>
+    <p class="disadvantage heading">Не спецификация, а набор рекомендаций</p>
+    <ul>
+        <li class="fragment">Код для ошибок валидации? <i>400 или 422?</i></li>
+    </ul>
+</section>
+
+<section>
+    <h2>REST</h2>
+    <p style="margin-top: -15px; margin-bottom: 30px" class="disadvantage">Не спецификация, а набор рекомендаций</p>
+    <ul>
+        <li>GET идемпотентен?</li>
+    </ul>
+    <pre style="margin-left: 30px"><code class="html fragment" data-noescape data-trim>
+        <span class="green">GET</span> /search?text=идемпотентность
+    </code></pre>
+</section>
+
+<section>
+    <h2>REST</h2>
+    <p class="disadvantage heading">Сложная фильтрация и поиск</p>
+    <pre><code class="html" data-noescape data-trim>
+        <span class="green">GET</span> /users?parameter1=value1&amp;parameter2=value2&amp;parameter3=...
+    </code></pre>
+    <pre class="fragment"><code class="json" data-noescape data-trim>
+        <span class="green">POST</span> /users/search
+        {
+            "parameter1": "value1",
+            "parameter2": "value2",
+            "parameter3": "value3"
+        }
+    </code></pre>
+</section>
+
+<section>
+    <h2>REST</h2>
+    <p class="disadvantage heading">Сложно мыслить ресурсами</p>
+    <blockquote class="fragment">
+        Я создал (<span class="green">POST</span>) себя в университете,
+        обновил (<span class="blue">PATCH</span>) знания студентов лекцией
+        и удалил (<span class="red">DELETE</span>) себя из аудитории.
+    </blockquote>
+    <blockquote class="fragment" style="margin-top: 50px">
+        Я пришел в университет, рассказал лекцию студентам и вышел из аудитории.
+    </blockquote>
+</section>
+
+<section>
+    <h2>REST</h2>
+    <ul>
+        <li class="disadvantage">Нет валидации или схемы данных</li>
+        <li class="disadvantage fragment" data-trim>Нет механизма версионирования
+            <pre><code class="html" data-noescape data-trim>
+                /v1/users/dimastark → /v2/users/dimastark
+            </code></pre>
+        </li>
+        <li class="disadvantage fragment">Нет инструментов в комплекте</li>
+        <li class="disadvantage fragment">Пишем клиенты для всех языков</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h1><img src="images/grpc-logo.svg" alt="gRPC"></h1>
+</section>
+
+<section class="center">
+    <h2>gRPC Remote Procedure Calls</h2>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Схема в Protobuf формате</small></h2>
+    <pre><code class="hljs protobuf" data-noescape data-trim>
+<span class="hljs-comment">/* SearchRequest содержит поисковый запрос,
+&nbsp;* а также настройки пагинации */</span>
+message SearchRequest {
+    string query = 1;
+    int32 page_number = 2;
+    int32 results_per_page = 3;
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Схема в Protobuf формате</small></h2>
+    <pre><code class="hljs protobuf" data-noescape data-trim>
+<span class="hljs-comment">/* SearchRequest содержит поисковый запрос,
+&nbsp;* а также настройки пагинации */</span>
+message SearchRequest {
+    <mark>string</mark> query = 1;
+    <mark>int32</mark> page_number = 2;
+    <mark>int32</mark> results_per_page = 3;
+}
+<span class="hljs-built_in">
+double, float,
+int32, int64, uint32, uint64, sint32, sint64,
+bool, string, bytes
+</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Схема в Protobuf формате</small></h2>
+    <pre><code class="hljs protobuf" data-noescape data-trim>
+<span class="hljs-comment">/* SearchRequest содержит поисковый запрос,
+&nbsp;* а также настройки пагинации */</span>
+message SearchRequest {
+    string query = <mark>1</mark>;           <span class="fragment">// Идентификатор поля</span>
+    int32 page_number = <mark>2</mark>;      <span class="fragment">// Уникален</span>
+    int32 results_per_page = <mark>3</mark>; <span class="fragment">// Не меняется со временем</span>
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Схема в Protobuf формате</small></h2>
+    <pre><code class="hljs protobuf" data-noescape data-trim>
+message SearchReply {
+    repeated Document items = 1;
+}
+
+message Document {
+    map&lt;string, int32> occurrence_counts = 1;
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Схема в Protobuf формате</small></h2>
+    <pre><code class="hljs protobuf" data-noescape data-trim>
+message SearchReply {
+    <mark>repeated</mark> Document items = 1;
+}
+
+message Document {
+    map&lt;string, int32> occurrence_counts = 1;
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Схема в Protobuf формате</small></h2>
+    <pre><code class="hljs protobuf" data-noescape data-trim>
+message SearchReply {
+    repeated Document items = 1;
+}
+
+message Document {
+    <mark>map&lt;string, int32></mark> occurrence_counts = 1;
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Сервисы</small></h2>
+    <pre><code class="hljs protobuf" data-trim>
+service Searcher {
+    rpc Search (SearchRequest) returns (SearchReply);
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Сервисы</small></h2>
+    <pre><code class="hljs protobuf" data-noescape data-trim>
+service Searcher {
+    rpc Search (<mark>SearchRequest</mark>) returns (SearchReply);
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Сервисы</small></h2>
+    <pre><code class="hljs protobuf" data-noescape data-trim>
+service Searcher {
+    rpc Search (SearchRequest) returns (<mark>SearchReply</mark>);
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Чуть-чуть магии автогенерации</small></h2>
+    <pre><code class="hljs bash" data-trim data-noescape>
+# Генерируем серверный и клиентский код
+protoc
+    --plugin=protoc-gen-grpc=grpc_tools_node_protoc_plugin
+    --js_out="import_style=commonjs:./protos"
+    --grpc_out=./protos
+    search.proto
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Чуть-чуть магии автогенерации</small></h2>
+    <pre><code class="hljs bash" data-trim data-noescape>
+# Генерируем серверный и клиентский код
+<mark>protoc</mark>
+    --plugin=protoc-gen-grpc=grpc_tools_node_protoc_plugin
+    --js_out="import_style=commonjs:./protos"
+    --grpc_out=./protos
+    search.proto
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Чуть-чуть магии автогенерации</small></h2>
+    <pre><code class="hljs bash" data-trim data-noescape>
+# Генерируем серверный и клиентский код
+protoc
+    --<mark>plugin</mark>=protoc-gen-grpc=grpc_tools_node_protoc_plugin
+    --js_out="import_style=commonjs:./protos"
+    --grpc_out=./protos
+    search.proto
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Чуть-чуть магии автогенерации</small></h2>
+    <pre><code class="hljs bash" data-trim data-noescape>
+# Генерируем серверный и клиентский код
+protoc
+    --plugin=protoc-gen-<mark>grpc</mark>=grpc_tools_node_protoc_plugin
+    --js_out="import_style=commonjs:./protos"
+    --<mark>grpc</mark>_out=./protos
+    search.proto
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Чуть-чуть магии автогенерации</small></h2>
+    <pre><code class="hljs bash" data-trim data-noescape>
+# Генерируем серверный и клиентский код
+protoc
+    --plugin=protoc-gen-grpc=grpc_tools_node_protoc_plugin
+    --js_out="<mark>import_style=commonjs</mark>:./protos"
+    --grpc_out=./protos
+    search.proto
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Чуть-чуть магии автогенерации</small></h2>
+    <pre><code class="hljs bash" data-trim data-noescape>
+# Генерируем тайпинги
+protoc
+    --plugin=protoc-gen-ts=protoc-gen-ts
+    --ts_out=./protos
+    search.proto
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Чуть-чуть магии автогенерации</small></h2>
+    <pre><code class="hljs bash" data-trim data-noescape>
+# Генерируем тайпинги
+protoc
+    --<mark>plugin</mark>=protoc-gen-ts=protoc-gen-ts
+    --ts_out=./protos
+    search.proto
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Чуть-чуть магии автогенерации</small></h2>
+    <pre><code class="hljs bash" data-trim data-noescape>
+# Генерируем тайпинги
+protoc
+    --plugin=protoc-gen-<mark>ts</mark>=protoc-gen-ts
+    --<mark>ts</mark>_out=./protos
+    search.proto
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Пишем реализацию методов</small></h2>
+    <pre style="font-size: 40px"><code class="hljs typescript" data-trim data-noescape>
+import grpc from 'grpc';
+
+import { SearchRequest, SearchReply } from './protos/search_pb';
+import { ISearcherServer } from './protos/search_grpc_pb';
+
+class SearcherServiceImpl implements ISearcherServer {
+    search(
+        call: grpc.ServerUnaryCall&lt;SearchRequest>,
+        callback: grpc.sendUnaryData&lt;SearchReply>
+    ) {
+        ...
+    }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Пишем реализацию методов</small></h2>
+    <pre style="font-size: 40px"><code class="hljs typescript" data-trim data-noescape>
+import grpc from 'grpc';
+
+import { SearchRequest, SearchReply } from './protos/search_pb';
+import { <mark>ISearcherServer</mark> } from './protos/search_grpc_pb';
+
+class SearcherServiceImpl <mark>implements ISearcherServer</mark> {
+    search(
+        call: grpc.ServerUnaryCall&lt;SearchRequest>,
+        callback: grpc.sendUnaryData&lt;SearchReply>
+    ) {
+        ...
+    }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Пишем реализацию методов</small></h2>
+    <pre style="font-size: 40px"><code class="hljs typescript" data-trim data-noescape>
+import grpc from 'grpc';
+
+import { <mark>SearchRequest</mark>, SearchReply } from './protos/search_pb';
+import { ISearcherServer } from './protos/search_grpc_pb';
+
+class SearcherServiceImpl implements ISearcherServer {
+    search(
+        <mark>call</mark>: grpc.ServerUnaryCall&lt;<mark>SearchRequest</mark>>,
+        callback: grpc.sendUnaryData&lt;SearchReply>
+    ) {
+        ...
+    }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Пишем реализацию методов</small></h2>
+    <pre style="font-size: 40px"><code class="hljs typescript" data-trim data-noescape>
+import grpc from 'grpc';
+
+import { SearchRequest, <mark>SearchReply</mark> } from './protos/search_pb';
+import { ISearcherServer } from './protos/search_grpc_pb';
+
+class SearcherServiceImpl implements ISearcherServer {
+    search(
+        call: grpc.ServerUnaryCall&lt;SearchRequest>,
+        <mark>callback</mark>: grpc.sendUnaryData&lt;<mark>SearchReply</mark>>
+    ) {
+        ...
+    }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Запускаем наш сервер</small></h2>
+    <pre style="font-size: 40px"><code class="hljs typescript" data-trim data-noescape>
+import grpc from 'grpc';
+
+import { SearcherService } from './protos/search_grpc_pb';
+
+const server = <mark>new grpc.Server()</mark>;
+
+server.addService(SearcherService, new SearcherServiceImpl());
+
+server.bind(
+    '0.0.0.0:50051',
+    grpc.ServerCredentials.createInsecure()
+);
+
+server.start();
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Запускаем наш сервер</small></h2>
+    <pre style="font-size: 40px"><code class="hljs typescript" data-trim data-noescape>
+import grpc from 'grpc';
+
+import { <mark>SearcherService</mark> } from './protos/search_grpc_pb';
+
+const server = new grpc.Server();
+
+server.addService(<mark>SearcherService, new SearcherServiceImpl()</mark>);
+
+server.bind(
+    '0.0.0.0:50051',
+    grpc.ServerCredentials.createInsecure()
+);
+
+server.start();
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Запускаем наш сервер</small></h2>
+    <pre style="font-size: 40px"><code class="hljs typescript" data-trim data-noescape>
+import grpc from 'grpc';
+
+import { SearcherService } from './protos/search_grpc_pb';
+
+const server = new grpc.Server();
+
+server.addService(SearcherService, new SearcherServiceImpl());
+
+server.bind(
+    <mark>'0.0.0.0:50051'</mark>,
+    grpc.ServerCredentials.createInsecure()
+);
+
+server.start();
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Запускаем наш сервер</small></h2>
+    <pre style="font-size: 40px"><code class="hljs typescript" data-trim data-noescape>
+import grpc from 'grpc';
+
+import { SearcherService } from './protos/search_grpc_pb';
+
+const server = new grpc.Server();
+
+server.addService(SearcherService, new SearcherServiceImpl());
+
+server.bind(
+    '0.0.0.0:50051',
+    <mark>grpc.ServerCredentials.createInsecure()</mark>
+);
+
+server.start();
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <h2 class="subheading"><small>Запускаем наш сервер</small></h2>
+    <pre style="font-size: 40px"><code class="hljs typescript" data-trim data-noescape>
+import grpc from 'grpc';
+
+import { SearcherService } from './protos/search_grpc_pb';
+
+const server = new grpc.Server();
+
+server.addService(SearcherService, new SearcherServiceImpl());
+
+server.bind(
+    '0.0.0.0:50051',
+    grpc.ServerCredentials.createInsecure()
+);
+
+<mark>server.start()</mark>;
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>PROFIT?</h2>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <ul><li class="advantage">Использует HTTP/2</li></ul>
+    <ul>
+        <li class="fragment">Полностью бинарный</li>
+        <li class="fragment">Поточная передача данных</li>
+        <li class="fragment">Авторизация, балансировка</li>
+    </ul>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <ul><li class="advantage">Описывает схему в protobuf формате</li></ul>
+    <ul>
+        <li class="fragment">Валидация входных данных</li>
+    </ul>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <ul><li class="advantage">Описывает схему в protobuf формате</li></ul>
+    <ul><li>Суперкомпактность <span class="fragment">~25%</span></li></ul>
+    <pre><code class="hljs protobuf">
+    message Person {
+        int32  id    = 1;
+        string name  = 2;
+        string email = 3;
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <ul><li class="advantage">Описывает схему в protobuf формате</li></ul>
+    <ul>
+        <li>Производительность десериализации</li>
+        <li class="fragment">В 10 - 100 порядков быстрее, чем JSON</li>
+    </ul>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <ul><li class="advantage">Генерирует шаблонный код</li></ul>
+    <ul>
+        <li class="fragment">Серверный, клиентский, документация</li>
+        <li class="fragment">Генерирует идеоматичный языку код</li>
+    </ul>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <ul><li class="advantage">Генерирует шаблонный код</li></ul>
+    <div style="display: block; text-align: center">
+        <div>
+            <img alt="c++" width="100" src="images/cpp_logo_blur.jpg">
+            <img alt="c#" width="100" src="images/c-sharp_logo_blur.jpg">
+            <img alt="java" width="100" src="images/java_logo_blur.jpg">
+            <img alt="php" width="100" style="margin-bottom: 25px" src="images/php_logo_blur.jpg">
+        </div>
+        <div style="margin-top: 20px">
+            <img alt="js" width="100" src="images/js_logo_blur.jpg">
+            <img alt="nodejs" width="100" src="images/nodejs_logo_blur.jpg">
+            <img alt="python" width="100" src="images/python_logo_blur.jpg">
+            <img alt="ruby" width="100" src="images/ruby_logo_blur.jpg">
+        </div>
+        <div style="margin-top: 20px">
+            <img alt="go" width="100" src="images/go_logo_blur.jpg">
+            <img alt="dart" width="100" src="images/dart_logo_blur.jpg">
+            <img alt="haskell" width="100" src="images/haskell_logo_blur.jpg">
+            <img alt="swift" width="100" src="images/swift_logo_blur.jpg">
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>gRPC Remote Procedure Calls</h2>
+    <ul><li class="advantage">Генерирует шаблонный код</li></ul>
+    <div style="display: block; text-align: center">
+        <div>
+            <img alt="c++" width="100" src="images/cpp_logo.jpg">
+            <img alt="c#" width="100" src="images/c-sharp_logo.jpg">
+            <img alt="java" width="100" src="images/java_logo.jpg">
+            <img alt="php" width="100" style="margin-bottom: 25px" src="images/php_logo.jpg">
+        </div>
+        <div style="margin-top: 20px">
+            <img alt="js" width="100" src="images/js_logo.jpg">
+            <img alt="nodejs" width="100" src="images/nodejs_logo.jpg">
+            <img alt="python" width="100" src="images/python_logo.jpg">
+            <img alt="ruby" width="100" src="images/ruby_logo.jpg">
+        </div>
+        <div style="margin-top: 20px">
+            <img alt="go" width="100" src="images/go_logo.jpg">
+            <img alt="dart" width="100" src="images/dart_logo.jpg">
+            <img alt="haskell" width="100" src="images/haskell_logo.jpg">
+            <img alt="swift" width="100" src="images/swift_logo.jpg">
+        </div>
+    </div>
+</section>
+
+<section class="center">
+    <h2>Перерыв</h2>
+</section>
+
+<section class="center">
+    <h2>Пишем код!</h2>
+</section>
+
+
+<section>
+    <h2>Ссылочки</h2>
+    <ul>
+        <li class="fragment"><a href="https://auth0.com/blog/beating-json-performance-with-protobuf/">Бенчмарки</a></li>
+        <li class="fragment"><a href="https://grpc.io">gRPC</a> и <a href="https://developers.google.com/protocol-buffers/">Protobuf</a></li>
+        <li class="fragment">Varun Talwar – <a href="https://www.slideshare.net/VarunTalwar4/grpc-overview">gRPC Overview</a></li>
+        <li class="fragment"><a href="https://github.com/grpc/grpc/tree/master/examples/node">gRPC in 3 minutes</a></li>
+        <li class="fragment"><a href="https://habr.com/ru/company/mailru/blog/345184/">REST это новый SOAP</a></li>
+    </ul>
+</section>
+
+<section>
+    <h2>Штуки</h2>
+    <ul style="margin-left: -10px">
+        <li class="fragment"><a href="https://github.com/agreatfool/grpc_tools_node_protoc_ts">grpc-protoc-ts</a> – генерируем тайпинги</li>
+        <li class="fragment"><a href="https://github.com/pseudomuto/protoc-gen-doc">protoc-gen-doc</a> – генерируем документацию</li>
+        <li class="fragment"><a href="https://github.com/grpc/grpc-web">grpc-web</a> – gRPC из браузера</li>
+        <li class="fragment"><a href="https://github.com/grpc/grpc-web">twirp</a> – простая альтернатива gRPC-Web</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h2>Вопросы?</h2>
+</section>
+
+<section class="center">
+    <h2>Спасибо!</h2>
+</section>
+
+</div></div>
+
+<script src="../../@lib/core.js"></script>
+<script>
+    let i = 2;
+    let animated = false;
+
+    const methods = ['GET   ', 'POST  ', 'DELETE', 'PUT   ', 'PATCH '];
+    const colors = ['green', 'green', 'red', 'green', 'green'];
+
+    Reveal.addEventListener('animate-methods', function() {
+        if (!animated) {
+            setInterval(() => {
+                method.innerHTML = methods[i];
+                method.className = colors[i];
+
+                i = (i + 1) % 5;
+            }, 1500);
+
+            animated = true;
+        }
+    }, false);
+</script>
+
+</body></html>
