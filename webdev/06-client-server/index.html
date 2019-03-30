@@ -1,0 +1,1012 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Клиент-Сервер (HTTP, REST, WebSockets)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="white"><div class="reveal"><div class="slides">
+
+<section class="center">
+    <h1>Клиент-Сервер</h1>
+</section>
+
+<section class="center">
+    <h1><a href="https://tools.ietf.org/html/rfc2616">HTTP</a><br></h1>
+    <h2><span class="grey">HyperText Transfer Protocol</span></h2>
+</section>
+
+<section>
+    <h2>Ресурс</h2>
+    <pre class="html"><code data-trim data-noescape>
+/notes
+
+/notes/films
+
+/notes/films/pinned
+    </code></pre>
+</section>
+
+<section>
+    <h2>Aдрес ресурса</h2>
+    <pre class="html"><code data-trim data-noescape>
+
+http://localhost:5000/notes?limit=10&sortBy=name
+⇡      ⇡         ⇡    ⇡     ⇡
+<span class="green">scheme</span> <span class="green">host</span>      <span class="green">port</span> <span class="green">path</span>  <span class="green">query</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Запрос</h2>
+    <pre class="html"><code data-trim data-noescape><span class="green">POST</span> /notes <span class="grey">HTTP/1.1</span>
+<span class="magenta">Accept:</span> application/json
+<span class="magenta">Accept-Encoding:</span> gzip, deflate
+<span class="magenta">Content-Type:</span> application/json; charset=utf-8
+<span class="magenta">Host:</span> localhost:8080
+<span class="magenta">User-Agent:</span> HTTPie/0.9.3
+
+{
+    "name": "films",
+    "text": "Films to watch"
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Ответ</h2>
+    <pre class="html"><code data-trim data-noescape><span class="grey">HTTP/1.1</span> <span class="green">200</span> OK
+<span class="magenta">Content-Length:</span> 67
+<span class="magenta">Content-Type:</span> application/json; charset=utf-8
+<span class="magenta">Date:</span> Wed, 16 Mar 2016 14:32:18 GMT
+<span class="magenta">X-Powered-By:</span> Express
+
+{
+    "createdAt": 1458138738899,
+    "name": "films",
+    "text": "Films to watch"
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Метод</h2>
+    <pre class="html"><code data-trim data-noescape>
+
+<span class="green">GET</span>      получение ресурса
+
+<span class="green">POST</span>     создание ресурса
+
+<span class="green">DELETE</span>   удаление ресурса
+    </code></pre>
+</section>
+
+<section>
+    <h2><a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">Код ответа</a></h2>
+    <pre class="html"><code data-trim data-noescape><span class="green">200</span> Ok
+<span class="green">201</span> Created
+<span class="green">204</span> No content
+<span>
+<span class="magenta">301</span> Moved Permanently
+<span class="magenta">304</span> Not modified
+</span><span>
+<span class="red">400</span> Bad request
+<span class="red">403</span> Forbidden
+<span class="red">404</span> Not found
+</span><span>
+<span class="red">500</span> Internal Server Error
+<span class="red">504</span> Gateway Timeout
+</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2><span class="red">418</span> I'm a teapot</h2>
+    <p><img src="images/teapot.png"></p>
+</section>
+
+<section>
+    <h2><span class="red">451</span> Unavailable For Legal Reasons</h2>
+    <p><img src="images/451.png"></p>
+</section>
+
+<section>
+    <h2>Stateless</h2>
+    <p>Сам не хранит состояние клиента между запросами, всё состояние целиком описывается в каждом запросе</p>
+    <p class="fragment"><a href="https://tools.ietf.org/html/rfc6265">HTTP State Management Mechanism</a></p>
+</section>
+
+<section>
+    <h2>Сжатие данных</h2>
+    <pre class="html"><code data-trim data-noescape>GET /notes/films HTTP/1.1
+<span class="red">Accept-Encoding: gzip, deflate</span>
+    </code></pre>
+
+    <pre class="html"><code data-trim data-noescape>HTTP/1.1 200 OK
+<span class="red">Content-Encoding: gzip</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Кеширование</h2>
+    <pre class="html"><code data-trim data-noescape>HTTP/1.1 200 OK
+<span class="red">Cache-Control: public, max-age=31536000, no-cache</span>
+    </code></pre>
+    <div style="font-size: .6em">
+        <table>
+        <tr class="left fragment" data-fragment-index=0><td style="border: 0;" class="green">private</td><td style="border: 0;">Закешируй только у конечного клиента (в браузере)</td></tr>
+        <tr class="left fragment" data-fragment-index=0><td style="border: 0;"class="green">public</td><td style="border: 0;">Закешируй и на промежуточных серверах (на CDN)</td></tr>
+        <tr class="left fragment" data-fragment-index=1><td style="border: 0;"class="green">max-age</td><td style="border: 0;">Закешируй на указанное количество секунд</td></tr>
+        <tr class="left fragment" data-fragment-index=2><td class="green" style="border: 0; white-space:nowrap">no-cache</td><td style="border: 0;">Кешируй, но каждый раз проверяй не изменился ли ресурс</td></tr>
+        <tr class="left fragment" data-fragment-index=2><td style="border: 0;"class="green">no-store</td><td style="border: 0;">Не кешируй ресурс</td></tr>
+        </table>
+    </div>
+</section>
+
+<section>
+    <h2>Кеширование</h2>
+    <pre class="html"><code data-trim data-noescape>HTTP/1.1 200 OK
+Cache-Control: public, max-age=31536000, no-cache
+<span class="red">ETag: d1d3c5c4cdb2568785ba1a366b7fb048</span>
+    </code></pre>
+    <pre class="fragment html"><code data-trim data-noescape>
+GET /index.css HTTP/1.1
+<span class="red">If-None-Match: d1d3c5c4cdb2568785ba1a366b7fb048</span>
+    </code></pre>
+    <pre class="fragment html"><code data-trim data-noescape>
+HTTP/1.1 <span class="red">304 Not Modified</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Кеширование</h2>
+    <pre class="html"><code data-trim data-noescape>HTTP/1.1 200 OK
+Cache-Control: public, max-age=31536000, no-cache
+<span class="red">Last-modified: Wed, 15 Nov 1995 04:58:08 GMT</span>
+    </code></pre>
+    <pre class="html"><code data-trim data-noescape>
+GET /index.css HTTP/1.1
+<span class="red">If-Modified-Since: Wed, 15 Nov 1995 04:58:08 GMT</span>
+    </code></pre>
+    <pre class="html"><code data-trim data-noescape>
+HTTP/1.1 <span class="red">304 Not Modified</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h1><a href="https://tools.ietf.org/html/rfc7540">HTTP/2</a></h1>
+</section>
+
+<section class="center">
+    <p>Бинарный</p>
+</section>
+
+<section class="center">
+    <p><a href="http://blog.jgc.org/2012/12/speeding-up-http-with-minimal-protocol.html#c5703739431744738432">Быстрее парсинг</a></p>
+    <p>Меньше размер пакета</p>
+    <p>Разделение запроса на фреймы</p>
+</section>
+
+<section class="center">
+    <p>Потоки</p>
+</section>
+
+<section class="center">
+    <p><img src="images/stream.svg"></p>
+</section>
+
+<section class="center">
+    <p><a href="https://en.wikipedia.org/wiki/Head-of-line_blocking">Head-of-Line blocking</a></p>
+</section>
+
+<section class="center">
+    <h2><a href="https://http2.github.io/http2-spec/compression.html">Сжатие заголовков (HPACK)</a></h2>
+</section>
+
+<section class="center">
+    <p><img class="invert" src="images/headers.png"></p>
+</section>
+
+<section class="center">
+    <p><img class="invert" src="images/headers2.png"></p>
+</section>
+
+<section class="center">
+    <p class="pros left">Устраняется дублирование</p>
+    <p class="pros left">Ещё меньший размер пакета</p>
+</section>
+
+<section class="center">
+    <p><a href="http://www.amazon.com/Every-Developer-Should-OdeToCode-Programming-ebook/dp/B0076Z6VMI/ref=sr_1_1?ie=UTF8&qid=1458055738&sr=8-1&keywords=HTTP">What Web Developer Should Know About HTTP</a><br>K. Scott Allen</p>
+    <p><a href="http://www.amazon.com/HTTP-The-Definitive-Guide-Guides/dp/1565925092">HTTP The Definitive Guide</a><br>David Gourley</p>
+    <p><a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching">HTTP caching</a><br>Ilya Grigorik</p>
+</section>
+
+<section class="center">
+    <h1>Взаимодействие приложений</h1>
+</section>
+
+<section class="center">
+    <pre class="html"><code data-noescape>
+                        Notes.find(name)
+                              ⇡    ⇡
+                         <span class="green">method</span>    <span class="red">arguments</span>
+    </code></pre>
+</section>
+
+<section>
+    <p><a href="http://www.jsonrpc.org/specification">Remote Procedure Call</a></p>
+    <pre class="html"><code data-trim data-noescape>
+{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "<span class="green">findNote</span>",
+    "params": [<span class="red">"films"</span>]
+}</code></pre>
+    <pre class="html fragment"><code data-trim data-noescape>
+{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "result": {
+        "name": "films",
+        "text": "..."
+    }
+}</code></pre>
+</section>
+
+<section>
+    <p>REpresentational State Transfer</p>
+    <pre class="html"><code data-trim data-noescape>GET /<span class="green">notes</span>/<span class="red">films</span> HTTP/1.1
+    </code></pre>
+    <pre class="html fragment"><code data-trim data-noescape>
+HTTP/1.1 200 Ok
+Content-Type: application/json
+
+{
+    "name": "films",
+    "text": "..."
+}
+    </code></pre>
+</section>
+
+<section>
+    <p><a href="http://facebook.github.io/graphql/draft/">GraphQL</a></p>
+    <pre class="html"><code data-trim data-noescape>
+type Note {
+    name: String!
+    text: String
+}
+
+type Query {
+    <span class="green">note</span>(<span class="red">name</span>: String!): Note
+}
+    </code></pre>
+</section>
+
+<section>
+    <p><a href="http://facebook.github.io/graphql/draft/">GraphQL</a></p>
+    <pre class="html"><code data-trim data-noescape>POST /graphql HTTP/1.1
+Content-Type: application/json
+
+{
+    "query": "query <span class="green">note</span>(name: $name) { name, text }",
+    "variables": { "name": "<span class="red">films</span>" }
+}
+    </code></pre>
+    <pre class="html fragment"><code data-trim data-noescape>
+HTTP/1.1 200 Ok
+Content-Type: application/json
+
+{
+    "data": { "name": "films", "text": "..." },
+    "errors": [ ... ]
+}
+    </code></pre>
+</section>
+
+<section>
+    <p><a href="https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md">gRPC</a></p>
+    <pre class="html"><code data-trim data-noescape>
+    service NotesService {
+        rpc <span class="green">Find</span> (NoteIdRequest) returns (Note) {}
+    }
+
+    message Note {
+        string name = 1;
+        string text = 2;
+    }
+
+    message NoteIdRequest {
+        string <span class="red">name</span> = 1;
+    }
+    </code></pre>
+</section>
+
+<section>
+    <p><a href="https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md">gRPC</a></p>
+    <pre class="html"><code data-trim data-noescape>
+    const NotesService = grpc.load('notes.proto').notes;
+
+    const client = new NotesService('localhost:50051');
+
+    client.<span class="green">find</span>({ name: '<span class="red">films</span>' }, (error, note) => {});
+    </code></pre>
+</section>
+
+<section>
+    <p><a href="https://tools.ietf.org/html/rfc6455">WebSockets</a></p>
+    <pre class="html"><code data-trim data-noescape>
+        const socket = new WebSocket('ws://localhost:8080');
+
+        socket.send(JSON.stringify({
+            id: '1',
+            method: '<span class="green">findNote</span>',
+            params: ['<span class="red">films</span>']
+        });
+    </code></pre>
+
+    <pre class="html fragment"><code data-trim data-noescape>
+        socket.onmessage = message => {
+            const { id, method, params } = JSON.parse(message);
+
+            // ...
+            socket.send({ id, result });
+        });
+    </code></pre>
+</section>
+
+<section class="center">
+    <h1>REST</h1>
+</section>
+
+<section class="center">
+    <p>Архитектурный стиль, позволяющий сделать сетевое взаимодействие удобнее, прозрачнее и стандартизованнее</p>
+    <p class="magenta">Рой Филдинг</p>
+    <p><a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm">Architectural Styles and the Design of Network-based Software Architectures</a></p>
+</section>
+
+<section class="center">
+    <p>REST определяет понятия (ресурсы, представление для ресурсов, индентификатор ресурсов)</p><p>И требования к взаимодействию (кеширование, связанность)</p>
+</section>
+
+<section class="center">
+    <p><span class="green">http</span> подходит как нельзя лучше</p>
+</section>
+
+<section class="center">
+    <p>Правила, которые не входят в REST,<br> но являются <span class="green">best practices</span></p>
+</section>
+
+<section class="center">
+    <div>
+        <p class="left">Use <span class="green">path</span>, not <span class="red">query</span></p>
+        <pre class="flat"><code data-trim data-noescape><span class="red">/api?type=notes&id=films</span>
+<span class="green">/notes/films</span></code></pre>
+    </div>
+</section>
+
+<section class="center">
+    <div>
+        <p class="left">Use <span class="green">plurals</span>, not <span class="red">singles</span></p>
+        <pre class="flat"><code data-trim data-noescape><span class="red">/note/films</span>
+<span class="green">/notes/films</span></code></pre>
+    </div>
+</section>
+
+<section class="center">
+    <div>
+        <p class="left">Use only <span class="green">nouns</span>, not <span class="red">verbs</span></p>
+        <pre class="flat"><code data-trim data-noescape><span class="red">POST /notes/add</span>
+<span class="green">POST /notes</span></code></pre>
+    </div>
+</section>
+
+<section class="center">
+    <p class="left">Avoid <span class="red">verbiage</span>, use <span class="green">plurals</span></p>
+    <pre class="flat"><code data-trim data-noescape><span class="red">/note_list</span>
+<span class="green">/notes</span></code></pre>
+</section>
+
+<section class="center">
+    <p class="left">Use <span class="green">lowercase</span></p>
+    <pre class="flat"><code data-trim data-noescape><span class="red">/pullRequests</span>
+<span class="green">/pull-requests</span></code></pre>
+</section>
+
+<section class="center">
+    <p class="left">Use <span class="green">nesting</span></p>
+    <pre class="flat"><code data-trim data-noescape><span class="red">/comments?note_id=films</span>
+<span class="green">/notes/films/comments</span></code></pre>
+</section>
+
+<section>
+    <h2>GET</h2>
+    <p>Получает состояние ресурса в одном из представлений (JSON, XML, HTML)</p>
+    <pre class="html"><code data-trim data-noescape><span class="green">GET</span> /notes
+<span class="green">GET</span> /notes/films
+<span class="green">GET</span> /notes/films/pinned
+<span class="green">GET</span> /notes?limit=10
+    </code></pre>
+    <pre class="html"><code data-trim data-noescape><span class="green">200</span> Ok
+
+<span class="red">404</span> Not found
+<span class="red">400</span> Bad request /notes?limit=muahahaha</code></pre>
+</section>
+
+<section>
+    <h2>POST</h2>
+    <p>Создаёт новый ресурс с начальным состоянием, когда мы <span class="red">не знаем</span> его ID</p>
+    <pre class="html"><code data-trim data-noescape><span class="green">POST</span> /notes
+    </code></pre>
+    <pre class="html"><code data-trim data-noescape><span class="green">201</span> Created
+
+<span class="red">409</span> Conflict
+    </code></pre>
+</section>
+
+<section>
+    <h2>PUT</h2>
+    <p>Создаёт новый ресурс с начальным состоянием, когда мы <span class="green">знаем</span> его ID</p>
+    <pre class="html"><code data-trim data-noescape><span class="green">PUT</span> /notes/films
+<span class="green">PUT</span> /notes/films/pinned
+    </code></pre>
+    <pre class="html"><code data-trim data-noescape><span class="green">200</span> Ok
+<span class="green">204</span> No content
+    </code></pre>
+</section>
+
+<section>
+    <h2>PUT</h2>
+    <p>Обновляет состояние существующего ресурса <span class="green">целиком</span></p>
+    <pre class="html"><code data-trim data-noescape><span class="green">PUT</span> /notes/films
+<span class="green">PUT</span> /notes/films/pinned
+    </code></pre>
+    <pre class="html"><code data-trim data-noescape><span class="green">200</span> Ok
+<span class="green">204</span> No content
+
+<span class="red">404</span> Not found
+    </code></pre>
+</section>
+
+<section>
+    <h2>DELETE</h2>
+    <p>Удаляет существующий ресурс</p>
+    <pre class="html"><code data-trim data-noescape><span class="green">DELETE</span> /notes/films
+<span class="green">DELETE</span> /notes/films/pinned
+    </code></pre>
+    <pre class="html"><code data-trim data-noescape><span class="green">200</span> Ok
+<span class="green">204</span> No content
+
+<span class="red">404</span> Not found
+    </code></pre>
+</section>
+
+<section>
+    <h2>PATCH</h2>
+    <p>Обновляет состояние существующего ресурса <span class="green">частично</span></p>
+    <pre class="html"><code data-trim data-noescape><span class="green">PATCH</span> /notes/films
+    </code></pre>
+    <pre class="html"><code data-trim data-noescape><span class="green">200</span> Ok
+<span class="green">204</span> No content
+
+<span class="red">404</span> Not found
+    </code></pre>
+</section>
+
+<section>
+    <h2>HEAD</h2>
+    <p>Запрашивает заголовки, чтобы проверить существование ресурса</p>
+    <pre class="html"><code data-trim data-noescape><span class="green">HEAD</span> /notes/films
+    </code></pre>
+    <pre class="html"><code data-trim data-noescape><span class="green">200</span> Ok
+
+<span class="red">404</span> Not found
+    </code></pre>
+</section>
+
+<section>
+    <h2>OPTIONS</h2>
+    <p>Запрашивает правила взаимодействия, например, доступные методы</p>
+    <pre class="html"><code data-trim data-noescape><span class="green">OPTIONS</span> /search
+    </code></pre>
+    <pre class="html"><code data-trim data-noescape>
+<span class="green">204</span> No content
+<span class="magenta">Allow:</span> OPTIONS, GET, HEAD
+    </code></pre>
+    <pre class="html"><code data-trim data-noescape><span class="green">POST</span> /search
+    </code></pre>
+    <pre class="html"><code data-trim data-noescape>
+<span class="green">405</span> Method not allowed
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2>Идемпотентность</h2>
+</section>
+
+<section class="center">
+    <p>Один и тот же запрос приводит к одному и тому же состоянию</p>
+</section>
+
+<section class="center">
+    <pre class="html"><code data-noescape>
+                <span class="">GET</span>       – <span class="green">да <span class="grey">(безопасный)</span></span>
+                <span class="">OPTIONS</span>   – <span class="green">да <span class="grey">(безопасный)</span></span>
+                <span class="">HEAD</span>      – <span class="green">да <span class="grey">(безопасный)</span></span>
+                <span class="">POST</span>      – <span class="red">нет</span>
+                <span class="">PUT</span>       – <span class="green">да</span>
+                <span class="">DELETE</span>    – <span class="green">да</span>
+                <span class="">PATCH</span>     – <span class="red">нет</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Связанность</p>
+</section>
+
+<section>
+    <h2>Location</h2>
+    <pre class="html"><code data-trim data-noescape>POST /notes HTTP/1.1
+Accept: application/json
+Accept-Encoding: gzip, deflate
+Host: localhost:5000
+
+{
+    "name": "films",
+    "text": "..."
+}
+    </code></pre>
+    <pre class="html fragment"><code data-trim data-noescape>
+
+HTTP/1.1 201 Created
+<span class="red">Location: /notes/films</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Hypertext As The Engine Of Application State</h2>
+    <pre class="html"><code data-trim data-noescape>GET / HTTP/1.1
+Host: api.github.com
+
+HTTP/1.1 200 Ok
+
+<span class="red">{
+    current_user_url: "https://api.github.com/user",
+    gists_url: "https://api.github.com/gists{/gist_id}"
+}</span>
+</code></pre>
+</section>
+
+<section>
+    <h2><a href="http://stateless.co/hal_specification.html">Hypertext Application Language</a></h2>
+
+    <pre class="html"><code data-trim data-noescape>GET /notes HTTP/1.1
+
+HTTP/1.1 200 Ok
+Accept: <span class="red">application/hal+json</span>
+
+{
+    "notes": [
+        { "name": "films" },
+        { "name": "games" }
+    ],
+    <span class="red">"_links"</span>: {
+        "self": { "href": "/notes" },
+        "next": { "href": "/notes?page=2" },
+        "find": { "href": "/notes/{?id}", "templated": true }
+    }
+}</code></pre>
+</section>
+
+
+
+<section class="center">
+    <p><a href="https://pages.apigee.com/rs/apigee/images/api-design-ebook-2012-03.pdf">Web API Design</a><br>Brian Mulloy</p>
+    <p><a href="http://www.restapitutorial.com/">REST API Tutorial</a></p>
+</section>
+
+<section class="center">
+    <h1><a href="https://xhr.spec.whatwg.org/">XMLHttpRequest</a></h1>
+</section>
+
+<section>
+    <h2>XMLHttpRequest</h2>
+    <pre class="javascript"><code>const xhr = new XMLHttpRequest();
+
+xhr.open('GET', '/notes');
+
+xhr.send();
+
+xhr.abort();</code></pre>
+</section>
+
+<section>
+    <h2>xhr.onreadystatechange</h2>
+    <pre class="flat"><code>xhr.onreadystatechange = () => {
+    if (xhr.readyState !== 4) {
+        return;
+    }
+
+    if (xhr.status === 200) {
+        console.log(xhr.responseText);
+    }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>xhr.readyState</h2>
+    <pre class="html"><code data-noescape>
+            UNSENT              <span class="green">0</span>  <span class="grey">начальное состояние</span>
+            OPENED              <span class="green">1</span>  <span class="grey">вызван open</span>
+            HEADERS_RECEIVED    <span class="green">2</span>  <span class="grey">получены заголовки</span>
+            LOADING             <span class="green">3</span>  <span class="grey">загружается тело</span>
+            DONE                <span class="green">4</span>  <span class="grey">запрос завершён</span>
+    </code></pre>
+    <p><span class="blue">0</span> → <span class="blue">1</span> → <span class="blue">2</span> → <span class="blue">3</span> → … → <span class="blue">3</span> → <span class="blue">4</span></p>
+</section>
+
+<section>
+    <h2>xhr.setRequestHeader</h2>
+    <pre class="flat"><code data-noescape>xhr.setRequestHeader('Content-Type', 'application/json');
+    </code></pre>
+</section>
+
+<section>
+    <h2>xhr.getResponseHeader</h2>
+    <pre class="javascript"><code data-noescape>xhr.getResponseHeader('Content-Type'); // text/html
+    </code></pre>
+</section>
+
+<section>
+    <h2>xhr.timeout</h2>
+    <pre><code data-noescape>xhr.timeout = 30000; // 30s
+
+xhr.ontimeout = () => {
+    console.log('Try again later');
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>FormData</h2>
+    <pre><code class="html">&lt;form name="notes"&gt;
+  &lt;input name="name"&gt;
+  &lt;input name="text"&gt;
+&lt;/form&gt;
+    </code></pre>
+    <pre class="fragment"><code>const xhr = new XMLHttpRequest();
+const formData = new FormData(document.forms.notes);
+
+formData.append('hiddenField', 'hiddenValue');
+
+xhr.open('POST', '/notes');
+xhr.send(formData);
+    </code></pre>
+</section>
+
+<section>
+    <h2>FormData</h2>
+    <pre><code class="html" data-noescape>&lt;form name="notes"&gt;
+  &lt;input name="name"&gt;
+  &lt;input name="text"&gt;
+  &lt;input type="file"&gt;</span>
+&lt;/form&gt;</code></pre>
+    <pre class="fragment"><code data-noescape>const xhr = new XMLHttpRequest();
+const notes = document.forms.notes;
+const formData = new FormData(notes);
+
+formData.append('file', notes.elements[3].file[0]);
+
+xhr.open('POST', '/notes');
+xhr.send(formData);
+    </code></pre>
+</section>
+
+<section>
+    <h2>Download progress</h2>
+    <pre class="flat"><code>xhr.onprogress = event => { // Every 50 ms
+  console.log(event.loaded); // Bytes
+  console.log(event.total); // Content-Length || 0
+};
+    </code></pre>
+</section>
+
+<section class="center">
+    <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest">Using XMLHttpRequest</a></p>
+    <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects">Using FormData Objects</a></p>
+</section>
+
+<section class="center">
+    <h1>Cross Origin Resurce Sharing</h1>
+</section>
+
+<section class="center">
+    <p>Механизм ограничения доступа к ресурсам одного источника (origin) при запросах с другого</p>
+</section>
+
+<section class="center">
+    <p>origin = <span class="blue">scheme</span> + <span class="blue">host</span> + <span class="blue">port</span></p>
+</section>
+
+<section class="center">
+    <p><span class="green">GET</span>, <span class="green">POST</span>, <span class="green">HEAD</span>, <span class="red">DELETE</span></p>
+</section>
+
+<section class="center">
+    <p class="">
+        <span class="green">Accept</span><br>
+        <span class="green">Accept-Language</span><br>
+        <span class="green">Content-Language</span><br>
+        <span class="green">Content-Type</span><br>
+        <span class="red">Cookie</span><br>
+    </p>
+</section>
+
+<section>
+    <h2>Простые запросы</h2>
+    <pre class="html"><code data-trim data-noescape>
+GET /notes HTTP/1.1
+Host: awesomenotes.com
+<span class="red">Origin: http://notesdashboard.ru</span>
+    </code></pre>
+
+    <pre class="html fragment"><code data-trim data-noescape>
+HTTP/1.1 200 Ok
+Content-Type: text/html
+<span class="red">Access-Control-Allow-Origin: http://notesdashboard.ru</span>
+    </code></pre>
+
+    <pre class="html fragment"><code data-trim data-noescape>
+HTTP/1.1 200 Ok
+Content-Type: text/html
+<span class="red">Access-Control-Allow-Origin: *</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Сложные запросы</h2>
+    <pre class="html"><code data-trim data-noescape>
+PUT /notes/films HTTP/1.1
+Host: awesomenotes.com
+<span class="red">Origin: http://notesdashboard.ru</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Сложные запросы</h2>
+    <pre class="html "><code data-trim data-noescape>
+    <span class="red">OPTIONS</span> /notes/films HTTP/1.1
+    Host: awesomenotes.com
+    <span class="red">Access-Control-Request-Method: PUT</span>
+    <span class="red">Access-Control-Request-Headers: accept-encoding</span>
+    </code></pre>
+
+    <pre class="html fragment"><code data-trim data-noescape>
+        HTTP/1.1 204 No content
+        <span class="red">Access-Control-Allow-Methods: PUT</span>
+        <span class="red">Access-Control-Allow-Headers: accept-language, origin, accept-encoding</span>
+        <span class="red">Access-Control-Max-Age: 60000</span>
+    </code></pre>
+
+    <pre class="html fragment"><code data-trim data-noescape>
+PUT /notes/films HTTP/1.1
+Host: awesomenotes.com
+<span class="red">Origin: http://notesdashboard.ru</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <p><a href="https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy">Same-origin policy</a></p>
+    <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS">HTTP access control (CORS)</a></p>
+    <p><a href="https://www.w3.org/TR/cors/">Cross-Origin Resource Sharing</a></p>
+</section>
+
+<section class="center">
+    <h1><a href="https://fetch.spec.whatwg.org/">Fetch</a></h1>
+</section>
+
+<section>
+    <h2>Fetch</h2>
+    <pre class="javascript"><code>const promise = fetch(url[, options]);
+    </code></pre>
+</section>
+
+<section>
+    <h2>options</h2>
+    <pre class="html"><code>{
+    methtod: 'POST',
+    headers: {
+        'Accept': 'application/json'
+    },
+    body: new FormData(),
+    mode: 'same-origin', // cors, no-cors
+    cache: 'no-cache'
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Promise</h2>
+    <pre class="flat"><code>fetch('/notes')
+    .then(response => {
+        response.headers.get('Content-Type'); // application/json
+
+        response.status; // 200
+
+        return response.json();
+    })
+    .then(notes => {
+        console.info(notes);
+    })
+    .catch(error => {
+        console.error(error);
+    });
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Нет удобной возможности следить за прогрессом</span>
+    <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController/">Возможность отменить запрос</a><br> есть не во всех браузерах</span>
+</section>
+
+<section class="center">
+    <p><a href="https://hacks.mozilla.org/2015/03/this-api-is-so-fetching/">This API is so Fetching!</a></p>
+</section>
+
+<section class="center">
+    <h1><a href="https://tools.ietf.org/html/rfc6455">WebSockets</a></h1>
+</section>
+
+<section class="center">
+    <p>Протокол полнодуплексной связи поверх TCP-соединения</p>
+</section>
+
+<section>
+    <h2>Сервер</h2>
+    <pre class="javascript"><code data-noescape data-trim>
+        const express = require('express');
+        const http = require('http');
+        const ws = require('ws');
+
+        const requestHandler = express();
+        const httpServer = http.Server(requestHandler);
+        const websocketServer = new ws.Server({ server: httpServer });
+
+        websocketServer.on('connection', socket => {
+            socket.send('Hello, Client!');
+        });
+
+        httpServer.listen(8080);
+    </code></pre>
+</section>
+
+<section>
+    <h2>Клиент</h2>
+    <pre class="javascript"><code data-noescape data-trim>
+        const socket = new WebSocket('ws://localhost:8080/socket');
+
+        socket.onmessage = messageEvent => {
+            console.log(messageEvent.data); // Hello, Client!
+        };
+    </code></pre>
+    <pre class="javascript fragment"><code data-noescape data-trim>
+        socket.onopen = () => {
+            socket.send('Hello, Server!');
+        };
+    </code></pre>
+</section>
+
+<section>
+    <h2>Сервер</h2>
+    <pre class="javascript"><code data-noescape data-trim>
+        websocketServer.on('connection', socket => {
+            socket.send('Hello, Client!');
+
+            socket.on('message', message => {
+                console.log(message);
+            });
+        });
+    </code></pre>
+</section>
+
+<section>
+    <h2>Бинарные данные</h2>
+    <pre class="javascript"><code data-noescape data-trim>
+        socket.onopen = () => {
+            socket.send(document.forms[0].elements[0].files[0]);
+        };
+    </code></pre>
+</section>
+
+<section>
+    <h2>Бинарные данные</h2>
+    <pre class="javascript"><code data-noescape data-trim>
+        socket.on('message', message => {
+            if (message instanceof Buffer) {
+                // ...
+            }
+        });
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Инициализация начинается с обычного HTTP <span class="green">GET</span> запроса</p>
+</section>
+
+<section>
+    <h2>Инициализация</h2>
+    <pre class="html"><code data-trim data-noescape>
+        GET /socket HTTP/1.1
+        <span class="red">Connection: Upgrade</span>
+        <span class="red">Upgrade: websocket</span>
+    </code></pre>
+
+    <pre class="fragment html"><code data-trim data-noescape>
+        HTTP/1.1 <span class="red">101 Switching Protocols</span>
+        Connection: Upgrade
+        Upgrade: websocket
+    </code></pre>
+</section>
+
+<section>
+    <h2>Инициализация</h2>
+    <pre class="html"><code data-trim data-noescape>
+        GET /socket HTTP/1.1
+        Connection: Upgrade
+        Upgrade: websocket
+        <span class="red">Sec-WebSocket-Version: 13</span>
+        <span class="red">Sec-WebSocket-Key: HjqL8dt/Sx6poK1PwQbtkg=</span>
+        <span class="red">Sec-WebSocket-Extensions: permessage-deflate</span>
+    </code></pre>
+
+    <pre class="html"><code data-trim data-noescape>
+        HTTP/1.1 101 Switching Protocols
+        Connection: Upgrade
+        Upgrade: websocket
+        <span class="red">Sec-WebSocket-Accept: IffTcaXvslUQ/19cSA4qNIUjHJc=</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Подвержен проблеме <span class="red">Head-of-Line Blocking</span></p>
+</section>
+
+<section class="center">
+    <p>Необходимо <span class="red">на уровне приложения</span> реализовывать кеширование и другие механизмы, которые в HTTP есть из коробки</p>
+</section>
+
+<section class="center">
+    <p>HTTP оптимизирован для коротких периодических сессий, и как следствие вся инфраструктура вокруг: сервера, прокси-сервера, балансеры</p>
+</section>
+
+<section class="center">
+    <h2>Nginx</h2>
+    <pre class="html"><code data-noescape data-trim>
+location /socket {
+    ...
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade websocket;
+    proxy_set_header Connection upgrade;
+    <span class="red">proxy_read_timeout 3600;
+    proxy_send_timeout 3600;</span>
+}
+    </code></pre>
+</section>
+
+<section class="center">
+    <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers">Writing WebSocket servers</a></p>
+</section>
+
+<section class="center">
+    <p><a href="https://hpbn.co/">High Performance Browser Networking</a><br>Ilya Grigorik</p>
+</section>
+
+</div></div>
+
+<script src="../../@lib/core.js"></script>
+</body>
+</html>

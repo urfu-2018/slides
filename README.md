@@ -38,5 +38,6 @@
 1. [Node.js I](https://urfu-2018.github.io/slides/webdev/01-nodejs/) ([pdf](https://urfu-2018.github.io/slides/webdev/01-nodejs/index.pdf))
 2. [Архитектура приложения](https://urfu-2018.github.io/slides/webdev/02-express/) ([pdf](https://urfu-2018.github.io/slides/webdev/02-express/index.pdf))
 3. [Эксплуатация приложения](https://urfu-2018.github.io/slides/webdev/03-operating/) ([pdf](https://urfu-2018.github.io/slides/webdev/03-operating/index.pdf))
-4. [Базы данных, часть I](https://urfu-2018.github.io/slides/webdev/04-databases/) ([pdf](https://urfu-2018.github.io/slides/webdev/04-databases/index.pdf))
-5. [Базы данных, часть II](https://urfu-2018.github.io/slides/webdev/05-databases/) ([pdf](https://urfu-2018.github.io/slides/webdev/05-databases/index.pdf))
+4. [Базы данных I](https://urfu-2018.github.io/slides/webdev/04-databases/) ([pdf](https://urfu-2018.github.io/slides/webdev/04-databases/index.pdf))
+5. [Базы данных II](https://urfu-2018.github.io/slides/webdev/05-databases/) ([pdf](https://urfu-2018.github.io/slides/webdev/05-databases/index.pdf))
+6. [Клиент-сервер I](https://urfu-2018.github.io/slides/webdev/06-client-server/) ([pdf](https://urfu-2018.github.io/slides/webdev/06-client-server/index.pdf))
