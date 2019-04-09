@@ -41,3 +41,4 @@
 4. [Базы данных I](https://urfu-2018.github.io/slides/webdev/04-databases/) ([pdf](https://urfu-2018.github.io/slides/webdev/04-databases/index.pdf))
 5. [Базы данных II](https://urfu-2018.github.io/slides/webdev/05-databases/) ([pdf](https://urfu-2018.github.io/slides/webdev/05-databases/index.pdf))
 6. [Клиент-сервер I](https://urfu-2018.github.io/slides/webdev/06-client-server/) ([pdf](https://urfu-2018.github.io/slides/webdev/06-client-server/index.pdf))
+7. [Клиент-сервер II](https://urfu-2018.github.io/slides/webdev/07-client-server-2/) ([pdf](https://urfu-2018.github.io/slides/webdev/07-client-server-2/index.pdf))
