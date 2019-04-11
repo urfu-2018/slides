@@ -1,0 +1,1176 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Просмотр презентаций</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+</head><body class="white"><div class="reveal"><div class="slides">
+
+<section class="center">
+    <h1>Node.js</h1>
+    <h2>Часть II</h2>
+</section>
+
+<section>
+    <h2>Сегодня</h2>
+    <ul>
+        <li class="fragment">Работа с файлами</li>
+        <li class="fragment">Потоки (Stream)</li>
+        <li class="fragment">Процессы (Child Processes)</li>
+        <li class="fragment">Потоки (Worker Threads)</li>
+        <li class="fragment">Отладка</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h1>Работа с файлами</h1>
+</section>
+
+
+<section>
+    <h2>Buffer</h2>
+    <h2 class="subheading"><small>Массив байт</small></h2>
+    <p class="left">Класс для работы с <strong>бинарными данными</strong></p>
+    <p class="left">Буфер можно рассматривать как массив чисел, ограниченных диапазоном <strong>0-255</strong></p>
+    <p class="left">Каждое число представляет <strong>байт</strong></p>
+</section>
+
+<section>
+    <h2>Buffer</h2>
+    <h2 class="subheading"><small>Инициализация</small></h2>
+    <pre><code class="fragment typescript" data-noescape data-trim>
+        // Выделяем буфер заданного размера
+        const buffer = Buffer.alloc(5);
+
+        console.log(buffer);
+
+        // &lt;Buffer 00 00 00 00 00>
+    </code></pre>
+</section>
+
+<section data-state="alloc-unsafe">
+    <h2>Buffer</h2>
+    <h2 class="subheading"><small>Инициализация</small></h2>
+    <pre><code class="typescript" data-noescape data-trim>
+        // Быстрое выделение буфера
+        const buffer = Buffer.allocUnsafe(5);
+
+        console.log(buffer);
+
+        // &lt;Buffer <span id="buffer" class="hljs-comment">00 00 00 00 00</span>>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Buffer</h2>
+    <h2 class="subheading"><small>Инициализация</small></h2>
+    <pre><code class="typescript" data-noescape data-trim>
+        // Выделяем буфер заданного размера, заполняем данными
+        const buffer = Buffer.alloc(5);
+
+        buffer.fill('ab')
+
+        console.log(buffer);
+
+        // &lt;Buffer 61 62 61 62 61>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Buffer</h2>
+    <h2 class="subheading"><small>Инициализация</small></h2>
+    <pre><code class="typescript" data-noescape data-trim>
+        // Выделяем буфер заданного размера, заполняем данными
+        const buffer = Buffer.alloc(5, 'ab');
+
+
+
+        console.log(buffer);
+
+        // &lt;Buffer 61 62 61 62 61>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Buffer</h2>
+    <h2 class="subheading"><small>Инициализация</small></h2>
+    <pre><code class="typescript" data-noescape data-trim>
+        // Создаем буфер из переданного объекта
+        const buffer = Buffer.from('Hello, world!');
+
+        console.log(buffer);
+
+        // &lt;Buffer 48 65 6c 6c 6f 2c 20 77 6f 72 6c 64 21>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Buffer</h2>
+    <h2 class="subheading"><small>Кодировки</small></h2>
+    <pre class="javascript"><code data-noescape data-trim>
+        const msg = Buffer.from([
+            0x2f, 0x04, 0x3d, 0x04, 0x34, 0x04,
+            0x35, 0x04, 0x3a, 0x04, 0x41, 0x04
+        ]);
+        <span class="fragment">
+        msg.toString(); // По умолчанию: utf-8
+        // \u0004=\u00044\u00045\u0004:\u0004A\u0004
+        </span>
+        <span class="fragment">
+        msg.toString('ucs-2');
+        // Яндекс
+        </span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Работа с файлами</h2>
+    <h2 class="subheading"><small>Чтение</small></h2>
+    <pre class="typescript"><code data-noescape data-trim>
+        import fs from 'fs';
+
+        fs.readFile(__filename, (error: Error, data: Buffer) => {
+            console.log(data);
+        });
+    </code></pre>
+</section>
+
+<section>
+    <h2>Работа с файлами</h2>
+    <h2 class="subheading"><small>Чтение</small></h2>
+    <pre class="typescript"><code data-noescape data-trim>
+        import fs from <mark>'fs'</mark>;
+
+        fs.readFile(__filename, (error: Error, data: Buffer) => {
+            console.log(data);
+        });
+    </code></pre>
+    <br/>
+    <p><strong>fs</strong> – модуль для работы с файловой системой</p>
+</section>
+
+<section>
+    <h2>Работа с файлами</h2>
+    <h2 class="subheading"><small>Чтение</small></h2>
+    <pre class="typescript"><code data-noescape data-trim>
+        import fs from 'fs';
+
+        fs.readFile(<mark>__filename</mark>, (error: Error, data: Buffer) => {
+            console.log(data);
+        });
+    </code></pre>
+    <br/>
+    <p><strong>__filename</strong> – полный путь до текущего файла</p>
+</section>
+
+<section>
+    <h2>Работа с файлами</h2>
+    <h2 class="subheading"><small>Чтение</small></h2>
+    <pre class="typescript"><code data-noescape data-trim>
+        import fs from 'fs';
+
+        fs.readFile(__filename, (<mark>error: Error</mark>, data: Buffer) => {
+            console.log(data);
+        });
+    </code></pre>
+</section>
+
+<section>
+    <h2>Работа с файлами</h2>
+    <h2 class="subheading"><small>Чтение</small></h2>
+    <pre class="typescript"><code data-noescape data-trim>
+        import fs from 'fs';
+
+        fs.readFile(__filename, (error: Error, <mark>data: Buffer</mark>) => {
+            console.log(data);
+        });
+    </code></pre>
+</section>
+
+<section>
+    <h2>Работа с файлами</h2>
+    <h2 class="subheading"><small>Чтение</small></h2>
+    <pre class="typescript"><code data-noescape data-trim>
+        import fs from 'fs';
+
+        fs.readFile(__filename, (error: Error, data: Buffer) => {
+            <mark>console.log(data);</mark>
+        });
+
+        // &lt;Buffer 69 6d 70 6f 72 74 20 2a ... 110 more bytes>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Работа с файлами</h2>
+    <h2 class="subheading"><small>Из буфера в текст</small></h2>
+    <pre class="typescript"><code data-trim style="font-size: 22px">
+        fs.readFile(__filename, (error: Error, data: Buffer) => {
+             console.log(data.toString('utf-8'));
+        });
+    </code></pre>
+    <pre class="fragment typescript"><code data-trim style="font-size: 22px">
+        fs.readFile(__filename, (error: Error, data: Buffer) => {
+             console.log(data.toString());
+        });
+    </code></pre>
+    <pre class="fragment typescript"><code data-trim style="font-size: 22px">
+        fs.readFile(__filename, 'utf-8', (error: Error, data: string) => {
+            console.log(data);
+        });
+    </code></pre>
+</section>
+
+<section>
+    <h2>Работа с файлами</h2>
+    <h2 class="subheading"><small>Запись</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 24px">
+        import fs from 'fs';
+
+        const data = 'Hello, world!';
+
+        fs.writeFile('file.txt', Buffer.from(data), (error: Error) => {
+            if (err) {
+                process.exit(1);
+            }
+        });
+    </code></pre>
+</section>
+
+<section>
+    <h2>Работа с файлами</h2>
+    <h2 class="subheading"><small>Запись</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 24px">
+        import fs from 'fs';
+
+        const data = 'Hello, world!';
+
+        fs.writeFile('file.txt', data, 'utf-8', (error: Error) => {
+            if (err) {
+                process.exit(1);
+            }
+        });
+    </code></pre>
+</section>
+
+<section>
+    <h2>Работа с файлами</h2>
+    <h2 class="subheading"><small>Запись</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 24px">
+        import fs from 'fs';
+
+        const data = 'Hello, world!';
+
+        fs.writeFile('file.txt', data, (error: Error) => {
+            if (err) {
+                process.exit(1);
+            }
+        });
+        <span class="fragment">
+        fs.appendFile('file.txt', 'And also hello to UrFU', 'utf-8');
+        </span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>Работа с файлами</h2>
+    <h2 class="subheading"><small>Синхронные аналоги</small></h2>
+    <pre class="javascript"><code>fs.readFileSync(...);</code></pre>
+    <pre class="javascript"><code>fs.writeFileSync(...);</code></pre>
+    <pre class="javascript"><code>fs.appendFileSync(...);</code></pre>
+
+    <p class="fragment"><strong class="red">Блокируют поток выполнения программы</strong></p>
+</section>
+
+<section>
+    <h2>Работа с файлами</h2>
+    <h2 class="subheading"><small>Promise</small></h2>
+    <pre class="javascript"><code>fs.promises.readFile(...);</code></pre>
+    <pre class="javascript"><code>fs.promises.writeFile(...);</code></pre>
+    <pre class="javascript"><code>fs.promises.appendFile(...);</code></pre>
+
+    <p class="fragment"><strong class="red">Stability: 1 - Experimental</strong></p>
+</section>
+
+<section>
+    <h2>Работа с файлами</h2>
+    <pre class="typescript"><code data-trim>
+        fs.readFile(__filename, (error: Error, data: Buffer) => {
+            console.log(data);
+        });
+    </code></pre>
+    <p>Данные записываются в <strong>Buffer</strong></p>
+    <p>Только когда <strong>весь</strong> файл прочитан, данные передаются в обработчик</p>
+</section>
+
+<section>
+    <img style="margin-top: 200px; margin-left: 100px" class="invert" src="images/buffer.png" alt="Buffer">
+</section>
+
+<section>
+    <img style="margin-top: 200px; margin-left: 100px" class="invert" src="images/stream.png" alt="Stream">
+</section>
+
+<section class="center">
+    <h1>Потоки</h1>
+    <h2>Stream</h2>
+</section>
+
+<section>
+    <h2>Потоки</h2>
+    <p>Данные готовы для обработки, как только будет прочитан <strong>первый</strong> chunk</p>
+    <p class="left fragment"><span class="green">✓</span> Экономия ресурсов</p>
+    <p class="left fragment"><span class="green">✓</span> Экономия времени</p>
+</section>
+
+<section>
+    <h2>Архиватор</h2>
+    <pre class="typescript"><code data-trim data-noescape>
+        import fs from 'fs';
+        import zlib from 'zlib';
+
+        fs.readFile(__filename, (_, fileBuffer: Buffer) => {
+            zlib.gzip(fileBuffer, (_, gzipBuffer: Buffer) => {
+                fs.writeFile(__filename + '.gz', gzipBuffer, () => {
+                    console.log('Success');
+                });
+            });
+        });
+    </code></pre>
+</section>
+
+<section>
+    <h2>Еще одна проблема</h2>
+    <p><strong>Buffer</strong> в V8 не может быть больше<br> 0x3FFFFFFF bytes ~<strong>1 Gb</strong></p>
+    <p class="fragment red"><strong>File size is greater than possible Buffer: 0x3FFFFFFF bytes</strong>
+    </p>
+</section>
+
+<section>
+    <h2>Архиватор</h2>
+    <h2 class="subheading"><small>Используем потоки</small></h2>
+    <pre class="typescript"><code data-trim>
+        import fs from 'fs';
+        import zlib from 'zlib';
+
+        // read | gzip | write
+        fs.createReadStream(__filename)
+          .pipe(zlib.createGzip())
+          .pipe(fs.createWriteStream(__filename + '.gz'))
+          .on('finish', () => console.log('Success'))
+          .on('error', () => console.error('Error!');
+    </code></pre>
+</section>
+
+<section>
+    <h2>Архиватор</h2>
+    <h2 class="subheading"><small>Используем потоки</small></h2>
+    <pre class="typescript"><code data-noescape data-trim>
+        import fs from 'fs';
+        import zlib from 'zlib';
+
+        // <mark>read</mark> | gzip | write
+        fs.<mark>createReadStream(__filename)</mark>
+          .pipe(zlib.createGzip())
+          .pipe(fs.createWriteStream(__filename + '.gz'))
+          .on('finish', () => console.log('Success'))
+          .on('error', () => console.error('Error!');
+    </code></pre>
+</section>
+
+<section>
+    <h2>Архиватор</h2>
+    <h2 class="subheading"><small>Используем потоки</small></h2>
+    <pre class="typescript"><code data-noescape data-trim>
+        import fs from 'fs';
+        import zlib from 'zlib';
+
+        // read <mark>|</mark> gzip | write
+        fs.createReadStream(__filename)
+          .<mark>pipe</mark>(zlib.createGzip())
+          .pipe(fs.createWriteStream(__filename + '.gz'))
+          .on('finish', () => console.log('Success'))
+          .on('error', () => console.error('Error!');
+    </code></pre>
+</section>
+
+<section>
+    <h2>Архиватор</h2>
+    <h2 class="subheading"><small>Используем потоки</small></h2>
+    <pre class="typescript"><code data-noescape data-trim>
+        import fs from 'fs';
+        import zlib from 'zlib';
+
+        // read | <mark>gzip</mark> | write
+        fs.createReadStream(__filename)
+          .pipe(<mark>zlib.createGzip()</mark>)
+          .pipe(fs.createWriteStream(__filename + '.gz'))
+          .on('finish', () => console.log('Success'))
+          .on('error', () => console.error('Error!');
+    </code></pre>
+</section>
+
+<section>
+    <h2>Архиватор</h2>
+    <h2 class="subheading"><small>Используем потоки</small></h2>
+    <pre class="typescript"><code data-noescape data-trim>
+        import fs from 'fs';
+        import zlib from 'zlib';
+
+        // read | gzip <mark>|</mark> write
+        fs.createReadStream(__filename)
+          .pipe(zlib.createGzip())
+          .<mark>pipe</mark>(fs.createWriteStream(__filename + '.gz'))
+          .on('finish', () => console.log('Success'))
+          .on('error', () => console.error('Error!');
+    </code></pre>
+</section>
+
+<section>
+    <h2>Архиватор</h2>
+    <h2 class="subheading"><small>Используем потоки</small></h2>
+    <pre class="typescript"><code data-noescape data-trim>
+        import fs from 'fs';
+        import zlib from 'zlib';
+
+        // read | gzip | <mark>write</mark>
+        fs.createReadStream(__filename)
+          .pipe(zlib.createGzip())
+          .pipe(<mark>fs.createWriteStream(__filename + '.gz')</mark>)
+          .on('finish', () => console.log('Success'))
+          .on('error', () => console.error('Error!');
+    </code></pre>
+</section>
+
+<section>
+    <h2>Архиватор</h2>
+    <h2 class="subheading"><small>Используем потоки</small></h2>
+    <pre class="typescript"><code data-noescape data-trim>
+        import fs from 'fs';
+        import zlib from 'zlib';
+
+        // read | gzip | write
+        fs.createReadStream(__filename)
+          .pipe(zlib.createGzip())
+          .pipe(fs.createWriteStream(__filename + '.gz'))
+          .<mark>on</mark>('finish', () => console.log('Success'))
+          .<mark>on</mark>('error', () => console.error('Error!');
+    </code></pre>
+    <p>
+        Stream – реализует методы EventEmitter
+    </p>
+</section>
+
+<section>
+    <h2>Виды потоков</h2>
+    <p class="left"><strong>Readable</strong> - для чтения</p>
+    <p class="left"><strong>Writable</strong> - для записи</p>
+    <p class="left"><strong>Duplex</strong> - для чтения и записи</p>
+    <p class="left"><strong>Transform</strong> - Duplex, но с преобразованием</p>
+</section>
+
+<section>
+    <h2>Виды потоков</h2>
+    <h2 class="subheading"><small>Readable</small></h2>
+    <pre class="typescript"><code data-trim>
+        const s: fs.ReadStream = fs.createReadStream(__filename);
+
+        http.request({ hostname: 'yandex.ru' })
+            .on('response', (res: http.IncomingMessage) => {
+                res.on('data', (chunk: Buffer) => {});
+                res.on('end', () => {});
+            });
+    </code></pre>
+    <ul style="font-size: 30px; line-height: 14px">
+        <li class="fragment"><strong>data</strong> – при получении чанка данных</li>
+        <li class="fragment"><strong>end</strong> – при завершении данных в потоке</li>
+        <li class="fragment"><strong>close</strong> – при закрытии потока</li>
+        <li class="fragment"><strong>error</strong> – в случае ошибки</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Виды потоков</h2>
+    <h2 class="subheading"><small>Writable</small></h2>
+    <pre class="typescript"><code data-trim>
+        const s: fs.WriteStream = fs.createWriteStream(__filename);
+
+        server.on('request', (req, res: http.ServerResponse) => {
+            res.write('Hello, ');
+            res.write('World!');
+            res.end();
+        });
+    </code></pre>
+    <ul style="font-size: 30px; line-height: 14px">
+        <li class="fragment"><strong>error</strong> – в случае ошибки</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Виды потоков</h2>
+    <h2 class="subheading"><small>Duplex, Transform</small></h2>
+    <ul>
+        <li>Сокеты</li>
+        <li class="fragment">Криптография</li>
+        <li class="fragment">Сжатие и кодирование</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h1>Перерыв</h1>
+</section>
+
+<section class="center">
+    <h1>Процессы</h1>
+    <h2>Child Process</h2>
+</section>
+
+<section>
+    <h2>Запускаем процесс</h2>
+    <h2 class="subheading"><small>child_process.exec</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 23px">
+        import { exec } from 'child_process';
+
+        const ls = exec('ls -l /home',
+            (error: Error, stdout: string, stderr: string) => {
+                if (error) {
+                    console.error(`exec error: ${error}`);
+                }
+
+                console.log(`stdout: ${stdout}`);
+                console.log(`stderr: ${stderr}`);
+            });
+    </code></pre>
+</section>
+
+<section>
+    <h2>Запускаем процесс</h2>
+    <h2 class="subheading"><small>child_process.exec</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 23px">
+        import { <mark>exec</mark> } from 'child_process';
+
+        const ls = <mark>exec</mark>('ls -l /home',
+            (error: Error, stdout: string, stderr: string) => {
+                if (error) {
+                    console.error(`exec error: ${error}`);
+                }
+
+                console.log(`stdout: ${stdout}`);
+                console.log(`stderr: ${stderr}`);
+            });
+    </code></pre>
+</section>
+
+<section>
+    <h2>Запускаем процесс</h2>
+    <h2 class="subheading"><small>child_process.exec</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 23px">
+        import { exec } from 'child_process';
+
+        const ls = exec('ls -l /home',
+            (<mark>error: Error</mark>, stdout: string, stderr: string) => {
+                if (error) {
+                    console.error(`exec error: ${error}`);
+                }
+
+                console.log(`stdout: ${stdout}`);
+                console.log(`stderr: ${stderr}`);
+            });
+    </code></pre>
+</section>
+
+<section>
+    <h2>Запускаем процесс</h2>
+    <h2 class="subheading"><small>child_process.exec</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 23px">
+        import { exec } from 'child_process';
+
+        const ls = exec('ls -l /home',
+            (error: Error, <mark>stdout: string, stderr: string</mark>) => {
+                if (error) {
+                    console.error(`exec error: ${error}`);
+                }
+
+                console.log(`stdout: ${stdout}`);
+                console.log(`stderr: ${stderr}`);
+            });
+    </code></pre>
+
+</section>
+
+<section>
+    <h2>Запускаем процесс</h2>
+    <h2 class="subheading"><small>child_process.exec</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 23px">
+        import { exec } from 'child_process';
+
+        const ls = exec('ls -l /home',
+            (error: Error, stdout: string, stderr: string) => {
+                if (error) {
+                    console.error(`exec error: ${error}`);
+                }
+
+                console.log(`stdout: ${stdout}`);
+                console.log(`stderr: ${stderr}`);
+            });
+    </code></pre>
+    <p><strong class="red">Ждет, пока процесс завершится</strong></p>
+</section>
+
+<section>
+    <h2>Запускаем процесс</h2>
+    <h2 class="subheading"><small>child_process.spawn</small></h2>
+    <pre class="typescript"><code data-trim style="font-size: 23px">
+        import { spawn } from 'child_process';
+
+        const ls = spawn('ls', ['-l', '/home']);
+
+        ls.stdout.on('data', (data: string) => {
+          console.log(`stdout: ${data}`);
+        });
+
+        ls.stderr.on('data', (data: string) => {
+          console.log(`stderr: ${data}`);
+        });
+
+        ls.on('close', (code: number) => {
+          console.log(`child process exited with code ${code}`);
+        });
+    </code></pre>
+</section>
+
+<section>
+    <h2>Запускаем процесс</h2>
+    <h2 class="subheading"><small>child_process.spawn</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 23px">
+        import { <mark>spawn</mark> } from 'child_process';
+
+        const ls = <mark>spawn</mark>('ls', ['-l', '/home']);
+
+        ls.stdout.on('data', (data: string) => {
+          console.log(`stdout: ${data}`);
+        });
+
+        ls.stderr.on('data', (data: string) => {
+          console.log(`stderr: ${data}`);
+        });
+
+        ls.on('close', (code: number) => {
+          console.log(`child process exited with code ${code}`);
+        });
+    </code></pre>
+</section>
+
+<section>
+    <h2>Запускаем процесс</h2>
+    <h2 class="subheading"><small>child_process.spawn</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 23px">
+        import { spawn } from 'child_process';
+
+        const ls = spawn('ls', ['-l', '/home']);
+
+        ls.<mark>stdout</mark>.on('data', (data: string) => {
+          console.log(`stdout: ${data}`);
+        });
+
+        ls.<mark>stderr</mark>.on('data', (data: string) => {
+          console.log(`stderr: ${data}`);
+        });
+
+        ls.on('close', (code: number) => {
+          console.log(`child process exited with code ${code}`);
+        });
+    </code></pre>
+</section>
+
+<section>
+    <h2>Запускаем процесс</h2>
+    <h2 class="subheading"><small>child_process.spawn</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 23px">
+        import { spawn } from 'child_process';
+
+        const ls = spawn('ls', ['-l', '/home']);
+
+        ls.stdout.on('data', (data: string) => {
+          console.log(`stdout: ${data}`);
+        });
+
+        ls.stderr.on('data', (data: string) => {
+          console.log(`stderr: ${data}`);
+        });
+
+        <mark>ls.on</mark>('close', (code: number) => {
+          console.log(`child process exited with code ${code}`);
+        });
+    </code></pre>
+</section>
+
+<section>
+    <h2>ChildProcess</h2>
+    <h2 class="subheading"><small>События</small></h2>
+    <ul>
+        <li class="fragment"><strong>close</strong> – при закрытии ввода/вывода</li>
+        <li class="fragment"><strong>error</strong> – при ошибке работы с процессом</li>
+        <li class="fragment"><strong>exit</strong> – при завершении процесса</li>
+        <li class="fragment"><strong>message</strong> – новое сообщение</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h1>Потоки</h1>
+    <h2>Worker Threads</h2>
+</section>
+
+<section>
+    <h2>JavaScript</h2>
+    <h2 class="subheading"><small>Живем в одном потоке</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 22px">
+        import fs from 'fs';
+
+        fs.readFile(__filename, 'utf-8', (error: Error, data: string) => {
+            const lines = data.split('\n');
+
+            for (const line of lines) {
+                someComputation(line);
+            }
+        });
+    </code></pre>
+</section>
+
+<section>
+    <h2>JavaScript</h2>
+    <h2 class="subheading"><small>Живем в одном потоке</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 22px">
+        import fs from 'fs';
+
+        fs.readFile(__filename, 'utf-8', (error: Error, data: string) => {
+            const lines = data.split('\n');
+
+            for (const line of lines) {
+                <mark>someComputation</mark>(line);
+            }
+        });
+    </code></pre>
+</section>
+
+<section>
+    <h2>Worker Threads</h2>
+    <h2 class="subheading"><small>Hello, world!</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 22px">
+        import { Worker, isMainThread, parentPort } from 'worker_threads';
+
+        if (isMainThread) {
+            const worker = new Worker(__filename);
+
+            worker.on('message', (message: string) => {
+                console.log(message);
+            });
+        } else {
+            parentPort.postMessage('Hello, world!');
+        }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Worker Threads</h2>
+    <h2 class="subheading"><small>Hello, world!</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 22px">
+        import { Worker, isMainThread, parentPort } from 'worker_threads';
+
+        if (<mark>isMainThread</mark>) {
+            const worker = new Worker(__filename);
+
+            worker.on('message', (message: string) => {
+                console.log(message);
+            });
+        } else {
+            parentPort.postMessage('Hello, world!');
+        }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Worker Threads</h2>
+    <h2 class="subheading"><small>Hello, world!</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 22px">
+        import { Worker, isMainThread, parentPort } from 'worker_threads';
+
+        if (isMainThread) {
+            const worker = <mark>new Worker(__filename)</mark>;
+
+            worker.on('message', (message: string) => {
+                console.log(message);
+            });
+        } else {
+            parentPort.postMessage('Hello, world!');
+        }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Worker Threads</h2>
+    <h2 class="subheading"><small>Hello, world!</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 22px">
+        import { Worker, isMainThread, parentPort } from 'worker_threads';
+
+        if (isMainThread) {
+            const worker = new Worker(__filename);
+
+            <mark>worker.on</mark>('message', (message: string) => {
+                console.log(message);
+            });
+        } else {
+            parentPort.postMessage('Hello, world!');
+        }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Worker Threads</h2>
+    <h2 class="subheading"><small>Hello, world!</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 22px">
+        import { Worker, isMainThread, parentPort } from 'worker_threads';
+
+        if (isMainThread) {
+            const worker = new Worker(__filename);
+
+            worker.on('message', (message: string) => {
+                console.log(message);
+            });
+        } else {
+            <mark>parentPort.postMessage</mark>('Hello, world!');
+        }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Worker Threads</h2>
+    <h2 class="subheading"><small>Передача аргументов</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 18px">
+    import fs from 'fs';
+    import { Worker, isMainThread, parentPort, workerData } from 'worker_threads';
+
+    if (isMainThread) {
+        fs.readFile(__filename, 'utf-8', (error: Error, data: string) => {
+            const lines = data.split('\n');
+
+            for (const line of lines) {
+                const worker = new Worker(__filename, { workerData: line });
+
+                worker.on('message', console.log)
+            }
+        });
+    } else {
+        parentPort.postMessage(someComputation(workerData));
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Worker Threads</h2>
+    <h2 class="subheading"><small>Передача аргументов</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 18px">
+    import fs from 'fs';
+    import { Worker, isMainThread, parentPort, workerData } from 'worker_threads';
+
+    if (<mark>isMainThread</mark>) {
+        fs.readFile(__filename, 'utf-8', (error: Error, data: string) => {
+            const lines = data.split('\n');
+
+            for (const line of lines) {
+                const worker = new Worker(__filename, { workerData: line });
+
+                worker.on('message', console.log)
+            }
+        });
+    } else {
+        parentPort.postMessage(someComputation(workerData));
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Worker Threads</h2>
+    <h2 class="subheading"><small>Передача аргументов</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 18px">
+    import fs from 'fs';
+    import { Worker, isMainThread, parentPort, workerData } from 'worker_threads';
+
+    if (isMainThread) {
+        fs.<mark>readFile</mark>(__filename, 'utf-8', (error: Error, data: string) => {
+            const lines = data.split('\n');
+
+            for (const line of lines) {
+                const worker = new Worker(__filename, { workerData: line });
+
+                worker.on('message', console.log)
+            }
+        });
+    } else {
+        parentPort.postMessage(someComputation(workerData));
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Worker Threads</h2>
+    <h2 class="subheading"><small>Передача аргументов</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 18px">
+    import fs from 'fs';
+    import { Worker, isMainThread, parentPort, workerData } from 'worker_threads';
+
+    if (isMainThread) {
+        fs.readFile(__filename, 'utf-8', (error: Error, data: string) => {
+            const lines = <mark>data.split('\n')</mark>;
+
+            for (const line of lines) {
+                const worker = new Worker(__filename, { workerData: line });
+
+                worker.on('message', console.log)
+            }
+        });
+    } else {
+        parentPort.postMessage(someComputation(workerData));
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Worker Threads</h2>
+    <h2 class="subheading"><small>Передача аргументов</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 18px">
+    import fs from 'fs';
+    import { Worker, isMainThread, parentPort, workerData } from 'worker_threads';
+
+    if (isMainThread) {
+        fs.readFile(__filename, 'utf-8', (error: Error, data: string) => {
+            const lines = data.split('\n');
+
+            for (<mark>const line of lines</mark>) {
+                const worker = new Worker(__filename, { workerData: line });
+
+                worker.on('message', console.log)
+            }
+        });
+    } else {
+        parentPort.postMessage(someComputation(workerData));
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Worker Threads</h2>
+    <h2 class="subheading"><small>Передача аргументов</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 18px">
+    import fs from 'fs';
+    import { Worker, isMainThread, parentPort, workerData } from 'worker_threads';
+
+    if (isMainThread) {
+        fs.readFile(__filename, 'utf-8', (error: Error, data: string) => {
+            const lines = data.split('\n');
+
+            for (const line of lines) {
+                const worker = <mark>new Worker</mark>(__filename, { workerData: line });
+
+                worker.on('message', console.log)
+            }
+        });
+    } else {
+        parentPort.postMessage(someComputation(workerData));
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Worker Threads</h2>
+    <h2 class="subheading"><small>Передача аргументов</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 18px">
+    import fs from 'fs';
+    import { Worker, isMainThread, parentPort, workerData } from 'worker_threads';
+
+    if (isMainThread) {
+        fs.readFile(__filename, 'utf-8', (error: Error, data: string) => {
+            const lines = data.split('\n');
+
+            for (const line of lines) {
+                const worker = new Worker(__filename, { <mark>workerData: line</mark> });
+
+                worker.on('message', console.log)
+            }
+        });
+    } else {
+        parentPort.postMessage(someComputation(workerData));
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Worker Threads</h2>
+    <h2 class="subheading"><small>Передача аргументов</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 18px">
+    import fs from 'fs';
+    import { Worker, isMainThread, parentPort, workerData } from 'worker_threads';
+
+    if (isMainThread) {
+        fs.readFile(__filename, 'utf-8', (error: Error, data: string) => {
+            const lines = data.split('\n');
+
+            for (const line of lines) {
+                const worker = new Worker(__filename, { workerData: line });
+
+                <mark>worker.on</mark>('message', console.log)
+            }
+        });
+    } else {
+        parentPort.postMessage(someComputation(workerData));
+    }
+    </code></pre>
+</section>
+
+<section>
+    <h2>Worker Threads</h2>
+    <h2 class="subheading"><small>Передача аргументов</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 18px">
+    import fs from 'fs';
+    import { Worker, isMainThread, parentPort, workerData } from 'worker_threads';
+
+    if (isMainThread) {
+        fs.readFile(__filename, 'utf-8', (error: Error, data: string) => {
+            const lines = data.split('\n');
+
+            for (const line of lines) {
+                const worker = new Worker(__filename, { workerData: line });
+
+                worker.on('message', console.log)
+            }
+        });
+    } else {
+        parentPort.postMessage(<mark>someComputation(workerData)</mark>);
+    }
+    </code></pre>
+</section>
+
+
+<section>
+    <h2>Worker Threads</h2>
+    <h2 class="subheading"><small>Передача аргументов</small></h2>
+    <pre class="typescript"><code data-noescape data-trim style="font-size: 18px">
+    import fs from 'fs';
+    import { Worker, isMainThread, parentPort, workerData } from 'worker_threads';
+
+    if (isMainThread) {
+        fs.readFile(__filename, 'utf-8', (error: Error, data: string) => {
+            const lines = data.split('\n');
+
+            for (const line of lines) {
+                const worker = new Worker(__filename, { workerData: line });
+
+                worker.on('message', console.log)
+            }
+        });
+    } else {
+        <mark>parentPort.postMessage</mark>(someComputation(workerData));
+    }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h1>Отладка</h1>
+</section>
+
+<section class="center">
+    <h1>
+        <pre class="javascript"><code>console.log();</code></pre>
+    </h1>
+</section>
+
+<section class="center">
+    <h1>Отладка в VS Code</h1>
+</section>
+
+<section>
+    <h2>Отладка в VS Code</h2>
+    <p class="left">
+        Для того чтобы открыть отладчик нужно:
+    </p>
+    <p class="left">1. Перейти на вкладку <span class="red">Отладка</span>
+        <small class="grey" style="vertical-align: middle">(Ctrl+Shift+D)</small>
+    </p>
+    <p class="left">2. Создать или выбрать конфигурацию для отладки</p>
+    <p class="left nowrap">3. Запустить отладчик нажав <span class="red">Начать отладку</span>
+        <small class="grey" style="vertical-align: middle">(F5)</small>
+    </p>
+</section>
+
+<section>
+    <h2 class="nowrap">Базовая конфигурация для отладки в VS Code</h2>
+    <pre><code data-trim>
+        {
+            "version": "0.2.0",
+            "configurations": [
+                {
+                    "type": "node",
+                    "request": "launch",
+                    "name": "Launch Program",
+                    "program": "${workspaceFolder}/server.js"
+                }
+            ]
+        }
+    </code></pre>
+</section>
+
+<section data-background-image="./images/code.png" data-background-size="100%">
+</section>
+
+<section>
+    <h2>Ссылки</h2>
+    <ul>
+        <li class="fragment"><a href="https://nodejs.org/api/fs.html">fs</a> и <a href="https://nodejs.org/api/buffer.html">Buffer</a></li>
+        <li class="fragment"><a href="https://nodejs.org/api/stream.html">Stream</a> и <a href="https://github.com/substack/stream-handbook">как их писать</a></li>
+        <li class="fragment"><a href="https://nodejs.org/api/child_process.html">Child Process</a> и <a href="https://nodejs.org/api/worker_threads.html">Worker Threads</a></li>
+        <li class="fragment"><a href="https://medium.com/devschacht/отладка-javascript-в-google-chrome-и-visual-studio-code-c2f07603a5b8">Про отладку</a></li>
+    </ul>
+</section>
+
+<section class="center">
+    <h2>Вопросы?</h2>
+</section>
+
+<section class="center">
+    <h2>Спасибо!</h2>
+</section>
+
+</div></div>
+
+<script src="../../@lib/core.js"></script>
+
+<script>
+    let animated = false;
+
+    function getRandomBytes(n) {
+        const a = new Uint8Array(n);
+
+        for (let i = 0; i < n; i += 65536) {
+            self.crypto.getRandomValues(a.subarray(i, i + Math.min(n - i, 65536)));
+        }
+
+        return a;
+    }
+
+    Reveal.addEventListener('alloc-unsafe', function() {
+        if (!animated) {
+            setInterval(() => {
+                buffer.innerText = Array.from(getRandomBytes(5))
+                    .map(b => b.toString(16).padStart(2, '0'))
+                    .join(' ');
+            }, 1500);
+
+            animated = true;
+        }
+    }, false);
+</script>
+
+</body></html>
