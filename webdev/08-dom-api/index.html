@@ -1,0 +1,983 @@
+<!doctype html>
+<html lang="ru" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <title>11-DOM API и события</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+</head><body class="white"><div class="reveal"><div class="slides">
+
+    <section class="center">
+        <h1>DOM API и события</h1>
+        <h5 style="text-align: center;"><span style="color: red;">Д</span>ьяченко Михаил</h5>
+    </section>
+
+    <section class="center">
+        <h2>Проблемы с браузером</h2>
+        <ul class="size_m">
+            <li class="fragment">Функциональность отличается у разных браузеров</li>
+            <li class="fragment">Мы не выбираем браузер пользователя</li>
+            <li class="fragment">Мы не выбираем версию браузера</li>
+            <li class="fragment">Мы не можем менять настройки пользователя</li>
+            <li class="fragment">Полифил – если реализации нет в браузере, то добавляем эту реализацию сами</li>
+            <li class="fragment">Проверяйте здесь: <a hrref="https://caniuse.com">caniuse.com</a></li>
+        </ul>
+    </section>
+
+    <section class="center">
+        <h2>Полифил</h2>
+        <pre><code class="js" data-trim>
+        if (!Element.prototype.closest) {
+            Element.prototype.closest = function() {
+            // Пишем реализацию полифила
+            };
+        }
+        </code></pre>
+        <a class="fragment" href="https://learn.javascript.ru/dom-polyfill">Полифилы для DOM</a>
+    </section>
+
+    <section class="center size_l" style="text-align: center;">
+        <h2>Javascript</h2>
+        <i  class="fragment size_m" data-fragment-index=0> & </i>
+        <h2 class="fragment" data-fragment-index=0>Browser</h2>
+    </section>
+
+    <section class="center">
+        <h2>window</h2>
+    </section>
+
+    <section class="center text-center">
+        <div style="background-color: white;padding: 5px;">
+            <img src="images/windowObjects@2x.png" width="750">
+        </div>
+    </section>
+
+    <section class="center text-center">
+        <p><span style="font-weight: bold">window</span> – глобальный объект</span></p>
+        <pre class="fragment"><code class="js size_xxl" style="width: 900px;"> window.document === document; // true</code> </pre>
+    </section>
+
+    <section class="size_l center">
+        <h2> Browser Object Model (BOM) </h2>
+        <ul class="size_m">
+            <li class="fragment">Объект navigator: информация о самом браузере</li>
+            <li class="fragment">Объект location: адресная строка и переходы по урлу</li>
+            <li class="fragment">Объект history: история переходов и переходы по истории</li>
+            <li class="fragment">Объект screen: информация об экране пользователя</li>
+            <li class="fragment">Функции alert/prompt/confirm</li>
+        </ul>
+    </section>
+
+    <section class="center">
+        <h1> Document Object Model (DOM) </h1>
+    </section>
+
+    <section>
+        <h2> HTML </h2>
+        <pre class="example"><code>&lt;!DOCTYPE html>
+&lt;html>
+    &lt;head>
+        <meta name="description" content="...">
+        &lt;title>CERN&lt;/title>
+    &lt;/head>
+    &lt;body>
+        <p>
+            <a href="http://home.web.cern.ch/">CERN</a>
+            is a European research organization
+        </p>
+    &lt;/body>
+&lt;/html>
+</code></pre>
+    </section>
+
+    <section class="center text-center">
+        <div style="background-color: white; padding: 5px;">
+            <img src="images/how-html-parser-works.png" width="800">
+        </div>
+    </section>
+
+    <section class="size_l">
+        <h2> Типы узлов </h2>
+        <ul >
+            <li class="fragment">В DOM 12 типов узлов, но мы работаем с 4</li>
+            <li class="fragment">Документ – объект document</li>
+            <li class="fragment">Элементы – теги</li>
+            <li class="fragment">Текст</li>
+            <li class="fragment">Комментарии</li>
+            <li class="fragment"><a href="https://www.w3schools.com/XML/dom_nodetype.asp">Другие</a></li>
+        </ul>
+    </section>
+
+
+    <section class="center">
+        <h2> Поиск элементов </h2>
+    </section>
+
+    <section class="center">
+        <h2> document.getElementById('id') </h2>
+        <ul>
+            <li class="fragment">Ищет элемент с заданным идентификатором</li>
+            <li class="fragment">Возращает первый найденный элемент</li>
+            <li class="fragment">Возращает null, если элемент с указанным ID не найден в документе</li>
+        </ul>
+    </section>
+
+    <section class="center">
+        <h2> document.getElementById('id') </h2>
+        <pre><code class="html" data-trim style="width: 1020px;">
+            <div id="hello">Hello everybody!</div>
+        </code></pre>
+        <pre class="fragment"><code class="js" data-trim style="width: 1020px;">
+            var elem = document.getElementById('hello');
+        </code></pre>
+    </section>
+
+    <section class="center">
+        <h2> getElementsByClassName('class') </h2>
+        <ul>
+            <li class="fragment">Ищет элементы с соответствующим классом</li>
+            <li class="fragment">Есть не только у document, но и у любого элемента</li>
+            <li class="fragment">Возращает коллекцию</li>
+        </ul>
+    </section>
+
+    <section class="center  size_m">
+        <h2> getElementsByClassName('class') </h2>
+        <pre><code class="html" data-trim style="width: 1020px;">
+            <div class="hello">
+                <div class="greeting">Hello everybody!</div>
+                <div class="greeting">Aloha</div>
+            </div>
+            <div class="greeting">Привет</div>
+        </code></pre>
+        <pre class="fragment"><code class="js" data-trim style="width: 1020px;">
+            var elems = document.getElementsByClassName('greeting'); // 3 элемента
+        </code></pre>
+        <pre class="fragment"><code class="js" data-trim style="width: 1020px;">
+            var parent = document.getElementsByClassName('hello')[0];
+            var elems = parent.getElementsByClassName('greeting'); // 2 элемента
+        </code></pre>
+    </section>
+
+    <section class="center">
+        <h2> Коллекция – array-like object </h2>
+        <ul class="size_m">
+            <li class="fragment">Можно итерировать</li>
+            <li class="fragment">Не стоит использовать for..in – будут лишние ключи</li>
+            <li class="fragment">Это не массив: нет привычных методов map, filter, reduce и т.д. </li>
+
+        </ul>
+        <pre class="fragment"><code class="js" data-trim style="width: 1020px;">
+            // преобразование в массив
+            var elems = document.getElementsByClassName('hello');
+            var elemsArray = Array.prototype.slice.call(elems);
+            var elemsArrayES6 = Array.from(elems); // > ES6
+        </code></pre>
+    </section>
+
+    <section class="center">
+        <h2> getElementsByTagName('tag') </h2>
+        <ul>
+            <li class="fragment">Ищет элементы соответствующего тега</li>
+            <li class="fragment">Есть не только у document, но и у любого элемента</li>
+            <li class="fragment">Возращает коллекцию</li>
+        </ul>
+    </section>
+
+    <section class="center">
+        <h2> getElementsByTagName('tag') </h2>
+        <pre><code class="html" data-trim style="width: 1020px;">
+            <div>
+                <span>Hello everybody!</span>
+                <span>Aloha</span>
+            </div>
+            <span>Good bye</span>
+        </code></pre>
+        <pre class="fragment"><code class="js" data-trim style="width: 1020px;">
+            var elems = document.getElementsByTagName('span'); // 3 элемента
+        </code></pre>
+        <pre class="fragment"><code class="js" data-trim style="width: 1020px;">
+            var parent = document.getElementsByTagName('div')[0];
+            var elems = parent.getElementsByTagName('span'); // 2 элемента
+        </code></pre>
+    </section>
+
+    <section class="center size_m">
+        <h2> querySelectorAll('selector') </h2>
+        <ul>
+            <li class="fragment">Возвращает коллекцию по заданному CSS селектору</li>
+            <li class="fragment">Псевдоселекторы тоже работают(:hover, :first-child, и т.д.)</li>
+            <li class="fragment">При невалидном селекторе выбрасывает исключение SYNTAX_ERR</li>
+        </ul>
+    </section>
+
+    <section >
+        <h2> querySelectorAll('selector') </h2>
+        <pre><code class="html" data-trim style="width: 1020px;">
+            <div class="container">
+                <div>Hello everybody!</div>
+                <div>Aloha</div>
+            </div>
+            <div class="container">
+                <div>Goodbye</div>
+                <div>Aloha</div>
+            </div>
+        </code></pre>
+        <pre class="fragment"><code class="js" data-trim style="width: 1020px;">
+            document.querySelectorAll('.container div:first-child');
+            // NodeList [ <div>Hello everybody!</div>, <div>Goodbye</div> ]
+        </code></pre>
+    </section>
+
+    <section class="center size_m">
+        <h2> querySelector(selector) </h2>
+        <ul>
+            <li class="fragment">Возвращает первый найденный элемент по заданному селектору</li>
+            <li class="fragment">Выбрасывает исключение SYNTAX_ERR в случае передачи невалидного селектора</li>
+        </ul>
+    </section>
+
+    <section >
+        <h2> querySelector('selector') </h2>
+        <pre><code class="html" data-trim style="width: 1020px;">
+            <div class="greeting">Goodbye</div>
+            <div class="container">
+                <div class="greeting">Hello everybody!</div>
+                <div class="greeting">Aloha</div>
+            </div>
+        </code></pre>
+        <pre class="fragment"><code class="js" data-trim style="width: 1020px;">
+            document.querySelector('.greeting');
+            // <div class="greeting">Goodbye</div>
+        </code></pre>
+        <pre class="fragment"><code class="js" data-trim style="width: 1020px;">
+            document.querySelector('.container .greeting');
+            // <div class="greeting">Hello everybody!</div>
+        </code></pre>
+    </section>
+
+    <section class="center size_m">
+        <h2> closest(selector) </h2>
+        <ul>
+            <li class="fragment">Возвращает ближайший родительский элемент (или сам элемент), который соответствует заданному CSS-селектору</li>
+            <li class="fragment">Возращает null, если нет элемента, который соответствует селектору</li>
+            <li class="fragment">При невалидном селекторе выбрасывает исключение SYNTAX_ERR</li>
+            <li class="fragment">Не доступен в IE и старых версиях браузеров</li>
+        </ul>
+    </section>
+
+    <section class="center">
+        <h2> closest(selector) </h2>
+        <pre><code data-trim style="width: 1020px;">
+            <div id="block" title="Я - блок">
+                <a href="#">Я ссылка в никуда</a>
+                <a href="http://site.ru">Я ссылка на сайт</a>
+                <div>
+                    <div id="too"></div>
+                </div>
+            </div>
+        </code></pre>
+
+        <pre><code class="fragment js" data-noescape data-trim  data-fragment-index="0" style="width: 1020px;">
+            var div = document.querySelector("#too");
+
+            <span class="fragment" data-fragment-index="1">div.closest("#block"); //&lt;div id="block" title="Я - блок"&gt; </span>
+            <span class="fragment" data-fragment-index="2">div.closest("div"); //Сам &lt;div id="too"&gt </span>
+            <span class="fragment" data-fragment-index="3">div.closest("a"); //null </span>
+        </code></pre>
+    </section>
+
+    <section class="center">
+        <a href="https://learn.javascript.ru/searching-elements-internals"> Внутреннее устройство поисковых методов </a>
+    </section>
+
+    <section class="center">
+        <h2> Навигация по узлам</h2>
+        <div style="background-color: white; margin-left: 150px; padding: 5px;">
+            <div>
+                <img src="images/dom-links@2x.png" width="600">
+            </div>
+        </div>
+    </section>
+
+    <section class="size_m">
+        <h2> Навигация по узлам </h2>
+        <pre><code data-trim style="width: 1020px;">
+            <div id="container">
+                <div>Hello</div>
+                Aloha
+                <div>Привет</div>
+            </div>
+        </code></pre>
+
+        <pre class="fragment" data-fragment-index=0><code class="js" data-trim style="width: 1020px;">
+            var container = document.getElementById('container');
+        </code></pre>
+
+        <pre class="fragment" data-fragment-index=1><code class="js" data-trim style="width: 1020px;">
+            console.log(container.childNodes); // <div>Hello</div> Aloha <div>Привет</div>
+            console.log(container.firstChild); // <div>Hello</div>
+            console.log(container.lastChild); // <div>Привет</div>
+            console.log(container.firstChild.parentNode); // <div id="container">...</div>
+            console.log(container.firstChild.nextSibling); // Aloha
+            console.log(container.lastChild.previousSibling); // Aloha
+        </code></pre>
+    </section>
+
+    <section class="center">
+        <h2> Навигация по элементам</h2>
+        <div style="background-color: white; margin-left: 150px; padding: 5px;">
+            <div>
+                <img src="images/dom-links-elements@2x.png" width="600">
+            </div>
+        </div>
+    </section>
+
+    <section class="size_m">
+        <h2> Навигация по элементам </h2>
+        <pre><code data-trim style="width: 1020px;">
+            <div id="container">
+                hi
+                <div>Hello</div>
+                Aloha
+                <div>Привет</div>
+            </div>
+        </code></pre>
+
+        <pre class="fragment" data-fragment-index=0><code class="js" data-trim style="width: 1020px;">
+            var container = document.getElementById('container');
+        </code></pre>
+
+        <pre class="fragment" data-fragment-index=1><code class="js" data-trim style="width: 1050px;">
+            console.log(container.children); // <div>Hello</div> <div>Привет</div>
+            console.log(container.firstElementChild); // <div>Hello</div>
+            console.log(container.lastElementChild); // <div>Привет</div>
+            console.log(container.firstElementChild.parenElement); // <div id="container">...</div>
+            console.log(container.firstElementChild.nextElementSibling); // <div>Привет</div>
+            console.log(container.lastElementChild.previousElementSibling); // <div>Hello</div>
+        </code></pre>
+    </section>
+
+    <section class="center">
+        <h1> Свойства узлов </h1>
+    </section>
+
+    <section class="center">
+        <h2> Тип узла – nodeType </h2>
+        <ul>
+            <li class="fragment">Представлено числом</li>
+            <li class="fragment">Всего типов 12<span class="fragment">, но используем 2</span></li>
+            <li class="fragment">1 – ELEMENT_NODE</li>
+            <li class="fragment">3 – TEXT_NODE</li>
+            <li class="fragment"><a href="https://learn.javascript.ru/basic-dom-node-properties#тип-nodetype">Остальные</a></li>
+        </ul>
+    </section>
+
+    <section class="center">
+        <h2> Тип узла – nodeType </h2>
+        <pre><code class="html" data-trim style="width: 1020px;">
+            <div id="container">
+                <span>Hello everybody!</span>
+                Aloha!
+            </div>
+        </code></pre>
+        <pre class="fragment"><code class="js" data-trim style="width: 1020px;">
+            var container = document.getElementById('container');
+            console.log(container.firstChild.nodeType); // 1
+            console.log(container.lastChild.nodeType); // 3
+        </code></pre>
+    </section>
+    <section class="center">
+        <h2> node.tagName </h2>
+        <ul>
+            <li class="fragment">Возвращает HTML-тег элемента в UPPERCASE</li>
+            <li class="fragment">Только для элемента</li>
+        </ul>
+    </section>
+    <section class="center">
+        <h2> node.nodeName </h2>
+        <ul>
+            <li class="fragment">Для элемента вернет tagName</li>
+            <li class="fragment">Для TEXT_NODE – строку "#text"</li>
+        </ul>
+    </section>
+
+    <section class="center">
+        <h2> element.innerHTML </h2>
+        <ul>
+            <li class="fragment">Cодержимое элемента в виде строки</li>
+            <li class="fragment">Доступен на чтение и запись</li>
+            <li class="fragment">Всегда осуществляется перезапись</li>
+            <li class="fragment">Если в innerHTML записывается тег script – он не будет выполнен</li>
+        </ul>
+    </section>
+
+    <section class="center">
+        <h2> element.outerHTML </h2>
+        <ul>
+            <li class="fragment">Содержит HTML элемент целиком</li>
+            <li class="fragment">При записи: в DOM исходный элемент замещается на новый элемент</li>
+            <li class="fragment">Изменить outerHTML элемента невозможно</li>
+        </ul>
+    </section>
+
+    <section class="center">
+        <h2> outerHTML и innerHTML</h2>
+        <div style="display: inline-flex;">
+            <div style="flex-grow: 5;">
+                <pre class="fragment" data-fragment-index="0"><code data-noescape="" data-trim class="javascript">
+            let div = document.querySelector('div');
+            console.log(div); // &lt;div&gt;Привет&lt;/div&gt;
+                <span class="fragment" data-fragment-index="1">
+            div.innerHTML = 'Hi!'
+            console.log(div); // &lt;div&gt;Hi!&lt;/div&gt;
+                </span>
+                <span class="fragment" data-fragment-index="2">
+            div.outerHTML = '&lt;h1&gt;Aloha&lt;/h1&gt;'
+            console.log(div) // &lt;div&gt;Hi!&lt;/div&gt;
+            </span>
+                </code></pre>
+            </div>
+            <div class="hidden-fragment fragment" data-fragment-index="0" width="200" style="padding: 50px;">
+                <span class="size_m"> это div </span>
+                <div width="200" height="200" style="padding: 20px; border-radius: 5px; margin-top: 10px; border: 2px solid lightseagreen;">
+                    Привет
+                </div>
+            </div>
+            <div class="hidden-fragment fragment" data-fragment-index="1" width="200" style="padding: 50px;">
+                <span class="size_m"> div </span>
+                <div width="200" height="200" style="padding: 20px; border-radius: 5px; margin-top: 10px; border: 2px solid lightseagreen;">
+                    Hi!
+                </div>
+            </div>
+            <div class="hidden-fragment fragment" data-fragment-index="2" width="200" style="padding: 50px;">
+                <span class="size_m"> а это h1 </span>
+                <h1 style="color: darkred;">Aloha</h1>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="size_m center">
+        <h2> data/nodeValue </h2>
+        <ul>
+            <li class="fragment">Содержимое текстового узла или комментария</li>
+            <li class="fragment">Можно изменять</li>
+            <li class="fragment">Для некоторых типов узлов nodeValue равно null, поэтому для более ожидаемого поведения лучше использовать data</li>
+        </ul>
+    </section>
+
+    <section class="size_m center">
+        <h2> data/nodeValue </h2>
+
+        <pre><code data-trim class="html">
+            <!-- Комментарий -->
+            &lt;!DOCTYPE html>
+        </code></pre>
+
+        <pre class="fragment"><code class="js" data-trim>
+            console.log(document.firstChild.data); // Комментарий
+            console.log(document.firstChild.nodeValue); // Комментарий
+        </code></pre>
+        <pre class="fragment"><code class="js" data-trim>
+            console.log(document.lastChild.data); // undefined
+            console.log(document.lastChild.nodeValue); // null
+        </code></pre>
+    </section>
+
+
+    <section class="size_m center">
+        <h2> Атрибуты </h2>
+        <pre><code data-trim class="html">
+            <img src="img.png" width="500" height="600" class="super-image"/>
+        </code></pre>
+    </section>
+
+
+    <section class="size_m center">
+        <h2> Атрибуты </h2>
+        <ul>
+            <li class="fragment">element.[get/has/set/remove]Attribute</li>
+            <li class="fragment">attributes – коллекция всех атрибутов элемента</li>
+        </ul>
+    </section>
+
+
+    <section class="size_m center">
+        <h2> hidden </h2>
+        <ul>
+            <li class="fragment">Если true – элемент не виден на экране</li>
+            <li class="fragment">Если false – элемент виден</li>
+        </ul>
+    </section>
+
+    <section class="size_m center">
+        <h2> Классы </h2>
+        <ul>
+            <li class="fragment">className – в виде строки</li>
+            <li class="fragment">classList – объект для работы с классами</li>
+            <li class="fragment">classList.[add/remove] – добавить/удалить класс</li>
+            <li class="fragment">classList.toggle – переключает класс</li>
+            <li class="fragment">classList.contains – проверяет есть ли класс</li>
+        </ul>
+    </section>
+
+    <section class="size_m center">
+        <h2> data-* </h2>
+        <ul>
+        <li>Позволяют хранить дополнительную информацию в стандартных элементах HTML</li>
+        <li>Можно использовать только латинские буквы, дефис (-), двоеточие (:) и подчёркивание (_)</li>
+        <pre    ><code data-trim class="html size_s">
+            <div data-index-number="123" data-parent="cars"></div>
+        </code></pre>
+    </section>
+
+    <section class="size_m center">
+        <h2> data-* </h2>
+        <ul>
+            <li class="fragment">Все data-* атрибуты доступны в объекте dataset</li>
+            <li class="fragment">data- отбрасывается, а остаток переводится в camelCase
+            <li class="fragment">Пример: data-user-location будет доступно в element.dataset.userLocation</li>
+        </ul>
+    </section>
+
+    <section class="size_m center">
+        <h1> Создание узлов </h1>
+        <pre class="fragment"><code data-trim class="js size_s">
+        //Создание элемента
+        var element = document.createElement(tagName);
+        </code></pre>
+
+        <pre class="fragment"><code data-trim class="js size_s">
+        //Создание текстового узла
+        var textNode = document.createTextNode(text);
+        </code></pre>
+    </section>
+
+    <section class="size_m center">
+        <h1> Добавление узлов </h1>
+    </section>
+
+    <section class="size_m">
+        <h2> appendChild </h2>
+        <pre class="fragment hidden-fragment" data-fragment-index="0" data-trim><code class="html size_s" data-trim style="width: 1020px;">
+            <ol id="list">
+                <li>0</li>
+                <li>1</li>
+                <li>2</li>
+            </ol>
+        </code></pre>
+        <pre class="fragment hidden-fragment" data-fragment-index="1" data-trim><code class="html size_s" data-trim style="width: 1020px;">
+            <ol id="list">
+                <li>0</li>
+                <li>1</li>
+                <li>2</li>
+            </ol>
+        </code></pre>
+        <pre class="fragment hidden-fragment" data-fragment-index="2" data-trim><code class="html size_s" data-trim style="width: 1020px;">
+            <ol id="list">
+                <li>0</li>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+            </ol>
+        </code></pre>
+        <pre class="fragment" data-fragment-index="1"><code class="javascript size_s" data-trim style="width: 1020px;">
+            var newLi = document.createElement('li');
+            newLi.innerHTML = '3';
+            // newLi.appendChild(document.createTextNode('3'))
+
+            list.appendChild(newLi);
+        </code></pre>
+    </section>
+
+    <section class="size_m">
+        <h2> insertBefore </h2>
+        <pre class="fragment hidden-fragment" data-fragment-index="0" data-trim><code class="html size_s" data-trim style="width: 1020px;">
+            <ol id="list">
+                <li>0</li>
+                <li>1</li>
+                <li>2</li>
+            </ol>
+        </code></pre>
+        <pre class="fragment hidden-fragment" data-fragment-index="1" data-trim><code class="html size_s" data-trim style="width: 1020px;">
+            <ol id="list">
+                <li>0</li>
+                <li>1</li>
+                <li>2</li>
+            </ol>
+        </code></pre>
+        <pre class="fragment hidden-fragment" data-fragment-index="2" data-trim><code class="html size_s" data-trim style="width: 1020px;">
+            <ol id="list">
+                <li>0</li>
+                <li>3</li>
+                <li>1</li>
+                <li>2</li>
+            </ol>
+        </code></pre>
+        <pre class="fragment" data-fragment-index="1"><code class="javascript size_s" data-trim style="width: 1020px;">
+            var newLi = document.createElement('li');
+            newLi.innerHTML = '3';
+            // newLi.appendChild(document.createTextNode('3'))
+
+            list.insertBefore(newLi, list.children[1]);
+        </code></pre>
+    </section>
+
+    <section class="size_m">
+        <h2> Удаление узлов </h2>
+        <ul>
+            <li class="fragment">parentElem.removeChild(elem) – удаляет elem из детей parentElem</li>
+            <li class="fragment">parentElem.replaceChild(newElem, elem) – удаляет elem из детей parentElem и вставляет на его место newElem</li>
+        </ul>
+    </section>
+
+    <section class="size_m">
+        <h2> removeChild </h2>
+        <pre class="fragment hidden-fragment visible-fragment" data-fragment-index="0" data-trim><code class="html size_s" data-trim style="width: 1020px;">
+            <ol id="list">
+                <li>0</li>
+                <li>1</li>
+                <li>2</li>
+            </ol>
+        </code></pre>
+        <pre class="fragment hidden-fragment" data-fragment-index="1" data-trim><code class="html size_s" data-trim style="width: 1020px;">
+            <ol id="list">
+                <li>0</li>
+                <li>1</li>
+                <li>2</li>
+            </ol>
+        </code></pre>
+        <pre class="fragment hidden-fragment" data-fragment-index="2" data-trim><code class="html size_s" data-trim style="width: 1020px;">
+            <ol id="list">
+                <li>1</li>
+                <li>2</li>
+            </ol>
+        </code></pre>
+        <pre class="fragment" data-fragment-index="1"><code class="javascript size_s" data-trim style="width: 1020px;">
+            var list = document.getElementById('list');
+
+            list.removeChild(list.firstChild);
+        </code></pre>
+    </section>
+
+    <section class="size_m">
+        <h2> replaceChild </h2>
+        <pre class="fragment hidden-fragment" data-fragment-index="0" data-trim><code class="html size_s" data-trim style="width: 1020px;">
+            <ol id="list">
+                <li>0</li>
+                <li>1</li>
+                <li>2</li>
+            </ol>
+        </code></pre>
+        <pre class="fragment hidden-fragment" data-fragment-index="1" data-trim><code class="html size_s" data-trim style="width: 1020px;">
+            <ol id="list">
+                <li>0</li>
+                <li>1</li>
+                <li>2</li>
+            </ol>
+        </code></pre>
+        <pre class="fragment hidden-fragment" data-fragment-index="2" data-trim><code class="html size_s" data-trim style="width: 1020px;">
+            <ol id="list">
+                <li>3</li>
+                <li>1</li>
+                <li>2</li>
+            </ol>
+        </code></pre>
+        <pre class="fragment" data-fragment-index="1"><code class="javascript size_s" data-trim style="width: 1020px;">
+            var list = document.getElementById('list');
+
+            var newLi = document.createElement('li');
+            newLi.innerHTML = '3';
+
+            list.replaceChild(newLi, list.firstChild);
+        </code></pre>
+    </section>
+
+    <section class="center size_m">
+        <h2> elem.cloneNode </h2>
+        <ul>
+            <li class="fragment">Создаёт копию текущего элемента</li>
+            <li class="fragment">Если в качестве аргумента передать true, то создаст глубокую копию элемента, включая атрибуты и подэлементы</li>
+        </ul>
+    </section>
+
+    <section class="center size_m">
+        <h1> События </h1>
+    </section>
+
+    <section class="center size_m">
+        <h2> События мыши </h2>
+        <ul>
+            <li class="fragment">click – на элемент кликнули левой кнопкой мыши</li>
+            <li class="fragment">contextmenu – на элемент кликнули правой кнопкой мыши</li>
+            <li class="fragment">mouseover/mouseout – курсор навели/увели на элемент</li>
+            <li class="fragment">mousedown/mouseup – кнопку мыши нажали (down)/отпустили (up)</li>
+            <li class="fragment">mousemove – при движении курсора мыши над элементом</li>
+        </ul>
+    </section>
+
+    <section class="center size_m">
+        <h2> События пальцев </h2>
+        <ul>
+            <li class="fragment">touchstart – элемента коснулись</li>
+            <li class="fragment">touchmove – по элементу провели пальцем</li>
+            <li class="fragment">touchend – касание закончилось и палец убрали</li>
+            <li class="fragment">touchcancel – палец переместился на интерфейс браузера или тач-событие нужно отменить</li>
+        </ul>
+    </section>
+
+    <section class="center size_m">
+        <h2> Другие события </h2>
+        <ul>
+            <li class="fragment">submit – отправка формы</li>
+            <li class="fragment">focus – фокус на элементе</li>
+            <li class="fragment">keyup/keydown – печать на клавиатуре</li>
+            <li class="fragment">resize – изменение размеров окна</li>
+            <li class="fragment">transitionend – завершение css анимации</li>
+        </ul>
+        <a class="fragment" href="https://developer.mozilla.org/ru/docs/Web/Events">Ещё больше событий</a>
+    </section>
+
+    <section class="size_m">
+        <h2> Назначение обработчика событий </h2>
+        <pre class="fragment"><code class="html size_s" data-trim  style="width: 1020px;">
+            <li onclick="alert('привет');">Щелкни меня</li>
+        </code></pre>
+        <pre class="fragment"><code class="js size_s" data-trim  style="width: 1020px;">
+            var li = document.getElementByTagName('li')[0];
+            li.onclick = function () { alert('hello'); }
+        </code></pre>
+        <pre class="fragment"><code class="js size_s" data-trim  style="width: 1020px;">
+            li.addEventListener('click', function(event) {
+                alert('aloha');
+            });
+        </code></pre>
+    </section>
+
+    <section class="size_m">
+        <h2> Удаление обработчика событий </h2>
+        <pre><code class="size_s" data-noescape data-trim style="width: 1020px;">
+            var li = document.getElementByTagName('li')[0];
+            li.addEventListener('click', function(event){ alert('привет'); });
+            <span class="fragment" data-fragment-index=2>// не работает</span>
+            <span class="fragment" data-fragment-index=1>li.removeEventListener('click', function() { alert('привет'); });</span>
+        </code></pre>
+
+        <pre class="fragment" data-fragment-index=3><code  class="size_s" data-trim data-noescape style="width: 1020px;">
+            var li = document.getElementByTagName('li')[0];
+            var onClickHandler = function(event) {
+                alert('привет');
+            }
+            li.addEventListener('click', onClickHandler);
+            li.removeEventListener('click', onClickHandler);
+        </code></pre>
+    </section>
+
+    <section class="size_m">
+        <h2> Всплытие событий </h2>
+        <pre class="fragment"><code style="width: 1020px;">
+            <form onclick="alert('form')">FORM
+                <div onclick="alert('div')">DIV
+                    <p onclick="alert('p')">P</p>
+                </div>
+            </form>
+        </code></pre>
+        <div class="bubbling-example fragment">
+            <style>
+                .bubbling-example {
+                    width: 700px;
+                    margin: 0 auto !important;
+                    padding: 10px !important;
+                }
+                .bubbling-example * {
+                    margin: 8px !important;
+                    border: 5px solid blue !important;
+                    color: red;
+                    text-align: center;
+                }
+            </style>
+
+            <form onclick="alert('form')">FORM
+                <div onclick="alert('div')">DIV
+                    <p onclick="alert('p')">P</p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section class="size_m center">
+        <h1> Всплытие событий </h1>
+        <div style="display: inline-flex;">
+            <p class="size_m" style="text-align: left; line-height: 44px;">Cначала cобытия срабатывают на <strong>самом вложенном элементе</strong>, затем на его <strong>родителе</strong>, и так далее, вверх до <strong>window</strong></p>
+            <div width="300" style="flex-shrink: 0;">
+                <img style="width: 500px;" src="images/event-order-bubbling@2x.png" />
+            </div>
+        </div>
+    </section>
+
+    <section class="size_m" >
+        <h2>Стадии прохода события</h2>
+        <ul>
+            <li class="fragment">Стадия перехвата (capturing stage) – событие идет сверху вниз</li>
+            <li class="fragment">Стадия цели (target stage) – событие  достигло целевого элемента</li>
+            <li class="fragment">Стадия всплытия (bubbling stage) – событие идет снизу верх</li>
+        </ul>
+    </section>
+
+    <section class="size_m center text-center" >
+        <img style="width: 700px;" src="images/eventflow2@2x.png" />
+    </section>
+
+    <section class="size_m center" >
+        <h2>Самый глубокий элемент, который вызывает событие, называется «целевым» или «исходным» элементом и доступен как event.target</h2>
+    </section>
+
+    <section class="size_m">
+        <h2>event.target</h2>
+        <pre class="fragment"><code style="width: 1020px;">
+            <form id="eventform">FORM
+                <div>DIV
+                    <p>P</p>
+                </div>
+            </form>
+        </code></pre>
+
+        <pre class="fragment"><code style="width: 1020px;">
+            eventform.onclick = function(event) {
+                alert('target = ', event.target.tagName);
+                alert('this = ', this.tagName);
+            }
+        </code></pre>
+    </section>
+
+    <section class="size_m">
+        <h2>event.target</h2>
+        <div class="bubbling-example">
+            <style>
+                .bubbling-example {
+                    width: 700px;
+                    margin: 0 auto !important;
+                    padding: 10px !important;
+                }
+                .bubbling-example * {
+                    margin: 10px !important;
+                    border: 5px solid blue !important;
+                    color: red;
+                    text-align: center;
+                }
+            </style>
+
+            <form id="eventform2">FORM
+                <div>DIV
+                    <p>P</p>
+                </div>
+            </form>
+            <script>
+                eventform2.onclick = function(event) {
+                    alert('event target: ' + event.target.tagName);
+                    alert('this: ' + this.tagName);
+                }
+            </script>
+        </div>
+    </section>
+
+    <section class="size_m center" >
+        <h2>Работа с событием</h2>
+        <ul>
+            <li class="fragment">event.preventDefault – отменяет обработчик по-умолчанию</li>
+            <li class="fragment">event.stopPropagation – прекращает всплытие</li>
+            <li class="fragment">event.stopImmediatePropagation – прекращает всплытие и не выполняет оставшиеся обработчики события</li>
+        </ul>
+    </section>
+
+    <section class="size_m center">
+        <h2>Перехват события</h2>
+        <ul>
+            <li class="size_m fragment">on... обработчики не обрабатывают перехват</li>
+            <li class="size_m fragment">element.addEventListener('event', callback, false) – обработка на стадии всплытия (дефолтное поведение)</li>
+            <li class="size_m fragment">element.addEventListener('event', callback, true) – обработка на стадии перехвата</li>
+        </ul>
+    </section>
+
+    <section class="size_m center" >
+        <h1> Делегирование событий </h1>
+    </section>
+
+    <section class="size_m">
+        <h2> Делегирование событий </h2>
+        <pre class="fragment " data-fragment-index="0" data-trim><code class="html" data-trim style="width: 1020px;">
+            <ul>
+                <li>0</li>
+                <li>1</li>
+                <li>2</li>
+            </ul>
+        </code></pre>
+        <pre class="fragment" data-fragment-index="0"><code class="javascript" data-trim data-noescape style="width: 1020px;">
+            // без делегирования
+            <span class="fragment" data-fragment-index="2">
+            var logger = function(event) {
+                console.log(event.target.innerHTML);
+            }
+            </span>
+            <span class="fragment" data-fragment-index="3">
+            var liElements = document.getElementsByTagName('li');
+
+            for (var i = 0; i < liElements.length; i++) {
+                var li = liElements[i];
+                li.addEventListener('click', logger);
+            }
+            </span>
+        </code></pre>
+    </section>
+
+    <section class="size_m">
+        <h2> Делегирование событий </h2>
+        <pre><code class="html" data-trim style="width: 1020px;">
+            <ul>
+                <li>0</li>
+                <li>1</li>
+                <li>2</li>
+            </ul>
+        </code></pre>
+        <pre class="fragment" data-fragment-index="0"><code class="javascript" data-trim data-noescape style="width: 1020px;">
+            // с делегированием
+            <span class="fragment" data-fragment-index="2">
+            var logger = function(event) {
+                if(event.target.tagName === 'LI') {
+                    console.log(event.target.innerHTML);
+                }
+            }
+            </span>
+            <span class="fragment" data-fragment-index="4">
+            var ul = document.getElementsByTagName('ul')[0];
+            ul.addEventListener('click', logger);
+            </span>
+        </code></pre>
+    </section>
+
+    <section class="size_m center">
+        <h2>Преимущества делегирования</h2>
+        <ul>
+            <li class="fragment">Один обработчик вместо множества</li>
+            <li class="fragment">При добавление новых элементов не нужно добавлять им обработчик</li>
+        </ul>
+    </section>
+
+    <section class="center size_m">
+        <h2>Полезные ссылки</h2>
+        <ul class="size_m">
+            <li><a href="https://www.w3.org/DOM/DOMTR">Спецификация DOM</a></li>
+            <li><a href="https://caniuse.com">caniuse.com</a></li>
+            <li><a href="https://learn.javascript.ru/document">learn.javascript.ru</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction">MDN</a></li>
+        </ul>
+    </section>
+
+    <section class="center">
+        <h1>Вопросы</h1>
+    </section>
+
+</div></div><script src="../../@lib/core.js"></script></body></html>

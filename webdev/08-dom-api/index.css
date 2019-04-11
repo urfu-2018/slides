@@ -1,0 +1,25 @@
+.hidden-fragment
+{
+    display: none;
+}
+
+.text-center
+{
+    text-align: center;
+}
+
+.current-fragment.hidden-fragment
+{
+    display: block;
+}
+
+.size_m
+{
+    font-size: .8em !important;
+}
+
+.size_s,
+.size_s > code
+{
+    font-size: .6em !important;
+}
