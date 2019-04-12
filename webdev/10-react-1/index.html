@@ -1,0 +1,1485 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>React</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="icon" href="./images/favicon.ico" />
+    <style>
+        .reveal .object-fit-fill.slide-background[data-background-size=contain] video {
+            object-fit: fill !important;
+        }
+
+        .slide-flex {
+            display: flex !important;
+        }
+    </style>
+</head>
+<body class="white"><div class="reveal"><div class="slides">
+
+<section class="center">
+    <h1 style="font-family: 'Ubuntu Mono', sourcesanspro-light, sans-serif; display: flex; align-items: center; justify-content: center;">
+        <img src="./images/react-logo.svg" width="200" style="margin-left: -240px">
+        <span style="margin-left: 40px;">React</span>
+    </h1>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Немного истории</h2>
+    <h2 class="grey" style="font-size: 35px;">Эволюция задач перед JS</h2>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Простые задачи</h2>
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <img src="./images/simple-javascript.gif" width="600">
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Взаимодействие</h2>
+    <div style="margin-top: 50px; display: flex; align-items: center; justify-content: center;">
+        <img src="images/multi-page-app-1.png" width="1000">
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Взаимодействие</h2>
+    <div style="margin-top: 50px; display: flex; align-items: center; justify-content: center;">
+        <img src="images/multi-page-app-2.png" width="1000">
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Взаимодействие</h2>
+    <div style="margin-top: 50px; display: flex; align-items: center; justify-content: center;">
+        <img src="images/multi-page-app-3.png" width="1000">
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Взаимодействие</h2>
+    <div style="margin-top: 50px; display: flex; align-items: center; justify-content: center;">
+        <img src="images/multi-page-app-4.png" width="1000">
+    </div>
+</section>
+
+<!-- Для pdf-версии -->
+<!-- <section class="object-fit-fill" data-background-image="./images/notes-app.png" data-background-size="cover" data-background-video-loop data-background-position="top" data-background-color="#f6f5f3"></section> -->
+
+<!-- Для html-версии -->
+<section class="object-fit-fill" data-background-video="./images/notes-app.mp4" data-background-size="contain" data-background-video-loop data-background-position="top" data-background-color="#f6f5f3">
+    <h2 style="margin-top: 50px; font-weight: bold;">Более сложные задачи</h2>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">Single
+        Page Application
+        &nbsp;<span class="grey" style="font-size: 35px;">(SPA)</span></h2>
+    <p>Веб-приложение или сайт, который загружает только одну страницу и все последующие запросы
+        обрабатываются без полной перезагрузки страницы</p>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Взаимодействие</h2>
+    <div style="margin-top: 50px; display: flex; align-items: center; justify-content: center;">
+        <img src="images/single-page-app-1.png" width="1000">
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Взаимодействие</h2>
+    <div style="margin-top: 50px; display: flex; align-items: center; justify-content: center;">
+        <img src="images/single-page-app-2.png" width="1000">
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Взаимодействие</h2>
+    <div style="margin-top: 50px; display: flex; align-items: center; justify-content: center;">
+        <img src="images/single-page-app-3.png" width="1000">
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Взаимодействие</h2>
+    <div style="margin-top: 50px; display: flex; align-items: center; justify-content: center;">
+        <img src="images/single-page-app-4.png" width="1000">
+    </div>
+</section>
+
+<section class="center">
+    <h1 style="font-family: 'Ubuntu Mono', sourcesanspro-light, sans-serif; display: flex; align-items: center; justify-content: center;">
+        <img src="./images/react-logo.svg" width="200" style="margin-left: -240px">
+        <span style="margin-left: 40px;">React</span>
+    </h1>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Концепции React</h2>
+    <div style="display: flex; justify-content: center; font-size: 40px; align-items: center;">
+        <ol style="list-style: none">
+            <li>Компонентный подход</li>
+            <li>Эффективная абстракция над DOM</li>
+            <li>Реактивный рендеринг</li>
+        </ol>
+    </div>
+</section>
+
+<section data-background-image="./images/first-component.png" data-background-size="50%" data-background-color="#f6f5f3" data-background-position="50% 80%">
+    <h2 style="font-weight: bold;">Рендеринг элементов</h2>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Рендеринг элементов</h2>
+    <pre><code data-trim data-noescape class="javascript" style="font-size: 20px">
+        import React from 'react';
+        import ReactDOM from 'react-dom';
+            
+        const root = document.getElementById('root');
+            
+        ReactDOM.render(
+            React.createElement(
+                'div',
+                { className: 'editor' },
+                React.createElement('input', { placeholder: 'Ключ заметки' }),
+                React.createElement('textarea', { placeholder: 'Текст заметки' }),
+                React.createElement('button', null, 'Отменить'),
+                React.createElement('button', null, 'Сохранить')
+            ),
+            root
+        );
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Рендеринг элементов</h2>
+    <pre><code data-trim data-noescape class="javascript" style="font-size: 20px">
+        import React from 'react';
+        import ReactDOM from 'react-dom';<span style="opacity: .2">
+            
+        const root = document.getElementById('root');
+            
+        ReactDOM.render(
+            React.createElement(
+                'div',
+                { className: 'editor' },
+                React.createElement('input', { placeholder: 'Ключ заметки' }),
+                React.createElement('textarea', { placeholder: 'Текст заметки' }),
+                React.createElement('button', null, 'Отменить'),
+                React.createElement('button', null, 'Сохранить')
+            ),
+            root
+        );</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Рендеринг элементов</h2>
+    <pre><code data-trim data-noescape class="javascript" style="font-size: 20px">
+        <span style="opacity: .2">import React from 'react';
+        import ReactDOM from 'react-dom';</span>
+            
+        const root = document.getElementById('root');<span style="opacity: .2">
+            
+        ReactDOM.render(
+            React.createElement(
+                'div',
+                { className: 'editor' },
+                React.createElement('input', { placeholder: 'Ключ заметки' }),
+                React.createElement('textarea', { placeholder: 'Текст заметки' }),
+                React.createElement('button', null, 'Отменить'),
+                React.createElement('button', null, 'Сохранить')
+            ),
+            root
+        );</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Рендеринг элементов</h2>
+    <pre><code data-trim data-noescape class="javascript" style="font-size: 20px">
+        <span style="opacity: .2">import React from 'react';
+        import ReactDOM from 'react-dom';
+            
+        const root = document.getElementById('root');
+            
+        ReactDOM.render(
+            React.createElement(
+                'div',
+                { className: 'editor' },</span>
+                React.createElement('input', { placeholder: 'Ключ заметки' }),<span style="opacity: .2">
+                React.createElement('textarea', { placeholder: 'Текст заметки' }),
+                React.createElement('button', null, 'Отменить'),
+                React.createElement('button', null, 'Сохранить')
+            ),
+            root
+        );</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Рендеринг элементов</h2>
+    <pre><code data-trim data-noescape class="javascript" style="font-size: 20px">
+        <span style="opacity: .2">import React from 'react';
+        import ReactDOM from 'react-dom';
+            
+        const root = document.getElementById('root');</span>
+            
+        ReactDOM.render(
+            React.createElement(
+                'div',
+                { className: 'editor' },
+                React.createElement('input', { placeholder: 'Ключ заметки' }),
+                React.createElement('textarea', { placeholder: 'Текст заметки' }),
+                React.createElement('button', null, 'Отменить'),
+                React.createElement('button', null, 'Сохранить')
+            ),
+            root
+        );
+    </code></pre>
+</section>
+
+<!-- Для pdf-версии -->
+<!-- <section class="object-fit-fill" data-background-image="./images/vdom.png" data-background-video-loop data-background-size="cover" data-background-position="top" data-background-color="#f6f5f3"></section> -->
+
+<!-- Для html-версии -->
+<section class="object-fit-fill" data-background-video="./images/vdom.mp4" data-background-video-loop data-background-size="contain" data-background-position="right" data-background-color="#f6f5f3"></section>
+
+<section class="center">
+    <div style="display: flex; justify-content: center;">
+        <pre><code data-trim class="javascript" style="font-size: 40px">
+            const element = <h1>Что такое JSX?</h1>;
+        </code></pre>
+    </div>
+</section>
+
+<section class="center">
+    <h3 class="grey" style="text-align: center; font-weight: bold;">JSX</h3>
+    <pre><code data-trim class="html" style="font-size: 18px;">
+        &lt;select multiple>
+            &lt;option value="Пункт 1">Пункт 1&lt;/option>
+            &lt;option selected value="Пункт 2">Пункт 2&lt;/option>
+        &lt;/select>
+    </code></pre>
+    <h3 class="grey" style="text-align: center; font-weight: bold;">JS</h3>
+    <pre><code data-trim style="font-size: 18px" class="javascript">
+        React.createElement(
+            'select',
+            { multiple: true },
+            React.createElement(
+                'option',
+                { value: 'Пункт 1' },
+                'Пункт 1'
+            ),
+            React.createElement(
+                'option',
+                { selected: true, value: 'Пункт 2' },
+                'Пункт 2'
+            )
+        );
+    </code></pre>
+</section>
+
+<!-- Для pdf-версии -->
+<!-- <section class="slide-flex object-fit-fill" data-background-image="./images/jsx-live-editor.png" data-background-video-loop data-background-position="top" data-background-size="cover" style="height: 100%; display: flex; align-items: flex-end;"></section> -->
+
+<!-- Для html-версии -->
+<section class="slide-flex object-fit-fill" data-background-video="./images/jsx-live-editor.mp4" data-background-video-loop data-background-size="contain" style="height: 100%; display: flex; align-items: flex-end;">
+    <a style="font-weight: bold; width: 100%; text-align: center; margin-bottom: 50px;" href="https://jsx-live.now.sh/" target="_blank">JSX Live Editor</a>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Все <strong>html</strong> атрибуты именуются <br /> в
+        <strong>camelCase</strong> стиле</h2>
+    <div class="grey" style="font-size: 30px; text-align: center; font-weight: bold;">HTML</div>
+    <pre><code class="html" data-trim style="font-size: 23px;">
+        &lt;input
+            class="name"
+            tabindex="2"
+            onchange="console.log('changed!');"
+        />
+    </code></pre>
+    <div class="grey" style="font-size: 30px; text-align: center; font-weight: bold;">JSX</div>
+    <pre><code class="language-typescript" data-trim data-noescape style="font-size: 23px;">
+        &lt;<span class="hljs-name">input</span>
+            <span class="hljs-attr">className</span>="name"
+            <span class="hljs-attr">tabIndex</span>="2"
+            <span class="hljs-attr">onChange</span>={event => console.log('changed!')}
+        />
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Все элементы должны быть <strong>закрыты</strong></h2>
+    <div class="grey" style="font-size: 30px; text-align: center; font-weight: bold;">HTML</div>
+    <pre><code class="html" data-trim>
+        &lt;div>
+            &lt;span>Введите ваше имя:&lt;/span>&lt;br>
+            &lt;input type="text">
+        &lt;/div>
+    </code></pre>
+    <div class="grey" style="font-size: 30px; text-align: center; font-weight: bold;">JSX</div>
+    <pre><code class="html" data-trim>
+        &lt;div>
+            &lt;span>Введите ваше имя:&lt;/span>&lt;br />
+            &lt;input type="text" />
+        &lt;/div>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Имена пользовательских компонентов должны начинаться с <strong>заглавной</strong>
+        буквы</h2>
+    <table>
+        <tr>
+            <td>
+                <pre><code data-trim>
+                    &lt;Article />
+                </code></pre>
+            </td>
+            <td>
+                <pre><code class="javascript">React.createElement(Article, null);</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <pre><code data-trim>
+                    &lt;article />
+                </code></pre>
+            </td>
+            <td>
+                <pre><code class="javascript">React.createElement("article", null);</code></pre>
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Может быть только <strong>один</strong> корневой элемент</h2>
+    <div style="display: flex; justify-content: center;">
+        <pre><code class="html" data-trim data-noescape>
+            &lt;p>Первый абзац&lt;/p>
+            &lt;p>Второй абзац&lt;/p>
+        </code></pre>
+    </div>
+    <div style="font-size: 30px; text-align: center; font-weight: bold;">
+        <strong class="red">
+            SyntaxError: Adjacent JSX elements must be wrapped in an enclosing tag
+        </strong>
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Может быть только <strong>один</strong> корневой элемент</h2>
+    <div style="display: flex; justify-content: center; flex-direction: column">
+        <div style="display: flex; justify-content: center;">
+                <pre><code class="html" data-trim>
+                        &lt;div>
+                            &lt;p>Первый абзац&lt;/p>
+                            &lt;p>Второй абзац&lt;/p>
+                        &lt;/div>
+                    </code></pre></div>
+        <div style="display: flex; justify-content: center;">
+                <pre><code class="html" data-trim>
+                        &lt;React.Fragment>
+                            &lt;p>Первый абзац&lt;/p>
+                            &lt;p>Второй абзац&lt;/p>
+                        &lt;/React.Fragment>
+                    </code></pre></div>
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;"><strong>JavaScript</strong> выражения должны быть заключены в <strong>{ }</strong></h2>
+    <pre><code class="javascript" data-trim>
+        const user = { name: 'Максим' };
+
+        const element = &lt;div>Привет, {user.name}&lt;/div>;
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Всё содержимое экранируется</h2>
+    <pre><code class="javascript" data-trim>
+        const html = '&lt;strong>Мир&lt;/strong>';
+
+        const element = &lt;div>Привет, {html}&lt;/div>;
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Всё содержимое экранируется</h2>
+    <pre><code class="language-typescript" data-trim data-noescape>
+        const html = 'Привет, &lt;strong>Мир&lt;/strong>!';
+
+        const element = (
+            &lt;<span class="hljs-name">div</span> <span class="hljs-attr">dangerouslySetInnerHTML</span>={{ __html: html }} />
+        );
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Компоненты</h2>
+    <pre><code data-trim data-noescape class="typescript">
+        import React from 'react';
+        import ReactDOM from 'react-dom';
+            
+        const root = document.getElementById('root');
+            
+        ReactDOM.render(
+            &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="editor">
+                &lt;<span class="hljs-name">input</span> <span class="hljs-attr">placeholder</span>="Ключ заметки" />
+                &lt;<span class="hljs-name">textarea</span> <span class="hljs-attr">placeholder</span>="Текст заметки" />
+                &lt;<span class="hljs-name">button</span>>Отменить&lt;/<span class="hljs-name">button</span>>
+                &lt;<span class="hljs-name">button</span>>Сохранить&lt;/<span class="hljs-name">button</span>>
+            &lt;/<span class="hljs-name">div</span>>,
+            root
+        );
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; position: relative;">
+        Function component
+    </h2>
+    <pre><code data-trim data-noescape class="javascript">
+        import React from 'react';
+
+        function Editor() {
+            return (
+                &lt;<span class="hljs-name">div</span> <span
+            class="hljs-attr">className</span>=<span class="hljs-string">"editor"</span>>
+                    &lt;<span class="hljs-name">input</span> <span
+            class="hljs-attr">placeholder</span>=<span class="hljs-string">"Ключ заметки"</span> />
+                    &lt;<span class="hljs-name">textarea</span> <span
+            class="hljs-attr">placeholder</span>=<span class="hljs-string">"Текст заметки"</span> />
+                    &lt;<span class="hljs-name">button</span>>Отменить&lt;/<span
+            class="hljs-name">button</span>>
+                    &lt;<span class="hljs-name">button</span>>Сохранить&lt;/<span
+            class="hljs-name">button</span>>
+                &lt;/<span class="hljs-name">div</span>>
+            );
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; position: relative;">
+        Class component
+    </h2>
+    <pre><code data-trim data-noescape class="javascript">
+        import React, { Component } from 'react';
+
+        class Editor extends Component {
+            render() {
+                return (
+                    &lt;<span class="hljs-name">div</span> <span
+            class="hljs-attr">className</span>=<span class="hljs-string">"editor"</span>>
+                        &lt;<span class="hljs-name">input</span> <span
+            class="hljs-attr">placeholder</span>=<span class="hljs-string">"Ключ заметки"</span> />
+                        &lt;<span class="hljs-name">textarea</span> <span
+            class="hljs-attr">placeholder</span>=<span class="hljs-string">"Текст заметки"</span> />
+                        &lt;<span class="hljs-name">button</span>>Отменить&lt;/<span
+            class="hljs-name">button</span>>
+                        &lt;<span class="hljs-name">button</span>>Сохранить&lt;/<span
+            class="hljs-name">button</span>>
+                    &lt;/<span class="hljs-name">div</span>>
+                );
+            }
+        }
+    </code></pre>
+</section>
+
+<section data-background-image="./images/composite-components.png" data-background-size="50%" data-background-color="#f6f5f3" data-background-position="50% 80%">
+    <h2 style="font-weight: bold;">Объединение компонентов</h2>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Объединение компонентов</h2>
+    <pre><code class="javascript" data-trim data-noescape>
+        import Editor from './Editor';
+        import Notes from './Notes';
+
+        function NotesApp() {
+            return (
+                &lt;div className="notes-app">
+                    &lt;Editor />
+                    &lt;Notes />
+                &lt;/div>
+            );
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Атрибуты</h2>
+    <h2 class="grey" style="font-size: 35px; font-weight: bold;">Props</h2>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">Атрибуты&nbsp;<span
+            class="grey" style="font-size: 40px;">(Props)</span></h2>
+    <div style="display: flex; justify-content: center">
+        <pre><code class="language-javascript" data-trim data-noescape>
+            function Notes() {
+                return (
+                    &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span
+                class="hljs-string">"notes"</span>>
+                        &lt;<span class="hljs-name">Note</span> <span class="hljs-attr">name</span>=<span
+                class="hljs-string">"Books"</span> <span
+                class="hljs-attr">text</span>=<span class="hljs-string">"Books to read"</span> />
+                        &lt;<span class="hljs-name">Note</span> <span class="hljs-attr">name</span>=<span
+                class="hljs-string">"Music"</span> <span
+                class="hljs-attr">text</span>=<span class="hljs-string">"Music to listen"</span> />
+                        &lt;<span class="hljs-name">Note</span> <span class="hljs-attr">name</span>=<span
+                class="hljs-string">"Films"</span> <span
+                class="hljs-attr">text</span>=<span class="hljs-string">"Films to watch"</span> />
+                    &lt;/<span class="hljs-name">div</span>>
+                );
+            }
+        </code></pre>
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">Атрибуты&nbsp;<span
+            class="grey" style="font-size: 40px;">(Props)</span></h2>
+    <pre><code class="typescript" data-trim data-noescape>
+        interface NoteProps {
+            name: string;
+            text: string;
+        }
+
+        function Note({ name, text }: NoteProps) {
+            return (
+                &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="note">
+                    &lt;<span class="hljs-name">h1</span>>{name}&lt;/<span class="hljs-name">h1</span>>
+                    &lt;<span class="hljs-name">p</span>>{text}&lt;/<span class="hljs-name">p</span>>
+                &lt;/<span class="hljs-name">div</span>>
+            );
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">Атрибуты&nbsp;<span
+            class="grey" style="font-size: 40px;">(Props)</span></h2>
+    <pre><code class="typescript" data-trim data-noescape style="font-size: 22px">
+        import React, { Component } from 'react';
+
+        interface NoteProps {
+            name: string;
+            text: string;
+        }
+
+        class Note extends Component&lt;NoteProps> {
+            render() {
+                return (
+                    &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="note">
+                        &lt;<span class="hljs-name">h1</span>>{<span class="hljs-keyword">this</span>.props.name}&lt;/<span class="hljs-name">h1</span>>
+                        &lt;<span class="hljs-name">p</span>>{<span class="hljs-keyword">this</span>.props.text}&lt;/<span class="hljs-name">p</span>>
+                    &lt;/<span class="hljs-name">div</span>>
+                );
+            }
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Потомки</h2>
+    <h2 class="grey" style="font-size: 35px; font-weight: bold;">Children</h2>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+        Потомки&nbsp;<span class="grey" style="font-size: 40px;">(Children)</span>
+    </h2>
+    <pre><code class="language-javascript" style="font-size: 23px;" data-trim data-noescape>
+        function Notes() {
+            return (
+                &lt;div className="notes">
+                    &lt;Note name="Books">
+                        Books to read
+                    &lt;/Note>
+
+                    &lt;Note name="Films">
+                        &lt;p>Films to read&lt;/p>
+                        &lt;button>Like&lt;/button>
+                    &lt;/Note>
+
+                    ...
+                &lt;/div>
+            );
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+        Потомки&nbsp;<span class="grey" style="font-size: 40px;">(Children)</span>
+    </h2>
+    <pre><code class="language-typescript" style="font-size: 20px;" data-trim data-noescape>
+        import React, { ReactNode } from 'react';
+
+        interface NoteProps {
+            children: ReactNode;
+            name: string;
+        }
+
+        function Note({ children, name }: NoteProps) {
+            return (
+                &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="note">
+                    &lt;<span class="hljs-name">h1</span> <span class="hljs-attr">className</span>="note__title">
+                        {name}
+                    &lt;/<span class="hljs-name">h1</span>>
+                    &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"note__content"</span>>
+                        {children}
+                    &lt;/<span class="hljs-name">div</span>>
+                &lt;/<span class="hljs-name">div</span>>
+            );
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+        Потомки&nbsp;<span class="grey" style="font-size: 40px;">(Children)</span>
+    </h2>
+    <pre><code class="language-typescript" style="font-size: 20px;" data-trim data-noescape>
+        <span style="opacity: .3">import React, { ReactNode } from 'react';
+
+        interface NoteProps {</span>
+            children: ReactNode;<span style="opacity: .3">
+            name: string;
+        }
+
+        function Note({ children, name }: NoteProps) {
+            return (
+                &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="note">
+                    &lt;<span class="hljs-name">h1</span> <span class="hljs-attr">className</span>="note__title">
+                        {name}
+                    &lt;/<span class="hljs-name">h1</span>></span>
+                    &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"note__content"</span>>
+                        {children}
+                    &lt;/<span class="hljs-name">div</span>><span style="opacity: .3">
+                &lt;/<span class="hljs-name">div</span>>
+            );
+        }</span>
+    </code></pre>
+</section>
+
+<section data-background-image="./images/warning-note.png" data-background-size="contain" data-background-position="center 20px" data-background-color="#f6f5f3">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+        Условный рендеринг
+    </h2>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+        Условный рендеринг
+    </h2>
+    <pre><code class="language-typescript" data-trim data-noescape>
+        function Note({ children, name, type }: NoteProps) {
+            return (
+                &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="note">
+                    &lt;<span class="hljs-name">h1</span> <span class="hljs-attr">className</span>="note__title">
+                        {type === 'warning' ? 'Warning' : name}
+                    &lt;/<span class="hljs-name">h1</span>>
+                    ...
+                &lt;/<span class="hljs-name">div</span>>
+            );
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+        Условный рендеринг
+    </h2>
+    <pre><code class="language-typescript" data-trim data-noescape>
+        <span style="opacity: .3">function Note({ children, name, type }: NoteProps) {
+            return (
+                &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="note"></span>
+                    &lt;<span class="hljs-name">h1</span> <span class="hljs-attr">className</span>="note__title">
+                        {type === 'warning' ? 'Warning' : name}
+                    &lt;/<span class="hljs-name">h1</span>><span style="opacity: .3">
+                    ...
+                &lt;/<span class="hljs-name">div</span>>
+            );
+        }</span>
+    </code></pre>
+</section>
+
+<section data-background-image="./images/warning-note.png" data-background-size="contain" data-background-position="center 20px" data-background-color="#f6f5f3">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+        Работа со списками
+    </h2>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+        Работа со списками
+    </h2>
+    <pre><code class="language-typescript" data-trim data-noescape>
+        function NotesList() {
+            return (
+                &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="notes-list">
+                    &lt;<span class="hljs-name">Note</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"Books"</span> <span class="hljs-attr">text</span>=<span class="hljs-strng">"Books to read"</span> />
+                    &lt;<span class="hljs-name">Note</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"Films"</span> <span class="hljs-attr">text</span>=<span class="hljs-strng">"Films to watch"</span> />
+                    &lt;<span class="hljs-name">Note</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"Music"</span> <span class="hljs-attr">text</span>=<span class="hljs-strng">"Music to listen"</span> />
+                &lt;/<span class="hljs-name">div</span>>
+            );
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+        Работа со списками
+    </h2>
+    <pre><code class="language-typescript" data-trim data-noescape>
+        function NotesList({ notes }: NotesListProps) {
+            return (
+                &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="notes-list">
+                    {notes.map(note => (
+                        &lt;<span class="hljs-name">Note</span> <span class="hljs-attr">name</span>={note.name} <span class="hljs-attr">text</span>={note.text} />
+                    ))}
+                &lt;/<span class="hljs-name">div</span>>
+            );
+        }
+    </code></pre>
+    <p class="red fragment" style="font-size: 30px;">
+        Each child in an array or iterator should have a unique "key" prop.<br>
+        Check the render method of <span style="font-weight: bold;">NotesList</span>. See https://fb.me/react-warning-keys for more information.
+    </p>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+        Работа со списками
+    </h2>
+    <pre><code class="language-typescript" data-trim data-noescape>
+        function NotesList({ notes }: NotesListProps) {
+            return (
+                &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="notes-list">
+                    {notes.map(note => (
+                        &lt;<span class="hljs-name">Note</span>
+                            <span class="hljs-attr">name</span>={note.name}
+                            <span class="hljs-attr">text</span>={note.text}
+                            <span class="hljs-attr">key</span>={note.id}
+                        />
+                    ))}
+                &lt;/<span class="hljs-name">div</span>>
+            );
+        }
+    </code></pre>
+    <p class="red" style="opacity:0; height: 100px; margin-top: -100px; margin-left: 50px; font-size: 30px;">
+        Each child in an array or iterator should have a unique "key" prop.<br>
+        Check the render method of <span style="font-weight: bold;">NotesList</span>. See https://fb.me/react-warning-keys for more information.
+    </p>
+</section>
+
+<section class="center">
+        <h2 style="font-weight: bold;">Keys</h2>
+        <div style="display: flex; align-items: center; justify-content: center; font-size: 30px;">
+            <ul style="list-style: none">
+                <li>Key должен однозначно определять элемент списка и быть стабильным</li>
+                <li>Повторяющиеся key в рамках одного списка недопустимы</li>
+                <li>Использовать индекс элемента в массиве лучше только тогда, когда другого выхода нет</li>
+            </ul>
+        </div>
+    </section>
+
+<!-- Для pdf-версии -->
+<!-- <section data-background-image="./images/set-state-example.png" data-background-size="conver" data-background-position="top" data-background-video-loop data-background-color="#f6f5f3"></section> -->
+
+<!-- Для html-версии -->
+<section data-background-video="./images/set-state-example.mp4" data-background-size="contain" data-background-position="center" data-background-video-loop data-background-color="#f6f5f3">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+        Состояние компонента&nbsp;<span class="grey" style="font-size: 40px;">(State)</span>
+    </h2>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+        Состояние компонента&nbsp;<span class="grey" style="font-size: 40px;">(State)</span></h2>
+    <div style="display: flex; justify-content: center; font-size: 40px">
+        <ol style="list-style: none; font-size: 34px;">
+            <li>Изменяется через специальный интерфейс</li>
+            <li>Компонент автоматически реагирует на изменения состояния</li>
+        </ol>
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+        Состояние компонента&nbsp;<span class="grey" style="font-size: 40px;">(State)</span>
+    </h2>
+    <pre><code class="language-typescript" data-trim data-noescape style="font-size: 24px">
+        interface NoteState {
+            isReadMoreClicked: boolean;
+        }
+
+        class Note extends Component&lt;NoteProps, NoteState> {
+            state: NoteState = { isReadMoreClicked: false }
+
+            handleReadMoreClick = () => {
+                this.setState({ isReadMoreClicked: true });
+            }
+
+            ...
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+        <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+            Состояние компонента&nbsp;<span class="grey" style="font-size: 40px;">(State)</span>
+        </h2>
+        <pre><code class="language-typescript" data-trim data-noescape style="font-size: 24px">
+            interface NoteState {
+                isReadMoreClicked: boolean;
+            }
+        
+            <span style="opacity: .3;">class Note extends Component</span>&lt;NoteProps, NoteState><span style="opacity: .3;"> {
+                state: NoteState = { isReadMoreClicked: false }
+    
+                handleReadMoreClick = () => {
+                    this.setState({ isReadMoreClicked: true });
+                }
+    
+                ...
+            }</span>
+        </code></pre>
+    </section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+        Состояние компонента&nbsp;<span class="grey" style="font-size: 40px;">(State)</span>
+    </h2>
+    <pre><code class="language-typescript" data-trim data-noescape style="font-size: 24px">
+        <span style="opacity: .3">interface NoteState {
+            isReadMoreClicked: boolean;
+        }</span>
+
+        <span style="opacity: .3;">class Note extends Component&lt;NoteProps, NoteState> {</span>
+            state: NoteState = { isReadMoreClicked: false }<span style="opacity: .3;">
+
+            handleReadMoreClick = () => {
+                this.setState({ isReadMoreClicked: true });
+            }
+
+            ...
+        }</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+        Состояние компонента&nbsp;<span class="grey" style="font-size: 40px;">(State)</span>
+    </h2>
+    <pre><code class="language-typescript" data-trim data-noescape style="font-size: 24px">
+        <span style="opacity: .3">interface NoteState {
+            isReadMoreClicked: boolean;
+        }</span>
+
+        <span style="opacity: .3;">class Note extends Component&lt;NoteProps, NoteState> {
+            state: NoteState = { isReadMoreClicked: false }</span>
+
+            handleReadMoreClick = () => {
+                this.setState({ isReadMoreClicked: true });
+            }<span style="opacity: .3;">
+
+            ...
+        }</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+        Состояние компонента&nbsp;<span class="grey" style="font-size: 40px;">(State)</span>
+    </h2>
+    <pre><code class="javascript" style="font-size: 19px;" data-trim data-noescape>
+        class Note extends Component&lt;NoteProps, NoteState> {
+            ...
+
+            render() {
+                return (
+                    &lt;div className="note">
+                        &lt;div className="note__name">Books&lt;/div>
+                        &lt;div className="note__text">Books to read&lt;/div>
+                        {<span class="hljs-keyword">this</span>.state.isReadMoreClicked
+                            ? &lt;button onClick={handleReadMoreClick}>Read more&lt;/button>
+                            : &lt;div className="note__additional-text">Additional text&lt;/div>
+                        }
+                    &lt;/div>
+                );
+            }
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+        Состояние компонента&nbsp;<span class="grey" style="font-size: 40px;">(State)</span>
+    </h2>
+    <pre><code class="javascript" style="font-size: 19px;" data-trim data-noescape>
+    <span style="opacity: .3">class Note extends Component&lt;NoteProps, NoteState> {
+        ...
+
+        render() {
+            return (
+                &lt;div className="note">
+                    &lt;div className="note__name">Books&lt;/div>
+                    &lt;div className="note__text">Books to read&lt;/div></span>
+                    {<span class="hljs-keyword">this</span>.state.isReadMoreClicked
+                        ? &lt;button onClick={handleReadMoreClick}>Read more&lt;/button>
+                        : &lt;div className="note__additional-text">Additional text&lt;/div>
+                    }<span style="opacity: .3">
+                &lt;/div>
+            );
+        }
+    }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">
+        Не изменяйте состояние напрямую
+    </h2>
+    <pre><code class="javascript" data-trim data-noescape>
+        // Неправильно
+        this.state.isReadMoreClicked = true;
+
+        // Правильно
+        this.setState({ isReadMoreClicked: true });
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">
+        Изменение состояния может быть асинхронным
+    </h2>
+    <pre><code class="javascript" data-trim data-noescape>
+        // Неправильно
+        this.setState({ counter: this.state.counter + 1 });
+        this.setState({ counter: this.state.counter + 1 });
+
+        // Правильно
+        this.setState(state => ({ counter: state.counter + 1 }));
+        this.setState(state => ({ counter: state.counter + 1 }));
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">
+        Можно обновлять не все состояние целиком
+    </h2>
+    <pre><code class="typescript" data-trim data-noescape>
+        interface State {
+            notes: Note[];
+            isReadMoreClicked: boolean;
+        }
+
+        this.setState({ isReadMoreClicked: true });
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Жизненный цикл компонента</h2>
+    <h2 class="grey" style="font-size: 35px; font-weight: bold;">Component life-cycle</h2>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Этапы жизненного цикла</h2>
+    <div style="display: flex; justify-content: center; font-size: 40px">
+        <ol>
+            <li>Монтирование компонента <span style="font-size: 40px;" class="grey">(Mounting)</span>
+            </li>
+            <li>Изменение атрибутов или состояния <span style="font-size: 40px;"
+                                                        class="grey">(Updating)</span></li>
+            <li>Удаление компонента <span style="font-size: 40px;" class="grey">(Unmounting)</span></li>
+        </ol>
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Монтирование <span class="grey"
+                                                      style="font-size: 40px">(Mounting)</span></h2>
+    <pre><code class="bash" data-trim data-noescape style="text-align: center;">
+        constructor
+        ↓
+        <span style="position: absolute; transform: translateX(-100%)" class="grey">(static)</span> getDerivedStateFromProps
+        ↓
+        render
+        ↓
+        componentDidMount
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Изменение атрибутов <span class="grey" style="font-size: 40px">(Updating)</span>
+    </h2>
+    <pre><code class="bash" data-trim data-noescape style="text-align: center;">
+        <span style="position: absolute; transform: translateX(-100%)" class="grey">(static)</span> getDerivedStateFromProps
+        ↓
+        shouldComponentUpdate
+        ↓
+        render
+        ↓
+        componentDidUpdate
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Изменение состояния <span class="grey" style="font-size: 40px">(Updating)</span>
+    </h2>
+    <pre><code class="bash" data-trim style="text-align: center;">
+        shouldComponentUpdate
+        ↓
+        render
+        ↓
+        componentDidUpdate
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Удаление компонента&nbsp;<span class="grey" style="font-size: 40px">(Unmounting)</span>
+    </h2>
+    <pre><code class="bash" data-trim style="text-align: center;">
+        componentWillUnmount
+    </code></pre>
+</section>
+
+<section data-background-image="./images/component-lifecycle.png" data-background-size="90%" data-background-position="center"></section>
+
+<!-- Для pdf-версии -->
+<!-- <section class="object-fit-fill" data-background-image="./images/back-to-top.png" data-background-video-loop data-background-size="cover" data-background-position="top" data-background-color="#f6f5f3"></section> -->
+
+<!-- Для html-версии -->
+<section class="object-fit-fill" data-background-video="./images/back-to-top.mp4" data-background-video-loop data-background-size="contain" data-background-position="right" data-background-color="#f6f5f3"></section>
+
+<section class="center">
+    <pre><code class="language-javascript" data-trim data-noescape style="font-size: 19px;">
+        class Notes extends Component&lt;NotesProps, NotesState> {
+            state: NotesState = { backToTop: false }
+
+            componentDidMount() {
+                window.addEventListener('scroll', this.handleScroll);
+            }
+
+            componentWillUnmount() {
+                window.removeEventListener('scroll', this.handleScroll);
+            }
+
+            handleScroll = () => {
+                if (!this.state.backToTop && document.documentElement.scrollTop > 300) {
+                    this.setState({ backToTop: true });
+                }
+
+                ...
+            }
+
+            ...
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <pre><code class="language-javascript" data-trim data-noescape style="font-size: 19px;">
+        <span style="opacity: .3">class Notes extends Component&lt;NotesProps, NotesState> {</span>
+            state: NotesState = { backToTop: false }
+
+            <span style="opacity: .3">componentDidMount() {
+                window.addEventListener('scroll', this.handleScroll);
+            }
+
+            componentWillUnmount() {
+                window.removeEventListener('scroll', this.handleScroll);
+            }</span>
+
+            handleScroll = () => {
+                if (!this.state.backToTop && document.documentElement.scrollTop > 300) {
+                    this.setState({ backToTop: true });
+                }
+
+                ...
+            }<span style="opacity: .3">
+
+            ...
+        }</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <pre><code class="language-javascript" data-trim data-noescape style="font-size: 19px;">
+        <span style="opacity: .3">class Notes extends Component&lt;NotesProps, NotesState> {
+            state: NotesState = { backToTop: false }</span>
+
+            componentDidMount() {
+                window.addEventListener('scroll', this.handleScroll);
+            }
+
+            componentWillUnmount() {
+                window.removeEventListener('scroll', this.handleScroll);
+            }<span style="opacity: .3">
+
+            handleScroll = () => {
+                if (!this.state.backToTop && document.documentElement.scrollTop > 300) {
+                    this.setState({ backToTop: true });
+                }
+
+                ...
+            }
+
+            ...
+        }</span>
+    </code></pre>
+</section>
+
+<!-- Для pdf-версии -->
+<!-- <section data-background-image="./images/notes-editor.png" data-background-size="cover" data-background-position="top" data-background-video-loop data-background-color="#f6f5f3"></section> -->
+
+<!-- Для html-версии -->
+<section data-background-video="./images/notes-editor.mp4" data-background-size="contain" data-background-position="center" data-background-video-loop data-background-color="#f6f5f3">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+        Работа с формами
+    </h2>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+        Работа с формами
+    </h2>
+    <div style="display: flex; align-items: center; justify-content: center; font-size: 40px;">
+        <ul style="list-style: none; margin-left: 0; padding: 0;">
+            <li>Как получить данные из формы?</li>
+            <li>Как обрабатывать события?</li>
+        </ul>
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+        Виды компонентов
+    </h2>
+    <div style="display: flex; align-items: center; justify-content: center; font-size: 40px;">
+        <table>
+            <tr>
+                <td>1. Неуправляемые</td>
+                <td style="color: #aaa">(Uncontrolled)</td>
+            </tr>
+            <tr>
+                <td>2. Управляемые</td>
+                <td style="color: #aaa">(Controlled)</td>
+            </tr>
+        </table>
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold;">
+        Неуправляемые компоненты
+        <br>
+        <span class="grey" style="font-size: 40px;">(Uncontrolled components)</span></h2>
+    <p style="font-size: 40px;"><strong>DOM</strong> управляет текущим состоянием компонента</p>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; justify-content: center; align-items: center;">
+        Ссылка на DOM элемент&nbsp;<span class="grey" style="font-size: 40px;">(Ref)</span>
+    </h2>
+    <pre><code class="language-typescript" data-noescape data-trim style="font-size: 18px;">
+        import React, { Component, createRef } from 'react';
+
+        class UncontrolledForm extends Component {
+            inputRef = createRef&lt;HTMLInputElement>()
+
+            handleSubmit = () => {
+                if (this.inputRef.current) {
+                    this.makeSomeApiRequest(this.inputRef.current.value);
+                }
+            }
+
+            render() {
+                return (
+                    &lt;<span class="hljs-name">div</span>>
+                        &lt;<span class="hljs-name">input</span> <span class="hljs-attr">ref</span>={this.inputRef} />
+                        &lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>={this.handleSubmit}>Отправить&lt;/<span class="hljs-name">button</span>>
+                    &lt;/<span class="hljs-name">div</span>>
+                );
+            }
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; justify-content: center; align-items: center;">
+        Ссылка на DOM элемент&nbsp;<span class="grey" style="font-size: 40px;">(Ref)</span>
+    </h2>
+    <pre><code class="language-typescript" data-noescape data-trim style="font-size: 18px;">
+        import React, { Component, createRef } from 'react';<span style="opacity: .3">
+
+        class UncontrolledForm extends Component {</span>
+            inputRef = createRef&lt;HTMLInputElement>()<span style="opacity: .3">
+
+            handleSubmit = () => {
+                if (this.inputRef.current) {
+                    this.makeSomeApiRequest(this.inputRef.current.value);
+                }
+            }
+
+            render() {
+                return (
+                    &lt;<span class="hljs-name">div</span>>
+                        &lt;<span class="hljs-name">input</span> <span class="hljs-attr">ref</span>={this.inputRef} />
+                        &lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>={this.handleSubmit}>Отправить&lt;/<span class="hljs-name">button</span>>
+                    &lt;/<span class="hljs-name">div</span>>
+                );
+            }
+        }</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; justify-content: center; align-items: center;">
+        Ссылка на DOM элемент&nbsp;<span class="grey" style="font-size: 40px;">(Ref)</span>
+    </h2>
+    <pre><code class="language-typescript" data-noescape data-trim style="font-size: 18px;">
+        <span style="opacity: .3">import React, { Component, createRef } from 'react';
+
+        class UncontrolledForm extends Component {
+            inputRef = createRef&lt;HTMLInputElement>()
+
+            handleSubmit = () => {
+                if (this.inputRef.current) {
+                    this.makeSomeApiRequest(this.inputRef.current.value);
+                }
+            }
+
+            render() {</span>
+                return (
+                    &lt;<span class="hljs-name">div</span>>
+                        &lt;<span class="hljs-name">input</span> <span class="hljs-attr">ref</span>={this.inputRef} /><span style="opacity: .3">
+                        &lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>={this.handleSubmit}>Отправить&lt;/<span class="hljs-name">button</span>></span>
+                    &lt;/<span class="hljs-name">div</span>>
+                );<span style="opacity: .3">
+            }
+        }</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; justify-content: center; align-items: center;">
+        Ссылка на DOM элемент&nbsp;<span class="grey" style="font-size: 40px;">(Ref)</span>
+    </h2>
+    <pre><code class="language-typescript" data-noescape data-trim style="font-size: 18px;">
+        <span style="opacity: .3">import React, { Component, createRef } from 'react';
+
+        class UncontrolledForm extends Component {
+            inputRef = createRef&lt;HTMLInputElement>()</span>
+
+            handleSubmit = () => {
+                if (this.inputRef.current) {
+                    this.makeSomeApiRequest(this.inputRef.current.value);
+                }
+            }<span style="opacity: .3">
+
+            render() {</span>
+                return (
+                    &lt;<span class="hljs-name">div</span>><span style="opacity: .3">
+                        &lt;<span class="hljs-name">input</span> <span class="hljs-attr">ref</span>={this.inputRef} /></span>
+                        &lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>={this.handleSubmit}>Отправить&lt;/<span class="hljs-name">button</span>>
+                    &lt;/<span class="hljs-name">div</span>>
+                );<span style="opacity: .3">
+            }
+        }</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold;">
+        Неуправляемые компоненты
+        <br>
+        <span class="grey" style="font-size: 40px;">(Uncontrolled components)</span></h2>
+    <div style="display: flex; align-items: center; justify-content: center; font-size: 35px;">
+        <ul style="list-style: none">
+            <li class="green">Простота</li>
+            <li class="green">Один обработчик на всю форму</li>
+            <li class="red">Контроль из кода</li>
+        </ul>
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold;">
+        Управляемые компоненты
+        <br>
+        <span class="grey" style="font-size: 40px;">(Controlled components)</span></h2>
+    <p style="font-size: 40px;"><strong>React</strong> управляет текущим состоянием компонента</p>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; justify-content: center; align-items: center;">
+        Управляемые компоненты
+    </h2>
+    <pre><code class="language-typescript" data-noescape data-trim style="font-size: 18px;">
+        import React, { Component, FormEvent } from 'react';
+
+        class ControlledForm extends Component&lt;ControlledFormProps, ControlledFormState> {
+            state: ControlledFormState = { value: '' }
+
+            handleChange = (event: FormEvent&lt;HTMLInputElement>) => {
+                this.setState({ value: event.target.value });
+            }
+
+            handleSubmit = () => this.makeSomeApiRequest(this.state.value)
+
+            render() {
+                return (
+                    &lt;<span class="hljs-name">div</span>>
+                        &lt;<span class="hljs-name">input</span> <span class="hljs-attr">value</span>={this.state.value} <span class="hljs-attr">onChange</span>={this.handleChange} />
+                        &lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>={this.handleSubmit}>Отправить&lt;/<span class="hljs-name">button</span>>
+                    &lt;/<span class="hljs-name">div</span>>
+                );
+            }
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; justify-content: center; align-items: center;">
+        Управляемые компоненты
+    </h2>
+    <pre><code class="language-typescript" data-noescape data-trim style="font-size: 18px;">
+        import React, { Component, FormEvent } from 'react';<span style="opacity: .3">
+
+        class ControlledForm extends Component&lt;ControlledFormProps, ControlledFormState> {</span>
+            state: ControlledFormState = { value: '' }
+
+            handleChange = (event: FormEvent&lt;HTMLInputElement>) => {
+                this.setState({ value: event.target.value });
+            }<span style="opacity: .3">
+
+            handleSubmit = () => this.makeSomeApiRequest(this.state.value)
+
+            render() {
+                return (
+                    &lt;<span class="hljs-name">div</span>></span>
+                        &lt;<span class="hljs-name">input</span> <span class="hljs-attr">value</span>={this.state.value} <span class="hljs-attr">onChange</span>={this.handleChange} /><span style="opacity: .3">
+                        &lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>={this.handleSubmit}>Отправить&lt;/<span class="hljs-name">button</span>></span><span style="opacity: .3">
+                    &lt;/<span class="hljs-name">div</span>>
+                );
+            }
+        }</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; justify-content: center; align-items: center;">
+        Управляемые компоненты
+    </h2>
+    <pre><code class="language-javascript" data-noescape data-trim style="font-size: 18px;">
+        <span style="opacity: .3">import React, { Component, FormEvent } from 'react';
+
+        class ControlledForm extends Component&lt;ControlledFormProps, ControlledFormState> {
+            state: ControlledFormState = { value: '' }
+
+            handleChange = (event: FormEvent&lt;HTMLInputElement>) => {
+                this.setState({ value: event.target.value });
+            }</span>
+
+            handleSubmit = () => this.makeSomeApiRequest(this.state.value)<span style="opacity: .3">
+
+            render() {
+                return (
+                    &lt;<span class="hljs-name">div</span>>
+                        &lt;<span class="hljs-name">input</span> <span class="hljs-attr">value</span>={this.state.value} <span class="hljs-attr">onChange</span>={this.handleChange} /></span>
+                        &lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>={this.handleSubmit}>Отправить&lt;/<span class="hljs-name">button</span>><span style="opacity: .3">
+                    &lt;/<span class="hljs-name">div</span>>
+                );
+            }
+        }</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold;">
+        Управляемые компоненты
+        <br>
+        <span class="grey" style="font-size: 40px;">(Controlled components)</span></h2>
+    <div style="display: flex; align-items: center; justify-content: center; font-size: 35px;">
+        <ul style="list-style: none">
+            <li class="green">Состояние управляется через интерфейс</li>
+            <li class="green">Полный контроль над изменениями</li>
+            <li class="red">Более сложное взаимодействие</li>
+        </ul>
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold;">
+        Быстрый старт
+    </h2>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">create-react-app</h2>
+    <pre><code class="bash" data-trim data-noescape>
+        <span class="red">$</span> npm install -g create-react-app
+        <span class="fragment"><span class="red">$</span> create-react-app notes-app --typescript</span>
+        <span class="fragment"><span class="red">$</span> cd notes-app</span>
+        <span class="fragment"><span class="red">$</span> npm run start
+        <span class="grey" style="font-size: 18px;">
+        Compiled successfully!
+
+        You can now view <span style="font-weight: bold;">notes-app</span> in the browser.
+            <span style="font-weight: bold;">Local</span>:            http://localhost:<span
+                style="font-weight: bold;">3000</span>/
+
+        Note that the development build is not optimized.
+        To create a production build, use <span class="green">npm run build.</span></span></span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">create-react-app</h2>
+    <div style="display: flex; align-items: center; justify-content: center; font-size: 35px;">
+        <ul style="list-style: none">
+            <li class="green">Очень быстрый старт</li>
+            <li class="green">Активное развитие и поддержка от разработчиков React</li>
+            <li class="green">TypeScript «из коробки»</li>
+        </ul>
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold;">
+        Почитать
+    </h2>
+    <div style="text-align: center">
+        <a href="https://ru.reactjs.org/docs/getting-started.html" style="display: block; margin-bottom: 10px; font-size: 35px;">Официальная документация React</a>
+        <a href="https://kentcdodds.com/blog/what-is-jsx" style="display: block; margin-bottom: 10px; font-size: 35px;">What is JSX?</a>
+        <a href="https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318" style="display: block; margin-bottom: 10px; font-size: 35px;">Index as a key is an anti-pattern</a>
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold;">
+        Посмотреть
+    </h2>
+    <div style="text-align: center">
+        <a href="https://egghead.io/courses/the-beginner-s-guide-to-react" style="display: block; margin-bottom: 10px; font-size: 35px;">The Beginner's Guide to React</a>
+        <a href="https://egghead.io/courses/start-learning-react" style="display: block; margin-bottom: 10px; font-size: 35px;">Start Learning React</a>
+        <a href="https://courses.totalreact.com/p/advanced-react-free" style="display: block; margin-bottom: 10px; font-size: 35px;">Advanced React</a>
+    </div>
+</section>
+
+</div></div>
+
+<script src="../../@lib/core.js"></script>
+</body>
+</html>
