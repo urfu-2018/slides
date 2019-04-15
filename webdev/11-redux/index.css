@@ -39,7 +39,7 @@ section > h2.img-header
     border: none;
 }
 
-.slides > section img.files-tree + pre,
+/* .slides > section img.files-tree + pre, */
 .slides > section img.files-tree + .split-code
 {
     margin-left: 25%;
