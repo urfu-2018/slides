@@ -1,0 +1,171 @@
+.slides > section
+{
+    height: 100%;
+}
+
+.img-wrapper
+{
+    height: calc(100% - 75px);
+}
+
+.slides > .title-slide
+{
+    height: auto;
+}
+
+.directory
+{
+    background-color: #000;
+    color: #c7c7c7;
+    padding: 0 20px !important;
+}
+
+section > h2.img-header
+{
+    margin-right: 5%;
+}
+
+.slides > section img.files-tree
+{
+    position: absolute;
+    left: 0;
+    top: 13.1%;
+    height: 80%;
+    border-right: 1px solid gainsboro;
+}
+
+.slides > section img.files-tree.not-code-next
+{
+    border: none;
+}
+
+.slides > section img.files-tree + pre,
+.slides > section img.files-tree + .split-code
+{
+    margin-left: 25%;
+}
+
+.split-code
+{
+    display: flex;
+    overflow: hidden;
+}
+
+.split-code > pre:last-child
+{
+    border-left: 1px solid gainsboro;
+}
+
+.post-mark
+{
+    width: 300px;
+    position: absolute;
+    right: 0;
+    box-shadow: 0 0 2px 4px whitesmoke;
+    border-radius: 3px;
+    font-size: 24px !important;
+    background: whitesmoke;
+    transform: rotate(-10deg);
+}
+
+.hor-center
+{
+    text-align: center;
+}
+
+.reveal .no-dot
+{
+    list-style-type: none;
+    margin-left: 0;
+}
+
+.reveal .left
+{
+    text-align: left;
+}
+
+.reveal code.black-text span
+{
+    color: #000;
+}
+
+.reveal table
+{
+    border-collapse: collapse;
+    margin: auto;
+}
+
+.reveal .small
+{
+    font-size: 80%;
+}
+
+.reveal .very-small
+{
+    font-size: 72%;
+}
+
+.reveal .little li
+{
+    font-size: 77%;
+}
+
+.reveal table tr:not(:last-child) td
+{
+    border-bottom: 1px solid;
+}
+
+.reveal table td:not(:last-child)
+{
+    border-right: 0;
+}
+
+.reveal table td sup
+{
+    vertical-align: top;
+
+    font-size: .5em;
+}
+
+.reveal .arrow-bottom
+{
+    margin-left: 20%;
+}
+
+.reveal blockquote
+{
+    display: block;
+    position: relative;
+    width: 55%;
+    margin: auto;
+    padding: 5px;
+    font-style: italic;
+}
+
+.reveal div.row
+{
+    display: inline-block;
+    vertical-align: top;
+    width: 450px;
+}
+
+.reveal .wide code
+{
+    width: 110%;
+}
+
+.reveal span.bold
+{
+    font-weight: 900;
+}
+
+.logo
+{
+    height: 70px;
+}
+
+.reveal .logo-newdb
+{
+    height: 70px;
+    margin-bottom: -19px;
+}

@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>State management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="icon" href="./images/favicon.ico" />
+    <style>
+        .reveal .object-fit-fill.slide-background[data-background-size=contain] video {
+            object-fit: fill !important;
+        }
+
+        .slide-flex {
+            display: flex !important;
+        }
+    </style>
+</head>
+<body class="white"><div class="reveal"><div class="slides">
+    <section class="center title-slide">
+        <h1>Управление состоянием</h1>
+        <h2 class="fragment">State management</h2>
+        <br />
+        <p><span class="red">Т</span>ощилин Сергей</p>
+    </section>
+
+    <section class="center little">
+        <h2>План лекции</h2>
+        <ol>
+            <li>State management: что это и зачем?</li>
+            <li>Flux-архитектура</li>
+            <li>Существующие решения</li>
+            <li>Redux</li>
+            <li>Использование Redux в React</li>
+            <li>Идеальная библиотека?</li>
+        </ol>
+    </section>
+
+    <section class="center title-slide">
+        <h1 class="title-count">State management: что это и зачем?</h1>
+    </section>
+
+    <section class="little">
+        <h2>Какие задачи решают клиентские фреймворки?</h2>
+    </section>
+
+    <section class="center">
+        <h2>Показательный пример</h2>
+        <img src="images/form-example.png" />
+    </section>
+
+    <section class="center little">
+        <h2>Определения</h2>
+        <ul>
+            <li><b style="font-weight: bolder; font-style: italic;">View</b> – часть приложения, отвечающая за отображение данных на странице</li>
+            <li><b style="font-weight: bolder; font-style: italic;">Состояние приложения (Application State)</b> – структурированные данные о конкретном экземпляре приложения для одного конкретного пользователя</li>
+        </ul>
+    </section>
+
+    <section class="center little">
+        <h2>Двусторонняя связь</h2>
+        <img src="images/ViewState-1.png" style="margin-left: 24px;">
+        <ul>
+            <li class="fragment">Некоторые изменения View вызывают изменения State. Например, ввод текста или выбор радиокнопки</li>
+            <li class="fragment">Изменения State вызывают перерисовки во View.</li>
+        </ul>
+    </section>
+
+    <section class="little">
+        <h2>Какие задачи решают клиентские фреймворки?</h2>
+        <br>
+        <ul>
+            <li class="fragment">Спрятать внутреннюю реализацию за одним "тегом" и помочь организовать компонентный подход</li>
+            <li class="fragment" style="font-weight: bolder; font-size: 1em;">Синхронизация View и State приложения</li>
+        </ul>
+    </section>
+
+    <section class="center little">
+        <h2>React</h2>
+        <ul>
+            <li class="fragment">
+                Есть функция <code>setState</code>
+                <pre><code class="language-typescript" data-noescape data-trim style="font-size: 24px;">
+                    this.setState((state, props) => {
+                        return { counter: state.counter + props.step };
+                    })
+                </code></pre>
+            </li>
+            <li class="fragment">Любые изменения state и <i>только они</i>* принудительно вызывают <code>render()</code>
+                <div class="fragment">- а как же props? <img src="images/thinking-memes.png" width="40px"></div>
+                <div class="fragment">- <i>props</i> обновится только если поменялся state вышестоящего компонента или приложения</div>
+            </li>
+            <li class="fragment">* – не только, есть еще <code class="language-typescript" data-noescape data-trim>forceUpdate()</code>, но в рамках лекции это не существенно</li>
+        </ul>
+    </section>
+
+    <section class="center little">
+        <h2>Двусторонняя связь</h2>
+        <img src="images/ViewState-1.png" style="margin-left: 24px;">
+        <ul>
+            <li>Некоторые изменения View вызывают изменения State. Например, ввод текста или выбор радиокнопки</li>
+            <li>Изменения State вызывают перерисовки во View. <div class="fragment">Какие изменения?</div></li>
+        </ul>
+    </section>
+
+    <section class="center hor-center">
+        <h2>Двусторонняя связь</h2>
+        <img src="images/ViewState-2.png">
+    </section>
+
+    <section class="center hor-center">
+        <h2>Двусторонняя связь</h2>
+        <img src="images/ViewState-3.png">
+    </section>
+
+    <section class="little">
+        <h2>Двусторонняя связь</h2>
+        <ul>
+            <li>Необходимо понимать, откуда пришли данные в State.<div class="fragment">Добавим контроллер!</div></li>
+        </ul>
+    </section>
+
+    <section class="little">
+        <h2>MVC (Model-View-Controller)</h2>
+        <div class="img-wrapper">
+            <img src="images/MVC.png">
+        </div>
+    </section>
+
+    <section class="little">
+        <h2>MVC (Model-View-Controller)</h2>
+        <ul>
+            <li>Model напрямую поставляет данные во View</li>
+            <li class="fragment">Если возникает связаность больше, чем one-to-one, становится сложно рисовать данные, View нагружается дополнительной логикой</li>
+            <li class="fragment">
+                Хорошо бы хранить связанные данные в Model нормализованно...<br>
+                <img src="images/normalize-data.jpeg" width="200">
+            </li>
+        </ul>
+    </section>
+
+    <section class="little">
+        <h2>MVC (Model-View-Controller)</h2>
+        <ul>
+            <li>Будем хранить ссылки!</li>
+            <li class="fragment">*храним ссылки*</li>
+            <li class="fragment">Толку с этих ссылок не много, хочется пользователю нарисовать на экране красивые данные</li>
+            <li class="fragment">Нужен дополнительный слой для денормализации!</li>
+        </ul>
+    </section>
+
+    <section class="little">
+        <h2>MVC → MVVM (Model-View-ViewModel)</h2>
+        <div class="img-wrapper">
+            <img src="images/MVVM.png">
+        </div>
+    </section>
+
+    <section class="little">
+        <h2>MVC → MVVM (Model-View-ViewModel)</h2>
+        <ul>
+            <li>Теперь все данные после отправления из Model и перед приходом в View проходят через дополнительный слой ViewModel</li>
+            <li class="fragment">MVVM хорошо полечил проблему сложносвязанных данных в слое View</li>
+            <li class="fragment">Но все ли хорошо?</li>
+        </ul>
+    </section>
+
+    <section class="little">
+        <h2>В чем здесь проблема?</h2>
+        <img src="images/MVVM-pre-problem.png">
+    </section>
+
+    <section class="little">
+        <h2>Вопросы к MVVM:</h2>
+        <img src="images/MVVM-problem.png">
+    </section>
+
+    <section class="little">
+        <h2>Вопросы к MVVM:</h2>
+        <ul>
+            <li>Как контролировать внесение изменений в State? Откуда пришли данные в State? из View/из AJAX-запроса/из записи в storage (нужное подчеркнуть)</li>
+            <li class="fragment">Как вообще отлаживать изменение View после изменения State?</li>
+            <li class="fragment">Как убедиться в том, что после изменений State остался корректным?</li>
+        </ul>
+    </section>
+
+    <section class="center title-slide">
+        <h1 class="title-count">Flux-архитектура</h1>
+    </section>
+
+    <section class="little">
+        <h2 class="img-header">Вот такая:</h2>
+        <img src="images/flux-1.png" style="margin-top: -1px;">
+    </section>
+
+    <section class="little">
+        <h2 class="img-header">Вот такая:</h2>
+        <img src="images/flux-1.1.png" style="margin-top: -1px;">
+    </section>
+
+    <section class="little">
+        <h2 class="img-header">На самом деле вот такая:</h2>
+        <img src="images/flux-2.png">
+    </section>
+
+    <section class="little">
+        <h2 class="img-header">Actions</h2>
+        <figure>
+            <img src="images/actions.png">
+            <figcaption class="fragment" style="position: absolute; top: 40px; right: 20px; width: 300px; font-size: 30px;">Действия, которые поступают в диспетчер с целью отработать в Store</figcaption>
+        </figure>
+    </section>
+
+    <section class="little">
+        <h2 class="img-header">Dispatcher</h2>
+        <figure>
+            <img src="images/dispatcher.png">
+            <figcaption class="fragment" style="position: absolute; top: 40px; right: 20px; width: 300px; font-size: 30px;">Cущность, которая упорядочивает и сихронизирует проброс Actions в Store</figcaption>
+        </figure>
+    </section>
+
+    <section class="little">
+        <h2 class="img-header">Store</h2>
+        <figure>
+            <img src="images/store.png">
+            <figcaption class="fragment" style="position: absolute; top: 40px; right: 20px; width: 320px; font-size: 28px;">Состояние приложения. Изменяется <i>строго на основе</i> старого состояния и данных из Action</figcaption>
+        </figure>
+    </section>
+
+    <section class="little">
+        <h2 class="img-header">View</h2>
+        <figure>
+            <img src="images/view.png">
+            <figcaption class="fragment" style="position: absolute; top: 40px; right: 20px; width: 290px; font-size: 30px;">Конечная точка использования вашего Store</figcaption>
+        </figure>
+    </section>
+
+    <section class="little">
+        <h2 class="img-header">А в чем особенность?</h2>
+        <img src="images/flux-sync.png">
+    </section>
+
+    <section class="little">
+        <h2 class="img-header">Модель взаимодействия синхронная!</h2>
+        <img src="images/flux-breakpoint.png">
+    </section>
+
+    <section class="little">
+        <h2>Вопросы к MVVM:</h2>
+        <ul>
+            <li class="fragment">Как контролировать внесение изменений в Store (откуда пришли данные в Store? из View/из AJAX-запроса/из записи в storage (нужное подчеркнуть))</li>
+            <div class="fragment red">actions!</div>
+        </ul>
+    </section>
+
+    <section class="little">
+        <h2>Вопросы к MVVM:</h2>
+        <ul>
+            <li style="text-decoration: line-through;">Как контролировать внесение изменений в Store (откуда пришли данные в Store? из View/из AJAX-запроса/из записи в storage (нужное подчеркнуть))</li>
+            <div class="red" style="text-decoration: line-through;">actions!</div>
+            <li class="fragment">Как вообще отлаживать изменение View после изменения Store?</li>
+            <div class="fragment red">dispatcher!</div>
+        </ul>
+    </section>
+
+    <section class="little">
+        <h2>Вопросы к MVVM:</h2>
+        <ul>
+            <li style="text-decoration: line-through;">Как контролировать внесение изменений в Store (откуда пришли данные в Store? из View/из AJAX-запроса/из записи в storage (нужное подчеркнуть))</li>
+            <div class="red" style="text-decoration: line-through;">actions!</div>
+            <li style="text-decoration: line-through;">Как вообще отлаживать изменение View после изменения Store?</li>
+            <div class="red" style="text-decoration: line-through;">dispatcher!</div>
+            <li class="fragment">Как убедиться в том, что после изменений Store остался корректным?</li>
+            <div class="fragment red">...</div>
+        </ul>
+    </section>
+
+    <section class="little">
+        <h2>Вопросы к Flux:</h2>
+        <ul>
+            <li style="text-decoration: line-through;">Как контролировать внесение изменений в Store (откуда пришли данные в Store? из View/из AJAX-запроса/из записи в storage (нужное подчеркнуть))</li>
+            <div style="text-decoration: line-through;" class="red">actions!</div>
+            <li style="text-decoration: line-through;">Как вообще отлаживать изменение View после изменения Store?</li>
+            <div style="text-decoration: line-through;" class="red">dispatcher!</div>
+            <li>Как убедиться в том, что после изменений Store остался корректным?</li>
+            <div class="red">...</div>
+        </ul>
+    </section>
+
+    <section class="center title-slide">
+        <h1 class="title-count">Существующие решения</h1>
+    </section>
+
+    <section class="little">
+        <h2>Cуществующие решения</h2>
+        <img src="images/solutions.png">
+    </section>
+
+    <section class="little">
+        <h2>Cуществующие решения</h2>
+        <img src="images/solutions-redux.png">
+    </section>
+
+    <section class="center title-slide">
+        <h1 class="title-count">Redux</h1>
+    </section>
+
+    <section class="hor-center center little">
+        <img src="images/redux.png">
+        <div>Redux – библиотека для управления состоянием, основанная на flux.</div>
+    </section>
+
+    <section class="little">
+        <h2>Фичи Redux</h2>
+        <li>Один большой Store</li>
+        <img src="images/redux-store.png">
+    </section>
+
+    <section class="little">
+        <h2>Фичи Redux</h2>
+        <li>Есть <i>selectors</i></li>
+        <img src="images/redux-selectors.png">
+        <li class="fragment"><i>selectors</i> – просто функции, которые вынимают из Store необходимый для конкретного компонента кусочек</li>
+    </section>
+
+    <section class="little">
+        <h2>selectors</h2>
+        <div style="font-size: 36px;" class="directory">/src/store/selectors.ts</div>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 18px;">
+            // Интерфейс, который описывает структуру Store
+            import { ApplicationState } from './index';
+
+            export function getAllNotes(state: ApplicationState) {
+                return state.notes;
+            }
+
+            export function getNoteById(state: ApplicationState, id: string) {
+                const { notes } = state;
+
+                return notes.find(note => note.id === parseInt(id, 10)) || notes[notes.length - 1];
+            }
+
+            export function getLastStatus({ notes }: ApplicationState) {
+                return notes[notes.length - 1].status;
+            }
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>selectors</h2>
+        <div style="font-size: 36px;">Бывают очень простые, делаются для удобства</div>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 18px;">
+            <span style="opacity: .3">// Интерфейс, который описывает структуру Store
+            import { ApplicationState } from './index';
+
+            </span>export function getAllNotes(state: ApplicationState) {
+                return state.notes;
+            }<span style="opacity: .3">
+
+            export function getNoteById(state: ApplicationState, id: string) {
+                const { notes } = state;
+
+                return notes.find(note => note.id === parseInt(id, 10)) || notes[notes.length - 1];
+            }
+
+            export function getLastStatus({ notes }: ApplicationState) {
+                return notes[notes.length - 1].status;
+            }</span>
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>selectors</h2>
+        <div style="font-size: 36px;">Бывают более сложные, реализуют какую-то логику</div>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 18px;">
+            <span style="opacity: .3">// Интерфейс, который описывает структуру Store
+            import { ApplicationState } from './index';
+
+            export function getAllNotes(state: ApplicationState) {
+                return state.notes;
+            }
+
+            </span>export function getNoteById(state: ApplicationState, id: string) {
+                const { notes } = state;
+
+                return notes.find(note => note.id === parseInt(id, 10)) || notes[notes.length - 1];
+            }<span style="opacity: .3">
+
+            export function getLastStatus({ notes }: ApplicationState) {
+                return notes[notes.length - 1].status;
+            }</span>
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Фичи Redux</h2>
+        <li>Есть reducers</li>
+        <img src="images/redux-reducers.png">
+        <li class="fragment"><i>reducer</i> является чистой функцией, которая возвращает новый store на основе старого и данных из action</li>
+    </section>
+
+
+    <section class="little">
+        <h2>reducers</h2>
+        <div style="font-size: 36px;" class="directory">/src/store/reducers.ts</div>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 16px;">
+            import { Reducer } from 'redux';
+            ...
+
+            // состояние Store при инициализации приложения
+            export const initialState = { notes: initialNotes };
+
+            const notesReducer = (state: ApplicationState = initialState, action: IAction) => {
+                switch (action.type) {
+                    case ACTIONS.ADD_NOTE: { // enum со всеми action'ами
+                        const { note: newPureNote } = action.payload as IAddNotePayload;
+                        const id = Math.max(...state.notes.map((note: INote) => note.id)) + 1;
+                        const newNote = { ...newPureNote, id };
+
+                        return {
+                            ...state,
+                            notes: [...state.notes, newNote]
+                        };
+                    }
+                    ...
+            };
+
+            export default notesReducer as Reducer;
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>reducers</h2>
+        <div style="font-size: 36px;">Обычно выглядит, как длинный switch-case:</div>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 16px;">
+            <span style="opacity: .3">import { Reducer } from 'redux';
+            ...
+
+            // состояние Store при инициализации приложения
+            export const initialState = { notes: initialNotes };
+
+            const notesReducer = (state: ApplicationState = initialState, action: IAction) => {
+                </span>switch (action.type) {
+                    case ACTIONS.ADD_NOTE: { // enum со всеми action'ами
+                        <span style="opacity: .3">const { note: newPureNote } = action.payload as IAddNotePayload;
+                        const id = Math.max(...state.notes.map((note: INote) => note.id)) + 1;
+                        const newNote = { ...newPureNote, id };
+
+                        return {
+                            ...state,
+                            notes: [...state.notes, newNote]
+                        };
+                    }</span>
+                    ...
+            <span style="opacity: .3">};
+
+            export default notesReducer as Reducer;</span>
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>reducers</h2>
+        <div style="font-size: 36px;">Является чистой функцией:</div>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 16px;">
+            <span style="opacity: .3">import { Reducer } from 'redux';
+            ...
+
+            // состояние Store при инициализации приложения
+            export const initialState = { notes: initialNotes };
+
+            const notesReducer = </span>(state: ApplicationState = initialState, action: IAction)<span style="opacity: .3"> => {
+                switch (action.type) {
+                    case ACTIONS.ADD_NOTE: { // enum со всеми action'ами
+                        const { note: newPureNote } = action.payload as IAddNotePayload;
+                        const id = Math.max(...state.notes.map((note: INote) => note.id)) + 1;
+                        const newNote = { ...newPureNote, id };
+
+                        </span>return {
+                            ...state,
+                            notes: [...state.notes, newNote]
+                        };
+                    <span style="opacity: .3">}
+                    ...
+            };
+
+            export default notesReducer as Reducer;</span>
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Вопросы к Flux:</h2>
+        <ul>
+            <li style="text-decoration: line-through;">Как контролировать внесение изменений в Store (откуда пришли данные в Store? из View/из AJAX-запроса/из записи в storage (нужное подчеркнуть))</li>
+            <div style="text-decoration: line-through;" class="red">actions!</div>
+            <li style="text-decoration: line-through;">Как вообще отлаживать изменение View после изменения Store?</li>
+            <div style="text-decoration: line-through;" class="red">dispatcher!</div>
+            <li>Как убедиться в том, что после изменений Store остался корректным?</li>
+            <div class="red fragment">reducer!</div>
+        </ul>
+    </section>
+
+    <section class="little">
+        <h2>Вопросы к Flux:</h2>
+        <ul>
+            <li style="text-decoration: line-through;">Как контролировать внесение изменений в Store (откуда пришли данные в Store? из View/из AJAX-запроса/из записи в storage (нужное подчеркнуть))</li>
+            <div style="text-decoration: line-through;" class="red">actions!</div>
+            <li style="text-decoration: line-through;">Как вообще отлаживать изменение View после изменения Store?</li>
+            <div style="text-decoration: line-through;" class="red">dispatcher!</div>
+            <li style="text-decoration: line-through;">Как убедиться в том, что после изменений Store остался корректным?</li>
+            <div style="text-decoration: line-through;" class="red">reducer!</div>
+        </ul>
+    </section>
+
+    <section class="little">
+        <h1>Основные моменты:</h1>
+        <ul>
+            <li class="fragment">store и вся работа с ним кладется в отдельную папку</li>
+            <li class="fragment">Библиотека <a href="https://www.npmjs.com/package/redux">redux</a> для использования в /store/</li>
+            <li class="fragment">Библиотека <a href="https://www.npmjs.com/package/react-redux">react-redux</a> для использования в компонентах React</li>
+            <li class="fragment">В redux, как правило, явно не используется слой Dispatcher</li>
+            <li class="fragment">Есть Redux DevTools, который отлично помогает при разработке</li>
+        </ul>
+    </section>
+
+    <section class="little">
+        <h2>Redux DevTools</h2>
+        <ul>
+            <li class="fragment"><a href="https://github.com/zalmoxisus/redux-devtools-extension">Ссылка на документацию и мануал по установке</a></li>
+            <li class="fragment">Позволяет следить за Store в режиме дебага</li>
+        </ul>
+    </section>
+
+    <section class="little">
+        <h2>Redux DevTools</h2>
+        <li>Запуск</li>
+        <img src="images/redux-devtools-launch.png">
+    </section>
+
+    <section class="little">
+        <h2>Redux DevTools</h2>
+        <li>Отображается вся история action'ов для экземпляра приложения</li>
+        <img src="images/redux-devtools-history.png">
+    </section>
+
+    <section class="little">
+        <h2>Redux DevTools</h2>
+        <li>Для каждого action'а (или даже нескольких) можно посмотреть параметры action'а, состояние store после выполнения и diff стора</li>
+        <img src="images/redux-devtools-action-select.png" width="94%">
+    </section>
+
+    <section class="little">
+        <h2>Redux DevTools</h2>
+        <img src="images/redux-devtools-action.png" width="93%">
+    </section>
+
+    <section class="little">
+        <h2>Redux DevTools</h2>
+        <img src="images/redux-devtools-state.png" width="93%">
+    </section>
+
+    <section class="little">
+        <h2>Redux DevTools</h2>
+        <img src="images/redux-devtools-diff.png" width="93%">
+    </section>
+
+    <section class="center title-slide">
+        <h1 class="title-count">Связка React ↔ Redux</h1>
+    </section>
+
+    <section class="little">
+        <h2>Пример приложения</h2>
+        <img src="images/redux-notes.png" style="width: calc(100% - 225px); position: absolute; right: 0;">
+        <img class="files-tree not-code-next" src="images/code/tree-initial.png"/>
+    </section>
+
+    <section class="little">
+        <h2>types</h2>
+        <img class="files-tree" src="images/code/tree-types.png"/>
+        <div class="split-code">
+            <pre><code class="language-typescript" data-noescape data-trim style="font-size: 14px;">
+                export enum NOTE_STATUS {
+                    actual = 'actual',
+                    old = 'old',
+                    deleted = 'deleted'
+                }
+
+                export interface IPureNote {
+                    title: string;
+                    description: string;
+                    status: NOTE_STATUS;
+                    created: Date;
+                }
+
+                export interface INote
+                extends IPureNote {
+                    id: number;
+                }
+
+                // Все типы Action'ов
+                export enum ACTIONS {
+                    ADD_NOTE = 'ADD_NOTE',
+                    EDIT_NOTE = 'EDIT_NOTE',
+                    CHANGE_STATUS = 'CHANGE_STATUS'
+                }
+            </code></pre>
+            <pre><code class="language-typescript" data-noescape data-trim style="font-size: 14px;">
+                // Action Payloads – ПОЛЕЗНАЯ(!) информация,
+                // которая передается в action
+                export interface IAddNotePayload {
+                    note: IPureNote;
+                }
+
+                export interface IEditNotePayload {
+                    id: number;
+                    newNote: IPureNote;
+                }
+
+                export interface IChangeStatusPayload {
+                    id: number;
+                    newStatus: NOTE_STATUS;
+                }
+
+                // Интерфейс, который описывает Action целиком
+                export interface IAction {
+                    type: ACTIONS;
+                    payload:
+                        | IAddNotePayload
+                        | IEditNotePayload
+                        | IChangeStatusPayload;
+                }
+            </code></pre>
+        </div>
+    </section>
+
+    <section class="little">
+        <h2>reducers</h2>
+        <img class="files-tree" src="images/code/tree-reducers.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 14px;">
+            import { Reducer } from 'redux';
+            ...
+            // состояние Store при инициализации приложения
+            export const initialState = { notes: initialNotes };
+
+            const notesReducer = (
+                state: ApplicationState = initialState,
+                action: IAction
+            ) => {
+                const { notes } = state;
+                switch (action.type) {
+                    ...
+                    case ACTIONS.EDIT_NOTE: {
+                        const { id, newNote } = action.payload as IEditNotePayload;
+                        const noteWithId = { ...newNote, id };
+
+                        const noteIndex = notes.findIndex((note: INote) => note.id === id);
+
+                        const stateCopy: ApplicationState = {
+                            ...state,
+                            notes: [...notes].splice(noteIndex, 1, noteWithId);
+                        };
+
+                        return stateCopy;
+                    }
+                    ...
+            };
+            export default notesReducer as Reducer;
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>В аргументах приходит тот самый action</h2>
+        <img class="files-tree" src="images/code/tree-reducers.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 14px;">
+            import { ..., IEditNotePayload, IAction } from '../common/types';
+            ...
+            <span style="opacity: .3">// состояние Store при инициализации приложения
+            export const initialState = { notes: initialNotes };
+
+            </span>const notesReducer = (
+                <span style="opacity: .3">state: ApplicationState = initialState,
+                </span>action: IAction
+            ) <span style="opacity: .3">=> {
+                const { notes } = state;
+                switch (</span>action.type<span style="opacity: .3">) {
+                    ...
+                    case ACTIONS.EDIT_NOTE: {
+                        const { id, newNote } = </span>action.payload as IEditNotePayload;<span style="opacity: .3">
+                        const noteWithId = { ...newNote, id };
+
+                        const noteIndex = notes.findIndex((note: INote) => note.id === id);
+
+                        const stateCopy: ApplicationState = {
+                            ...state,
+                            notes: [...notes].splice(noteIndex, 1, noteWithId);
+                        };
+
+                        return stateCopy;
+                    }
+                    ...
+            };
+            export default notesReducer as Reducer;</span>
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Действие определяется по типу action'а</h2>
+        <img class="files-tree" src="images/code/tree-reducers.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 14px;">
+            import { ..., ACTIONS, IAction } from '../common/types';
+            ...
+            <span style="opacity: .3">// состояние Store при инициализации приложения
+            export const initialState = { notes: initialNotes };
+
+            const notesReducer = (
+                state: ApplicationState = initialState,
+                </span>action: IAction<span style="opacity: .3">
+            ) => {
+                const { notes } = state;
+                </span>switch (action.type) {<span style="opacity: .3">
+                    ...
+                    </span>case ACTIONS.EDIT_NOTE:<span style="opacity: .3"> {
+                        const { id, newNote } = action.payload as IEditNotePayload;
+                        const noteWithId = { ...newNote, id };
+
+                        const noteIndex = notes.findIndex((note: INote) => note.id === id);
+
+                        const stateCopy: ApplicationState = {
+                            ...state,
+                            notes: [...notes].splice(noteIndex, 1, noteWithId);
+                        };
+
+                        return stateCopy;
+                    }
+                    ...
+            };
+            export default notesReducer as Reducer;</span>
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>reducer возвращает новый Store</h2>
+        <img class="files-tree" src="images/code/tree-reducers.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 14px;">
+            import { ApplicationState } from './index';
+            ...
+            <span style="opacity: .3">// состояние Store при инициализации приложения
+            export const initialState = { notes: initialNotes };
+
+            const notesReducer = (
+                </span>state: ApplicationState = initialState,<span style="opacity: .3">
+                action: IAction
+            ) => {
+                </span>const { notes } = state;<span style="opacity: .3">
+                switch (action.type) {
+                    ...
+                    case ACTIONS.EDIT_NOTE: {
+                        const { id, newNote } = action.payload as IEditNotePayload;
+                        const noteWithId = { ...newNote, id };
+
+                        const noteIndex = notes.findIndex((note: INote) => note.id === id);
+
+                        </span>const stateCopy: ApplicationState = {
+                            ...state,
+                            notes: [...notes].splice(noteIndex, 1, noteWithId);
+                        };
+
+                        return stateCopy;<span style="opacity: .3">
+                    }
+                    ...
+            };
+            export default notesReducer as Reducer;</span>
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Инициализация Store</h2>
+        <img class="files-tree" src="images/code/tree-store.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 16px;">
+            import { createStore } from 'redux';
+            import { composeWithDevTools } from 'redux-devtools-extension';
+
+            import { INote } from '../common/types';
+            import reducer, { initialState } from './reducers';
+
+            export interface ApplicationState {
+                notes: INote[];
+            }
+
+            export default createStore(
+                reducer,
+                initialState as any,
+                composeWithDevTools()
+            );
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Передаем reducers</h2>
+        <img class="files-tree" src="images/code/tree-store.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 16px;">
+            import { createStore } from 'redux';
+            <span style="opacity: .3">import { composeWithDevTools } from 'redux-devtools-extension';
+
+            import { INote } from '../common/types';
+            import </span>reducer<span style="opacity: .3">, { initialState } </span>from './reducers';
+
+            <span style="opacity: .3">export interface ApplicationState {
+                notes: INote[];
+            }
+
+            export default </span>createStore(
+                reducer,
+                <span style="opacity: .3">initialState as any,
+                composeWithDevTools()
+            </span>);
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Значение Store по умолчанию</h2>
+        <img class="files-tree" src="images/code/tree-store.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 16px;">
+            import { createStore } from 'redux';
+            <span style="opacity: .3">import { composeWithDevTools } from 'redux-devtools-extension';
+
+            import { INote } from '../common/types';
+            import reducer, </span>{ initialState } from './reducers';
+
+            <span style="opacity: .3">export interface ApplicationState {
+                notes: INote[];
+            }
+
+            export default </span>createStore(
+                <span style="opacity: .3">reducer,
+                </span>initialState as any,<span style="opacity: .3">
+                composeWithDevTools()
+            </span>);
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>ApplicationState пишем здесь</h2>
+        <img class="files-tree" src="images/code/tree-store.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 16px;">
+            <span style="opacity: .3">import { createStore } from 'redux';
+            import { composeWithDevTools } from 'redux-devtools-extension';
+
+            import { INote } from '../common/types';
+            import reducer, { initialState } from './reducers';
+
+            </span>export interface ApplicationState {
+                notes: INote[];
+            }<span style="opacity: .3">
+
+            export default createStore(
+                reducer,
+                initialState as any,
+                composeWithDevTools()
+            );</span>
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>actions</h2>
+        <img class="files-tree" src="images/code/tree-actions.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 16px;">
+            import {
+                IAddNotePayload,
+                IEditNotePayload,
+                IChangeStatusPayload,
+                ACTIONS,
+                IAction
+            } from '../common/types';
+
+            // Edit Note
+            export const editNote = ({ id, newNote }: IEditNotePayload): IAction =>
+                ({
+                    type: ACTIONS.EDIT_NOTE,
+                    <span class="hljs-keyword">payload</span>: {
+                        id,
+                        newNote
+                    }
+                });
+
+            // Add Note
+            export const addNote = ({ note }: IAddNotePayload) => ({
+                ...
+            });
+
+            ...
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Каждый action – есть функция</h2>
+        <img class="files-tree" src="images/code/tree-actions.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 16px;">
+            <span style="opacity: .3">import {
+                IAddNotePayload,
+                IEditNotePayload,
+                IChangeStatusPayload,
+                ACTIONS,
+                IAction
+            } from '../common/types';
+
+            </span>// Edit Note
+            export const editNote = ({ id, newNote }: IEditNotePayload): IAction =>
+                ({
+                    type: ACTIONS.EDIT_NOTE,
+                    <span class="hljs-keyword">payload</span>: {
+                        id,
+                        newNote
+                    }
+                });<span style="opacity: .3">
+
+            // Add Note
+            export const addNote = ({ note }: IAddNotePayload) => ({
+                ...
+            });
+
+            ...</span>
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Принимает payload</h2>
+        <img class="files-tree" src="images/code/tree-actions.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 16px;">
+            <span style="opacity: .3">import {
+                IAddNotePayload,
+                </span>IEditNotePayload,<span style="opacity: .3">
+                IChangeStatusPayload,
+                ACTIONS,
+                IAction
+            } </span>from '../common/types';<span style="opacity: .3">
+
+            // Edit Note
+            export const editNote = </span>({ id, newNote }: IEditNotePayload)<span style="opacity: .3">: IAction =>
+                ({
+                    type: ACTIONS.EDIT_NOTE,
+                    <span class="hljs-keyword">payload</span>: {
+                        id,
+                        newNote
+                    }
+                });
+
+            // Add Note
+            export const addNote = ({ note }: IAddNotePayload) => ({
+                ...
+            });
+
+            ...</span>
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Возвращает IAction</h2>
+        <img class="files-tree" src="images/code/tree-actions.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 16px;">
+            <span style="opacity: .3">import {
+                IAddNotePayload,
+                IEditNotePayload,
+                IChangeStatusPayload,
+                ACTIONS,
+                </span>IAction
+            } from '../common/types';<span style="opacity: .3">
+
+            // Edit Note
+            export const editNote = ({ id, newNote }: IEditNotePayload)</span>: IAction<span style="opacity: .3"> =>
+                </span>({
+                    type:<span style="opacity: .3"> ACTIONS.EDIT_NOTE,
+                    </span><span class="hljs-keyword">payload</span>:<span style="opacity: .3"> {
+                        id,
+                        newNote
+                    }
+                </span>})<span style="opacity: .3">;
+
+            // Add Note
+            export const addNote = ({ note }: IAddNotePayload) => ({
+                ...
+            });
+
+            ...</span>
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Как подключить к React?</h2>
+        <img class="files-tree" src="images/code/tree-app.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 16px;">
+            import React, { Component } from 'react';
+            import { Provider } from 'react-redux';
+            import { Route, Switch } from 'react-router-dom';
+
+            import Note from './components/note';
+            import NotesList from './components/notes-list';
+            import store from './store';
+
+            class App extends Component {
+                public render() {
+                    return (
+                        &lt;<span class="hljs-name">Provider</span> <span class="hljs-attr">store</span>={store}>
+                            &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="App">
+                                &lt;<span class="hljs-name">Switch</span>>
+                                    &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path="/note/:id"</span> <span class="hljs-attr">component</span>={Note} />
+                                    &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path="/"</span> <span class="hljs-attr">component</span>={NotesList} />
+                                &lt;<span class="hljs-name">/Switch</span>>
+                            &lt;<span class="hljs-name">/div</span>>
+                        &lt;<span class="hljs-name">/Provider</span>>
+                    );
+                }
+            }
+
+            <span class="hljs-keyword">export default</span> App;
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Ликбез: react-router</h2>
+        <img class="files-tree" src="images/code/tree-app.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 16px;">
+            <span style="opacity: .3">import React, { Component } from 'react';
+            import { Provider } from 'react-redux';
+            </span>import { Route, Switch } from 'react-router-dom';
+
+            import Note from './components/note';
+            import NotesList from './components/notes-list';
+            <span style="opacity: .3">import store from './store';
+
+            class App extends Component {
+                public render() {
+                    return (
+                        &lt;<span class="hljs-name">Provider</span> <span class="hljs-attr">store</span>={store}>
+                            &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="App">
+                                </span>&lt;<span class="hljs-name">Switch</span>>
+                                    &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path="/note/:id"</span> <span class="hljs-attr">component</span>={Note} />
+                                    &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path="/"</span> <span class="hljs-attr">component</span>={NotesList} />
+                                &lt;<span class="hljs-name">/Switch</span>>
+                            <span style="opacity: .3">&lt;<span class="hljs-name">/div</span>>
+                        &lt;<span class="hljs-name">/Provider</span>>
+                    );
+                }
+            }
+
+            <span class="hljs-keyword">export default</span> App;</span>
+        </code></pre>
+        <div class="post-mark fragment" style="bottom: 45%;">На самом деле обычные роуты, на которые будет реагировать React</div>
+    </section>
+
+    <section class="little">
+        <h2>Вернемся к redux</h2>
+        <img class="files-tree" src="images/code/tree-app.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 16px;">
+            <span style="opacity: .3">import React, { Component } from 'react';
+            </span>import { Provider } from 'react-redux';<span style="opacity: .3">
+            import { Route, Switch } from 'react-router-dom';
+
+            import Note from './components/note';
+            import NotesList from './components/notes-list';
+            </span>import store from './store';<span style="opacity: .3">
+
+            class App extends Component {
+                public render() {
+                    return (
+                        </span>&lt;<span class="hljs-name">Provider</span> <span class="hljs-attr">store</span>={store}>
+                            <span style="opacity: .3">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="App">
+                                &lt;<span class="hljs-name">Switch</span>>
+                                    &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path="/note/:id"</span> <span class="hljs-attr">component</span>={Note} />
+                                    &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path="/"</span> <span class="hljs-attr">component</span>={NotesList} />
+                                &lt;<span class="hljs-name">/Switch</span>>
+                            &lt;<span class="hljs-name">/div</span>>
+                        </span>&lt;<span class="hljs-name">/Provider</span>>
+                    <span style="opacity: .3">);
+                }
+            }
+
+            <span class="hljs-keyword">export default</span> App;</span>
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Работаем с redux в компонентах</h2>
+        <img class="files-tree" src="images/code/tree-note.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 14px;">
+            import { connect } from 'react-redux';
+            import { ApplicationState } from '../../store';
+            import { changeStatus, editNote } from '../../store/actions';
+            import { getNoteById } from '../../store/selectors';
+            ...
+
+            type StateProps = ReturnType&lt;<span class="hljs-name">typeof mapStateToProps</span>>;
+            type DispatchProps = typeof mapDispatchToProps;
+            type Props = StateProps & DispatchProps;
+
+            class Note extends Component&lt;<span class="hljs-name">Props, IOwnState</span>> {
+                ...
+            }
+
+            const mapStateToProps = (
+                state: ApplicationState,
+                props: RouteComponentProps&lt;<span class="hljs-name">IRouteProps</span>>
+            ) => ({
+                currentNote: getNoteById(state, props.match.params.id);
+            });
+
+            const mapDispatchToProps = {
+                editNote,
+                changeStatus
+            };
+
+            export default connect(mapStateToProps, mapDispatchToProps)(Note);
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>HOC connect</h2>
+        <img class="files-tree" src="images/code/tree-note.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 14px;">
+            import { connect } from 'react-redux';
+            <span style="opacity: .3">import { ApplicationState } from '../../store';
+            import { changeStatus, editNote } from '../../store/actions';
+            import { getNoteById } from '../../store/selectors';
+            ...
+
+            type StateProps = ReturnType&lt;<span class="hljs-name">typeof mapStateToProps</span>>;
+            type DispatchProps = typeof mapDispatchToProps;
+            type Props = StateProps & DispatchProps;
+
+            </span>class Note extends Component&lt;<span class="hljs-name">Props, IOwnState</span>> {
+                ...
+            }<span style="opacity: .3">
+
+            const mapStateToProps = (
+                state: ApplicationState,
+                props: RouteComponentProps&lt;<span class="hljs-name">IRouteProps</span>>
+            ) => ({
+                currentNote: getNoteById(state, props.match.params.id);
+            });
+
+            const mapDispatchToProps = {
+                editNote,
+                changeStatus
+            };
+
+            </span>export default connect(mapStateToProps, mapDispatchToProps)(Note);
+        </code></pre>
+        <div class="post-mark fragment" style="bottom: 40%;">connect(...)(Note) возвращает новый компонент, который имеет доступ в Store</div>
+    </section>
+
+    <section class="little">
+        <h2>mapDispatchToProps</h2>
+        <img class="files-tree" src="images/code/tree-note.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 14px;">
+            <span style="opacity: .3">import { connect } from 'react-redux';
+            import { ApplicationState } from '../../store';
+            </span>import { changeStatus, editNote } from '../../store/actions';<span style="opacity: .3">
+            import { getNoteById } from '../../store/selectors';
+            ...
+
+            type StateProps = ReturnType&lt;<span class="hljs-name">typeof mapStateToProps</span>>;
+            </span>type DispatchProps = typeof mapDispatchToProps;<span style="opacity: .3">
+            type Props = StateProps & DispatchProps;
+
+            class Note extends Component&lt;<span class="hljs-name">Props, IOwnState</span>> {
+                ...
+            }
+
+            const mapStateToProps = (
+                state: ApplicationState,
+                props: RouteComponentProps&lt;<span class="hljs-name">IRouteProps</span>>
+            ) => ({
+                currentNote: getNoteById(state, props.match.params.id);
+            });
+
+            </span>const mapDispatchToProps = {
+                editNote,
+                changeStatus
+            };<span style="opacity: .3">
+
+            export default connect(mapStateToProps, </span>mapDispatchToProps<span style="opacity: .3">)(Note);</span>
+        </code></pre>
+        <div class="post-mark fragment" style="bottom: 40%;">mapDispatchToProps передается вторым аргументом в connect(...) и подкладывает в this.props action'ы</div>
+    </section>
+
+    <section class="little">
+        <h2>mapStateToProps</h2>
+        <img class="files-tree" src="images/code/tree-note.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 14px;">
+            <span style="opacity: .3">import { connect } from 'react-redux';
+            </span>import { ApplicationState } from '../../store';<span style="opacity: .3">
+            import { changeStatus, editNote } from '../../store/actions';
+            </span>import { getNoteById } from '../../store/selectors';<span style="opacity: .3">
+            ...
+
+            </span>type StateProps = ReturnType&lt;<span class="hljs-name">typeof mapStateToProps</span>>;<span style="opacity: .3">
+            type DispatchProps = typeof mapDispatchToProps;
+            type Props = StateProps & DispatchProps;
+
+            class Note extends Component&lt;<span class="hljs-name">Props, IOwnState</span>> {
+                ...
+            }
+
+            </span>const mapStateToProps = (
+                state: ApplicationState,
+                props: RouteComponentProps&lt;<span class="hljs-name">IRouteProps</span>>
+            ) => ({
+                currentNote: getNoteById(state, props.match.params.id);
+            });<span style="opacity: .3">
+
+            const mapDispatchToProps = {
+                editNote,
+                changeStatus
+            };
+
+            export default connect(</span>mapStateToProps<span style="opacity: .3">, mapDispatchToProps)(Note);</span>
+        </code></pre>
+        <div class="post-mark fragment" style="bottom: 40%;">mapStateToProps передается первым аргументом в connect(...) и подкладывает в this.props поля из Store</div>
+    </section>
+
+    <section class="little">
+        <h2>Как вызвать событие?</h2>
+        <img class="files-tree" src="images/code/tree-note.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 14px;">
+            ...
+            type DispatchProps = typeof mapDispatchToProps;
+            type Props = StateProps & DispatchProps;
+            class Note extends Component&lt;<span class="hljs-name">Props, IOwnState</span>> {
+                ...
+                public render() {
+                    return (
+                        ...
+                        &lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>={this.onEditButtonClick}>Сохранить&lt;<span class="hljs-name">button</span>>
+                    )
+                }
+                public onEditButtonClick = (e: ReactMouseEvent) => {
+                    ...
+                    // Кладем в currentNote данные об отредактированной заметке
+                    const currentNote = ...;
+
+                    this.props.editNote({ <span class="hljs-keyword">id</span>, <span class="hljs-keyword">newNote</span>: currentNote });
+                };
+                ...
+            }
+            ...
+
+            const mapDispatchToProps = {
+                editNote,
+                changeStatus
+            };
+
+            export default connect(mapStateToProps, mapDispatchToProps)(Note);
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Вызываем событие из this.props</h2>
+        <img class="files-tree" src="images/code/tree-note.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 14px;">
+            <span style="opacity: .3">...
+            </span>type DispatchProps = typeof mapDispatchToProps;
+            type Props = StateProps & DispatchProps;<span style="opacity: .3">
+            class Note extends Component&lt;<span class="hljs-name">Props, IOwnState</span>> {
+                ...
+                public render() {
+                    return (
+                        ...
+                        &lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>={this.onEditButtonClick}>Сохранить&lt;<span class="hljs-name">button</span>>
+                    )
+                }
+                public onEditButtonClick = (e: ReactMouseEvent) => {
+                    ...
+                    // Кладем в currentNote данные об отредактированной заметке
+                    const currentNote = ...;
+
+                    </span>this.props.editNote({ <span class="hljs-keyword">id</span>, <span class="hljs-keyword">newNote</span>: currentNote });<span style="opacity: .3">
+                };
+                ...
+            }
+            ...
+
+            const mapDispatchToProps = {
+                </span>editNote<span style="opacity: .3">,
+                changeStatus
+            };
+
+            export default connect(mapStateToProps, mapDispatchToProps)(Note);</span>
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Как получить доступ к Store?</h2>
+        <img class="files-tree" src="images/code/tree-note.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 14px;">
+            ...
+            type StateProps = ReturnType&lt;<span class="hljs-name">typeof mapStateToProps</span>>;
+            type Props = StateProps & DispatchProps;
+            class Note extends Component&lt;<span class="hljs-name">Props, IOwnState</span>> {
+                ...
+                public render() {
+                    return (
+                        ...
+                        &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="note-page__field">
+                            Дата создания
+                            &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="note-page__created-date">
+                                {this.props.currentNote.created}
+                            &lt;/<span class="hljs-name">div</span>>
+                        &lt;/<span class="hljs-name">div</span>>
+                        ...
+                    )
+                }
+                ...
+            }
+            ...
+            const mapStateToProps = (
+                state: ApplicationState,
+                props: RouteComponentProps&lt;<span class="hljs-name">IRouteProps</span>>
+            ) => ({
+                currentNote: getNoteById(state, props.match.params.id);
+            });
+
+            export default connect(mapStateToProps, mapDispatchToProps)(Note);
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Все через те же this.props</h2>
+        <img class="files-tree" src="images/code/tree-note.png"/>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 14px;">
+            <span style="opacity: .3">...
+            </span>type StateProps = ReturnType&lt;<span class="hljs-name">typeof mapStateToProps</span>>;
+            type Props = StateProps & DispatchProps;
+            <span style="opacity: .3">class Note extends Component&lt;<span class="hljs-name">Props, IOwnState</span>> {
+                ...
+                public render() {
+                    return (
+                        ...
+                        &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="note-page__field">
+                            Дата создания
+                            &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="note-page__created-date">
+                                </span>{this.props.currentNote.created}
+                            <span style="opacity: .3">&lt;/<span class="hljs-name">div</span>>
+                        &lt;/<span class="hljs-name">div</span>>
+                        ...
+                    )
+                }
+                ...
+            }
+            ...
+            </span>const mapStateToProps = (
+                state: ApplicationState,
+                props: RouteComponentProps&lt;<span class="hljs-name">IRouteProps</span>>
+            ) => ({
+                currentNote: getNoteById(state, props.match.params.id);
+            });<span style="opacity: .3">
+
+            export default connect(mapStateToProps, mapDispatchToProps)(Note);</span>
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h1>Идеальная библиотека?</h1>
+        <ol>
+            <div class="fragment">Да, но:</div><br>
+            <li class="fragment">В Store теперь хочется складывать вообще все</li>
+            <li class="fragment">В redux'е store не знает о том, какие его части важны для каждой конкретной view</li>
+            <li class="fragment">Нет асинхронности:(</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2 class="fragment fade-out">Проблема 1. Что делать, если Store стал одной большой помойкой</h2>
+        <h2 class="fragment" style="position: absolute; top: 30px;">Вопрос: куда класть данные и когда использовать Application State?</h2>
+        <div class="fragment">Все данные делятся на <span class="red">3 типа</span>:</div>
+        <ul>
+            <li class="fragment">Данные, которые могут поменяться из нескольких мест</li>
+            <li class="fragment">Данные, которые нужны в нескольких несвязанных частях приложения (компонентах)</li>
+            <li class="fragment">Начальные данные для приложения</li>
+        </ul>
+    </section>
+
+    <section class="little">
+        <h2>Данные, которые могут поменяться из нескольких мест</h2>
+        <img src="images/appstate-case-1.png">
+    </section>
+
+    <section class="little">
+        <h2>Данные, которые нужны в нескольких несвязанных частях приложения (компонентах)</h2>
+        <img src="images/appstate-case-2.1.png">
+    </section>
+
+    <section class="little">
+        <h2>Данные, которые нужны в нескольких несвязанных частях приложения (компонентах)</h2>
+        <img src="images/appstate-case-2.2.png">
+    </section>
+
+    <section class="little">
+        <h2>Начальные данные для приложения</h2>
+        <div class="fragment" style="font-size: 36px;"><i>Речь о данных, которые пришли с сервера: переводы, какие-то настройки, и т.д.</i></div>
+        <ul>
+            <li class="fragment">Хорошо бы, чтобы эти данные хранились в одном месте...</li>
+            <li class="fragment">И чтобы достать их можно было из любого компонента...</li>
+            <li class="fragment"><a href="https://reactjs.org/docs/context.html">React Context API!</a></li>
+            <li class="fragment"><q cite="https://reactjs.org/docs/context.html">Context provides a way to pass data through the component tree without having to pass props down manually at every level</q></li>
+        </ul>
+    </section>
+
+    <section class="little">
+        <h2>Проблема 2. Как избежать rerender'а во всех местах?</h2>
+        <ul><br>
+            <div class="fragment">Хорошо бы, чтобы перерисовывались только те View, данные для которых реально поменялись...</div><br>
+            <div class="fragment"><a href="https://redux.js.org/recipes/computing-derived-data">Библиотека Reselect!</a></div><br>
+        </ul>
+    </section>
+
+    <section class="little">
+        <h2>Проблема 3. Асинхронность?</h2>
+        <div class="fragment"><a href="https://redux.js.org/advanced/async-flow">Async Flow</a>: документация redux</div><br>
+        <ul>
+            <div class="fragment" style="font-size: 36px;">Библиотеки для работы с асинхронностью в Redux:</div>
+            <li class="fragment"><a href="https://github.com/reduxjs/redux-thunk">redux-thunk</a> (рекомендуется, чтобы не заморачиваться)</li>
+            <li class="fragment"><a href="https://github.com/redux-utilities/redux-promise">redux-promise</a></li>
+            <li class="fragment"><a href="https://redux-saga.js.org">redux-saga</a> (true-way)</li>
+            <li class="fragment"><a href="https://redux-observable.js.org">redux-observable</a></li>
+        </ul>
+    </section>
+
+    <section class="little">
+        <h2>Ссылки</h2>
+        <ul>
+            <li><a href="https://redux.js.org/">Документация по Redux</a></li>
+            <li><a href="https://habr.com/ru/company/ruvds/blog/437804/">Статья про использование Redux на сервере</a></li>
+            <li><a href="https://martinfowler.com/eaaDev/EventSourcing.html">Один из принципипов redux – EventSourcing</a></li>
+            <li><a href="https://martinfowler.com/bliki/CQRS.html">Один из принципипов redux – CQRS</a></li>
+            <li><a href="https://medium.com/devschacht/neil-fenton-improving-react-and-redux-performance-with-reselect-40f1d3efba89">Повышение производительности React и Redux с Reselect</a></li>
+            <li><a href="https://react-redux.js.org">Документация по React-Redux</a></li>
+            <li><a href="https://github.com/reduxjs/redux">Репозиторий Redux</a></li>
+            <li><a href="https://github.com/zalmoxisus/redux-devtools-extension">Redux DevTools Extension</a></li>
+        </ul>
+    </section>
+
+    <section class="center title-slide">
+        <h1>Вопросы?</h1>
+    </section>
+</div></div>
+
+<script src="../../@lib/core.js"></script>
+</body>
+</html>
+</html>
