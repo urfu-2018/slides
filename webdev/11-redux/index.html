@@ -266,7 +266,7 @@
 
     <section class="little">
         <h2>reducers</h2>
-        <div style="font-size: 36px;" class="directory">/src/store/reducers.ts</div>
+        <div style="font-size: 36px;">&nbsp;</div>
         <pre><code class="language-typescript" data-noescape data-trim style="font-size: 24px;">
             export const notesReducer = (
                 state: ApplicationState,
@@ -367,7 +367,6 @@
             <li class="fragment">store и вся работа с ним кладется в отдельную папку</li>
             <li class="fragment">Библиотека <a href="https://www.npmjs.com/package/redux">redux</a> для работы со Store</li>
             <li class="fragment">Библиотека <a href="https://www.npmjs.com/package/react-redux">react-redux</a> для использования в компонентах React</li>
-            <li class="fragment">В redux, как правило, явно не используется слой Dispatcher</li>
             <li class="fragment">Есть Redux DevTools, который отлично помогает при разработке</li>
         </ul>
     </section>
@@ -387,8 +386,12 @@
 
     <section class="little">
         <h2>Пример приложения</h2>
-        <img src="images/redux-notes.png" style="width: calc(100% - 225px); position: absolute; right: 0;">
         <img class="files-tree not-code-next" src="images/code/tree-initial.png"/>
+    </section>
+
+    <section class="little">
+        <h2>Пример приложения</h2>
+        <img src="images/redux-notes.png" height="85%" width="100%">
     </section>
 
     <section class="little">
@@ -491,6 +494,103 @@
                     | IEditNotePayload
                     | IChangeStatusPayload;
             }
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>actions</h2>
+        <img class="files-tree" src="images/code/tree-actions.png"/>
+    </section>
+
+    <section class="little">
+        <h2>actions</h2>
+        <div style="font-size: 36px;" class="directory">/src/store/actions.ts</div>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 22px;">
+            import {
+                IAddNotePayload,
+                IEditNotePayload,
+                IChangeStatusPayload,
+                ACTIONS,
+                IAction
+            } from '../common/types';
+
+            export const editNote = ({ id, newNote }: IEditNotePayload): IAction =>
+                ({
+                    type: ACTIONS.EDIT_NOTE,
+                    <span class="hljs-keyword">payload</span>: {
+                        id,
+                        newNote
+                    }
+                });
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Каждый action – есть функция</h2>
+        <div style="font-size: 36px;" class="directory">/src/store/actions.ts</div>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 22px;">
+            <span style="opacity: .3">import {
+                IAddNotePayload,
+                IEditNotePayload,
+                IChangeStatusPayload,
+                ACTIONS,
+                IAction
+            } from '../common/types';
+
+            </span>export const editNote = ({ id, newNote }: IEditNotePayload): IAction =>
+                ({
+                    type: ACTIONS.EDIT_NOTE,
+                    <span class="hljs-keyword">payload</span>: {
+                        id,
+                        newNote
+                    }
+                });
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Принимает payload</h2>
+        <div style="font-size: 36px;" class="directory">/src/store/actions.ts</div>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 22px;">
+            <span style="opacity: .3">import {
+                IAddNotePayload,
+                </span>IEditNotePayload,<span style="opacity: .3">
+                IChangeStatusPayload,
+                ACTIONS,
+                IAction
+            } </span>from '../common/types';<span style="opacity: .3">
+
+            export const editNote = </span>({ id, newNote }: IEditNotePayload)<span style="opacity: .3">: IAction =>
+                ({
+                    type: ACTIONS.EDIT_NOTE,
+                    <span class="hljs-keyword">payload</span>: {
+                        id,
+                        newNote
+                    }
+                });</span>
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Возвращает IAction</h2>
+        <div style="font-size: 36px;" class="directory">/src/store/actions.ts</div>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 22px;">
+            <span style="opacity: .3">import {
+                IAddNotePayload,
+                IEditNotePayload,
+                IChangeStatusPayload,
+                ACTIONS,
+                </span>IAction
+            } from '../common/types';<span style="opacity: .3">
+
+            export const editNote = ({ id, newNote }: IEditNotePayload)</span>: IAction<span style="opacity: .3"> =>
+                </span>({
+                    type:<span style="opacity: .3"> ACTIONS.EDIT_NOTE,
+                    </span><span class="hljs-keyword">payload</span>:<span style="opacity: .3"> {
+                        id,
+                        newNote
+                    }
+                </span>});
         </code></pre>
     </section>
 
@@ -693,103 +793,6 @@
                 reducer,
                 initialState as any
             );</span>
-        </code></pre>
-    </section>
-
-    <section class="little">
-        <h2>actions</h2>
-        <img class="files-tree" src="images/code/tree-actions.png"/>
-    </section>
-
-    <section class="little">
-        <h2>actions</h2>
-        <div style="font-size: 36px;" class="directory">/src/store/actions.ts</div>
-        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 22px;">
-            import {
-                IAddNotePayload,
-                IEditNotePayload,
-                IChangeStatusPayload,
-                ACTIONS,
-                IAction
-            } from '../common/types';
-
-            export const editNote = ({ id, newNote }: IEditNotePayload): IAction =>
-                ({
-                    type: ACTIONS.EDIT_NOTE,
-                    <span class="hljs-keyword">payload</span>: {
-                        id,
-                        newNote
-                    }
-                });
-        </code></pre>
-    </section>
-
-    <section class="little">
-        <h2>Каждый action – есть функция</h2>
-        <div style="font-size: 36px;" class="directory">/src/store/actions.ts</div>
-        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 22px;">
-            <span style="opacity: .3">import {
-                IAddNotePayload,
-                IEditNotePayload,
-                IChangeStatusPayload,
-                ACTIONS,
-                IAction
-            } from '../common/types';
-
-            </span>export const editNote = ({ id, newNote }: IEditNotePayload): IAction =>
-                ({
-                    type: ACTIONS.EDIT_NOTE,
-                    <span class="hljs-keyword">payload</span>: {
-                        id,
-                        newNote
-                    }
-                });
-        </code></pre>
-    </section>
-
-    <section class="little">
-        <h2>Принимает payload</h2>
-        <div style="font-size: 36px;" class="directory">/src/store/actions.ts</div>
-        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 22px;">
-            <span style="opacity: .3">import {
-                IAddNotePayload,
-                </span>IEditNotePayload,<span style="opacity: .3">
-                IChangeStatusPayload,
-                ACTIONS,
-                IAction
-            } </span>from '../common/types';<span style="opacity: .3">
-
-            export const editNote = </span>({ id, newNote }: IEditNotePayload)<span style="opacity: .3">: IAction =>
-                ({
-                    type: ACTIONS.EDIT_NOTE,
-                    <span class="hljs-keyword">payload</span>: {
-                        id,
-                        newNote
-                    }
-                });</span>
-        </code></pre>
-    </section>
-
-    <section class="little">
-        <h2>Возвращает IAction</h2>
-        <div style="font-size: 36px;" class="directory">/src/store/actions.ts</div>
-        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 22px;">
-            <span style="opacity: .3">import {
-                IAddNotePayload,
-                IEditNotePayload,
-                IChangeStatusPayload,
-                ACTIONS,
-                </span>IAction
-            } from '../common/types';<span style="opacity: .3">
-
-            export const editNote = ({ id, newNote }: IEditNotePayload)</span>: IAction<span style="opacity: .3"> =>
-                </span>({
-                    type:<span style="opacity: .3"> ACTIONS.EDIT_NOTE,
-                    </span><span class="hljs-keyword">payload</span>:<span style="opacity: .3"> {
-                        id,
-                        newNote
-                    }
-                </span>});
         </code></pre>
     </section>
 
@@ -1166,7 +1169,7 @@
         <pre><code class="language-typescript" data-noescape data-trim style="font-size: 22px;">
             import { ApplicationState } from './index';
             ...
-            case ACTIONS.EDIT_NOTE: {
+            case ACTIONS.EDIT_NOTE: { // 'editNote'
                 const { id: <span style="color: green;">[56]</span>, newNote: <span style="color: green;">[ЗАМЕТКА]</span> } = action.payload;
                 // noteWithId – это [ЗАМЕТКА №56]
                 const noteWithId = { ...newNote: <span style="color: green;">[ЗАМЕТКА]</span>, id: <span style="color: green;">[56]</span> };
