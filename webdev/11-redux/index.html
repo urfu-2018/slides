@@ -572,7 +572,7 @@
             import { ApplicationState } from './index';
             ...
             case ACTIONS.EDIT_NOTE: {
-                const { id, newNote } = action.payload as IEditNotePayload;
+                const { id, newNote } = action.payload;
                 const noteWithId = { ...newNote, id };
 
                 const noteIndex = state.notes.findIndex(
@@ -595,7 +595,7 @@
             import { ApplicationState } from './index';
             <span style="opacity: .3">...
             case ACTIONS.EDIT_NOTE: {
-                const { id, newNote } = action.payload as IEditNotePayload;
+                const { id, newNote } = action.payload;
                 const noteWithId = { ...newNote, id };
 
                 const noteIndex = </span>state.notes<span style="opacity: .3">.findIndex(
@@ -1106,6 +1106,162 @@
             }
             ...</span>
         </code></pre>
+    </section>
+
+    <section class="center title-slide">
+        <h1 class="title-count">Еще раз весь цикл на примере</h1>
+    </section>
+
+    <section class="little">
+        <h2>Dispatch'им событие из комопненты</h2>
+        <div style="font-size: 36px;" class="directory">/src/components/note/note.tsx</div>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 22px;">
+            import { editNote } from '../../store/actions';
+            <span style="opacity: .3">...
+            </span>type DispatchProps = { dispatch: (action: IAction) => void };
+            <span style="opacity: .3">type Props = StateProps & DispatchProps;
+            class Note extends Component&lt;<span class="hljs-name">Props, IOwnState</span>> {
+                ...
+                public onEditButtonClick = (e: ReactMouseEvent) => {
+                    ...
+                    // Кладем в currentNote данные об отредактированной заметке
+                    const currentNote = ...;
+
+                    </span>this.props.dispatch(editNote({ <span class="hljs-keyword">id: <span style="color: green;">[56]</span></span>, <span class="hljs-keyword">newNote</span>: <span style="color: green;">[ЗАМЕТКА]</span> }))<span style="opacity: .3">
+                };
+                ...
+            }
+            ...</span>
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2 style="font-size: 40px;">actionCreator возвращает данные с типом action'а</h2>
+        <div style="font-size: 36px;" class="directory">/src/store/actions.ts</div>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 20px;">
+            <span style="opacity: .3">import {
+                IAddNotePayload,
+                IEditNotePayload,
+                IChangeStatusPayload,
+                ACTIONS,
+                IAction
+            } from '../common/types';
+
+            </span>const editNote = ({ id: <span style="color: green;">[56]</span>, newNote: <span style="color: green;">[ЗАМЕТКА]</span> }: IEditNotePayload) =>
+                ({
+                    type: ACTIONS.EDIT_NOTE // <span style="color: green;">'editNote'</span>,
+                    <span class="hljs-keyword">payload</span>: {
+                        id: <span style="color: green;">[56]</span>,
+                        newNote: <span style="color: green;">[ЗАМЕТКА]</span>
+                    }
+                });
+                ...
+        </code></pre>
+    </section>
+
+
+    <section class="little">
+        <h2>Принимаем данные в reducer'е:</h2>
+        <div style="font-size: 36px;" class="directory">/src/store/reducers.ts</div>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 22px;">
+            import { ApplicationState } from './index';
+            ...
+            case ACTIONS.EDIT_NOTE: {
+                const { id: <span style="color: green;">[56]</span>, newNote: <span style="color: green;">[ЗАМЕТКА]</span> } = action.payload;
+                // noteWithId – это [ЗАМЕТКА №56]
+                const noteWithId = { ...newNote: <span style="color: green;">[ЗАМЕТКА]</span>, id: <span style="color: green;">[56]</span> };
+                // находим индекс редактируемой заметки
+                const index = state.notes.findIndex(
+                    (note: INote) => note.id === id
+                );
+                // копируем массив заметок и вставляем на место старой новую
+                return {
+                    ...state,
+                    notes: [...notes].splice(index, 1, noteWithId: <span style="color: green;">[ЗАМЕТКА №56]</span>);
+                };
+            }
+            ...
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Кладем Store в компонент</h2>
+        <div style="font-size: 36px;" class="directory">/src/components/note/note.tsx</div>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 20px;">
+            <span style="opacity: .3">...
+
+            </span>type StateProps = ReturnType&lt;<span class="hljs-name">typeof mapStateToProps</span>>;
+            <span style="opacity: .3">type DispatchProps = { dispatch: (action: IAction) => void };
+            type Props = StateProps & DispatchProps & ...;
+
+            class Note extends Component&lt;<span class="hljs-name">Props, IOwnState</span>> {
+                ...
+            }
+
+            </span>const mapStateToProps = (state: ApplicationState, props: Props) => ({
+                currentNote: state.notes.find(note => note.id === id: <span style="color: green;">[56]</span>);
+                // теперь this.props.currentNote – это <span style="color: green;">[ЗАМЕТКА №56]</span>
+            });<span style="opacity: .3">
+
+            export default connect(</span>mapStateToProps<span style="opacity: .3">)(Note);</span>
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Получаем Store из this.props</h2>
+        <div style="font-size: 36px;" class="directory">/src/components/note/note.tsx</div>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 20px;">
+            ...
+            type StateProps = ReturnType&lt;<span class="hljs-name">typeof mapStateToProps</span>>;
+            type Props = StateProps & DispatchProps; // подкладываем StateProps в this.props
+            class Note extends Component&lt;<span class="hljs-name">Props, IOwnState</span>> {
+                ...
+                public render() {
+                    return (
+                        ...
+                        &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="note-page__field">
+                            Дата создания
+                            &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="note-page__created-date">
+                                {this.props.currentNote.created} // это <span style="color: green;">[ЗАМЕТКА №56]</span>
+                            &lt;/<span class="hljs-name">div</span>>
+                        &lt;/<span class="hljs-name">div</span>>
+                        ...
+                    )
+                }
+                ...
+            }
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2>Получаем Store из this.props</h2>
+        <div style="font-size: 36px;" class="directory">/src/components/note/note.tsx</div>
+        <pre><code class="language-typescript" data-noescape data-trim style="font-size: 20px;">
+            ...
+            type StateProps = ReturnType&lt;<span class="hljs-name">typeof mapStateToProps</span>>;
+            type Props = StateProps & DispatchProps; // подкладываем StateProps в this.props
+            <span style="opacity: .3">class Note extends Component&lt;<span class="hljs-name">Props, IOwnState</span>> {
+                ...
+                public render() {
+                    return (
+                        ...
+                        &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="note-page__field">
+                            Дата создания
+                            &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="note-page__created-date">
+                                </span>{this.props.currentNote.created} // это <span style="color: green;">[ЗАМЕТКА №56]</span><span style="opacity: .3">
+                            &lt;/<span class="hljs-name">div</span>>
+                        &lt;/<span class="hljs-name">div</span>>
+                        ...
+                    )
+                }
+                ...
+            }</span>
+        </code></pre>
+    </section>
+
+    <section class="little">
+        <h2 class="img-header">Еще раз картинка flux:</h2>
+        <img src="images/flux-1.png" style="margin-top: -1px;">
     </section>
 
     <section class="center title-slide">
