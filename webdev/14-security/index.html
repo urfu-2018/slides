@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Безопасность веб-приложений</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="white"><div class="reveal"><div class="slides">
+
+<section class="center">
+    <h1>Безопасность <span class="one-line">веб-приложений</span></h1>
+    <h2 class="author">Семён Махаев</h2>
+</section>
+
+<section>
+    <h1 class="disclaimer__title small">Дисклеймер</h1>
+    <div class="disclaimer__wrapper">
+        <p class="disclaimer__text">
+            Примеры кода в лекции содержат <strong>уязвимости</strong>! Пожалуйста, не используйте их в ваших приложениях
+        </p>
+    </div>
+    <div class="disclaimer__buttons">
+        <a class="disclaimer__button" href="#">Убежать</a>
+        <a class="disclaimer__button" href="#/2">Вперёд!</a>
+    </div>
+</section>
+
+<section class="center">
+    <h1>Почему безопасность&mdash;&nbsp;это важно?</h1>
+</section>
+
+<section class="center car image"></section>
+
+<section class="center theory image">
+    <div class="theory__wrapper"></div>
+</section>
+
+<section class="center">
+    <dl>
+        <dt class="term">Угроза</dt>
+        <dd class="fragment definition">
+            Потенциально возможное <strong>событие</strong>, которое посредством работы с&nbsp;компонентами сервиса, может нанести <strong>ущерб</strong>
+        </dd>
+    </dl>
+</section>
+
+<section class="center">
+    <dl>
+        <dt class="term">Уязвимость</dt>
+        <dd class="fragment definition">
+            <strong>Свойство</strong> сервиса, использование которого злоумышленником приводит к&nbsp;<strong>реализации угрозы</strong>
+        </dd>
+    </dl>
+</section>
+
+<section class="center">
+    <dl>
+        <dt class="term">Атака</dt>
+        <dd class="fragment definition">
+            <strong>Реализация угрозы</strong>, путём использования уязвимостей
+        </dd>
+    </dl>
+</section>
+
+<section class="center">
+    <img src="./images/03-owasp.jpg" alt="OWASP">
+</section>
+
+<section class="center">
+    <h1>Что мы защищаем?</h1>
+</section>
+
+<section class="center">
+    <img src="./images/01-schema.jpg" alt="Схема архитектуры современного веб-приложения">
+</section>
+
+<section class="vulnerabilities-slide">
+    <div class="vulnerabilities">
+        <h2 class="fly color-black fragment">Server-side</h2>
+        <h2 class="chop color-black fragment">Client-side</h2>
+    </div>
+</section>
+
+<section>
+    <h1>Серверная часть</h1>
+    <ul class="list">
+        <li class="fragment">Логические уязвимости</li>
+        <li class="fragment">Ошибки эксплуатации</li>
+        <li class="fragment">Ошибки реализации</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Логические уязвимости</h1>
+    <ul class="list">
+        <li class="fragment">Отсутствие разграничений прав доступа</li>
+        <li class="fragment">Избыточная небезопасная функциональность</li>
+    </ul>
+</section>
+
+<section>
+    <h1 class="small">Секретный урл</h1>
+    <pre><code class="hljs nginx">
+        GET https://my-awesome-site.ru/admin</code></pre>
+    <pre class="fragment"><code class="hljs nginx">
+        GET https://my-awesome-site.ru/aliSFla1434snf</code>
+    </pre>
+    <p class="fragment xxsmall">В обоих случаях такая функциональность может быть скомпрометирована</p>
+</section>
+
+<section>
+    <img src="images/04-docs.png" alt="Индексация GoogleDocs">
+</section>
+
+<section>
+    <h1>Логические уязвимости</h1>
+    <ul class="list">
+        <li>Отсутствие разграничений прав доступа</li>
+        <li>Избыточная небезопасная функциональность</li>
+        <li class="fragment">Нарушение логики работы приложения</li>
+    </ul>
+</section>
+
+<section>
+    <h1 class="small">Функциональность оплаты</h1>
+    <span class="payment-step">Выбираем способ оплаты</span>
+    <pre data-noescape data-trim><code class="hljs nginx">    GET https://online-shop.ru/payment/step/1</code></pre>
+    <div class="fragment">
+        <span class="payment-step">Производим оплату</span>
+        <pre data-noescape data-trim><code class="hljs nginx">    GET https://online-shop.ru/payment/step/2</code></pre>
+    </div>
+    <div class="fragment">
+        <span class="payment-step">Подтверждаем по СМС</span>
+        <pre data-noescape data-trim><code class="hljs nginx">    GET https://online-shop.ru/payment/step/3</code></pre>
+    </div>
+    <div class="fragment">
+        <span class="payment-step">Получаем товар</span>
+        <pre data-noescape data-trim><code class="hljs nginx">    GET https://online-shop.ru/payment/step/4</code></pre>
+    </div>
+</section>
+
+<section>
+    <h1 class="small">Insecure direct object reference</h1>
+    <div class="fragment">
+        <pre data-noescape data-trim><code class="hljs left nginx">
+    GET https://disk.yandex.ru/client/1028379420</code></pre>
+        <pre data-noescape data-trim><code class="hljs left nginx">    GET https://disk.yandex.ru/client/123</code>
+        </pre>
+    </div>
+</section>
+
+<section>
+    <h1 class="small">Insecure direct object reference</h1>
+    <pre data-noescape data-trim><code class="hljs left nginx" data-noescape>
+    GET https://disk.yandex.ru/client/<mark>1028379420</mark></code></pre>
+    <pre data-noescape data-trim><code class="hljs left nginx" data-noescape>    GET https://disk.yandex.ru/client/<mark>123</mark></code>
+    </pre>
+    <p class="xxsmall fragment">Есть возможность получить данные другого пользователя</p>
+</section>
+
+<section>
+    <h1>Предпосылки</h1>
+    <ul class="list">
+        <li class="fragment">Сложности реализации</li>
+        <li class="fragment">Плохо продуманная архитектура</li>
+        <li class="fragment">Человеческий фактор</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Ошибки реализации</h1>
+    <ul class="list">
+        <li class="fragment">Инъекции и небезопасная сериализация</li>
+        <li class="fragment">Открытые редиректы</li>
+        <li class="fragment">Слабая криптография</li>
+        <li class="fragment">Бинарные уязвимости</li>
+    </ul>
+</section>
+
+<section class="center">
+    <dl>
+        <dt class="term">Инъекции</dt>
+        <dd class="fragment definition">
+            <strong>Уязвимости</strong>, направленные на возможность <strong>внедрения</strong> управляющего кода в язык запросов
+        </dd>
+    </dl>
+</section>
+
+<section>
+    <h1>
+        SQL инъекции
+        <span class="crone">👑</span>
+    </h1>
+    <pre class="fragment"><code class="hljs typescript left" data-noescape data-trim>
+        const { id } = req.query;
+
+        const sql = `SELECT * FROM adventures WHERE id='${id}';`;
+    </code></pre>
+    <pre class="fragment">
+        <code class="hljs nginx" data-noescape data-trim>
+        GET /adventures?id=123
+    </code></pre>
+    <pre class="fragment">
+        <code class="hljs sql" data-noescape data-trim>
+        SELECT * FROM adventures WHERE id='123';
+    </code></pre>
+</section>
+
+<section>
+    <h1>
+        SQL инъекции
+        <span class="crone">👑</span>
+    </h1>
+    <pre>
+        <code class="hljs nginx" data-noescape data-trim>
+        GET /adventures?id=123
+    </code></pre>
+</section>
+
+<section>
+    <h1>
+        SQL инъекции
+        <span class="crone">👑</span>
+    </h1>
+    <pre>
+        <code class="hljs nginx" data-noescape data-trim>
+        GET /adventures?id=123' or '1'='1
+    </code></pre>
+    <pre class="fragment">
+        <code class="hljs sql" data-noescape data-trim>
+        SELECT * FROM adventures WHERE id='<mark>123' or '1'='1</mark>';
+    </code></pre>
+    <pre class="fragment">
+        <code class="hljs nginx" data-noescape data-trim>
+        GET /adventures?id=123%27%20or%20%271%27=%271
+    </code></pre>
+</section>
+
+<section class="center">
+    <h1>
+        SQL инъекции
+        <span class="crone">👑</span>
+    </h1>
+    <img src="./images/12-what.jpg" alt="Что делать?" class="what-to-do">
+</section>
+
+<section>
+    <h1>
+        SQL инъекции
+        <span class="crone">👑</span>
+    </h1>
+    <ul class="list">
+        <li class="fragment">Санитайзить / эскейпить данные</li>
+        <li class="fragment">Использовать ORM</li>
+        <li class="fragment">Использовать prepared statements</li>
+    </ul>
+</section>
+
+<section>
+    <h1 class="small">Эскейпинг</h1>
+    <pre><code class="hljs typescript" data-trim>
+    const { name } = req.body;
+    const escaped = name.replace('\'', '\'\'');
+
+    const sql = `
+        SELECT * FROM adventures WHERE name='${escaped}';
+    `;</code></pre>
+    <p class="xsmall">Работает только <strong>в частном случае</strong></p>
+</section>
+
+<section>
+    <h1 class="small">Prepared statements</h1>
+    <pre><code class="hljs sql" data-noescape data-trim>    PREPARE findAdventure (text) AS
+        SELECT * FROM adventures WHERE name = $1;
+    EXECUTE findAdventure('magic');</code></pre>
+    <pre class="fragment"><code class="hljs typescript" data-trim>    const { name } = req.body;
+
+    sequelize
+        .query('SELECT * FROM adventures WHERE name = :name', {
+            replacements: { name },
+            type: sequelize.QueryTypes.SELECT
+        })
+        .then(adventures => res.send(adventures));</code></pre>
+    <p class="xsmall fragment">
+        <a target="_blank" href="https://www.postgresql.org/docs/９.6/sql-prepare.html">
+            Prepared statements в PostgreSQL
+        </a>
+    </p>
+</section>
+
+<section>
+    <h1 class="small">Command injection 🐽</h1>
+    <pre class="fragment"><code class="hljs typescript" data-noescape data-trim>    import { exec } from 'child_process';</code></pre>
+    <pre class="fragment"><code class="hljs typescript" data-noescape data-trim>    const { repo, name } = req.body;
+    </code></pre>
+    <pre class="fragment"><code class="hljs typescript" data-noescape data-trim>    exec(`git clone ${repo}`);
+    exec(`cd ${name}`);
+    exec('npm install');
+    exec('npm test');</code></pre>
+    <pre class="fragment"><code class="hljs nginx" data-noescape data-trim>    POST /hook</code><code class="hljs typescript" data-noescape data-trim>    {
+        repo: 'https://github.com/urfu-2018/telltail.git',
+        name: 'telltail'
+    }</code></pre>
+</section>
+
+<section>
+    <h1 class="small">Command injection 🐽</h1>
+    <pre><code class="hljs typescript" data-noescape data-trim>    import { exec } from 'child_process';</code></pre>
+    <pre><code class="hljs typescript" data-noescape data-trim>    const { repo, name } = req.body;
+    </code></pre>
+    <pre><code class="hljs typescript" data-noescape data-trim>    exec(`git clone ${repo}`); // 🤔
+    exec(`cd ${name}`); // 🤔
+    exec('npm install');
+    exec('npm test');</code></pre>
+    <pre><code class="hljs nginx" data-noescape data-trim>    POST /hook</code><code class="hljs typescript" data-noescape data-trim>    {
+        repo: 'https://github.com/urfu-2018/telltail.git',
+        name: 'telltail'
+    }</code></pre>
+</section>
+
+<section>
+    <h1 class="small">Command injection</h1>
+    <pre><code class="hljs nginx" data-noescape data-trim>    POST /hook</code><code class="hljs typescript" data-noescape data-trim>    {
+        repo: 'https://github.com/urfu-2018/telltail.git',
+        name: 'telltail && sudo rm -rf /app/'
+    }</code></pre>
+    <pre class="fragment"><code class="hljs typescript" data-noescape data-trim>        exec('cd telltail && sudo rm -rf /app/')</code></pre>
+</section>
+
+<section>
+    <h1 class="small">Command injection</h1>
+    <pre><code class="hljs nginx" data-noescape data-trim>    POST /hook</code><code class="hljs typescript" data-noescape data-trim>    {
+        repo: 'https://github.com/urfu-2018/telltail.git',
+        name: 'telltail && sudo rm -rf /app/'
+    }</code></pre>
+    <pre><code class="hljs typescript" data-noescape data-trim>        exec('cd <mark>telltail && sudo rm -rf /app/</mark>')</code></pre>
+</section>
+
+<section>
+    <h1 class="small">Command injection</h1>
+    <ul class="list">
+        <li class="fragment">Разбивать сервис на микросервисы</li>
+        <li class="fragment">Не передавать пользовательский ввод в параметры</li>
+        <li class="fragment">Не запускать новые процессы из пользовательских запросов</li>
+        <li class="fragment">Изолировать запускаемый код</li>
+        <li class="fragment xsmall">Возможно, вам это не нужно</li>
+    </ul>
+</section>
+
+<section>
+    <h1 class="small">Command injection 🐽</h1>
+    <pre><code class="hljs typescript">    import { exec } from 'child_process';</code></pre>
+    <pre><code class="hljs typescript">    const { repo, name } = req.body;</code></pre>
+    <pre class="fragment"><code class="hljs typescript">    const repoRegex = /^https?:\/\/[\w\d.\/\-]+\.git$/;
+    const nameRegex = /^[^{}()<>&*|=?;[\]$\-~!.%\/:+'`#]+$/;</code><code class="hljs typescript">    if (!repo.match(repoRegex) || !name.match(nameRegex)) {
+        return;
+    }</code></pre>
+    <pre><code class="hljs typescript">    exec(`git clone ${repo}`);
+    exec(`cd ${name}`); // ...</code></pre>
+</section>
+
+<section>
+    <h1 class="small">CRLF Injection</h1>
+    <p class="xsmall">Проксируем запрос в бэкенд</p>
+    <pre class="fragment"><code class="hljs typescript" data-noescape data-trim>    const { pathname } = req;
+
+    const data = await got(`https://${apiHostname}/${pathname}`);</code></pre>
+    <div class="fragment">
+        <p class="xsmall">Путь на фронте преобразуется в путь на бэке</p>
+        <div class="flex-start">
+            <span class="xxsmall">На форнте: </span>
+            <pre><code class="hljs nginx" data-noescape data-trim> GET /handle</code></pre>
+        </div>
+        <div class="flex-start">
+            <span class="xxsmall">На бэке: </span>
+            <pre><code class="hljs nginx" data-noescape data-trim> GET /backend/handle</code></pre>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h1 class="small">CRLF Injection</h1>
+    <pre class="fragment"><code class="hljs nginx code-small" data-noescape data-trim>    GET /handle%20HTTP/1.0%0D%0AHost%3A%20test%0D%0A%0D%0A HTTP/1.0\r\n
+    Host: frontend\r\n
+    \r\n</code></pre>
+</section>
+
+<section>
+    <h1 class="small">CRLF Injection</h1>
+    <pre><code class="hljs nginx code-small" data-noescape data-trim>    GET /handle%20HTTP/1.0<mark>%0D%0A</mark>Host%3A%20test<mark>%0D%0A</mark><mark>%0D%0A</mark> HTTP/1.0\r\n
+    Host: frontend\r\n
+    \r\n</code></pre>
+    <div class="fragment">
+    <p class="xsmall">Запрос к бэкенду:</p>
+    <pre><code class="hljs nginx">GET /backend/handle HTTP/1.0\r\n
+Host: test\r\n
+\r\n
+HTTP/1.0\r\n
+Host: backend\r\n</code></pre>
+    </div>
+</section>
+
+<section>
+    <h1 class="small">CRLF Injection</h1>
+    <pre><code class="hljs nginx code-small" data-noescape data-trim>    GET /handle%20HTTP/1.0<mark>%0D%0A</mark>Host%3A%20test<mark>%0D%0A</mark><mark>%0D%0A</mark> HTTP/1.0\r\n
+    Host: frontend\r\n
+    \r\n</code></pre>
+    <p class="xsmall">Запрос к бэкенду:</p>
+    <pre><code class="hljs nginx" data-noescape data-trim>GET /backend<mark>/handle HTTP/1.0\r\n
+Host: test\r\n
+\r\n</mark>
+HTTP/1.0\r\n
+Host: backend\r\n</code></pre>
+    <p class="xsmall fragment">Пользовательский ввод попадает в ответ сервера</p>
+</section>
+
+<section>
+    <h1 class="small">HTTP Header Splitting</h1>
+    <pre class="fragment"><code class="hljs yaml" data-noescape data-trim>    GET /api/v1/vulnerable HTTP/1.0\r\n
+    Host: frontend\r\n
+    Referer: test%0D%0ASet-Cookie:%20name=Alice%0D%0A\r\n
+    \r\n
+    </code></pre>
+    <pre class="fragment"><code class="hljs yaml" data-noescape data-trim>    GET /application/vulnerable HTTP/1.0\r\n
+    Host: backend\r\n
+    Referer: test\r\n
+    Set-Cookie: name=Alice\r\n
+    \r\n
+    Set-Cookie: name=Bob\r\n
+    \r\n</code></pre>
+</section>
+
+<section>
+    <h1 class="small">HTTP Header Splitting</h1>
+    <pre><code class="hljs yaml" data-noescape data-trim>    GET /api/v1/vulnerable HTTP/1.0\r\n
+    Host: frontend\r\n
+    Referer: test<mark>%0D%0ASet-Cookie:%20name=Alice%0D%0A</mark>\r\n
+    \r\n
+    </code></pre>
+    <pre><code class="hljs yaml" data-noescape data-trim>    GET /application/vulnerable HTTP/1.0\r\n
+    Host: backend\r\n
+    Referer: test\r\n
+    Set-Cookie: name=Alice\r\n
+    \r\n
+    Set-Cookie: name=Bob\r\n
+    \r\n</code></pre>
+</section>
+
+<section>
+    <h1 class="small">HTTP Header Splitting</h1>
+    <pre><code class="hljs yaml" data-noescape data-trim>    GET /api/v1/vulnerable HTTP/1.0\r\n
+    Host: frontend\r\n
+    Referer: test<mark>%0D%0ASet-Cookie:%20name=Alice%0D%0A</mark>\r\n
+    \r\n
+    </code></pre>
+    <pre><code class="hljs yaml" data-noescape data-trim>    GET /application/vulnerable HTTP/1.0\r\n
+    Host: backend\r\n
+    Referer: test<mark>\r\n
+    Set-Cookie: name=Alice\r\n</mark>
+    \r\n
+    Set-Cookie: name=Bob\r\n
+    \r\n</code></pre>
+    <p class="xsmall fragment">Инъекция в HTTP-заголовке <strong>Referer</strong></p>
+</section>
+
+<section>
+    <h1 class="small">HTTP parameter contamination</h1>
+    <pre class="fragment">
+        <code class="hljs nginx">
+GET /handle?payload=1%26login=admin</code></pre>
+    <pre class="fragment"><code class="hljs nginx">
+GET /handle?payload=1&login=admin&login=user</code></pre>
+</section>
+
+<section>
+    <h1 class="small">HTTP parameter contamination</h1>
+    <pre>
+    <code class="hljs nginx">
+GET /handle?payload=1%26login=admin</code></pre>
+    <pre><code class="hljs nginx" data-noescape>
+GET /handle?payload=<mark>1&login=admin</mark>&login=user</code>
+</pre>
+    <p class="xsmall fragment">Инъекция в GET-параметре <strong>payload</strong></p>
+</section>
+
+<section class="center">
+    <img src="./images/23-ostrich.jpg" alt="Перерыв?">
+</section>
+
+<section>
+    <h1>Path traversal</h1>
+    <pre class="fragment"><code class="hljs nginx">
+    GET /handler?filename=image.jpg</code></pre>
+    <pre class="fragment"><code class="hljs nginx">
+    GET /handler?filename=../../../../../etc/passwd</code>
+    </pre>
+    <p class="fragment xxsmall">Нужно разграничивать права доступа к директориям в файловой системе</p>
+</section>
+
+<section>
+    <h1 class="small">Race conditions (гонки)</h1>
+    <pre class="fragment"><code class="hljs typescript left" data-noescape data-trim>
+    const { code } = req.body;
+
+    const isValid = await PromoCode.validate(code);
+
+    if (!isValid) {
+        return;
+    }
+
+    await PromoCode.activate(code);
+    await PromoCode.markAsUsed(code);</code></pre>
+</section>
+
+<section>
+    <h1 class="small">Race conditions (гонки)</h1>
+    <pre><code class="hljs typescript left" data-noescape data-trim>
+    const { code } = req.body;
+
+    const isValid = await PromoCode.validate(code);
+
+    if (!isValid) {
+        return;
+    }
+
+    await PromoCode.activate(code);
+    await PromoCode.markAsUsed(code); // ⏰</code></pre>
+    <p class="fragment xsmall">Нужно использовать <strong>транзакции</strong></p>
+</section>
+
+<section>
+    <h1 class="small">Раскрытие информации</h1>
+    <ul class="list">
+        <li class="fragment">Заголовки запроса в ответе сервера</li>
+        <li class="fragment">Ссылки на внутреннюю документацию / описание внутренних структур</li>
+        <li class="fragment">Язык и фреймворк</li>
+        <li class="fragment">Отладочные данные в production</li>
+        <li class="fragment">Traceback в production</li>
+        <li class="fragment">Небезопасное логирование</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Криптография</h1>
+    <ul class="list">
+        <li class="fragment">Криптография !== Безопасность</li>
+        <li class="fragment">&laquo;Последний рубеж&raquo;</li>
+        <li class="fragment">Не хранить пароли в открытом виде</li>
+        <li class="fragment">При хешировании использовать соль</li>
+    </ul>
+</section>
+
+<section>
+    <h1 class="small">Denial of service</h1>
+    <pre class="fragment"><code class="hljs typescript" data-trim>    const { text } = req.body;
+
+    const regex = /^https?:\/\/\w+@\w+\.\w+$/;
+
+    const isValidEmail = Boolean(text.match(regex));
+
+    const statusCode = isValidEmail ? 200 : 400;
+
+    res.sendStatus(statusCode);</code></pre>
+</section>
+
+<section>
+    <h1 class="small">Denial of service</h1>
+    <pre><code class="hljs typescript" data-trim>    const { text } = req.body;
+
+    const regex = /^https?:\/\/\w+@\w+\.\w+$/;
+
+    const isValidEmail = Boolean(text.match(regex)); // ⚠️
+
+    const statusCode = isValidEmail ? 200 : 400;
+
+    res.sendStatus(statusCode);</code></pre>
+</section>
+
+<section>
+    <h1 class="small">Denial of service</h1>
+    <pre><code class="hljs typescript" data-trim>
+    const isValidEmail = Boolean(text.match(regex));</code></pre>
+    <pre class="fragment"><code class="hljs bash" data-trim>    while (true); do
+        curl $URL -d '{ text: $(cat "Война и мир.txt") }';
+    done</code></pre>
+    <div class="fragment smoke">
+        <img src="./images/22-smoke.jpg" alt="Двигатель перегрелся">
+    </div>
+</section>
+
+<section>
+    <h1 class="small">Distributed Denial of service</h1>
+    <img class="fragment" src="./images/19-dos.jpg" alt="Схема атаки DDOS">
+</section>
+
+<section>
+    <h1>Ошибки архитектуры</h1>
+    <ul class="list">
+        <li>Некорректная авторизация и аутентификация</li>
+        <li>Атака SSRF</li>
+    </ul>
+</section>
+
+<section>
+    <h1 class="small">Аутентификация и авторизация</h1>
+    <img src="./images/05-auth.jpg" alt="Схема авторизации и аутентифкации в Яндексе">
+</section>
+
+<section>
+    <h1 class="small">Атака Server Side Request Forgery</h1>
+    <img src="./images/06-ssrf.jpg" alt="Схема атаки SSRF">
+</section>
+
+<section>
+    <h1 class="small">Атака Server Side Request Forgery</h1>
+    <img src="./images/20-ssrf-redirect.jpg" alt="Схема атаки SSRF">
+</section>
+
+<section>
+    <h1 class="small">Атака Server Side Request Forgery</h1>
+    <img src="./images/07-ssrf-solve.jpg" alt="Схема атаки SSRF">
+</section>
+
+<section>
+    <h1>В Яндексе</h1>
+    <ul class="list">
+        <li class="fragment">Security Review</li>
+        <li class="fragment">Автоматическое сканирование</li>
+        <li class="fragment">Безопасные общие компоненты</li>
+        <li class="fragment">Аутентификация и авторизация</li>
+        <li class="fragment">Секреты и токены</li>
+    </ul>
+</section>
+
+<section class="center">
+    <h1>Client side</h1>
+</section>
+
+<section>
+    <h1>Same Origin Policy</h1>
+    <div class="fragment">
+        <pre><code class="hljs nginx">    http://a.yandex.ru/dir1 </code></pre>
+        <pre><code class="hljs nginx">    http://a.yandex.ru/dir1/dir2 </code></pre>
+        <pre><code class="hljs nginx">    https://a.yandex.ru/dir1 </code></pre>
+        <pre><code class="hljs nginx">    http://a.yandex.ru:8080/dir1 </code></pre>
+        <pre><code class="hljs nginx">    http://b.yandex.ru/dir1 </code></pre>
+    </div>
+</section>
+
+<section>
+    <h1>Cookie</h1>
+    <pre class="fragment"><code class="hljs" data-noescape data-trim>
+    Set-Cookie: id=1111; Path=/admin/
+    Set-Cookie: id=2222; Path=/; Domain=my.example.com
+    Set-Cookie: id=3333; Path=/; Http-Only; secure</code></pre>
+</section>
+
+<section>
+    <h1>Cookie</h1>
+    <pre><code class="hljs" data-noescape data-trim>
+    Set-Cookie: id=1111; Path=/admin/
+    Set-Cookie: id=2222; Path=/; Domain=my.example.com
+    Set-Cookie: id=3333; Path=/; <mark>Http-Only</mark>; <mark>secure</mark></code></pre>
+    <p class="fragment xsmall left pad-left-small">
+        <strong>Http-Only</strong> - кука не доступна из JS
+    </p>
+    <p class="fragment xsmall left pad-left-small">
+        <strong>Secure</strong> - кука передаётся только по HTTPS
+    </p>
+</section>
+
+<section>
+    <h1 class="small">Cross-Origin Resource Sharing</h1>
+    <pre class="fragment"><code class="hljs nginx">
+    GET /handler/ HTTP/1.1
+    Host: myawesomedomain.com
+    Origin: https://attacker.com
+    Cookie: session=123</code></pre>
+    <pre class="fragment"><code class="hljs">
+    HTTP/1.0 200 OK
+    Access-Control-Allow-Origin: https://attacker.com
+    Access-Control-Allow-Credentials: true</code></pre>
+</section>
+
+<section>
+    <h1>Cross site request forgery</h1>
+    <img class="fragment" src="./images/08-csrf.jpg" alt="Схема атаки CSRF">
+</section>
+
+<section>
+    <h1>Cross site request forgery</h1>
+    <pre>
+        <code class="hljs yaml" data-noescape data-trim>
+        POST /modify HTTP/1.0
+        Host: vulnerable.com
+        X-CSRF-Token: keyboard-cat
+    </code></pre>
+</section>
+
+<section>
+    <h1>Cross site request forgery</h1>
+    <pre>
+        <code class="hljs yaml" data-noescape data-trim>
+        POST /modify HTTP/1.0
+        Host: vulnerable.com
+        X-CSRF-Token: keyboard-cat // 🦄 🌈
+    </code></pre>
+</section>
+
+<section>
+    <dl>
+        <dt class="small center">Cross-site request scripting (XSS)</dt>
+        <dd class="fragment definition">
+            <strong>Атака</strong>, при которой вредоносный код <strong>внедряется</strong>
+            в код вашего сайта и может быть <strong>запущен</strong>
+        </dd>
+    </dl>
+</section>
+
+<section>
+    <h1 class="small center">Cross-site request scripting (XSS)</h1>
+    <ul class="list center">
+        <li class="fly">Reflected</li>
+        <li class="chop">Stored</li>
+    </ul>
+</section>
+
+<section>
+    <pre><code class="hljs html">    &lt;textarea id=&quot;textarea&quot; type=&quot;text&quot;&gt;&lt;/textarea&gt;
+    &lt;button id=&quot;button&quot;&gt;Сохранить&lt;/button&gt;
+    &lt;div id=&quot;result&quot;&gt;&lt;/div&gt;
+    &lt;script&gt;
+        button.addEventListener(&apos;click&apos;, function () {
+            result.innerHTML = textarea.value;
+        });
+    &lt;script&gt;</code></pre>
+    <div class="fragment blog-wrapper">
+        <textarea id="textarea" class="blog__textarea"></textarea>
+        <button id="button" class="blog__button">Сохранить</button>
+        <div class="blog">
+            <img class="blog__author" src="./images/17-author.png" alt="Автор">
+            <p class="blog__description">Пользователь написал в 25 апреля в 17:45</p>
+            <p id="result" class="blog__result"></p>
+        </div>
+        <script>
+            button.addEventListener('click', function () {
+                result.innerHTML = textarea.value;
+            });
+        </script>
+    </div>
+</section>
+
+<section>
+    <img src="./images/10-search.jpg" alt="Пример с XSS на сайте рекламы Яндекса">
+</section>
+
+<section>
+    <h1 class="small">Cross-Site Scripting</h1>
+    <ul class="list">
+        <li class="fragment">Санитайзинг / эскейпинг данных на выходе</li>
+        <li class="fragment">Бескуковый домен для пользовательских скриптов</li>
+        <li class="fragment">Заголовок X-XSS-Protection</li>
+        <li class="fragment">Content Security Policy</li>
+    </ul>
+</section>
+
+<section>
+    <h1 class="small">Санитайзинг</h1>
+    <pre><code class="hljs typescript html">    import sanitizeHtml from 'sanitize-html';
+
+    const evilHtml = `
+        &lt;p style="background-image: url('attacker.com')"&gt;
+            Hello, world!
+        &lt;/p&gt;
+        &lt;script&gt;alert(document.cookie);&lt;/script&gt;
+    `;
+
+    const kindHtml = sanitizeHtml(evilHtml, {
+        allowedTags: ['a', 'p', 'div'],
+        allowedAttributes: { a: ['href'] }
+    });
+    // <p>Hello, world!</p>
+    </code></pre>
+</section>
+
+<section class="center">
+    <pre>
+<code class="hljs html">
+&lt;XSS&gt;’’;!—&laquo;&lt;hr/&gt;&amp;{()}
+</code>
+    </pre>
+</section>
+
+<section>
+    <h1>Content Security Policy</h1>
+    <pre><code class="hljs">
+    Content-Security-Policy:
+        default-src 'self';
+        img-src *;
+        script-src: trusted.com;</code></pre>
+</section>
+
+<section>
+    <h1>Content Security Policy</h1>
+    <pre><code class="hljs nginx" data-noescape data-trim>
+    Content-Security-Policy:
+        media-src: https://yandex.ru</code>
+    </pre>
+</section>
+
+<section>
+    <h1>Content Security Policy</h1>
+    <pre><code class="hljs nginx" data-noescape data-trim>
+    Content-Security-Policy:
+        media-src: <mark>https</mark>://yandex.ru</code>
+    </pre>
+    <p class="fragment">
+        <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy#Directives">
+            Список директив CSP
+        </a>
+    </p>
+    <p class="xxsmall fragment">
+        <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP#Browser_compatibility">
+            * обращаем внимание на <strong>поддержку браузерами</strong>
+        </a>
+    </p>
+</section>
+
+<section>
+    <h1 class="small">ClickJacking</h1>
+    <div class="clickjacking">
+        <img class="clickjacking__image" src="./images/18-clickjacking.png" alt="Иллюстрация атаки Clickjacking">
+        <pre class="clickjacking__code"><code class="hljs html">    &lt;iframe src=&quot;https://vk.com&quot;&gt;
+    &lt;/iframe&gt;
+
+    <a href="http://attacker.com">
+        Click to WIN!
+    </a></code></pre>
+    </div>
+</section>
+
+<section>
+    <h1 class="small">ClickJacking</h1>
+    <pre>
+        <code class="hljs" data-noescape data-trim>    X-Frame-Options: ALLOW-FROM http://trusted.com
+    X-Frame-Options: SAMEORIGIN
+    X-Frame-Options: DENY</code>
+    </pre>
+    <p class="fragment xxsmall left pad-left-small">
+        * X-Frame-Options: <strong>ALLOW-FROM</strong> не работает в Google Chrome
+    </p>
+    <p class="fragment xxsmall left pad-left-small">
+        ** Но есть директива CSP <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors">frame-ancestors</a>
+    </p>
+</section>
+
+<section>
+    <h1>Многократная отправка формы</h1>
+    <div class="captcha">
+        <img src="./images/11-captcha.jpg" alt="Капча">
+    </div>
+</section>
+
+<section>
+    <h1 class="small">Что делать, чтобы было безопаснее</h1>
+    <ul class="list">
+        <li class="fragment">Унификация сервисов</li>
+        <li class="fragment">Не доверяйте пользовательским данным</li>
+        <li class="fragment">Автоматизация (анализ кода, сканирования)</li>
+        <li class="fragment">Общие безопасные компоненты</li>
+        <li class="fragment">
+            <pre><code class="hljs npm" data-trim data-noescape>npm audit</code></pre>
+        </li>
+    </ul>
+</section>
+
+<section>
+    <h1>Ссылки</h1>
+    <ul class="list">
+        <li class="fragment">
+            <a href="https://www.owasp.org/index.php/OWASP_Testing_Guide_v4_Table_of_Contents" target="_blank">Гайд OWASP v4</a>
+        </li>
+        <li class="fragment">
+            <a href="https://academy.yandex.ru/events/system_administration/msk-2018/" target="_blank">Лекции ШИБ</a>
+        </li>
+        <li class="fragment">
+            <a href="https://html5sec.org" target="_blank">HTML5 Security Cheatsheet</a>
+        </li>
+        <li class="fragment">
+            <a href="https://helmetjs.github.io" target="_blank">Helmet.js</a>
+        </li>
+        <li class="fragment">
+            <a href="https://www.acunetix.com" target="_blank">Acunetix</a>
+            <span class="fragment">💰</span>
+        </li>
+        <li class="fragment">
+            <a href="https://portswigger.net/burp" target="_blank">Burb Suite</a>
+        </li>
+    </ul>
+</section>
+
+<section class="center">
+    <h1>??</h1>
+</section>
+
+</div></div>
+
+<script src="../../@lib/core.js"></script>
+</body>
+</html>

@@ -1,0 +1,301 @@
+dd strong {
+    color: #a71d5d;
+}
+
+.center
+{
+    text-align: center;
+}
+
+.left
+{
+    text-align: left;
+}
+
+.one-line
+{
+    white-space: nowrap;
+}
+
+.author::first-letter
+{
+    color: #d00;
+}
+
+.security
+{
+    background-image: url('./images/15-security.jpg');
+}
+
+.car
+{
+    background-image: url('./images/16-car.jpg');
+}
+
+.theory
+{
+    background-image: url('./images/02-math.jpg');
+}
+
+.image
+{
+    padding: 0 !important;
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.vulnerabilities
+{
+    text-align: center;
+}
+
+.vulnerabilities-slide
+{
+    height: 0;
+    padding: 0 !important;
+    background: no-repeat center/cover url('./images/21-van-damm.jpg');
+}
+
+.fly,
+.chop
+{
+    width: 384px;
+    margin-top: 85px !important;
+
+    display: inline-block;
+    vertical-align: middle !important;
+}
+
+.payment-step {
+    margin-left: 24px !important;
+    font-size: 24px !important;
+    line-height: 28px;
+}
+
+.theory__title
+{
+    position: absolute;
+    font-weight: bold;
+    color: #fff;
+    padding-left: 30px;
+    width: 410px;
+    text-align: left;
+}
+
+.term.term
+{
+    font-size: 64px;
+}
+
+.definition
+{
+    margin-top: 30px !important;
+    padding: 20px !important;
+    text-align: left;
+}
+
+.list
+{
+    list-style-type: none;
+}
+
+.robby
+{
+    width: 45%;
+}
+
+.crone
+{
+    text-align: center;
+}
+
+pre
+{
+    white-space: pre;
+}
+
+.what-to-do
+{
+    width: 35%;
+}
+
+.color-black
+{
+    color: #000;
+}
+
+.small
+{
+    font-size: 60px !important;
+}
+
+.xsmall
+{
+    font-size: 32px !important;
+}
+
+.xxsmall
+{
+    font-size: 24px !important;
+}
+
+.left
+{
+    text-align: left !important;
+}
+
+.pad-left-small
+{
+    padding-left: 15px !important;
+}
+
+.code-small
+{
+    font-size: 0.46em !important;
+}
+
+.flex-start
+{
+    display: grid;
+    align-items: center;
+    grid-template-columns: 140px auto;
+}
+
+.smoke
+{
+    text-align: center;
+}
+
+.smoke img
+{
+    width: 500px;
+}
+
+.blog-wrapper
+{
+    width: 50%;
+    margin: 0 auto !important;
+}
+
+.blog
+{
+    margin-top: 24px;
+}
+
+.blog__description
+{
+    font-size: 22px !important;
+    padding: 0 !important;
+}
+
+.blog__author,
+.blog__description
+{
+    display: inline-block;
+    vertical-align: middle !important;
+}
+
+.blog__result
+{
+    min-height: 64px;
+    margin-top: 16px !important;
+    padding: 15px 20px !important;
+    border: 1px solid #aaa !important;
+    border-radius: 4px;
+    overflow: hidden;
+
+    font-size: 24px !important;
+    text-align: left !important;
+    text-overflow: ellipsis;
+}
+
+.blog__textarea
+{
+    width: 250px;
+    height: 70px;
+}
+
+.blog__textarea,
+.blog__button
+{
+    display: inline-block;
+    vertical-align: top;
+}
+
+.clickjacking
+{
+    display: flex;
+}
+
+.clickjacking__image
+{
+    height: 400px;
+}
+
+.captcha
+{
+    text-align: center;
+}
+
+.captcha img
+{
+    width: 70%;
+}
+
+.disclaimer__wrapper
+{
+    position: relative;
+    height: 380px;
+    margin-top: 32px !important;
+    background: no-repeat center/cover url('./images/24-ctulhu.jpg');
+}
+
+.disclaimer__text
+{
+    position: absolute;
+    width: 640px;
+    left: 30px;
+    bottom: 30px;
+
+    text-align: left !important;
+    font-size: 32px !important;
+    line-height: 46px !important;
+
+    color: #fff !important;
+}
+
+.disclaimer__text strong
+{
+    color: #fffd1a !important;
+}
+
+.disclaimer__buttons
+{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px !important;
+}
+
+.disclaimer__button
+{
+    padding: 20px 45px !important;
+    font-size: 34px !important;
+    line-height: 38px !important;
+    color: #fff !important;
+    text-align: center;
+    background-color: #555;
+    border-radius: 4px;
+    transition: background-color .15s ease;
+}
+
+.disclaimer__button + .disclaimer__button
+{
+    margin-left: 52px;
+}
+
+.disclaimer__button:hover
+{
+    background-color: #999;
+}
