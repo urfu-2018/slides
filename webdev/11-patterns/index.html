@@ -1,0 +1,2047 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <title>Шаблоны проектирования | УрФУ</title>
+
+    <meta name="author" content="Evgeny Markov" />
+    <meta name="description" content="Slides about SOLID and design patterns" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <link rel="stylesheet" href="../../@lib/core.css" />
+    <link rel="stylesheet" href="../../@lib/theme.css" />
+  </head>
+
+  <body class="white">
+    <div class="reveal">
+      <div class="slides">
+        <section class="slide-theme center">
+          <h1>SOLID и шаблоны проектирования</h1>
+
+          <style>
+            .slide-theme__name {
+              display: inline-block;
+              color: black !important;
+            }
+
+            .slide-theme__name::first-letter {
+              color: red;
+            }
+          </style>
+        </section>
+
+        <section class="slide-content">
+          <h2>План лекции</h2>
+          <ol>
+            <li>SOLID</li>
+            <li>Порождающие шаблоны</li>
+            <li>Структурные шаблоны</li>
+            <li>Поведенческие шаблоны</li>
+          </ol>
+
+          <aside class="notes">
+            <p>
+              Сегодня поговорим про SOLID, различные шаблоны поектирования.
+              Посмотрим на примеры плохого кода и на то как его можно красиво
+              отрефакторить.
+            </p>
+          </aside>
+
+          <style>
+            .slide-content ol {
+              width: 100% !important;
+            }
+          </style>
+        </section>
+
+        <section class="center slide-robert-martin">
+          <h2>Robert Martin</h2>
+
+          <p>
+            <img
+              class="slide-robert-martin__robert-img"
+              src="./images/robert-martin.jpg"
+              alt="Роберт Мартин"
+            />
+          </p>
+
+          <aside class="notes">
+            <p>
+              На фото – Роберт Мартин. Он автор книги "Чистый код". В 2000 году
+              он формализовал базовые принципы проектирования, о которых мы
+              будем сегодня говорить. Он же их и популяризовал. Его влияние на
+              индустрию, пожалуй, соизмеримо с тем которое оказал Джордж Мартин
+              на кинематограф и литературу.
+            </p>
+          </aside>
+
+          <style>
+            .slide-robert-martin__robert-img {
+              height: 40vh;
+            }
+          </style>
+        </section>
+
+        <section class="slide-patterns-definition">
+          <h2>SOLID</h2>
+
+          <ul class="slide-patterns-definition__principles">
+            <li><b>S</b> Принцип единственной ответственности</li>
+            <li><b>O</b> Принцип открытости-закрытости</li>
+            <li><b>L</b> Принцип подстановки Барбары Лисков</li>
+            <li><b>I</b> Принцип разделения интерфейса</li>
+            <li><b>D</b> Принцип инверсии зависимостей</li>
+          </ul>
+
+          <aside class="notes">
+            <p>
+              Прежде чем переходить к шаблонам, рассмотрим базу, что это за
+              принципы такие, которые вывел Мартин. Говорят, что если им
+              следовать то код будет более чистым, поддерживаемым и
+              приспособленным к изменениям.
+            </p>
+
+            <p>
+              Давайте убедимся в этом и рассмотрим что таится за каждой буквой в
+              аббревиатуре SOLID.
+            </p>
+          </aside>
+
+          <style>
+            .slide-patterns-definition__principles li {
+              list-style-type: none;
+              display: flex;
+              align-items: center;
+              font-size: 40px;
+            }
+
+            .slide-patterns-definition__principles li b {
+              width: 30px;
+              text-align: center;
+              font-size: 1.5em;
+              margin-right: 50px;
+            }
+          </style>
+        </section>
+
+        <section class="slide-solid-srp">
+          <h2>Принцип единственной ответственности (SRP)</h2>
+
+          <blockquote class="slide-solid-srp__quote">
+            <p>Существует лишь одна причина, приводящая к изменению класса</p>
+          </blockquote>
+
+          <aside class="notes">
+            <p>
+              Один класс должен решать только какую-то одну задачу. Он может
+              иметь несколько методов, но они должны использоваться лишь для
+              решения общей задачи. Все методы и свойства должны служить одной
+              цели. Если класс имеет несколько назначений, его нужно разделить
+              на отдельные классы.
+            </p>
+
+            <p>
+              Тоже самое, кстати, справедливо и для функции, и для файла и для
+              любой другой программной сущности.
+            </p>
+          </aside>
+
+          <style>
+            .slide-solid-srp__quote {
+              margin-top: 150px !important;
+            }
+          </style>
+        </section>
+
+        <section class="slide-solid-srp-bad-example">
+          <h2>Неправильно</h2>
+
+          <section>
+            <pre class="ts"><code data-trim>
+interface IUser {
+  id: number;
+  name: string;
+}
+          </code></pre>
+
+            <aside class="notes">
+              <p>
+                Начнём с плохого примера.
+              </p>
+
+              <p>
+                Пусть есть у нас интерфейс IUser, для простоты предположим, что
+                у пользователя есть только id и name.
+              </p>
+            </aside>
+          </section>
+
+          <section>
+            <pre style="font-size: 40px" class="ts"><code data-trim>
+class UserController {
+  getUserInfo(id: number): string {
+    const user = this.getUserFromDb(id);
+
+    return this.formatToHtml(user);
+  }
+
+  protected getUserFromDb(id: number): IUser {
+    // SELECT id, name FROM users WHERE users.id = ${id};
+
+    return { id: 1, name: 'Martin' };
+  }
+
+  protected formatToHtml(user: IUser): string {
+    return `<h1>Name: ${user.name} </h1>`;
+  }
+}
+          </code></pre>
+
+            <aside class="notes">
+              <p>
+                И есть UserController, который работает с объектами типа IUser.
+              </p>
+
+              <p>
+                Этот класс нарушает принцип единственной ответственности. Почему
+                он должен извлекать данные из базы? Это задача для уровня
+                хранения данных, на котором данные сохраняются и извлекаются из
+                хранилища (например, базы данных). Это ответственность другого
+                класса.
+              </p>
+
+              <p>
+                Также данный класс не должен отвечать за форматирование. Нам
+                могут понадобиться данные другого формата, например, XML, JSON,
+                HTML и т.д. И не будем же мы писать здесь методы для
+                преобразования во все.
+              </p>
+            </aside>
+          </section>
+
+          <style>
+            .slide-solid-srp-bad-example h2 {
+              color: var(--bad-color);
+            }
+          </style>
+        </section>
+
+        <section class="slide-solid-srp-good-example">
+          <h2>Правильно</h2>
+
+          <section>
+            <pre class="ts"><code data-trim>
+class UserRepository {
+  getUserById(id: number): IUser {
+    // SELECT id, name FROM users WHERE users.id = ${id};
+
+    return { id: 1, name: 'Martin' };
+  }
+}
+
+class UserFormatter {
+  formatToHtml(user: IUser): string {
+    return `<h1>Name: ${user.name} </h1>`;
+  }
+}
+                </code></pre>
+
+            <aside class="notes">
+              <p>Попробуем исправить</p>
+
+              <p>
+                Получение объекта из базы выносим в отдельный класс
+                UserRepository, у него единственная ответственность – работать с
+                базой и отдавать JS объекты.
+              </p>
+
+              <p>
+                Форматирование пользователя тоже переложим на плечи другого
+                класса – создадим класс UserFormatter, в нём будем писать
+                преобразования объектов с интерфейсом IUser в различные форматы.
+              </p>
+            </aside>
+          </section>
+
+          <section>
+            <pre class="ts"><code data-trim>
+class UserController {
+  protected repository = new UserRepository();
+  protected formatter = new UserFormatter();
+
+  getUserInfo(id: number): string {
+    const user = this.repository.getUserById(id);
+
+    return this.formatter.formatToHtml(user);
+  }
+}
+                </code></pre>
+
+            <aside class="notes">
+              <p>
+                Теперь класс UserController становится крайне простым.
+                Инициализируем в нём репозиторий, форматтер и затем просто
+                вызываем их методы. Нам нет дела до их реализации. Теперь нам
+                нет необходимости заходить в контроллер ради того чтобы
+                поменять, к примеру, реализацию форматтера.
+              </p>
+
+              <p>
+                Мораль: разделяйте ответственность, объединяйте код, который
+                делает похожие операции, разносите в разные модули, классы всё
+                то, что вместе никак не сочетается: например, форматирование и
+                методы для работы с базой. Мы сделали код чуть более
+                поддерживаемым. Идём дальше.
+              </p>
+            </aside>
+          </section>
+
+          <style>
+            .slide-solid-srp-good-example h2 {
+              color: var(--good-color);
+            }
+          </style>
+        </section>
+
+        <section class="slide-solid-ocp">
+          <h2>Принцип открытости-закрытости (OCP)</h2>
+
+          <blockquote class="slide-solid-ocp__quote">
+            <p>
+              Программные сущности должны быть открыты для расширения, но
+              закрыты для модификации
+            </p>
+          </blockquote>
+
+          <aside class="notes">
+            <p>
+              Программные сущности (классы, модули, функции и прочее) должны
+              быть расширяемыми без изменения своего содержимого. Если строго
+              соблюдать этот принцип, то можно регулировать поведение кода без
+              изменения самого исходника.
+            </p>
+          </aside>
+
+          <style>
+            .slide-solid-ocp__quote {
+              margin-top: 150px !important;
+            }
+          </style>
+        </section>
+
+        <section class="slide-solid-ocp-bad-example">
+          <h2>Неправильно</h2>
+
+          <section>
+            <pre class="ts"><code data-trim>
+interface IUser {
+  id: number;
+  name: string;
+}
+
+interface IRegisteredUser extends IUser {
+  email: string;
+}
+            </code></pre>
+
+            <aside class="notes">
+              <p>
+                Теперь, предположим, у нас появилось 2 варианта пользователя:
+                Простой и зарегистрированный. У зарегистрированного добавилось
+                поле email.
+              </p>
+            </aside>
+          </section>
+
+          <section>
+            <pre class="ts"><code data-trim>
+class UserFormatter {
+  formatToHtml(user: IUser | IRegisteredUser): string {
+    if ('email' in user) {
+      return `
+        <p>Name: ${user.name} </p>
+        <br>
+        <p>Email: ${user.email} </p>
+      `;
+    }
+
+    return `<p>Name: ${user.name} </p>`;
+  }
+}
+            </code></pre>
+
+            <aside class="notes">
+              <p>
+                Вернёмся к нашему форматтеру. Ему теперь нужно поддерживать оба
+                варианта.
+              </p>
+
+              <p>
+                Какие ваши предположения? Что с этим методом не так? **
+                Подождать ответы ** Проблема здесь заключается в том, что чтобы
+                поддержать ещё один вариант User нам надо будет придти в код,
+                поправить его. Добавить ещё if'ов и не факт, что они нас
+                выручат.
+              </p>
+
+              <p>
+                Если дальше продолжать if'ать, то код превратится в клубок
+                ниток.
+              </p>
+            </aside>
+          </section>
+
+          <style>
+            .slide-solid-ocp-bad-example h2 {
+              color: var(--bad-color);
+            }
+          </style>
+        </section>
+
+        <section class="slide-solid-ocp-good-example">
+          <h2>Правильно</h2>
+
+          <section>
+            <pre class="ts"><code data-trim>
+interface IUser {
+  id: number;
+  name: string;
+  getDisplayFields(): string[];
+}
+
+interface IRegisteredUser extends IUser {
+  email: string;
+}
+            </code></pre>
+
+            <aside class="notes">
+              <p>
+                Попробуем исправить проблему. Пусть наш базовый IUser объявит
+                контракт для себя и всех наследников и будет возвращать все
+                поля, которые нужно отправить на форматирование.
+              </p>
+
+              <p>
+                И делать он с наследниками это будет через метод
+                getDisplayFields().
+              </p>
+            </aside>
+          </section>
+
+          <section>
+            <pre class="ts"><code data-trim>
+class UserFormatter {
+  formatToHtml(user: IUser): string {
+    return user
+      .getDisplayFields()
+      .map(field => `<p>${field}: ${user[field]}</p>`)
+      .join('<br>');
+  }
+}
+            </code></pre>
+
+            <aside class="notes">
+              <p>Тогда наш форматтер сильно облегчится.</p>
+
+              <p>
+                В его методе formatToHtml() мы избавляется от знания того что за
+                поля нам нужны, с какими мы подклассами IUser работаем. Нам
+                важно лишь то, что передаётся IUser и мы его можем дёрнуть метод
+                getDisplayFields(), вернутся поля.
+              </p>
+
+              <p>
+                А мы их потом единообразно отформатируем. Таким образом мы
+                поддержали всех наследников IUser и больше в этот метод не
+                зайдём, когда будем добавлять, например, IExtendedUser.
+              </p>
+
+              <p>
+                Мы получили метод formatToUser() открытый для расширения и
+                закрытый для модификации.
+              </p>
+            </aside>
+          </section>
+
+          <style>
+            .slide-solid-ocp-good-example h2 {
+              color: var(--good-color);
+            }
+          </style>
+        </section>
+
+        <section class="slide-solid-lsp">
+          <h2>Принцип подстановки Барбары Лисков (LSP)</h2>
+
+          <blockquote class="slide-solid-lsp__quote">
+            <p>
+              Функции, которые используют базовый тип, должны иметь возможность
+              использовать подтипы базового типа, не зная об этом
+            </p>
+          </blockquote>
+
+          <aside class="notes">
+            <p>
+              Функции, которые используют базовый тип, должны иметь возможность
+              использовать подтипы базового типа, не зная об этом.
+            </p>
+
+            <p>
+              Т.е. Должна быть возможность вместо базового типа подставить любой
+              его подтип.
+            </p>
+
+            <p>
+              Принцип подстановки Лисков помогает чётче сформулировать иерархию
+              классов, определить функциональность для базовых и производных
+              классов и избежать возможных проблем при применении полиморфизма.
+            </p>
+          </aside>
+
+          <style>
+            .slide-solid-lsp__quote {
+              margin-top: 150px !important;
+            }
+          </style>
+        </section>
+
+        <section class="slide-solid-lsp-example-start">
+          <h2>LSP</h2>
+
+          <pre style="font-size: 38px" class="ts"><code data-trim>
+abstract class BaseUserRepository {
+  abstract getById(id: number): IUser;
+}
+
+class MockUserRepository extends BaseUserRepository {
+  getById(id: number): IUser {
+    return { id, name: 'Robert' };
+  }
+}
+
+class FileUserRepository extends BaseUserRepository {
+  getById(id: number): IUser {
+    const fileContent = fs.readFileSync('users.json', 'utf-8');
+    const user = JSON.parse(fileContent)[id];
+
+    return user;
+  }
+}
+
+// ...
+          </code></pre>
+
+          <aside class="notes">
+            <p>
+              Допустим, мы хотим получать пользователя из различных источников.
+              Во время разработки – файл с данными о пользователях. Во время
+              прогона тестов — замоканный объект. В боевом окружении это может
+              быть база.
+            </p>
+
+            <p>
+              Мы же не хотим менять ради этого код одного UserRepository каждый
+              раз. Мы создадим под разные нужды разные репозитории и можем их
+              безболезненно подменять. Ну и все наши репозитории унаследуем от
+              какого-то базового, который будет содержать общую логику и
+              описывать требования к наследникам.
+            </p>
+
+            <p>
+              На пример, у нас есть абстрактный класс BaseUserRepository,
+              который содержит общую логику для всех репозиториев. От него
+              унаследуем MockUserRepository, который будет просто отдавать
+              готовый объект из памяти, унаследуем FileUserRepository, который
+              будет ходить в файл и читать оттуда пользователей. Ниже у нас
+              появится ещё DbUserRepository, который будет ходить в базу.
+            </p>
+          </aside>
+        </section>
+
+        <section class="slide-solid-lsp-example-end">
+          <h2>LSP</h2>
+
+          <pre style="font-size: 38px" class="ts"><code data-trim>
+class UserController {
+  protected repository: BaseUserRepository;
+
+  constructor() {
+    switch (process.env.NODE_ENV) {
+      case 'development':
+        this.repository = new FileUserRepository();
+        break;
+      case 'test':
+        this.repository = new MockUserRepository();
+        break;
+      default:
+        this.repository = new DbUserRepository();
+    }
+  }
+
+  getUserInfo(id: number): IUser {
+    return this.repository.getById(id);
+  }
+}
+          </code></pre>
+
+          <aside class="notes">
+            <p>
+              Теперь мы просто будем подменять по определённому условию в
+              UserController и тем самым добъёмся желаемого: работы с разными
+              репозиториями в разных окружениях.
+            </p>
+
+            <p>
+              Кстати, скажите какой из уже рассмотренных принципов здесь
+              нарушен?
+            </p>
+
+            <p>
+              Чуть позже увидим как можно решать эту проблему.
+            </p>
+          </aside>
+        </section>
+
+        <section class="slide-solid-isp">
+          <h2>Принцип разделения интерфейса (ISP)</h2>
+
+          <blockquote class="slide-solid-isp__quote">
+            <p>
+              Нельзя заставлять клиента реализовать интерфейс, которым он не
+              пользуется
+            </p>
+          </blockquote>
+
+          <aside class="notes">
+            <p>
+              Это означает, что нужно разбивать интерфейсы на более мелкие,
+              лучше удовлетворяющие конкретным потребностям клиентов.
+            </p>
+          </aside>
+
+          <style>
+            .slide-solid-isp__quote {
+              margin-top: 150px !important;
+            }
+          </style>
+        </section>
+
+        <section class="slide-solid-isp-bad-example">
+          <h2>Неправильно</h2>
+
+          <pre style="font-size: 38px" class="ts"><code data-trim>
+interface IRepository&lt;T&gt; {
+  findAll(): Promise&lt;T[]&gt;;
+  findOne(id: string): Promise&lt;T&gt;;
+  create(item: T): Promise&lt;boolean&gt;;
+  delete(id: string): Promise&lt;boolean&gt;;
+  update(id: string, item: T): Promise&lt;boolean&gt;;
+}
+
+class MockUserRepository implements IRepository&lt;IUser&gt; {
+  findAll(): Promise&lt;IUser[]&gt; {
+    return Promise.resolve([{ id: 1, name: 'Sergey' }, { id: 2, name: 'Maxim' }]);
+  }
+
+  // ...
+
+  update(id: string, item: IUser): Promise&lt;boolean&gt; {
+    throw new Error('Method not implemented.');
+  }
+}
+          </code></pre>
+
+          <aside class="notes">
+            <p>
+              Напишем интерфейс для репозитория, который должен работать с
+              пользователями. В контракте скажем: пусть каждый репозиторий умеет
+              извлекать всех, извлекать по Id, добавлять, удалять, обновлять. Но
+              всегда ли нам это надо? Вот предположим, всё что нам нужно от
+              репозитория — получать пользователей, но никак мы не будем их
+              обновлять, удалять, создавать. Но тому кто будет писать такой
+              репозиторий, придётся оставить много throw new Error('Method not
+              implemented.') только лишь потому что он вынужден поддержать наш
+              контракт.
+            </p>
+          </aside>
+
+          <style>
+            .slide-solid-isp-bad-example h2 {
+              color: var(--bad-color);
+            }
+
+            .slide-solid-isp-bad-example pre {
+              margin-top: 0;
+            }
+          </style>
+        </section>
+
+        <section class="slide-solid-isp-good-example">
+          <h2>Правильно</h2>
+
+          <pre style="font-size: 38px" class="ts"><code data-trim>
+interface IReadableRepository&lt;T&gt; {
+  findAll(): Promise&lt;T[]&gt;;
+  findOne(id: string): Promise&lt;T&gt;;
+}
+
+interface IWritableRepository&lt;T&gt; {
+  create(item: T): Promise&lt;boolean&gt;;
+  delete(id: string): Promise&lt;boolean&gt;;
+  update(id: string, item: T): Promise&lt;boolean&gt;;
+}
+
+class MockUserRepository implements IReadableRepository&lt;IUser&gt; {
+  findAll(): Promise&lt;IUser[]&gt; {
+    return Promise.resolve([{ id: 1, name: 'Sergey' }, { id: 2, name: 'Maxim' }]);
+  }
+
+  findOne(id: string): Promise&lt;IUser&gt; {
+    return Promise.resolve({ id: 3, name: 'Igor' });
+  }
+}
+          </code></pre>
+
+          <aside class="notes">
+            <p>
+              Вот теперь хорошо. Mock репозиторий теперь реализует только то,
+              что нужно. Те контроллеры, в которых нам нужно только читать
+              данные могут теперь ожидать IReadOnlyRepository и мы сможем
+              использовать внутри них наш Mock.
+            </p>
+          </aside>
+
+          <style>
+            .slide-solid-isp-good-example h2 {
+              color: var(--good-color);
+            }
+
+            .slide-solid-isp-good-example pre {
+              margin-top: 0px;
+            }
+          </style>
+        </section>
+
+        <section class="slide-solid-lsp">
+          <h2>Принцип инверсии зависимостей (DIP)</h2>
+
+          <blockquote class="slide-solid-dip__quote-first">
+            <p>
+              Высокоуровневые модули не должны зависеть от низкоуровневых. Оба
+              вида модулей должны зависеть от абстракций.
+            </p>
+          </blockquote>
+
+          <blockquote class="slide-solid-dip__quote-second">
+            <p>
+              Абстракции не должны зависеть от подробностей. Подробности должны
+              зависеть от абстракций.
+            </p>
+          </blockquote>
+
+          <aside class="notes">
+            <p>
+              Проще говоря: зависьте от абстракций, а не от чего-то конкретного.
+              Применяя этот принцип, одни модули можно легко заменять другими, и
+              тогда никакие перемены в низкоуровневом модуле не повлияют на
+              высокоуровневый.
+            </p>
+          </aside>
+
+          <style>
+            .slide-solid-dip__quote-first {
+              margin-top: 80px !important;
+            }
+
+            .slide-solid-dip__quote-second {
+              margin-top: 80px !important;
+            }
+          </style>
+        </section>
+
+        <section class="slide-solid-dip-bad-example">
+          <h2>Неправильно</h2>
+
+          <pre style="font-size: 38px" class="ts"><code data-trim>
+class MySQLConnection {
+  query(sql: string): object[] {
+    // Execute SQL query
+
+    return [];
+  }
+}
+
+class DbUserRepository {
+  protected dbConnection: MySQLConnection;
+
+  constructor(dbConnection: MySQLConnection) {
+    this.dbConnection = dbConnection;
+  }
+
+  findAll() {
+    return this.dbConnection.query('SELECT * FROM users;');
+  }
+}
+          </code></pre>
+
+          <aside class="notes">
+            <p>
+              Пусть у нас есть репозиторий для работы с пользователями, в
+              качестве источника данных он использует базу данных. В конструктор
+              к нему мы передаём инициализированное соединение с помощью
+              которого он может обращаться в MySQL.
+            </p>
+
+            <p>
+              А что произойдёт если мы захотим перейти на использование
+              PostgreSQL? Нам придётся переписывать вообще вещь код, искать
+              отличия MySQLConnection от PostgreSQLConnection. Это будет очень
+              болезненный переезд и займёт он много времени.
+            </p>
+          </aside>
+
+          <style>
+            .slide-solid-dip-bad-example h2 {
+              color: var(--bad-color);
+            }
+
+            .slide-solid-dip-bad-example pre {
+              margin-top: 0;
+            }
+          </style>
+        </section>
+
+        <section class="slide-solid-dip-good-example">
+          <h2>Правильно</h2>
+
+          <section>
+            <pre style="font-size: 38px" class="ts"><code data-trim>
+interface IConnection {
+  query(sql: string): object[];
+}
+
+class MySQLConnection implements IConnection {
+  query(sql: string): object[] {
+    // Execute SQL query written in MySQL dialect
+
+    return [];
+  }
+}
+
+class PostgreSQLConnection implements IConnection {
+  query(sql: string): object[] {
+    // Execute SQL query written in PostgreSQL dialect
+
+    return [];
+  }
+}
+            </code></pre>
+
+            <aside class="notes">
+              <p>
+                Начнём решать проблему. Напишем интерфейс IConnection и две его
+                реализации – MySQLConnection, PostgreSQLConnection.
+              </p>
+            </aside>
+          </section>
+
+          <section>
+            <pre style="font-size: 38px" class="ts"><code data-trim>
+class DbUserRepository {
+  protected dbConnection: IConnection;
+
+  constructor(dbConnection: IConnection) {
+    this.dbConnection = dbConnection;
+  }
+
+  findAll() {
+    return this.dbConnection.query('SELECT * FROM users;');
+  }
+}
+
+const userRepositoryMySQL = new DbUserRepository(
+  new MySQLConnection()
+);
+const userRepositoryPostgreSQL = new DbUserRepository(
+  new PostgreSQLConnection()
+);
+            </code></pre>
+
+            <aside class="notes">
+              <p>
+                В DbUserRepository отвяжемся от конкретной реализации и будем
+                ожидать IConnection. Теперь мы можем передать любую реализацию
+                соединения с БД и если переедем на любую другую базу, то код
+                репозиториев не будет затронут.
+              </p>
+
+              <p>
+                Помните я говорил про нарушение принципа открытости-закрытости
+                пару слайдов назад? Мы написали switch/case конструкцию и тем
+                самым обрекли себя на дальнейшие правки в этом куске кода. Мы
+                уже, конечно, научились прокидывать зависимости сверху через
+                конструктор, но ещё есть такая специфичная форма инверсии
+                управления, как DI (Dependency Injection).
+              </p>
+            </aside>
+          </section>
+
+          <style>
+            .slide-solid-dip-good-example h2 {
+              color: var(--good-color);
+            }
+
+            .slide-solid-dip-good-example pre {
+              margin-top: 0px;
+            }
+          </style>
+        </section>
+
+        <section class="slide-di">
+          <h2>Dependency Injection</h2>
+
+          <p>
+            <img
+              class="slide-di__img"
+              src="./images/dependency-injection.png"
+              alt="DI basics"
+            />
+          </p>
+
+          <div>
+            <ul class="slide-di__repos">
+              <li>
+                <a
+                  href="https://habr.com/ru/post/434380/"
+                  target="_blank"
+                  rel="noopener"
+                  noreferrer
+                >
+                  <img
+                    width="40"
+                    height="40"
+                    src="./images/habr-icon.png"
+                    alt="Habr icon"
+                  />
+                  Основы внедрения зависимостей
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/inversify/InversifyJS/"
+                  target="_blank"
+                  rel="noopener"
+                  noreferrer
+                >
+                  <img
+                    width="40"
+                    height="40"
+                    src="./images/github-icon.png"
+                    alt="GitHub icon"
+                  />
+                  inversify/InversifyJS
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/Microsoft/tsyringe"
+                  target="_blank"
+                  rel="noopener"
+                  noreferrer
+                >
+                  <img
+                    width="40"
+                    height="40"
+                    src="./images/github-icon.png"
+                    alt="GitHub icon"
+                  />
+                  Microsoft/tsyringe
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/thiagobustamante/typescript-ioc"
+                  target="_blank"
+                  rel="noopener"
+                  noreferrer
+                >
+                  <img
+                    width="40"
+                    height="40"
+                    src="./images/github-icon.png"
+                    alt="GitHub icon"
+                  />
+                  thiagobustamante/typescript-ioc
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/bem/bem-react/tree/master/packages/di"
+                  target="_blank"
+                  rel="noopener"
+                  noreferrer
+                >
+                  <img
+                    width="40"
+                    height="40"
+                    src="./images/github-icon.png"
+                    alt="GitHub icon"
+                  />
+                  bem/bem-react
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <aside class="notes">
+            <p>
+              Но с ней предлагаю вам разобраться самим. Возможно вы уже
+              встречались с DI в различных фреймворках для Java, C#. Если
+              посмотрите на реализации DI в разных языках, то поймёте, что везде
+              всё одно и то же. Нужно только понять концепцию и выбрать наиболее
+              приглянувшееся вам и вашей команде решение.
+            </p>
+
+            <p>
+              Первые 3 решения они общего назначения. Позволяют инжектить любые
+              классы. Если же у вас возникнет необходимость в использовании DI в
+              дереве React компонентов, то обратите внимание на bem-react/di.
+            </p>
+          </aside>
+
+          <style>
+            .slide-di__img {
+              height: 18vh;
+            }
+
+            .slide-di__repos li {
+              list-style-type: none;
+              height: 50px;
+            }
+
+            .slide-di__repos li a {
+              display: flex;
+              align-items: center;
+            }
+
+            .slide-di__repos li a img {
+              margin-right: 10px;
+            }
+          </style>
+        </section>
+
+        <section class="slide-patterns-definition">
+          <h2>Шаблоны проектирования</h2>
+
+          <blockquote>
+            <p>
+              Это типичные способы решения часто встречающихся проблем при
+              проектировании программ
+            </p>
+          </blockquote>
+
+          <aside class="notes">
+            <p>
+              Мы посмотрели на базовые принципы проектирования. Теперь о
+              шаблонах. Шаблоны проектирования описывают типичные способы
+              решения часто встречающихся проблем при проектировании программ.
+            </p>
+
+            <p>
+              Это не классы, пакеты или библиотеки, которые можно было бы
+              подключить к вашему приложению и сидеть в ожидании чуда. Они
+              скорее являются методиками, как решать определенные проблемы в
+              определенных ситуациях.
+            </p>
+
+            <p>
+              Что даёт нам применение шаблонов? При написании программ мы можем
+              формализовать проблему в виде классов и объектов и связей между
+              ними. И применить один из существующих шаблонов для её решения. В
+              итоге нам не надо ничего придумывать. У нас уже есть готовый
+              шаблон, и нам только надо его применить в конкретной программе.
+              Причем шаблонов, как правило, не зависят от языка
+              программирования. Их принципы применения будут аналогичны и в C#,
+              и в Java, и в TypeScript.
+            </p>
+
+            <p>
+              Не стоит применять шаблонов ради самих шаблонов. Хорошая программа
+              предполагает использование шаблонов. Однако не всегда шаблонов
+              упрощают и улучшают программу. Неоправданное их использование
+              может привести к усложнению программного кода, уменьшению его
+              качества.
+            </p>
+          </aside>
+
+          <style>
+            .slide-patterns-definition blockquote {
+              margin-top: 150px;
+            }
+          </style>
+        </section>
+
+        <section class="slide-patterns-list">
+          <h2>Шаблоны проектирования</h2>
+
+          <ul>
+            <li>Порождающие</li>
+            <li>Cтруктурные</li>
+            <li>Поведенческие</li>
+          </ul>
+
+          <aside class="notes">
+            <p>
+              Существует множество различных паттернов, которые решают разные
+              проблемы и выполняют различные задачи. Но по своему действию их
+              можно объединить в ряд групп. Рассмотрим некоторые группы
+              паттернов.
+            </p>
+          </aside>
+
+          <style>
+            .slide-patterns-list ul {
+              margin-top: 100px;
+            }
+
+            .slide-patterns-list ul li {
+              margin-bottom: 25px;
+            }
+          </style>
+        </section>
+
+        <section class="slide-creational-patterns">
+          <h2>Порождающие шаблоны</h2>
+
+          <blockquote>
+            <p>
+              Это шаблоны, которые абстрагируют процесс создания объектов
+              классов
+            </p>
+          </blockquote>
+
+          <ul>
+            <li>Фабрика (Factory)</li>
+            <li>Строитель (Builder)</li>
+            <li>Одиночка (Singleton)</li>
+            <li>...</li>
+          </ul>
+
+          <aside class="notes">
+            <p>
+              Начнём с порождающих шаблонов. Они используются для
+              инстанцирования объектов различными способами.
+            </p>
+          </aside>
+
+          <style>
+            .slide-creational-patterns blockquote {
+              margin-top: 40px;
+              margin-bottom: 40px;
+            }
+
+            .slide-creational-patterns blockquote::before {
+              content: "";
+            }
+          </style>
+        </section>
+
+        <section class="slide-pattern-factory-method">
+          <h2>Фабрика (Factory)</h2>
+
+          <blockquote>
+            <p>Это объект или функция для создания других объектов</p>
+          </blockquote>
+
+          <aside class="notes">
+            <p>
+              Паттерн "Фабрика" предлагает создавать объекты не напрямую,
+              используя оператор new, а через вызов функции или метода объекта.
+              Давайте посмотрим пример.
+            </p>
+          </aside>
+
+          <style>
+            .slide-pattern-factory-method blockquote {
+              margin-top: 100px;
+            }
+          </style>
+        </section>
+
+        <section class="slide-pattern-factory-method-example">
+          <h2>Фабрика (Factory)</h2>
+
+          <section>
+            <pre style="font-size: 38px" class="ts"><code data-trim>
+interface IStorage {
+  get(key: string): string;
+  set(key: string, value: string): void;
+}
+
+enum StorageType {
+  Redis,
+  InMemory
+}
+
+class RedisStorage implements IStorage {
+  get(key: string): string { /* ... */ }
+  set(key: string, value: string): void { /* ... */ }
+}
+
+class InMemoryStorage implements IStorage {
+  get(key: string): string { /* ... */ }
+  set(key: string, value: string): void { /* ... */ }
+}
+            </code></pre>
+
+            <aside class="notes">
+              <p>
+                Очень часто программисты сталкиваются вот с какой ситуацией.
+                Пусть у вас есть некоторый базовый класс или интерфейс и много
+                подклассов. Например, хранилище IStorage и классы обеспечивающие
+                работу с конкретными хранилищами RedisStorage, InMemoryStorage.
+              </p>
+
+              <p>
+                Вопрос состоит в том, как гибко и удобно управлять созданием
+                объектов этих классов. Реализаций хранилищ может быть сотня, а
+                интерфейс они реализуют однотипный. Не хотелось бы при
+                инстанцировании дублировать логику для каждого типа.
+              </p>
+
+              <p>
+                Вот какое «удачное решение» предлагает паттерн Фабрика
+                (Factory). Во-первых, надо завести Enum, значения которого будут
+                соответствовать различным классам.
+              </p>
+            </aside>
+          </section>
+
+          <section>
+            <pre class="ts"><code data-trim>
+function createStorage(type: StorageType): IStorage {
+  switch (type) {
+    case StorageType.Redis:
+      return new RedisStorage();
+    case StorageType.InMemory:
+      return new InMemoryStorage();
+    default:
+      throw new Error('Invalid storage type');
+  }
+}
+            </code></pre>
+
+            <aside class="notes">
+              <p>
+                Во-вторых, сделать специальную функцию-фабрику, которая будет
+                заниматься созданием объектов в зависимости от значения Enum’а.
+              </p>
+
+              <p>
+                Какие преимущества нам это даёт? Программисты-клиенты,
+                использующие наш код, теперь избавлены от знания иерархии
+                наследования и им не нужно понимать весь процесс инстанцирования
+                тех или иных классов. Создаваемые фабрикой объекты можно
+                инициализировать нужными данными. Количество значений Enum не
+                обязательно должно совпадать с количеством классов. Типов может
+                быть много, а классов – мало. Т.е может быть соответствие не 1 к
+                1.
+              </p>
+
+              <p>
+                Фабрики часто используют в тестах для генерации моковых данных.
+                Есть различные вариации на паттерн "Фабрика", и другие
+                порождающие шаблоны, но этот, пожалуй был самый популярный.
+                Давайте перейдём к структурным.
+              </p>
+            </aside>
+          </section>
+        </section>
+
+        <section class="slide-structural-patterns">
+          <h2>Структурные шаблоны</h2>
+
+          <section>
+            <blockquote>
+              <p>
+                Это шаблоны, которые отвечают за построение удобных в поддержке
+                иерархий классов
+              </p>
+            </blockquote>
+          </section>
+
+          <section>
+            <ul>
+              <li>Адаптер (Adapter)</li>
+              <li>Заместитель (Proxy)</li>
+              <li>Декоратор (Decorator)</li>
+              <li>Компоновщик (Composite)</li>
+              <li>Фасад (Facade)</li>
+              <li>Мост (Bridge)</li>
+              <li>...</li>
+            </ul>
+          </section>
+
+          <aside class="notes">
+            <p>
+              Все они одинаково полезны, но рассмотрим мы сегодня только пару.
+              Начнём с "Адаптера", его же иногда называют "Обёртка".
+            </p>
+          </aside>
+
+          <style>
+            .slide-structural-patterns blockquote {
+              margin-top: 40px;
+            }
+
+            .slide-structural-patterns blockquote::before {
+              content: "";
+            }
+          </style>
+        </section>
+
+        <section class="slide-pattern-adapter-definition">
+          <h2>Адаптер (Adapter)</h2>
+
+          <blockquote>
+            <p>
+              Это шаблон, который позволяет объектам с несовместимыми
+              интерфейсами работать вместе
+            </p>
+          </blockquote>
+
+          <p>
+            <img src="./images/adapter.jpeg" alt="Apple adapter for Type-C" />
+          </p>
+
+          <aside class="notes">
+            <p>
+              Ну вот макбуки видели? Apple сказали "Портов нет, но вы
+              держитесь". Впрочем, проблем не испытываю, адаптер выручает когда
+              нужно подключить монитор или флешку. С программным кодом точно
+              также. Вам могут дать внешний интерфейс с которым неудобно
+              работать, но вы можете это исправить написав обёртку, которая
+              преобразует к удобному формату.
+            </p>
+
+            <p>
+              Представьте, что вы делаете приложение, пишете логи, сохраняете их
+              куда-то, но тут вы решили начать как-то по умному их обрабатывать,
+              собирать статистику.
+            </p>
+
+            <p>
+              Вы узнали, что ваш коллега когда-то уже поднял сервис по обработке
+              логов и он решает все ваши проблемы. Но есть одно "Но". Вы пишете
+              логи просто строчками определённого формата, а сервис ожидает, что
+              ему будете отправлять JSON'ы.
+            </p>
+
+            <p>
+              Вы смогли бы модифицировать сервис, добавить в него поддержку
+              логгирования в вашем формате. Но, во-первых, это может нарушить
+              его работу. Во вторых, это скорее всего очень трудозатратно и не
+              стоит потраченного времени.
+            </p>
+
+            <p>
+              Давайте попробуем обойтись малой кровью и решим всё на нашей
+              стороне.
+            </p>
+          </aside>
+
+          <style>
+            .slide-pattern-adapter-definition blockquote {
+              margin-top: 50px;
+            }
+
+            .slide-pattern-adapter-definition img {
+              height: 25vh;
+            }
+          </style>
+        </section>
+
+        <section class="slide-pattern-adapter">
+          <h2>Адаптер (Adapter)</h2>
+
+          <section class="slide-structure-object-adapter">
+            <p>
+              <img
+                src="./images/structure-object-adapter.png"
+                alt="Adapter problem"
+              />
+            </p>
+
+            <aside class="notes">
+              <p>
+                Клиент — это класс, который содержит существующую бизнес-логику
+                программы.
+              </p>
+
+              <p>
+                Service — класс для общения с сервисом анализа логов. Клиент не
+                может использовать этот класс напрямую, так как сервис имеет
+                непонятный ему интерфейс.
+              </p>
+
+              <p>
+                Раз напрямую мы в клиенте использовать сервис мы не можем,
+                значит сделаем слой абстракции.
+              </p>
+
+              <p>
+                Клиентский интерфейс описывает протокол, через который клиент
+                может работать с другими классами.
+              </p>
+
+              <p>
+                Адаптер — это класс, который может одновременно работать и с
+                клиентом, и с сервисом. Он реализует клиентский интерфейс и
+                содержит ссылку на объект сервиса. Адаптер получает вызовы от
+                клиента через методы клиентского интерфейса, а затем переводит
+                их в вызовы методов обёрнутого объекта в правильном формате.
+              </p>
+
+              <p>
+                Работая с адаптером через интерфейс, клиент не привязывается к
+                конкретному классу адаптера. Благодаря этому, вы можете
+                добавлять в программу новые виды адаптеров, независимо от
+                клиентского кода. Это может пригодиться, если интерфейс сервиса
+                вдруг изменится, например, после выхода новой версии сторонней
+                библиотеки.
+              </p>
+            </aside>
+
+            <style>
+              .structure-object-adapter img {
+                height: 40vh;
+                margin-top: 100px;
+              }
+            </style>
+          </section>
+
+          <section class="slide-pattern-adapter-code-1">
+            <pre class="ts"><code data-trim>
+interface ILogRecord {
+  level: string;
+  timestamp: number;
+  message: string;
+}
+
+class LoggerService {
+  sendRecord(record: ILogRecord) {
+    console.log(record);
+  }
+}
+            </code></pre>
+
+            <aside class="notes">
+              <p>
+                То что мы сейчас проговорили словами давайте опишем в коде. Вот
+                наш класс LoggerService, который отправляет логи в аналитику. Он
+                принимает объекты строго определённого формата: level - уровень
+                логгирования (debug, info, error, ...etc), timestamp - время
+                отправки записи, message - произвольный текст.
+              </p>
+            </aside>
+
+            <style></style>
+          </section>
+
+          <section class="slide-pattern-adapter-code-2">
+            <pre style="font-size: 44px" class="ts"><code data-trim>
+interface ILogger {
+  log(message: string): void;
+}
+
+class Client {
+  protected logger: ILogger;
+
+  constructor(logger: ILogger) {
+    this.logger = logger;
+  }
+
+  doSomething() {
+    this.logger.log('DEBUG 1556523689224 Client works fine');
+  }
+}
+            </code></pre>
+
+            <aside class="notes">
+              <p>
+                Наш клиент. Как мы поняли, использовать в нём напрямую
+                LoggerService мы не можем, поэтому отвяжемся от конкретной
+                реализации и будем просто работать с любым ILogger. Будем как
+                обычно писать логи строчками.
+              </p>
+            </aside>
+
+            <style></style>
+          </section>
+
+          <section class="slide-pattern-adapter-code-3">
+            <pre style="font-size: 44px" class="ts"><code data-trim>
+class ServiceAdapter implements ILogger {
+  protected service = new LoggerService();
+
+  log(message: string): void {
+    const match = message.match(/(\w+) (\w+) (.*)/);
+
+    if (match) {
+      this.service.sendRecord({
+        level: match[1],
+        timestamp: Number(match[2]),
+        message: match[3]
+      });
+    }
+  }
+}
+            </code></pre>
+
+            <aside class="notes">
+              <p>
+                И теперь свяжем Service и Client. Напишем адаптер благодаря
+                которому они поймут друг друга. ServiceAdapter должен
+                реализовывать интерфейс ILogger чтобы клиент мог работать с ним
+                как с любым другим Logger'ом. Сам ServiceAdapter должен
+                содержать в себе ссылку на LoggerService, с которым Client не
+                смог связаться напрямую. Задача нашего адаптера теперь
+                преобразовать строки, которые отдаёт клиент, в объект ожидаемый
+                сервисом. Что мы и сделаем, распарсив строку регуляркой. Сложим
+                распарсенную лог запись в объект и отдадим в сервис.
+              </p>
+
+              <p>
+                На этом паттерн Adapter заканчивается. Все счастливы и не
+                пришлось переписывать сервис и клиент.
+              </p>
+            </aside>
+
+            <style></style>
+          </section>
+        </section>
+
+        <section class="slide-behavioral-patterns">
+          <h2>Поведенческие шаблоны</h2>
+
+          <section>
+            <blockquote>
+              <p>
+                Это шаблоны, определяющие алгоритмы и способы реализации
+                взаимодействия различных объектов и классов
+              </p>
+            </blockquote>
+          </section>
+
+          <section style="font-size: 42px;">
+            <ul>
+              <li>Наблюдатель (Observer)</li>
+              <li>Стратегия (Strategy)</li>
+              <li>Цепочка обязанностей (Chain of responsibility)</li>
+              <li>Посетитель (Visitor)</li>
+              <li>Итератор (Iterator)</li>
+              <li>Интерпретатор (Interpreter)</li>
+              <li>...</li>
+            </ul>
+          </section>
+
+          <aside class="notes">
+            <p>
+              Эти паттерны решают задачи эффективного и безопасного
+              взаимодействия между объектами программы.
+            </p>
+
+            <p>
+              Вам уже доводилось как минимум 1 раз работать с паттерном
+              Observer. Это была последняя домашка на TypeScript в прошлом году.
+              Поэтому разберём не его, а стратегию. Она пригодится нам для
+              практического примера.
+            </p>
+          </aside>
+
+          <style>
+            .slide-behavioral-patterns blockquote {
+              margin-top: 40px;
+              margin-bottom: 40px;
+            }
+
+            .slide-behavioral-patterns blockquote::before {
+              content: "";
+            }
+          </style>
+        </section>
+
+        <section class="slide-strategy-definition">
+          <h2>Стратегия (Strategy)</h2>
+
+          <blockquote>
+            <p>
+              Это шаблон, который определяет семейство схожих алгоритмов,
+              инкапсулирует каждый из них и обеспечивает их взаимозаменяемость
+            </p>
+          </blockquote>
+
+          <p><img src="./images/strategy.jpg" alt="Strategy schema" /></p>
+
+          <aside class="notes">
+            <p>
+              Это шаблон который определяет семейство схожих алгоритмов и
+              помещает каждый из них в собственный класс, после чего алгоритмы
+              можно взаимозаменять прямо во время исполнения программы.
+            </p>
+          </aside>
+
+          <style>
+            .slide-strategy-definition blockquote {
+              margin-top: 30px;
+            }
+          </style>
+        </section>
+
+        <section class="slide-strategy-example-1">
+          <h2>Стратегия (Strategy)</h2>
+
+          <pre style="font-size: 43px" class="ts"><code data-trim>
+interface IAuthStrategy {
+  authenticate(): void;
+}
+
+class TokenAuthStrategy implements IAuthStrategy {
+  authenticate() {
+    console.log('Authenticating using TokenAuthStrategy');
+  }
+}
+
+class CookiesAuthStrategy implements IAuthStrategy {
+  authenticate() {
+    console.log('Authenticating using CookiesAuthStrategy');
+  }
+}
+          </code></pre>
+
+          <aside class="notes">
+            <p>
+              С помощью этого шаблона удобно реализовывать различные способы
+              аутентификации пользователя в приложении. Предположим, вы пишете
+              сервис на NodeJS. К нему обращаются из браузера, с мобильных
+              телефонов. Для браузерных клиентов удобно использовать куки для
+              аутентификации, мобильщикам проще передать токен, который они
+              хранят на устройстве.
+            </p>
+
+            <p>
+              Так и опишем в коде. Есть интерфейс, который должен реализовывать
+              любой алгоритм аутентификации. Создадим две реализации – одна
+              аутентифицирует пользователя по токену, вторая по кукам.
+            </p>
+          </aside>
+
+          <style></style>
+        </section>
+
+        <section class="slide-strategy-example-2">
+          <h2>Стратегия (Strategy)</h2>
+
+          <pre style="font-size: 43px" class="ts"><code data-trim>
+class Passport {
+  protected strategy: IAuthStrategy | null = null;
+
+  use(strategy: IAuthStrategy) {
+    this.strategy = strategy;
+
+    return this;
+  }
+
+  authenticate() {
+    if (this.strategy === null) {
+      throw new Error('No authentication strategy set');
+    }
+
+    this.strategy.authenticate();
+  }
+}
+          </code></pre>
+
+          <aside class="notes">
+            <p>
+              Теперь нам понадобится "Контекст". Это класс, в котором
+              реализуется общая логика для всего процесса аутентификации. Он
+              определяет в каком порядке какие методы вызывать, как данные
+              хранить. Но мы должны ему сказать какую стратегию использовать.
+              Это мы делаем с помощью метода use(), передавая в него конкретную
+              реализацию стратегии.
+            </p>
+          </aside>
+
+          <style></style>
+        </section>
+
+        <section class="slide-strategy-example-2">
+          <h2>Стратегия (Strategy)</h2>
+
+          <pre class="ts"><code data-trim>
+// Setup
+const passport = new Passport();
+const cookiesStrategy = new CookiesAuthStrategy();
+passport.use(cookiesStrategy);
+
+// Usage
+passport.authenticate();
+          </code></pre>
+
+          <aside class="notes">
+            <p>
+              Теперь мы можем инициализировать в нескольких местах сервиса
+              различные стратегии и применять их, например, в контроллерах для
+              аутентификации.
+            </p>
+
+            <p>
+              Если появится ещё одна стратегия аутетентификации, то всё что нам
+              нужно будет сделать — реализовать интерфейс IAuthStrategy, создать
+              объект этой стратегии и в нужном месте вызвать метод use() у
+              паспорта.
+            </p>
+          </aside>
+
+          <style></style>
+        </section>
+
+        <section class="slide-chain-definition">
+          <h2>Цепочка обязанностей <br />(Chain of responsibility)</h2>
+
+          <blockquote>
+            <p>
+              Шаблон проектирования, который позволяет избежать жёсткой привязки
+              отправителя запроса к получателю, позволяя нескольким объектам
+              обработать запрос<
+            </p>
+          </blockquote>
+
+          <aside class="notes">
+            <p>
+              Вас уже знакомили с этим шаблоном на одной из лекций по Express.
+              Express middlewar'ы являются способом реализации этого шаблона. Я
+              вкратце напомню суть.
+            </p>
+          </aside>
+
+          <style>
+            .slide-chain-definition blockquote {
+              margin-top: 100px;
+            }
+          </style>
+        </section>
+
+        <section class="slide-chain-problem-1">
+          <h2>Проблема</h2>
+
+          <p>
+            <img
+              src="./images/chain-problem-1.png"
+              alt="Chain responsibility problem"
+            />
+          </p>
+
+          <aside class="notes">
+            <p>
+              Представьте, что вы делаете приложение для заметок и хотите
+              ограничить к нему доступ так, чтобы только авторизованные
+              пользователи могли создавать заметки. Кроме того, определённые
+              пользователи, владеющие правами администратора, должны иметь
+              полный доступ к заметкам.
+            </p>
+
+            <p>
+              Вы поняли, что эти проверки нужно выполнять последовательно. Ведь
+              пользователя можно попытаться «залогинить» в систему, если его
+              запрос содержит логин и пароль. Но если такая попытка не удалась,
+              то проверять расширенные права доступа попросту не имеет смысла.
+            </p>
+
+            <p>
+              Ну вы быстро заifали проверки в одном месте, вроде круто, вроде
+              работает.
+            </p>
+          </aside>
+
+          <style>
+            .slide-chain-problem-1 img {
+              margin-top: 80px !important;
+            }
+          </style>
+        </section>
+
+        <section class="slide-chain-problem-2">
+          <h2>Проблема усугубляется</h2>
+
+          <p>
+            <img
+              src="./images/chain-problem-2.png"
+              alt="Chain responsibility problem"
+            />
+          </p>
+
+          <aside class="notes">
+            <p>
+              На протяжении следующих нескольких месяцев список требуемых
+              проверок пополнился.
+            </p>
+            <p>
+              Теперь передаваемые данные в запросе проверяются перед внесением в
+              систему.
+            </p>
+            <p>
+              Решили, что нужно блокировать массовые отправки формы с одним и
+              тем же логином, чтобы предотвратить подбор паролей ботами.
+            </p>
+            <p>
+              Внесли оптимизацию – сделали так, что заметка достаётся из кеша,
+              если она уже была однажды показана.
+            </p>
+            <p>
+              С каждой новой «фичей» код проверок превратился в клубок ниток.
+              При изменении одного правила приходилось трогать код всех
+              проверок. А для того, чтобы применить проверки к другим ресурсам,
+              пришлось продублировать их код в других классах.
+            </p>
+          </aside>
+
+          <style></style>
+        </section>
+
+        <section class="slide-chain-solution">
+          <h2>Решение</h2>
+
+          <p>
+            <img
+              src="./images/chain-solution.png"
+              alt="Chain responsibility solution"
+            />
+          </p>
+
+          <aside class="notes">
+            <p>
+              Шаблон "Цепочка обязанностей" предлагает превратить отдельные
+              поведения в объекты или функции. JavaScript это больше о функциях.
+              Данные запроса, над которым происходит проверка, будут
+              передаваться как аргументы в них.
+            </p>
+
+            <p>
+              Важно запомнить особенность реализации шаблона —
+              функции-обработчики нужно связать в одну цепь. Каждый из них будет
+              иметь ссылку на следующий обработчик в цепи. Таким образом, при
+              получении запроса обработчик сможет не только сам что-то с ним
+              сделать, но и передать обработку следующему в цепочке.
+            </p>
+
+            <p>
+              После лекции, в ближайшие дни, я выложу пример сервиса с
+              авторизацией. Там будет SOLID во всей красе, пример использования
+              "инъекции зависимостей" с использованием InversifyJS, а также
+              шаблоны "Цепочка ответственности" и "Стратегия".
+            </p>
+          </aside>
+
+          <style>
+            .slide-chain-solution img {
+              margin-top: 80px !important;
+            }
+          </style>
+        </section>
+
+        <section class="slide-anti">
+          <h2>Анти-паттерны</h2>
+
+          <a
+            href="http://lurkmore.to/Анти-паттерн"
+            target="_blank"
+            rel="noopener"
+            noreferrer
+          >
+            <img src="./images/veged.webp" alt="Бережной" />
+          </a>
+
+          <aside class="notes">
+            Бывают не только паттерны, но и анти-паттерны. Почитать о них можно
+            на Луркоморье. Классная статейка, прямо набор вредных советов. Так
+            что прочитайте и никогда так не пишите.
+          </aside>
+
+          <style>
+            .slide-anti {
+              display: flex;
+              flex-direction: column;
+            }
+
+            .slide-anti a {
+              display: block;
+              margin-top: 40px;
+              text-align: center;
+            }
+
+            .slide-anti a img {
+              height: 45vh;
+            }
+          </style>
+        </section>
+
+        <section class="slide-books">
+          <h2>Почитать</h2>
+
+          <a
+            class="slide-books__link"
+            href="https://yadi.sk/i/njru0tTAmN67pQ"
+            target="_blank"
+            rel="noopener"
+            noreferrer
+          >
+            <img
+              class="slide-books__clean-code-img"
+              src="./images/clean-code.jpg"
+              alt="«Чистый код», Роберт Мартин"
+            />
+          </a>
+
+          <a
+            class="slide-books__link"
+            href="https://yadi.sk/i/2sCFv5v3w9ebPQ"
+            target="_blank"
+            rel="noopener"
+            noreferrer
+          >
+            <img
+              class="slide-books__patterns-img"
+              src="./images/patterns.jpg"
+              alt="«Паттерны проектирования», Эрик Фримен, Элизабет Фримен"
+            />
+          </a>
+
+          <a
+            class="slide-books__link"
+            href="https://yadi.sk/i/PtiX-GA6HitAIg"
+            target="_blank"
+            rel="noopener"
+            noreferrer
+          >
+            <img
+              class="slide-books__gof-img"
+              src="./images/gof.jpg"
+              alt="«Приемы объектно-ориентированного проектирования», Э. Гамма Р. Хелм Р. Джонсон Дж. Влиссидес"
+            />
+          </a>
+
+          <aside class="notes">
+            <p>
+              Есть у меня рекомендации что вам дать почитать.
+            </p>
+
+            <p>
+              В первую очередь, это, конечно, Роберт Мартин о котором я вам
+              говорил в начале лекции. Он то вам уж точно расскажет как писать
+              чистый и эффективный код, выявлять плохо пахнущий, правильно
+              рефакторить и не допускать типичных ошибок в проектировании.
+            </p>
+
+            <p>
+              Вторая книга — «Шаблоны проектирования» от Эрика и Элизабет
+              Фримен. В ней вы найдёте порядка 20 шаблонов. Они прекрасно
+              описаны и проиллюстрированы.
+            </p>
+
+            <p>
+              Примеры обеих книг написаны на Java, но не пугайтесь. Вы их без
+              проблем поймёте и легко сможете переписать на TypeScript.
+            </p>
+
+            <p>
+              Есть ещё очень известная книга "Банды четырёх". Если вдруг вам не
+              понравились "Шаблоны проектирования" от Фрименов, то читайте эту.
+            </p>
+          </aside>
+
+          <style>
+            .slide-books {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+
+            .slide-books__link + .slide-books__link {
+              margin-left: 20px;
+            }
+
+            .slide-books h2 {
+              margin-bottom: 30px;
+            }
+
+            .slide-books__clean-code-img,
+            .slide-books__patterns-img,
+            .slide-books__gof-img {
+              height: 40vh;
+              max-width: 33%;
+            }
+          </style>
+        </section>
+
+        <section class="slide-demo">
+          <h2>Демо</h2>
+
+          <img
+            class="slide-demo__github-img"
+            width="140"
+            height="140"
+            src="./images/github-icon.png"
+            alt="Github icon"
+          />
+
+          <a
+            class="slide-demo__github-link"
+            href="https://github.com/urfu-2018/passport-demo"
+            target="_blank"
+            rel="noopener"
+            noreferrer
+          >
+            Приложение с аутентификацией
+          </a>
+
+          <style>
+            .slide-demo {
+              display: flex !important;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+            }
+
+            .slide-demo__github-img {
+              margin-top: 120px !important;
+              margin-bottom: 40px !important;
+            }
+          </style>
+        </section>
+
+        <section class="center">
+          <h2>Спасибо!</h2>
+          <h2>Вопросы?</h2>
+
+          <aside class="notes">
+            <p>
+              Подведём итог: следуйте принципам SOLID, это важно. Изучайте
+              шаблоны проектирования, не все сразу, а понемногу. Применяйте их с
+              умом и никогда не втаскивайте их только лишь потому что они "круто
+              выглядят". Удачи, пишите чистый код.
+            </p>
+          </aside>
+        </section>
+      </div>
+    </div>
+
+    <script src="../../@lib/core.js"></script>
+  </body>
+</html>
