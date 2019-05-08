@@ -45,3 +45,4 @@
 8. [DOM API и события](https://urfu-2018.github.io/slides/webdev/08-dom-api/) ([pdf](https://urfu-2018.github.io/slides/webdev/08-dom-api/index.pdf))
 9. [Node.js II](https://urfu-2018.github.io/slides/webdev/09-nodejs-2/) ([pdf](https://urfu-2018.github.io/slides/webdev/09-nodejs-2/index.pdf))
 10. [React](https://urfu-2018.github.io/slides/webdev/10-react-1/) ([pdf](https://urfu-2018.github.io/slides/webdev/10-react-1/index.pdf))
+11. [SOLID и шаблоны проектирования](https://urfu-2018.github.io/slides/webdev/11-patterns/) ([pdf](https://urfu-2018.github.io/slides/webdev/11-patterns/index.pdf))
