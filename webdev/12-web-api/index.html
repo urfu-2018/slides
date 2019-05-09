@@ -1,0 +1,1239 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Storage APIs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="white"><div class="reveal">
+    <div class="slides">
+
+        <section class="large center">
+            <h2>Web Api</h2>
+            <p><small class="grey">Cookies, Storages, IndexedDB, History APi, PaymentRequest Api</small></p>
+            <p class="author">
+                <small><span class="red">К</span>ристина Ильенко</small>
+            </p>
+        </section>
+
+        <section class="center">
+            <p class="red">В данной лекции обсуждается браузерное API</p>
+        </section>
+
+        <section class="center" style="width: 600px; position: absolute; margin-left: auto; margin-right: auto; left: 0; right: 0; top: 0">
+            <img src="images/map.png">
+        </section>
+
+        <section class="center" style="width: 600px; position: absolute; margin-left: auto; margin-right: auto; left: 0; right: 0; top: 0">
+            <img src="images/music.png">
+        </section>
+
+        <section class="center" style="width: 600px; position: absolute; margin-left: auto; margin-right: auto; left: 0; right: 0; top: 0">
+            <img src="images/cookie.jpg">
+        </section>
+
+        <section>
+            <h2>Создание</h2>
+            <pre class="javascript"><code data-noescape data-trim>
+        <span class="fragment">document.cookie = 'subject=Song';</span>
+
+        <span class="fragment">document.cookie = 'subject=Beautiful-song';</span>
+
+        <span class="fragment">document.cookie = 'volume=5';</span>
+
+        <span class="fragment">document.cookie = 'subject=' + encodeURIComponent('Песня');
+        // %D0%9F%D0%B5%D1%81%D0%BD%D1%8F</span>
+            </code></pre>
+        </section>
+
+        <section class="center">
+            <p>uniq key = name + path + domain</p>
+        </section>
+
+        <section class="center">
+            <pre class="javascript">
+                <code data-noescape data-trim>
+                    <span style="font-size: .8em">document.cookie = 'subject=Song; path=/users; domain=yandex.ru';</span>
+
+                    <span style="font-size: .8em" class="green">path=/</span>
+
+                    <span style="font-size: .8em" class="green">domain=music.yandex.ru;</span>
+
+                    <span style="font-size: .8em" class="green">path=/users/playlists;</span>
+
+                    <span style="font-size: .8em" class="red">path=/usersplaylists; domain=yandex.ru;</span>
+
+                    <span style="font-size: .8em" class="red">domain=facebook.com;</span>
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <h2>expires</h2>
+
+            <pre class="javascript">
+                <code data-noescape data-trim>
+                    subject=Song; <span class="red">expires=Tue, 19 Apr 2019 00:00:00 GMT</span>
+                </code>
+            </pre>
+        </section>
+
+        <section class="center">
+            <p>Чтобы <span class="red">удалить</span>, устанавливаем дату устаревания в прошлом</p>
+        </section>
+
+        <section class="center">
+            <pre class="javascript">
+                <code data-noescape>subject=Song; expires=Tue, <span class="red">19 Apr 1970</span> 00:00:00 GMT</code>
+            </pre>
+        </section>
+
+        <section>
+            <h2>Чтение</h2>
+            <pre class="javascript">
+                <code data-noescape data-trim>
+                    document.cookie = 'subject=Song; path=/';
+
+                    <span>console.log(document.cookie);</span>
+                    // subject=Song
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <h2>Чтение</h2>
+            <pre class="javascript">
+                <code data-noescape data-trim>
+                    <span style="color: #00df50">document.cookie</span> = 'subject=Song; path=/';
+                    <span style="color: #5000df">document.cookie</span> = 'subject=Song; path=/users';
+
+                    <span>console.log(document.cookie);</span>
+                </code>
+            </pre>
+            <p>Раньше будет выведена cookie с заданным
+                <span style="color: #5000df">path=/users</span> или с
+                <span style="color: #00df50">path=/</span>?
+            </p>
+        </section>
+
+        <section class="center">
+            <p>Если подходят несколько – доступны все в порядке от наиболее специфичной к наименее</p>
+        </section>
+
+        <section>
+            <h2>Чтение</h2>
+            <pre class="javascript">
+                <code data-noescape data-trim>
+                    <span style="color: #00df50">document.cookie</span> = 'subject=Song; path=/';
+                    <span style="color: #5000df">document.cookie</span> = 'subject=Song; path=/users';</span>
+
+                    <span>console.log(document.cookie);</span>
+
+                    <span style="color: #5000df">subject=Song;</span>
+                    <span style="color: #00df50">subject=Song;</span>
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <h2><a href="https://github.com/js-cookie/js-cookie">js-cookie</a></h2>
+
+            <pre class="javascript">
+                <code data-noescape data-trim>
+                    <span>Cookies.set('subject', 'Song', { expires: 7, path: '' });</span>
+
+                    <span>Cookies.get('subject');</span>
+
+                    <span>Cookies.remove('subject');</span>
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <h2>Отправка на сервер</h2>
+            <pre class="html"><code data-trim data-noescape>GET / HTTP/1.1
+        Host: music.yandex.ru
+        <span class="red">Cookie: subject=Song; playlist=1</span>
+            </code></pre>
+
+            <pre class="fragment"><code data-noescape data-trim>
+        const express = require('express')
+        const app = express();
+        const cookieParser = require('cookie-parser');
+
+        app.use(cookieParser());
+
+        app.use((req, res) => {
+            console.log(req.cookies);
+            // { subject: 'Song' }
+        });
+            </code></pre>
+        </section>
+
+        <section>
+            <h2>Отправка на клиент</h2>
+
+            <pre>
+                <code data-noescape data-trim>
+                    var express = require('express')
+                    var app = express();
+
+                    app.use((req, res) => {
+                        res.cookie('subject', 'Song', { path: '/users' });
+                    });
+                </code>
+            </pre>
+
+            <pre class="html fragment"><code data-noescape data-trim>
+
+        HTTP/1.1 200 OK
+        <span class="red">Set-Cookie: subject=Song; path=/users</span>
+            </code></pre>
+        </section>
+
+        <section>
+            <h2>HTTP-only</h2>
+
+            <pre class="html"><code data-noescape data-trim>
+                res.cookie('subject', 'Song', {
+                    path: '/users',
+                    <span class="red">httpOnly: true</span>
+                });
+            </code></pre>
+
+            <pre class="html"><code data-noescape data-trim>
+
+            HTTP/1.1 200 OK
+            Set-Cookie: subject=Song; path=/users; <span class="red">HttpOnly</span>
+            </code></pre>
+        </section>
+
+        <section class="center">
+            <p>Не доступны в js-скриптах на клиенте</p>
+        </section>
+
+        <section>
+            <h2>Secure</h2>
+
+            <pre class="html"><code data-noescape data-trim>
+                res.cookie('subject', 'Song', {
+                    path: '/users',
+                    <span class="red">secure: true</span>
+                });
+            </code></pre>
+
+            <pre class="html"><code data-noescape data-trim>
+            HTTP/1.1 200 OK
+            Set-Cookie: subject=Song; path=/users; <span class="red">secure</span>
+            </code></pre>
+        </section>
+
+        <section class="center">
+            <p>Не доступны по HTTP</p>
+        </section>
+
+        <section class="center">
+            <p><span class="green">Устаревание</span></p>
+        </section>
+
+        <section class="center">
+            <p><span class="green">Доступ с сервера</span></p>
+        </section>
+
+        <section class="center">
+            <p><span class="red">4Kb</span></p>
+        </section>
+
+        <section class="center">
+            <p><span class="red">Передаются с каждым запросом</span> в заголовке, который не сжимается</p>
+        </section>
+
+        <section class="center">
+            <p>Для статики используйте<br><span class="green">cookieless</span> домены (CDN)</p>
+        </section>
+
+        <section class="center">
+            <p>В cookie храните <span class="green">id</span>, по которому можно на сервере получить полные данные</p>
+        </section>
+
+        <section class="center">
+            <p>Кодируйте <span class="green">01100101</span></p>
+        </section>
+
+        <section class="center">
+            <p><a href="https://www.netsparker.com/blog/web-security/same-site-cookie-attribute-prevent-cross-site-request-forgery/">Using the Same-Site Cookie Attribute to Prevent CSRF Attacks</a></p>
+            <p><a href="https://en.wikipedia.org/wiki/HTTP_cookie#SameSite_cookie">HTTP cookie</a></p>
+        </section>
+
+        <section class="center" style="position: absolute; margin-left: auto; margin-right: auto; left: 0; right: 0; width: 647px; top: 0">
+            <img src="images/localstorage.jpg">
+        </section>
+
+        <section class="center">
+            <h2><a href="https://html.spec.whatwg.org/multipage/webstorage.html">WebStorage</a></h2>
+        </section>
+
+        <section class="center">
+            <h2><span class="green">SessionStorage</span> – хранит данные до окончания сессии (до закрытия вкладки/окна)</h2>
+        </section>
+
+        <section class="center">
+            <h2><span class="green">LocalStorage</span> – хранит данные перманентно, пока скрипт или пользователь не удалит их</h2>
+        </section>
+
+        <section class="center">
+            <p>Не передаёт данные на сервер</p>
+        </section>
+
+        <section class="center">
+            <p>Ограничение в <span class="green">10Mb</span></p>
+        </section>
+
+        <section>
+            <h2>Интерфейс</h2>
+            <pre class="javascript">
+                <code data-noescape data-trim>
+                    localStorage.setItem('volume', 8);
+
+                    localStorage.getItem('volume'); // "8"
+
+                    localStorage.removeItem('volume')
+
+                    localStorage.clear();
+
+                    <span class="fragment">localStorage.setItem('repeat', 1);
+                    // QUOTA_EXCEEDED_ERROR</span>
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <p>Хранит <span class="green">строки</span>, а не объекты</p>
+            <pre class="javascript"><code data-noescape data-trim>
+        localStorage.setItem('options', { volume: 8 });
+
+        localStorage.getItem('options'); // "[object Object]"
+
+        <span class="fragment">localStorage.setItem('options', JSON.stringify({ volume: 8 }));</span>
+            </code></pre>
+        </section>
+
+        <section>
+            <h2>Событие</h2>
+            <pre class="javascript"><code data-noescape data-trim>
+        window.addEventListener('storage', event => {
+            console.log(event);
+        });
+            </code></pre>
+            <pre class="html fragment grey"><code data-noescape data-trim>
+                {
+                    key: 'volume',
+                    oldValue: '8',
+                    newValue: '6'
+                }
+            </code></pre>
+        </section>
+
+        <section>
+            <h2>Приватный режим</h2>
+            <pre class="flat javacript"><code data-noescape data-trim>
+        try {
+            localStorage.setItem('options', '8');
+        } catch (error) {
+            console.error(error);
+            // SecurityError: The operation is insecure
+        }
+            </code></pre>
+        </section>
+
+        <section class="center">
+            <p class="green">Хранение настроек</p>
+            <p class="green">Хранение промежуточных данных</p>
+        </section>
+
+        <section class="center">
+            <p>Строго ограничено источником (origin)</p>
+        </section>
+
+        <section class="center">
+            <p><span class="red">Синхронный</span> интерфейс</p>
+        </section>
+
+        <section class="center">
+            <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API">Web Storage API</a></p>
+            <p><a href="http://www.amazon.com/Client-Side-Data-Storage-Keeping-Local/dp/1491935111">Html5 Local Storage How-To</a></p>
+            <p><a href="http://www.amazon.com/Instant-HTML5-Local-Storage-How-ebook/dp/B00C1COMDG">Client-side Data Storage</a></p>
+        </section>
+
+        <section class="center">
+            <h2><a href="https://www.w3.org/TR/webdatabase/">WebSQL</a></h2>
+        </section>
+
+        <section class="center">
+            <p><span class="green">Асинхронный интерфейс</span> к SQLite базе</p>
+        </section>
+
+        <section>
+            <pre class="javascript"><code data-noescape data-trim>
+        const db = openDatabase('my-app', '1.0', null, 1024 * 1024);
+
+        db.transaction(tr => {
+            tr.executeSql(`
+                create table if not exists notes(
+                    name TEXT
+                )
+            `);
+
+            tr.executeSql(`
+                insert into notes(name)
+                values("films")
+            `);
+        }, console.error);
+            </code></pre>
+        </section>
+
+        <section class="center">
+            <p><img src="images/websql-ciu.png"></p>
+        </section>
+
+        <section class="center" style="width: 615px;
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+            left: 0;
+            right: 0;">
+            <img src="images/frozen.jpg">
+        </section>
+
+        <section class="center">
+            <h2><a href="https://www.w3.org/TR/IndexedDB-2/">IndexedDB</a></h2>
+        </section>
+
+        <section class="center">
+            <img src="images/indexeddb-ciu.png">
+        </section>
+
+        <section class="center">
+            <p>Строго ограничено источником (origin)</p>
+        </section>
+
+        <section class="center">
+            <p>Нет ограничений на размер<span class="grey">*</span></p>
+        </section>
+
+        <section class="center">
+            <p>Асинхронное</p>
+        </section>
+
+        <section class="center">
+            <p>Не реляционное, а <span class="green">object storage</span></p>
+        </section>
+
+        <section class="center">
+            <p>Не SQL, а <span class="green">API</span></p>
+        </section>
+
+        <section class="center">
+            <p>Хранилище объектов <span class="green">всегда сортирует значения по ключам внутри</span></p>
+            <p style="font-size: .8em">Поэтому запросы, возвращающие много значений, всегда возвращают их в отсортированном порядке</p>
+        </section>
+
+        <section>
+            <h2>Создание</h2>
+            <pre class="flat"><code data-noescape data-trim>
+                // Указываем название и версию
+                const requestDb = indexedDB.open('my-app', 1);
+                // Метод open возвращает объект IDBOpenDBRequest
+                // с тремя обработчиками:
+                // onerror, onsuccess, onupgradeneeded
+                requestDb.onerror = event => {
+                    console.log(event.target.errorCode);
+                };
+
+                requestDb.onsuccess = event => {
+                    // Экземпляр открытой базы напрямую не отдает
+                    // Получаем доступ к базе
+                    const db = event.target.result;
+                };
+            </code></pre>
+        </section>
+
+        <section>
+            <h2>Обновление</h2>
+            <pre class="flat">
+                <code data-noescape data-trim>
+                    // Будет вызван в первый раз, и когда сменилась версия
+                    requestDb.onupgradeneeded = event => {
+                        const db = event.target.result;
+                        const oldVersion = event.oldVersion;
+                        // Инструкции к миграции на вторую версию
+                        if (oldVersion < 2) {
+                            // Создаём хранилище для заметок
+                            // IndexedDB оперирует не таблицами,
+                            // а хранилищами объектов: ObjectStore
+                            db.createObjectStore('notes', {
+                                keyPath: 'id', // Имя ключевого поля
+                                autoIncrement: true
+                            });
+                        }
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section class="center">
+            <p>
+                <span class="green">Можем добавлять/удалять/обновлять данные вне обработчика onupgradeneeded</span>
+            </p>
+            <br>
+            <p>
+                <span class="red">Можем создавать/измененять хранилище объектов только при обновлении версии БД внутри обработчика onupgradeneeded</span>
+            </p>
+        </section>
+
+        <section class="center">
+            <h2 class="green">Любые операции с данными в IndexedDB происходят в рамках транзакции</h2>
+            <p style="font-size: .7em">
+                Это обеспечивает целостность базы данных (в случае сбоя операции транзакция откатывается)
+            </p>
+        </section>
+
+        <section>
+            <h2>Добавление объекта</h2>
+            <pre class="flat">
+                <code data-noescape data-trim>
+                    // Открываем транзакцию
+                    // Указываем, к каким Store будет иметь доступ транзакция
+                    const transaction = db.transaction('notes', 'readwrite');
+                    // В рамках транзакции получаем ссылку на объект Store
+                    const store = transaction.objectStore('notes');
+                    // Выполняем запрос в хранилище
+                    // Добавляем заметку
+                    const request = store.add({
+                        id: 'films',
+                        name: 'films'
+                    });
+
+                    request.onerror = err => console.error(err);
+
+                    transaction.abort();
+                </code>
+            </pre>
+        </section>
+
+        <section class="center">
+            <p>Транзакция остаётся “живой“, если есть активные запросы к концу event loop цикла</p>
+        </section>
+
+        <section class="center">
+            <p>Может быть несколько паралелльных <span class="green">readonly</span> транзакций, но только одна <span class="green">readwrite</span></p>
+            <p style="font-size: 0.6em"><span class="green">readwrite</span> транзакция “блокирует” хранилище для записи</p>
+        </section>
+
+        <section>
+                <h2>Получение объекта</h2>
+                <pre class="flat">
+                    <code data-noescape data-trim>
+                        // Открываем транзакцию
+                        // Указываем, к каким Store будет иметь доступ транзакция
+                        const transaction = db.transaction(['notes'], 'readonly');
+                        // В рамках транзакции получаем ссылку на объект Store
+                        const store = transaction.objectStore('notes')
+                        // Выполняем запрос в хранилище
+                        // Получаем данные, используя значения ключа (id)
+                        const request = store.get('films')
+
+                        request.onsuccess = note => console.log(note)
+                    </code>
+                </pre>
+            </section>
+
+        <section class="center">
+            <h2 class="green">Метод get удобно использовать, если знаем ключ, по которому хотим получить данные</h2>
+            <p style="font-size: .7em">А если хотим пройти через все записи в ObjectStore?</p>
+        </section>
+
+        <section class="center">
+            <h2 class="green">Можно воспользоваться курсором</h2>
+            <p style="font-size: .7em">Курсор – особый объект, который пересекает ObjectStore с заданным запросом
+                и возвращает по одному ключу/значению за раз, таким образом экономя память
+            </p>
+        </section>
+
+        <section>
+            <h2>Чтобы <span class="green">получить все объекты</span>, используем курсор</h2>
+            <pre>
+                <code data-noescape data-trim>
+                    const requestCursor = db.transaction(['notes'], 'readonly')
+                        .objectStore('notes').openCursor();
+                    requestCursor.onsuccess = event => {
+                        const cursor = event.target.result;
+                        if (cursor) {
+                            console.log(cursor.key, cursor.value);
+                            cursor.continue();
+                        } else {
+                            console.log("No more notes");
+                        }
+                    };
+                    </code>
+                </pre>
+        </section>
+
+        <section class="center">
+            <p>
+                Основное отличие курсора в том, что <span class="green">request.onsuccess</span>
+                срабатывает несколько раз: по одному разу для каждого результата
+            </p>
+        </section>
+
+        <section class="center">
+            <h2>Что использовать, если хотим искать по условию?</h2>
+            <p style="font-size: .8em">
+                Например, нужно найти Заметки с именем Films?
+            </p>
+        </section>
+
+        <section class="center">
+            <h2 class="green">Использовать индексы</h2>
+            <p style="font-size: .8em">
+                Индекс – это “надстройка“ к хранилищу, отслеживающая заданное поле объекта.
+            </p>
+            <p style="font-size: .8em">
+                Для каждого значения этого поля хранится список ключей для объектов, имеющих это значение.
+            </p>
+        </section>
+
+        <section>
+            <h2>Индексы</h2>
+            <pre class="flat">
+                <code data-noescape data-trim>
+                    const db = event.target.result;
+
+                    const store = db.createObjectStore('notes', {
+                        keyPath: 'id',
+                        autoIncrement: true
+                    });
+
+                    store.createIndex(
+                        'nameIdx',         // Название
+                        'name',            // Поле или массив ['name', 'keywords'],
+                                        //     по которому будем искать
+                        { unique: false }  // Параметры
+                    );
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <h2>Поиск по условию</h2>
+            <pre class="flat">
+                <code data-noescape data-trim>
+                    const transaction = db.transaction(['notes'], 'readonly');
+                    const store = transaction.objectStore('notes')
+
+                    const requestCursor = store
+                        .index('nameIdx')
+                        .openCursor(IDBKeyRange.only(['films', true]));
+
+                    // ...
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <p><a href="http://dexie.org/">dexie.org</a></p>
+            <pre class="flat"><code data-noescape data-trim>
+        const db = new Dexie('MyDatabase');
+
+        db
+            .version(1)
+            .stores({
+                notes: 'name'
+            });
+
+        db
+            .open()
+            .catch(error => console.error(error));
+            </code></pre>
+        </section>
+
+        <section>
+            <p><a href="http://dexie.org/">dexie.org</a></p>
+            <pre class="flat"><code data-noescape data-trim>
+        db
+            .notes
+            .where('name')
+            .equals(['films'])
+            .each(note => {
+                console.log(note.name);
+            });
+            </code></pre>
+        </section>
+
+        <section class="center">
+            <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB">Using IndexedDB</a></p>
+        </section>
+
+        <section class="center">
+            <h2>SPA</h2>
+        </section>
+
+        <section class="center">
+            <h2 class="green">Приложение быстро загружается и работает</h2>
+        </section>
+
+        <section class="center">
+            <h2 class="green">Необходимые приложению статические ресурсы подгружаются один раз, и затем контент
+                формируется динамически без перезагрузки страницы</h2>
+        </section>
+
+        <section class="center">
+            <h2 class="green">Не требует написания серверной части</h2>
+        </section>
+
+        <section class="center">
+            <h2 class="green">Предоставляет пользовательский опыт близкий к нативным приложениям</h2>
+        </section>
+
+        <section class="center">
+            <h2 class="red">Тяжело делать SEO оптимизацию</h2>
+        </section>
+
+        <section class="center">
+            <h2 class="red">Изначально технология предоставляла возможность только менять содержимое страницы
+                без её перезагрузки</h2>
+        </section>
+
+        <section class="center">
+            <p style="font-size: 1em; text-align: left;">Разработчики научились
+                загружать отдельные страницы с помощью JavaScript так, чтобы одновременно:</p>
+            <p style="text-align: left;"><span class="green">- менялось содержание</span></p>
+            <p style="text-align: left;"><span class="green">- генерировался новый адрес страницы</span></p>
+        </section>
+
+        <section class="center">
+            <h2>History API</h2>
+        </section>
+
+        <section class="center">
+            <p>
+                History API опирается на один DOM интерфейс —
+                <span class="green">объект History</span>.
+                Он доступен через <span class="green">window.history</span>
+            </p>
+            <img src="images/history-api-1.png">
+        </section>
+
+        <section class="center">
+            <h2 style="font-size: .9em">Основные методы и свойства объекта History</h2>
+            <p style="font-size: .7em; text-align: left;">window.history.<span class="green">length</span></p>
+            <p style="font-size: .7em; text-align: left;">window.history.<span class="green">state</span></p>
+            <p style="font-size: .7em; text-align: left;">window.history.<span class="green">go(n)</span></p>
+            <p style="font-size: .7em; text-align: left;">window.history.<span class="green">back()</span></p>
+            <p style="font-size: .7em; text-align: left;">window.history.<span class="green">forward()</span></p>
+            <p style="font-size: .7em; text-align: left;">window.history.<span class="green">pushState(data, title [, url])</span></p>
+            <p style="font-size: .7em; text-align: left;">window.history.<span class="green">replaceState(data, title [, url])</span></p>
+        </section>
+
+        <section>
+            <p style="font-size: .8em; text-align: left;">
+                    window.history.<span class="green">length</span> –
+                cвойство length хранит количество записей в текущей сессии истории
+            </p>
+            <pre class="javascript" style="height: 80px;">
+                    <code data-noescape data-trim style="margin-top: -73px;">
+                        window.history.length
+                        // 10
+                    </code>
+            </pre>
+            <img src="images/history-api-2.png">
+        </section>
+
+        <section class="center">
+            <p style="font-size: .8em; text-align: left;">
+                    window.history.<span class="green">state</span> –
+                cвойство state хранит текущий объект истории
+            </p>
+            <pre class="javascript" style="height: 60px;">
+                    <code data-noescape data-trim style="margin-top: -73px;">
+                        window.history.state
+                        // { history.id: 0 }
+                    </code>
+            </pre>
+            <img src="images/history-api-3.png">
+        </section>
+
+        <section class="center">
+            <p style="font-size: .8em; text-align: left;">
+                    window.history.<span class="green">go(n)</span> –
+                метод, позволяющий гулять по истории. В качестве аргумента передается смещение относительно текущей позиции
+            </p>
+        </section>
+
+        <section>
+            <p style="font-size: .8em; text-align: left;">
+                    window.history.<span class="green">back()</span> –
+                метод, позволяющий гулять по истории. Идентичен вызову window.history.go(-1)
+            </p>
+            <img src="images/history-api-4.png">
+            <pre class="javascript" style="height: 15px;">
+                    <code data-noescape data-trim style="margin-top: -90px;">
+                        window.history.back()
+                    </code>
+            </pre>
+            <img src="images/history-api-5.png">
+        </section>
+
+        <section class="center">
+            <p style="font-size: .8em; text-align: left;">
+                    window.history.<span class="green">forward()</span> –
+                метод, позволяющий гулять по истории. Идентичен вызову window.history.go(1)
+            </p>
+        </section>
+
+        <section class="center">
+            <p style="font-size: .8em; text-align: left;">
+                    window.history.<span class="green">pushState(state, title [, url])</span> –
+                метод, добавляющий новое состояние в историю браузера
+            </p>
+            <p style="font-size: .8em; text-align: left;">
+                <span class="green">state</span> – любой валидный тип в JavaScript, который можно сериализовать
+            </p>
+            <p style="font-size: .8em; text-align: left;">
+                <span class="green">title</span> – все современные браузеры игнорируют этот параметр
+            </p>
+            <p style="font-size: .8em; text-align: left;">
+                <span class="green">url</span> – относительный/абсолютный URL новой записи в истории браузера
+            </p>
+        </section>
+
+        <section class="center">
+            <img src="images/history-api-6.png" style="margin-top: 80px;">
+            <pre class="javascript">
+                <code data-noescape data-trim style="font-size:.4em;">
+                    window.onpopstate = event => {
+                        console.info("location: " + document.location + ", state: " +
+                            JSON.stringify(event.state));
+                    };
+                    window.history.pushState({ page: 1 }, "title 1", "?page=1");
+                    window.history.pushState({ page: 2 }, "title 2", "?page=2");
+                    window.history.pushState({ page: 3 }, "title 3", "?page=3");
+                    window.history.pushState({ page: 4 }, "title 4", "?page=4");
+                </code>
+            </pre>
+        </section>
+
+        <section class="center">
+            <pre class="javascript">
+                <code data-noescape data-trim style="font-size:.6em; margin-top: -85px; margin-bottom: -125px;">
+                    window.history.back();
+                </code>
+            </pre>
+            <img src="images/history-api-7.png">
+        </section>
+
+        <section class="center">
+            <img src="images/history-api-8.png">
+        </section>
+
+        <section class="center">
+            <p style="font-size: 0.8em; text-align: left;">
+                    window.history.<span class="green">replaceState(state, title [, url])</span> –
+                метод, обновляющий текущее состояние истории браузера
+            </p>
+            <img src="images/history-api-9.png">
+        </section>
+
+        <section class="center">
+            <p>
+                <span class="green">Cобытие popstate</span>
+            </p>
+            <p style="font-size: .8em; text-align: left;">
+                <span class="red">Не вызывает событие</span>
+            </p>
+            <pre>
+                <code style="margin-top: -120px; margin-bottom: -180px;">
+                    window.history.pushState()
+                    window.history.popState()
+                </code>
+            </pre>
+            <p style="font-size: .8em; text-align: left;">
+                <span class="green">Вызывает событие</span>
+            </p>
+            <pre>
+                <code style="margin-top: -100px; margin-bottom: -180px;">
+                    window.history.back()
+                    window.history.forward()
+                    Совершение действий в браузере
+                    (нажатие стрелок для движения по истории)
+                </code>
+            </pre>
+        </section>
+
+        <section class="center">
+            <pre class="javascript">
+                <code data-noescape data-trim style="font-size:.5em; margin-top: -50px; margin-bottom: -125px;">
+                    window.onpopstate = event => {
+                        console.info("onpopstate-event", event);
+                    };
+
+                    window.history.pushState({ page: 1 }, "title 1", "?page=1");
+                    window.history.pushState({ page: 2 }, "title 2", "?page=2");
+                </code>
+            </pre>
+            <img src="images/history-api-10.png">
+        </section>
+
+        <section class="center">
+            <pre class="javascript">
+                <code data-noescape data-trim style="font-size:.5em; margin-top: -85px; margin-bottom: -125px;">
+                    window.history.back();
+                </code>
+            </pre>
+            <img src="images/history-api-11.png">
+        </section>
+
+        <section class="center">
+            <p>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/API/Payment_Request_API">
+                    Payment Request API
+                </a>
+            </p>
+        </section>
+
+        <section class="center">
+            <img src="images/tim-berners-lee.jpg">
+        </section>
+
+        <section class="center">
+            <img src="images/shopping-cart-abandonment.png">
+        </section>
+
+        <section class="center">
+            <img src="images/reasons-of-cart-abandonment.png">
+        </section>
+
+        <section class="center">
+            <h2>Зачем, если есть PayPal/AmazonPay/...?</h2>
+            <p class="green" style="font-size: 0.6em; text-align: left;">Добавляет возможность оплаты «одной кнопкой» на многих сайтах</p>
+            <p class="red" style="font-size: 0.6em; text-align: left;">Cохраняет данные карты у себя</p>
+            <p class="red" style="font-size: 0.6em; text-align: left;">Транзакции PayPal обходятся ритейлерам до 1,9% от выручки</p>
+            <p class="red" style="font-size: 0.6em; text-align: left;">Страницы оформления заказа у ритейлеров практически не стандартизированы</p>
+            <p class="red" style="font-size: 0.6em; text-align: left;">Адрес доставки и выставления счетов должны быть введены отдельно в разных форматах в конце процесса</p>
+        </section>
+
+        <section class="center">
+            <h2>Преимущества PR API</h2>
+            <p class="green" style="font-size: 0.6em; text-align: left;">PR API позволяет хранить данные в браузере</p>
+            <p class="green" style="font-size: 0.6em; text-align: left;">Транзакции бесплатны для ритейлеров </p>
+            <p class="green" style="font-size: 0.6em; text-align: left;">Страницы оформления заказа стандартизованы</p>
+        </section>
+
+        <section class="center">
+            <h2>Цель</h2>
+            <p style="font-size: .6em; text-align: left;">
+                Помочь пользователям оплатить так, как им хочется
+            </p>
+            <p style="font-size: .6em; text-align: left;">
+                Сделать это быстро и эффективно
+            </p>
+        </section>
+
+        <section class="center">
+            <h2>Как?</h2>
+            <p style="font-size: .6em; text-align: left;">
+                Cоздать простой и удобный способ оформления заказа
+            </p>
+            <p style="font-size: .6em; text-align: left;">
+                Не вводить вручную платёжные данные при каждой покупке, а хранить реквизиты банковских карточек в
+                браузере и вписывать их в форму автоматически
+            </p>
+        </section>
+
+        <section class="center">
+            <h2 class="center">Создание экземпляра PaymentRequest</h2>
+            <pre class="javascript">
+                <code data-noescape data-trim>
+                    const paymentRequest = new PaymentRequest(
+                        supportedPaymentMethods, // способы оплаты
+                        orderDetails, // детали заказа
+                        paymentOptions  // [данные об оплате]
+                    );
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <h2 class="center">Состояния экземпляра PaymentRequest</h2>
+            <img src="images/states-payment-request.svg"/>
+            <p style="font-size: .6em; text-align: left;">Конструктор устанавливает начальное состояние <span class="green">"Created"</span></p>
+            <p style="font-size: .6em; text-align: left;">Метод <span class="green">show()</span> меняет на <span class="green">"Interactive"</span></p>
+            <p style="font-size: .6em; text-align: left;">Метод <span class="green">abort()</span> или любая ошибка приводят к состоянию <span class="green">"Closed"</span></p>
+            <p style="font-size: .6em; text-align: left;">Пользователь принимает или отклоняет платеж – также <span class="green">"Closed"</span></p>
+        </section>
+
+        <section class="center">
+            <h2 class="center">Поддерживаемые способы оплаты</h2>
+            <p style="text-align: left; font-size: .8em;">- Стандартизированные способы оплаты</p>
+            <p style="text-align: left; font-size: .8em;">- Способы оплаты на основе URL</p>
+        </section>
+
+        <section class="center">
+            <h2 class="center">Стандартизированные способы оплаты</h2>
+            <p class="center" style="text-align: left; font-size: .7em;">Имеют реестр способов оплаты</p>
+            <p style="text-align: left;">
+                <span class="green" style="font-size: .7em;">- basic-card</span>
+            </p>
+            <p style="text-align: left;">
+                <span class="grey" style="font-size: 0.7em;">- basic-credit-transfer</span>
+            </p>
+            <p style="text-align: left;">
+                <span class="grey" style="font-size: 0.7em;">- tokenized-card</span>
+            </p>
+            <p style="text-align: left;">
+                <span class="grey" style="font-size: 0.7em;">- sepamail</span>
+            </p>
+        </section>
+
+        <section class="center">
+            <h2>Способы оплаты на основе URL</h2>
+            <p style="text-align: left; font-size: .7em;">Cвязаны с определенным платежным приложением</p>
+            <p style="text-align: left; font-size: .7em;">Не имеют реестра способов оплаты</p>
+            <img style="max-width: 48%;" src="images/url-based-payment-request.png">
+            <img style="max-width: 48%;" src="images/url-based-payment-request-2.png">
+        </section>
+
+        <section class="center">
+            <h2 class="center">Поддерживаемые способы оплаты</h2>
+            <pre class="javascript">
+                <code style="font-size:.4em; margin-top: -65px;" data-noescape data-trim>
+                    const paymentRequest = new PaymentRequest(
+                        <span style="background:#ff0">paymentMethods</span>, orderDetails, paymentOptions
+                    );
+                </code>
+                <code style="font-size:.4em; margin-top: -100px;" data-noescape data-trim>
+                    const paymentMethods = [
+                        {
+                            supportedMethods: ['basic-card'],
+                            data: {
+                                supportedNetworks: [ // "бренды" поддерживаемых карт
+                                    'visa', 'mastercard', 'unionpay'
+                                ],
+                                supportedTypes: [ // типы поддерживаемых карт
+                                    'debit', 'credit'
+                                ]
+                            }
+                        },
+                        { supportedMethods: "https://apple.com/apple-pay" }
+                    ];
+                </code>
+            </pre>
+        </section>
+
+        <section class="center">
+            <h2 class="center">Информация о заказе</h2>
+            <pre class="javascript">
+                <code style="font-size:.4em; margin-top: -65px;" data-noescape data-trim>
+                    const paymentRequest = new PaymentRequest(
+                        paymentMethods, <span style="background:#ff0">orderDetails</span>, paymentOptions
+                    );
+                </code>
+                <code style="font-size:.4em; margin-top: -100px;" data-noescape data-trim>
+                    const orderDetails = {
+                        displayItems: [{
+                            label: '1 x Футболка ДММ',
+                            amount: { currency: 'RUB', value: '650.00' }
+                        }],
+                        total: {
+                            label: 'ДММ мерч',
+                            amount: { currency: 'RUB', value: '650.00' }
+                        }
+                    };
+                </code>
+            </pre>
+        </section>
+
+        <section class="center">
+            <h2 class="center">2 + 2 = 5? Возможно</h2>
+            <p class="red" style="text-align: left; font-size: 0.8em;">PR API не выполняет арифметическую проверку</p>
+            <p style="text-align: left; font-size: 0.8em;">Разработчик приложения отвечает за то, что значение в total будет соответствовать значениям в displayItems</p>
+        </section>
+
+        <section class="center">
+            <h2 class="center">Поддерживаемые методы оплаты</h2>
+            <pre class="javascript">
+                <code style="font-size:.4em; margin-top: -65px;" data-noescape data-trim>
+                    const paymentRequest = new PaymentRequest(
+                        paymentMethods, orderDetails, <span style="background:#ff0">paymentOptions</span>
+                    );
+                </code>
+                <code style="font-size:.4em; margin-top: -100px;" data-noescape data-trim>
+                    // Пользователю будет предложено указать
+                    // адрес электронной почты, имя, номер телефона, адрес доставки
+                    // и тип доставки, например:
+                    const paymentOptions = {
+                        requestPayerEmail: true,
+                        requestPayerPhone: true,
+                        requestShipping: true
+                    };
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <h2 class="center">Создание экземпляра PaymentRequest</h2>
+            <pre class="javascript">
+                <code data-noescape data-trim>
+                    const paymentRequest = new PaymentRequest(
+                        paymentMethods, // способы оплаты
+                        orderDetails, // детали заказа
+                        paymentOptions  // [данные об оплате]
+                    );
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <h2 class="center">Обработка транзакции</h2>
+            <pre class="javascript">
+                <code data-noescape data-trim style="font-size: .4em">
+                    paymentRequest
+                        .show()
+                        .then(paymentResponse => {
+                            const paymentData = { ... };
+                            return fetch('/paymentGatewayAddress', paymentData)
+                                .then(response => paymentResponse.complete(...)})
+                                .then(() => successPanel.innerHTML = 'Order complete!')
+                                .catch(() => paymentResponse.complete('fail'));
+                            })
+                        .catch(() => {
+                            failPanel.innerHTML = 'Order failed';
+                        });
+                </code>
+            </pre>
+        </section>
+
+        <section style="height: 100%">
+            <pre style="height: 100px; text-align: center" class="javascript">
+                <code data-noescape data-trim style="font-size: .4em">
+                    paymentRequest.<span style="background:#ff0">show()</span>
+                </code>
+            </pre>
+            <img style="width: 530px; position: absolute; margin-left: auto; margin-right: auto; left: 0; right: 0;" src="images/payment-api-demo-1.png">
+        </section>
+
+        <section style="height: 100%">
+            <pre style="height: 100px; text-align: center" class="javascript">
+                <code data-noescape data-trim style="font-size: .4em">
+                    paymentRequest.<span style="background:#ff0">show()</span>
+                </code>
+            </pre>
+            <img style="width: 530px; position: absolute; margin-left: auto; margin-right: auto; left: 0; right: 0;" src="images/payment-api-demo-2.png">
+        </section>
+
+        <section style="height: 100%">
+            <pre style="height: 100px; text-align: center" class="javascript">
+                <code data-noescape data-trim style="font-size: .4em">
+                    paymentRequest.<span style="background:#ff0">show()</span>
+                </code>
+            </pre>
+            <img style="width: 530px; position: absolute; margin-left: auto; margin-right: auto; left: 0; right: 0;" src="images/payment-api-demo-3.png">
+        </section>
+
+        <section>
+            <pre  class="javascript" style="height: 100px;">
+                <code data-noescape data-trim style="font-size: .4em">
+                    paymentRequest
+                        .show().then(paymentResponse => <span style="background:#ff0">console.info(paymentResponse)</span>);
+                    // {
+                    //    methodName: 'basic-card',
+                    //    details: {
+                    //        billingAddress: {
+                    //            city: 'Москва',
+                    //            country: 'RU',
+                    //            organization: 'Яндекс',
+                    //            phone: '+79991233212',
+                    //            ...
+                    //        },
+                    //        cardNumber: '0000000000000000',
+                    //        cardSecurityCode: '123',
+                    //        cardholderName: 'ILYENKO KRISTINA',
+                    //        expiryMonth: '06',
+                    //        expiryYear: '2020'
+                    //    }
+                    //    ...
+                    // }
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre class="javascript" style="height: 100px;">
+                <code data-noescape data-trim style="font-size: 0.4em">
+                    paymentRequest
+                        .show()
+                        .<span style="background:#ff0">then</span>(paymentResponse => {
+                            const paymentInfo = {
+                                details:    paymentResponse.details,
+                                methodName: paymentResponse.methodName
+                            };
+
+                            const paymentData = {
+                                body: JSON.stringify(paymentInfo),
+                                credentials: 'include',
+                                headers: { 'Content-Type': 'application/json' },
+                                method: 'POST'
+                            };
+
+                            return fetch('/paymentGatewayAddress', paymentData)
+                                .then(...)
+                                .catch(...);
+                        });
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre class="javascript" style="height: 100px;">
+                <code data-noescape data-trim style="font-size: .4em">
+                    paymentRequest
+                        .show()
+                        .<span style="background:#ff0">then</span>(paymentResponse => {
+                            const paymentData = { ... };
+                            return fetch('/paymentGatewayAddress', paymentData)
+                                .then(response => {
+                                    if (response.status === 200) {
+                                        return paymentResponse.complete('success');
+                                    } else {
+                                        return paymentResponse.complete('fail');
+                                    }
+                                })
+                                .then(() => document.getElementById('status')
+                                    .innerHTML = 'Order complete!')
+                                .catch(() => paymentResponse.complete('fail'));
+                        })
+                        .catch(() => document.getElementById('status')
+                            .innerHTML = 'Order failed!';);
+                </code>
+            </pre>
+        </section>
+
+
+        <section style="
+            width: 615px;
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+            left: 0;
+            right: 0;
+        ">
+            <img src="images/payment-api-demo-4.png" />
+        </section>
+
+        </div></div>
+        <script src="../../@lib/core.js"></script>
+    </body>
+</html>
