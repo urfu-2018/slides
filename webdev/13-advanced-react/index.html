@@ -1,0 +1,1672 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Advanced React</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../@lib/core.css">
+    <link rel="stylesheet" href="../../@lib/theme.css">
+    <link rel="icon" href="./images/favicon.ico" />
+    <style>
+        .reveal .object-fit-fill.slide-background[data-background-size=contain] video {
+            object-fit: fill !important;
+        }
+    </style>
+</head>
+<body class="white"><div class="reveal"><div class="slides">
+
+<section class="center">
+    <h1 style="position: relative; font-family: 'Ubuntu Mono', sourcesanspro-light, sans-serif; display: flex; align-items: center; justify-content: center;">
+        <img src="./images/react-logo.svg" width="200" style="margin-left: -240px">
+        <span style="margin-left: 40px;">React</span>
+        <span class="grey" style="font-size: 35px; display: block; position: absolute; bottom: 20px;">Advanced</span>  
+    </h1>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">Single
+        Page Application
+        &nbsp;<span class="grey" style="font-size: 35px;">(SPA)</span></h2>
+    <p>Веб-приложение или сайт, который загружает только одну страницу и все последующие запросы
+        обрабатываются без полной перезагрузки страницы</p>
+</section>
+
+<section class="object-fit-fill" data-background-video="./images/notes-app.mp4" data-background-size="contain" data-background-video-loop data-background-position="top" data-background-color="#f6f5f3"></section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Express.js</h2>
+    <pre><code class="javascript" data-trim data-noescape>
+        import express from 'express';
+        
+        const app = express();
+        
+        app.get('/notes', (req, res) => res.render('notes'));
+
+        app.all('*', (req, res) => res.sendStatus(404));
+        
+        app.listen(8080);
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="display: flex; align-items: center; justify-content: center;">
+        <img src="./images/react-router.png" width="100px" style="margin-left: -140px">
+        <span style="font-weight: bold; font-size: 70px; margin-left: 40px;">React Router</span>
+    </h2>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">React Router</h2>
+    <pre><code data-trim data-noescape style="background: rgba(0,0,0,.04);">
+        <span class="red">$</span> npm install react-router-dom @types/react-router-dom
+    </code></pre>
+    <pre class="fragment"><code class="typescript" style="font-size: 20px" data-noescape data-trim>
+        import { Fragment } from 'react';
+        import { BrowserRouter, Route } from 'react-router-dom';
+        
+        function NotesApp() {
+            return (
+                &lt;<span class="hljs-name">BrowserRouter</span>>
+                    &lt;<span class="hljs-name">Fragment</span>>
+                        &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>="/" <span class="hljs-attr">component</span>={HomePage} />
+                        &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>="/notes" <span class="hljs-attr">component</span>={NotesPage} />
+                    &lt;/<span class="hljs-name">Fragment</span>>
+                &lt;/<span class="hljs-name">BrowserRouter</span>>
+            );
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">React Router</h2>
+    <pre><code data-trim data-noescape style="background: rgba(0,0,0,.04);">
+        <span class="red">$</span> npm install react-router-dom @types/react-router-dom
+    </code></pre>
+    <pre><code class="typescript" style="font-size: 20px" data-noescape data-trim>
+        import { Fragment } from 'react';
+        import { BrowserRouter, Route } from 'react-router-dom';
+        
+        function NotesApp() {
+            return (
+                &lt;<span class="hljs-name">BrowserRouter</span>>
+                    &lt;<span class="hljs-name">Fragment</span>>
+                        &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">exact</span> <span class="hljs-attr">path</span>="/" <span class="hljs-attr">component</span>={HomePage} />
+                        &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>="/notes" <span class="hljs-attr">component</span>={NotesPage} />
+                    &lt;/<span class="hljs-name">Fragment</span>>
+                &lt;/<span class="hljs-name">BrowserRouter</span>>
+            );
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">React Router</h2>
+    <pre><code class="language-javascript" style="font-size: 20px" data-noescape data-trim>
+        import { Fragment } from 'react';
+        import { BrowserRouter, Route, Link } from 'react-router-dom';
+        
+        function NotesApp() {
+            return (
+                &lt;<span class="hljs-name">BrowserRouter</span>>
+                    &lt;<span class="hljs-name">Fragment</span>>
+                        &lt;<span class="hljs-name">nav</span>>
+                            &lt;<span class="hljs-name">Link</span> <span class="hljs-attr">to</span>=<span class="hljs-string">"/home"</span>>Home&lt;/<span class="hljs-name">Link</span>>
+                            &lt;<span class="hljs-name">Link</span> <span class="hljs-attr">to</span>=<span class="hljs-string">"/notes"</span>>Notes&lt;/<span class="hljs-name">Link</span>>
+                        &lt;/<span class="hljs-name">nav</span>>
+                        &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">exact</span> <span class="hljs-attr">path</span>=<span class="hljs-string">"/home"</span> <span class="hljs-attr">component</span>={HomePage} />
+                        &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">exact</span> <span class="hljs-attr">path</span>=<span class="hljs-string">"/notes"</span> <span class="hljs-attr">component</span>={NotesPage} />
+                    &lt;/<span class="hljs-name">Fragment</span>>
+                &lt;/<span class="hljs-name">BrowserRouter</span>>
+            );
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">React Router</h2>
+    <pre><code class="language-javascript" style="font-size: 20px" data-noescape data-trim>
+        <span style="opacity: .3">import { Fragment } from 'react';</span>
+        import { BrowserRouter, Route, Link } from 'react-router-dom';<span style="opacity: .3">
+        
+        function NotesApp() {
+            return (
+                &lt;<span class="hljs-name">BrowserRouter</span>>
+                    &lt;<span class="hljs-name">Fragment</span>>
+                        &lt;<span class="hljs-name">nav</span>></span>
+                            &lt;<span class="hljs-name">Link</span> <span class="hljs-attr">to</span>=<span class="hljs-string">"/home"</span>>Home&lt;/<span class="hljs-name">Link</span>>
+                            &lt;<span class="hljs-name">Link</span> <span class="hljs-attr">to</span>=<span class="hljs-string">"/notes"</span>>Notes&lt;/<span class="hljs-name">Link</span>><span style="opacity: .3">
+                        &lt;/<span class="hljs-name">nav</span>>
+                        &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">exact</span> <span class="hljs-attr">path</span>=<span class="hljs-string">"/home"</span> <span class="hljs-attr">component</span>={HomePage} />
+                        &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">exact</span> <span class="hljs-attr">path</span>=<span class="hljs-string">"/notes"</span> <span class="hljs-attr">component</span>={NotesPage} />
+                    &lt;/<span class="hljs-name">Fragment</span>>
+                &lt;/<span class="hljs-name">BrowserRouter</span>>
+            );
+        }</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">React Router</h2>
+    <pre><code class="language-javascript" style="font-size: 19px" data-noescape data-trim>
+        <span style="opacity: .3">import { Fragment } from 'react';</span>
+        import { BrowserRouter, Route, NavLink } from 'react-router-dom';<span style="opacity: .3">
+        
+        function NotesApp() {
+            return (
+                &lt;<span class="hljs-name">BrowserRouter</span>>
+                    &lt;<span class="hljs-name">Fragment</span>>
+                        &lt;<span class="hljs-name">nav</span>></span>
+                            &lt;<span class="hljs-name">NavLink</span> <span class="hljs-attr">activeClassName</span>=<span class="hljs-string">"link_active"</span> <span class="hljs-attr">to</span>=<span class="hljs-string">"/home"</span>>
+                                Home
+                            &lt;/<span class="hljs-name">NavLink</span>>
+                            &lt;<span class="hljs-name">NavLink</span> <span class="hljs-attr">activeClassName</span>=<span class="hljs-string">"link_active"</span> <span class="hljs-attr">to</span>=<span class="hljs-string">"/notes"</span>>
+                                Notes
+                            &lt;/<span class="hljs-name">NavLink</span>><span style="opacity: .3">
+                        &lt;/<span class="hljs-name">nav</span>>
+                        &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">exact</span> <span class="hljs-attr">path</span>=<span class="hljs-string">"/home"</span> <span class="hljs-attr">component</span>={HomePage} />
+                        &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">exact</span> <span class="hljs-attr">path</span>=<span class="hljs-string">"/notes"</span> <span class="hljs-attr">component</span>={NotesPage} />
+                    &lt;/<span class="hljs-name">Fragment</span>>
+                &lt;/<span class="hljs-name">BrowserRouter</span>>
+            );
+        }</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">React Router</h2>
+    <pre><code class="javascript" style="font-size: 22px" data-noescape data-trim>
+        import { Fragment } from 'react';
+        import { BrowserRouter, Route } from 'react-router-dom';
+        
+        function NotesApp() {
+            return (
+                &lt;BrowserRouter>
+                    &lt;Fragment>
+                        &lt;Route exact path="/notes/:id" component={NotePage} />
+                    &lt;/Fragment>
+                &lt;/BrowserRouter>
+            );
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">React Router</h2>
+    <pre><code class="typescript" data-trim data-noescape>
+        import { RouteComponentProps } from 'react-router-dom';
+
+        type NotePageProps = RouteComponentProps<{ id: string }>;
+
+        function NotePage({ match }: NotePageProps) {
+            return &lt;<span class="hljs-name">h1</span>>Note id: {match.params.id}&lt;/<span class="hljs-name">h1</span>>;
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">React Router</h2>
+    <pre><code class="typescript" data-trim data-noescape>
+        import { RouteComponentProps } from 'react-router-dom';
+
+        type NotePageProps = RouteComponentProps<{ id: string }>;<span style="opacity: .3">
+
+        function NotePage({ match }: NotePageProps) {
+            return &lt;<span class="hljs-name">h1</span>>Note id: {match.params.id}&lt;/<span class="hljs-name">h1</span>>;
+        }</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">React Router</h2>
+    <pre><code class="typescript" data-trim data-noescape>
+        <span style="opacity: .3">import { RouteComponentProps } from 'react-router-dom';
+
+        type NotePageProps = RouteComponentProps<{ id: string }>;</span>
+
+        function NotePage({ match }: NotePageProps) {
+            return &lt;<span class="hljs-name">h1</span>>Note id: {match.params.id}&lt;/<span class="hljs-name">h1</span>>;
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">React Router</h2>
+    <pre><code class="javascript" style="font-size: 22px" data-noescape data-trim>
+        import { Fragment } from 'react';
+        import { BrowserRouter, Route } from 'react-router-dom';
+        
+        function NotesApp() {
+            return (
+                &lt;<span class="hljs-name">BrowserRouter</span>>
+                    &lt;<span class="hljs-name">Fragment</span>>
+                        &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">exact</span> <span class="hljs-attr">path</span>=<span class="hljs-string">"/home"</span> <span class="hljs-attr">component</span>={HomePage} />
+                        &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">exact</span> <span class="hljs-attr">path</span>=<span class="hljs-string">"/notes"</span> <span class="hljs-attr">component</span>={NotesPage} />
+                        &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">exact</span> <span class="hljs-attr">path</span>=<span class="hljs-string">"/notes/:id"</span> <span class="hljs-attr">component</span>={NotePage} />
+                        &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">component</span>={NotFoundPage} />
+                    &lt;/<span class="hljs-name">Fragment</span>>
+                &lt;/<span class="hljs-name">BrowserRouter</span>>
+            );
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">React Router</h2>
+    <pre><code class="javascript" style="font-size: 22px" data-noescape data-trim>
+        import { Fragment } from 'react';
+        import { BrowserRouter, Route, Switch } from 'react-router-dom';
+        
+        function NotesApp() {
+            return (
+                &lt;<span class="hljs-name">BrowserRouter</span>>
+                    &lt;<span class="hljs-name">Switch</span>>
+                        &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">exact</span> <span class="hljs-attr">path</span>=<span class="hljs-string">"/home"</span> <span class="hljs-attr">component</span>={HomePage} />
+                        &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">exact</span> <span class="hljs-attr">path</span>=<span class="hljs-string">"/notes"</span> <span class="hljs-attr">component</span>={NotesPage} />
+                        &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">exact</span> <span class="hljs-attr">path</span>=<span class="hljs-string">"/notes/:id"</span> <span class="hljs-attr">component</span>={NotePage} />
+                        &lt;<span class="hljs-name">Route</span> <span class="hljs-attr">component</span>={NotFoundPage} />
+                    &lt;/<span class="hljs-name">Switch</span>>
+                &lt;/<span class="hljs-name">BrowserRouter</span>>
+            );
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Работа с API</h2>  
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Работа с API</h2>
+    <pre><code class="typescript" data-trim data-noescape style="font-size: 19px; margin-top: -30px">
+        class Notes extends Component {
+            ...
+
+            render() {
+                if (this.state.loading) {
+                    return 'Загрузка...';
+                }
+
+                if (this.state.error) {
+                    return 'Что-то пошло не так';
+                }
+
+                return (
+                    &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="notes">
+                        {this.state.notes.map(note => (
+                            &lt;<span class="hljs-name">Note</span> <span class="hljs-attr">key</span>={note.id} <span class="hljs-attr">name</span>={note.name} <span class="hljs-attr">text</span>={note.text} />
+                        ))}
+                    &lt;/<span class="hljs-name">div</span>>
+                );
+            }
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Работа с API</h2>
+    <pre><code class="typescript" data-trim data-noescape style="font-size: 19px;">
+        class Notes extends Component&lt;NotesProps, NotesState> {
+            state: NotesState = {
+                loading: true,
+                error: false,
+                notes: null
+            }
+
+            componentDidMount() {
+                fetch('/api/notes')
+                    .then(response => response.json())
+                    .then(notes => {
+                        this.setState({ notes, loading: false });
+                    })
+                    .catch(() => {
+                        this.setState({ error: true, loading: false });
+                    });
+            }
+
+            ...
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Работа с API</h2>
+    <pre><code class="typescript" data-trim data-noescape style="font-size: 19px;">
+        <span style="opacity: .3">class Notes extends Component&lt;NotesProps, NotesState> {</span>
+            state: NotesState = {
+                loading: true,
+                error: false,
+                notes: null
+            }<span style="opacity: .3">
+
+            componentDidMount() {
+                fetch('/api/notes')
+                    .then(response => response.json())
+                    .then(notes => {
+                        this.setState({ notes, loading: false });
+                    })
+                    .catch(() => {
+                        this.setState({ error: true, loading: false });
+                    });
+            }
+
+            ...
+        }</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Работа с API</h2>
+    <pre><code class="typescript" data-trim data-noescape style="font-size: 19px;">
+        <span style="opacity: .3">class Notes extends Component&lt;NotesProps, NotesState> {
+            state: NotesState = {
+                loading: true,
+                error: false,
+                notes: null
+            }</span>
+
+            componentDidMount() {
+                fetch('/api/notes')
+                    .then(response => response.json())
+                    .then(notes => {
+                        this.setState({ loading: false, notes });
+                    })
+                    .catch(() => {
+                        this.setState({ error: true, loading: false });
+                    });
+            }<span style="opacity: .3">
+
+            ...
+        }</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Компоненты высшего порядка</h2>
+    <h2 class="grey" style="font-weight: bold; font-size: 35px;">Higher-Order Components (HOC)</h2>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Функции высшего порядка</h2>
+    <h2 class="grey" style="font-weight: bold; font-size: 35px;">Higher-Order Functions</h2>
+</section>
+
+<section class="center">
+    <p style="font-size: 45px;">Функция, которая <strong>принимает функцию</strong><br>в качестве аргумента или<br> <strong>возвращает функцию</strong> в качестве результата, называется функцией высшего порядка</p>   
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Функции высшего порядка</h2>
+    <pre><code class="javascript" data-trim data-noescape>
+        function greaterThen(x) {
+            return function (y) {
+                return x > y;
+            }
+        }
+
+        const greaterThen10 = greaterThen(10);
+        
+        greaterThen10(42); // true 
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Функции высшего порядка</h2>
+    <pre><code class="javascript" data-trim data-noescape>
+        function logArguments(f) {
+            return function (...args) {
+                const result = f(...args);
+
+                console.log('called with', args, 'result', result);
+
+                return result;
+            }
+        }
+
+        logArguments(Math.max)(1, 2, 3);
+        // called with [1, 2, 3] result 3
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Функции высшего порядка</h2>
+    <pre><code class="javascript" data-trim data-noescape>
+        [...].map(n => ...);
+    </code></pre>
+    <pre><code class="javascript" data-trim data-noescape>
+        [...].filter(n => ...);
+    </code></pre>
+    <pre><code class="javascript" data-trim data-noescape>
+        [...].reduce((acc, n) => ...);
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Компоненты высшего порядка</h2>
+    <div style="display: flex; align-items: center; flex-direction: column; margin-top: 30px;">
+        <div class="fragment" style="text-align: center">
+            <div style="font-size: 35px; margin-bottom: 15px;">Принимают компонент в качестве аргумента</div>
+            <div style="font-size: 35px; margin-bottom: 15px;">Возвращают новый компонент</div>
+            <div style="font-size: 35px; margin-bottom: 15px;">Могут отрендерить переданный компонент</div>
+        </div>
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">withRouter</h2>
+    <pre><code class="typescript" data-trim data-noescape style="font-size: 22px; margin-top: -20px">
+        import React, { Component } from 'react';
+        import { RouteComponentProps, withRouter } from 'react-router-dom';
+
+        interface NoteOwnProps {
+            name: string;
+            text: string;
+        }
+
+        type NoteProps = NoteOwnProps & RouteComponentProps&lt;{ id: string }>;
+
+        function Note({ name, text, match }: NoteProps) {
+            return &lt;<span class="hljs-name">div</span>>ID: {match.params.id}&lt;/<span class="hljs-name">div</span>>;
+        }
+
+        <span class="hljs-keyword">const</span> NoteWithRouter = withRouter(Note);
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">withRouter</h2>
+    <pre><code class="typescript" data-trim data-noescape style="font-size: 22px; margin-top: -20px">
+        import React, { Component } from 'react';
+        import { RouteComponentProps, withRouter } from 'react-router-dom';
+
+        interface NoteOwnProps {
+            name: string;
+            text: string;
+        }
+
+        type NoteProps = NoteOwnProps & RouteComponentProps&lt;{ id: string }>;<span style="opacity: .3">
+
+        function Note({ name, text, match }: NoteProps) {
+            return &lt;<span class="hljs-name">div</span>>ID: {match.params.id}&lt;/<span class="hljs-name">div</span>>;
+        }
+
+        <span class="hljs-keyword">const</span> NoteWithRouter = withRouter(Note);</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">withRouter</h2>
+    <pre><code class="typescript" data-trim data-noescape style="font-size: 22px; margin-top: -20px">
+        <span style="opacity: .3">import React, { Component } from 'react';
+        import { RouteComponentProps, withRouter } from 'react-router-dom';
+
+        interface NoteOwnProps {
+            name: string;
+            text: string;
+        }
+
+        type NoteProps = NoteOwnProps & RouteComponentProps&lt;{ id: string }>;</span>
+
+        function Note({ name, text, match }: NoteProps) {
+            return &lt;<span class="hljs-name">div</span>>ID: {match.params.id}&lt;/<span class="hljs-name">div</span>>;
+        }<span style="opacity: .3">
+
+        <span class="hljs-keyword">const</span> NoteWithRouter = withRouter(Note);</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">withRouter</h2>
+    <pre><code class="typescript" data-trim data-noescape style="font-size: 22px; margin-top: -20px">
+        <span style="opacity: .3">import React, { Component } from 'react';
+        import { RouteComponentProps, withRouter } from 'react-router-dom';
+
+        interface NoteOwnProps {
+            name: string;
+            text: string;
+        }
+
+        type NoteProps = NoteOwnProps & RouteComponentProps&lt;{ id: string }>;
+
+        function Note({ name, text, match }: NoteProps) {
+            return &lt;<span class="hljs-name">div</span>>ID: {match.params.id}&lt;/<span class="hljs-name">div</span>>;
+        }</span>
+
+        <span class="hljs-keyword">const</span> NoteWithRouter = withRouter(Note);
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Компоненты высшего порядка</h2>
+    <pre><code data-trim data-noescape>
+        import React, { Component } from 'react';
+
+        function hoc(WrappedComponent) {
+            return class extends Component {
+                render() {
+                    return &lt;WrappedComponent {...this.props} />;
+                }
+            }
+        }
+    </code></pre>
+</section>
+
+<section>
+    <pre><code data-trim data-noescape style="font-size: 19px;">
+        import React, { Component } from 'react';
+
+        function withData(url, WrappedComponent) {
+            export class extends Component {
+                state = { ... }
+
+                componentDidMount() { // Запрашиваем данные, используя <span style="font-weight: bold">полученный</span> url
+                    ...               // См. «Работа с API»
+                }
+
+                render() {
+                    if (this.state.loading) {
+                        return 'Загрузка...';
+                    }
+
+                    if (this.state.error) {
+                        return 'Что-то пошло не так';
+                    }
+
+                    return &lt;WrappedComponent data={this.state.data} {...this.props} />;
+                }
+            }
+        }
+    </code></pre>
+</section>
+
+<section>
+    <pre><code data-trim data-noescape style="font-size: 19px;">
+        import React, { Component } from 'react';
+
+        function withData(url, WrappedComponent) {
+            export class extends Component {
+                <span style="opacity: .3">state = { ... }
+
+                componentDidMount() { // Получаем данные, используя <span style="font-weight: bold">полученный</span> url
+                    ...               // См. «Работа с API»
+                }
+
+                render() {
+                    if (this.state.loading) {
+                        return 'Загрузка...';
+                    }
+
+                    if (this.state.error) {
+                        return 'Что-то пошло не так';
+                    }
+
+                    return &lt;WrappedComponent data={this.state.data} {...this.props} />;
+                }</span>
+            }
+        }
+    </code></pre>
+</section>
+
+<section>
+    <pre><code data-trim data-noescape style="font-size: 19px;">
+        <span style="opacity: .3">import React, { Component } from 'react';
+
+        function withData(url, WrappedComponent) {
+            export class extends Component {</span>
+                state = { ... }
+
+                componentDidMount() { // Получаем данные, используя <span style="font-weight: bold">полученный</span> url
+                    ...               // См. «Работа с API»
+                }
+
+                <span style="opacity: .3">render() {
+                    if (this.state.loading) {
+                        return 'Загрузка...';
+                    }
+
+                    if (this.state.error) {
+                        return 'Что-то пошло не так';
+                    }
+
+                    return &lt;WrappedComponent data={this.state.data} {...this.props} />;
+                }
+            }
+        }</span>
+    </code></pre>
+</section>
+
+<section>
+    <pre><code data-trim data-noescape style="font-size: 19px;">
+        <span style="opacity: .3">import React, { Component } from 'react';
+
+        function withData(url, WrappedComponent) {
+            export class extends Component {
+                state = { ... }
+
+                componentDidMount() { // Получаем данные, используя <span style="font-weight: bold">полученный</span> url
+                    ...               // См. «Работа с API»
+                }</span>
+
+                render() {
+                    if (this.state.loading) {
+                        return 'Загрузка...';
+                    }
+
+                    if (this.state.error) {
+                        return 'Что-то пошло не так';
+                    }
+
+                    return &lt;WrappedComponent data={this.state.data} {...this.props} />;
+                }<span style="opacity: .3">
+            }
+        }</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <pre><code class="javascript" data-trim data-noescape style="font-size: 21px">
+        import withData from './hoc/with-data';
+
+        // Данные просто приходят в пропсах
+        function Notes({ data }: NotesProps)  {
+            return (
+                &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"notes"</span>>
+                    {data.map(note => (
+                        &lt;<span class="hljs-name">Note</span> <span class="hljs-attr">key</span>={note.id} <span class="hljs-attr">name</span>={note.name} <span class="hljs-attr">text</span>={note.text} />
+                    ))}
+                &lt;<span class="hljs-name">div</span>>
+            );
+        }
+
+        <span class="hljs-comment">// Оборачиваем Notes, чтобы получить данные</span>
+        <span class="hljs-keyword">export default</span> withData(<span class="hljs-string">'/api/notes'</span>, Notes);
+    </code></pre>
+</section>
+
+<section class="center">
+    <pre><code class="javascript" data-trim data-noescape>
+        import Notes from './components/notes';
+        
+        function NotesApp() {
+            // Используем как самый обычный компонент
+            return (
+                &lt;div className="notes-app">
+                    &lt;Notes /> 
+                    ...
+                &lt;/div>
+            )
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <pre><code class="javascript" data-trim data-noescape>
+        withData('/api/notes', Notes);
+    </code></pre>
+    <pre class="fragment"><code class="javascript" data-trim data-noescape>
+        withData('/api/notes/???', Note);
+    </code></pre>
+</section>
+
+<section class="center">
+    <pre><code class="javascript" data-trim data-noescape>
+        withData('/api/notes', Notes);
+    </code></pre>
+    <pre><code class="javascript" data-trim data-noescape>
+        withData(props => `/api/notes/${props.id}`, Note);
+    </code></pre>
+</section>
+
+<section class="center">
+    <pre><code class="javascript" data-trim data-noescape>
+        withData({
+            url: props => `/api/notes/${props.id}`,
+            propName: 'note',
+            headers: {
+                Authorization: 'OAuth ...'
+            }
+        }, Note);
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Композиция</h2>
+    <pre><code class="typescript" data-trim data-noescape>
+        withRouter(withData('/api/notes', Notes));
+    </code></pre>
+    <pre class="fragment"><code class="typescript" data-trim data-noescape>
+        withSomethingElse(
+            withRouter(
+                withData('/api/notes', Notes)
+            )
+        );
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Композиция</h2>
+    <pre><code class="javascript" data-trim data-noescape>
+        // lodash, underscore, ramda ...
+        import { compose } from 'redux';
+
+        compose(f, g, h)(x) === f(g(h(x)));
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Композиция</h2>
+    <pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">
+        withData('/api/notes')(Notes);
+    </code></pre> 
+    <pre class="fragment"><code class="javascript" data-trim data-noescape style="font-size: 20px;">
+        function withData(url) {
+            return function (WrappedComponent) {
+                return class extends Component {
+                    ...
+                }
+            }
+        }
+    </code></pre>
+    <pre class="fragment"><code class="typescript" data-trim data-noescape style="font-size: 20px;">
+        compose(
+            withSomethingElse,
+            withRouter,
+            withData('/api/notes')
+        )(Notes);
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Компоненты высшего порядка</h2>
+    <div style="display: flex; align-items: center; flex-direction: column; margin-top: 30px;">
+        <div style="text-align: center;">
+            <div class="green" style="font-size: 35px; margin-bottom: 15px;">Решают проблему повторного использования кода</div>
+            <div class="fragment red" style="font-size: 35px; margin-bottom: 15px;">Возможны конфликты имен</div>
+            <div class="fragment red" style="font-size: 35px; margin-bottom: 15px;">Не понятно откуда пришли данные</div>
+        </div>
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Render Props</h2>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Render Props</h2>  
+    <pre><code class="javascript" data-trim data-noescape>
+        function Notes() {
+            return (
+                &lt;<span class="hljs-name">DataProvider</span>
+                    <span class="hljs-attr">url</span>=<span class="hljs-string">"/api/notes"</span>
+                    <span class="hljs-attr">render</span>={notes => notes.map(note => (
+                        &lt;<span class="hljs-name">Note</span>
+                            <span class="hljs-attr">key</span>={note.id}
+                            <span class="hljs-attr">name</span>={note.name}
+                            <span class="hljs-attr">text</span>={note.text}
+                        />
+                    ))}
+                />
+            );
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Render Props</h2>  
+    <pre><code class="javascript" data-trim data-noescape style="font-size: 23px;">
+        function renderNotes(notes) {
+            return notes.map(note => (
+                &lt;<span class="hljs-name">Note</span> <span class="hljs-attr">key</span>={note.id} <span class="hljs-attr">name</span>={note.name} <span class="hljs-attr">text</span>={note.text} />
+            ));
+        }
+
+        <span class="hljs-keyword">function</span> <span class="hljs-attr">Notes</span>() {
+            <span class="hljs-keyword">return</span> &lt;<span class="hljs-name">DataProvider</span> <span class="hljs-attr">url</span>=<span class="hljs-string">"/api/notes"</span> <span class="hljs-attr">render</span>={renderNotes} />;
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Render Props</h2>
+    <pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">
+        class DataProvider extends Component&lt;Props, State> {
+            state = { ... }
+
+            componentDidMount() { // Запрашиваем данные, используя <span style="font-weight: bold">полученный</span> url
+                ...               // См. «Работа с API»
+            }
+
+            render() {
+                if (this.state.loading) {
+                    return 'Загрузка...';
+                }
+
+                if (this.state.error) {
+                    return 'Что-то пошло не так';
+                }
+
+                return this.props.render(this.state.data);
+            }
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Render Props</h2>  
+    <pre><code class="javascript" data-trim data-noescape>
+        function Notes() {
+            return (
+                &lt;DataProvider url="/api/notes">
+                    {notes => notes.map(note => (
+                        &lt;<span class="hljs-name">Note</span>
+                            <span class="hljs-attr">key</span>={note.id}
+                            <span class="hljs-attr">name</span>={note.name}
+                            <span class="hljs-attr">text</span>={note.text}
+                        />
+                    ))}
+                &lt;/DataProvider>
+            );
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Render Props</h2>  
+    <pre><code class="javascript" data-trim data-noescape style="font-size: 20px; margin-top: -20px;">
+        function Notes() {
+            return (
+                &lt;DataProvider url="/api/notes">
+                    {({ data, error, loading }) => {
+                        <span class="hljs-keyword">if</span> (loading) {
+                            <span class="hljs-keyword">return</span> &lt;LoadingScreen />;
+                        }
+
+                        ...
+
+                        <span class="hljs-keyword">return</span> notes.map(note => (
+                            &lt;Note
+                                key={note.id}
+                                name={note.name}
+                                text={note.text}
+                            />
+                        ));
+                    }}
+                &lt;/DataProvider>
+            );
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Render Props</h2>
+    <pre><code class="javascript" data-trim data-noescape style="font-size: 21px;">
+        class DataProvider extends Component&lt;Props, State> {
+            state = { ... }
+
+            componentDidMount() { // Запрашиваем данные, используя <span style="font-weight: bold">полученный</span> url
+                ...               // См. «Работа с API»
+            }
+
+            render() {
+                return this.props.children(this.state);
+            }
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Render Props</h2>
+    <div style="display: flex; align-items: center; flex-direction: column; margin-top: 30px;">
+        <div style="text-align: center;">
+            <div class="green" style="font-size: 35px; margin-bottom: 15px;">Решают проблему повторного использования кода</div>
+            <div class="fragment green" style="font-size: 35px; margin-bottom: 15px;">Не имеют проблем HOC</div>
+            <div class="fragment green" style="font-size: 35px; margin-bottom: 15px;">Нет сложностей с типизацией</div>
+            <div class="fragment red" style="font-size: 35px; margin-bottom: 15px;">Увеличивает вложенность</div>
+        </div>
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Render Props Hell</h2>
+    <pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">
+        &lt;<span class="hljs-name">DataFetcher</span>>
+            {data => (
+                &lt;<span class="hljs-name">Actions</span>>
+                    {actions => (
+                        &lt;<span class="hljs-name">Translations</span>>
+                            {translations => (
+                                &lt;<span class="hljs-name">Styles</span>>
+                                    {styles => ...}
+                                &lt;/<span class="hljs-name">Styles</span>>
+                            )}
+                        &lt;/<span class="hljs-name">Translations</span>>
+                    )}
+                &lt;/<span class="hljs-name">Actions</span>>
+            )}
+        &lt;/<span class="hljs-name">DataFetcher</span>>
+    </code></pre>
+</section>
+
+<section class="object-fit-fill" data-background-video="./images/notes-app.mp4" data-background-size="contain" data-background-video-loop data-background-position="top" data-background-color="#f6f5f3"></section>
+
+<section class="center">
+    <pre><code class="javascript" data-trim data-noescape style="font-size: 21px;">
+        const tabs = [
+            {
+                label: 'Books',
+                content: 'Dolore exercitation consequat sunt est anim occaecat.'
+            },
+            {
+                label: 'Films',
+                content: 'Cillum proident enim id pariatur minim reprehenderit.'
+            },
+            ...
+        ];
+    </code></pre>
+</section>
+
+<section class="center">
+    <div style="display: flex; align-items: center; justify-content: center">
+        <pre><code class="javascript" data-trim data-noescape style="font-size: 50px;">
+            &lt;<span class="hljs-name">Tabs</span> <span class="hljs-attr">tabs</span>={tabs} />
+        </code></pre>
+    </div>
+</section>
+
+<section class="center">
+    <div style="display: flex; align-items: center; justify-content: center">
+        <pre><code class="javascript" data-trim data-noescape style="font-size: 50px;">
+            &lt;<span class="hljs-name">Tabs</span>
+                <span class="hljs-attr">tabs</span>={tabs}
+                <span class="hljs-attr">tabsPosition</span>="bottom"
+            />
+        </code></pre>
+    </div>
+</section>
+
+<section class="center">
+    <div style="display: flex; align-items: center; justify-content: center">
+        <pre><code class="javascript" data-trim data-noescape style="font-size: 50px;">
+            &lt;<span class="hljs-name">Tabs</span>
+                <span class="hljs-attr">tabs</span>={tabs}
+                <span class="hljs-attr">tabsPosition</span>="bottom"
+                <span class="hljs-attr">disabled</span>={[ 1 ]}
+            />
+        </code></pre>
+    </div>
+</section>
+
+<section class="center">
+    <div style="display: flex; align-items: center; justify-content: center">
+        <pre><code class="javascript" data-trim data-noescape style="font-size: 40px;">
+            &lt;<span class="hljs-name">Tabs</span>
+                <span class="hljs-attr">tabs</span>={tabs}
+                <span class="hljs-attr">tabsPosition</span>="bottom"
+                <span class="hljs-attr">disabled</span>={[ 1 ]}
+                <span class="hljs-attr">onTabChange</span>={...}
+                <span class="hljs-attr">activeTabClassName</span>="..."
+                <span class="hljs-attr">icons</span>={[...]}
+                ...
+            />
+        </code></pre>
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Составные компоненты</h2>
+    <h2 class="grey" style="font-weight: bold; font-size: 35px;">Compound components</h2>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Составные компоненты</h2>
+    <pre><code class="javascript" data-trim data-noescape style="font-size: 22px;">
+        &lt;<span class="hljs-name">Tabs</span> <span class="hljs-attr">initialTabId</span>="books">
+            &lt;<span class="hljs-name">TabList</span>>
+                &lt;<span class="hljs-name">Tab</span> id="books">Books&lt;/<span class="hljs-name">Tab</span>>
+                &lt;<span class="hljs-name">Tab</span> id="films">Films&lt;/<span class="hljs-name">Tab</span>>
+            &lt;/<span class="hljs-name">TabList</span>>
+            &lt;<span class="hljs-name">TabPanels</span>>
+                &lt;<span class="hljs-name">TabPanel</span> id="books">
+                    Dolore exercitation consequat sunt est anim occaecat.
+                &lt;/<span class="hljs-name">TabPanel</span>>
+                &lt;<span class="hljs-name">TabPanel</span> <span class="hljs-attr">id</span>="films">
+                    Cillum proident enim id pariatur minim reprehenderit.
+                &lt;/<span class="hljs-name">TabPanel</span>>
+            &lt;/<span class="hljs-name">TabPanels</span>>
+        &lt;/<span class="hljs-name">Tabs</span>>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Составные компоненты</h2>
+    <pre><code class="javascript" data-trim data-noescape style="font-size: 22px;">
+        &lt;<span class="hljs-name">Tabs</span> <span class="hljs-attr">initialTabId</span>="books">
+            &lt;<span class="hljs-name">TabPanels</span>>
+                &lt;<span class="hljs-name">TabPanel</span> id="books">
+                    Dolore exercitation consequat sunt est anim occaecat.
+                &lt;/<span class="hljs-name">TabPanel</span>>
+                &lt;<span class="hljs-name">TabPanel</span> <span class="hljs-attr">id</span>="films">
+                    Cillum proident enim id pariatur minim reprehenderit.
+                &lt;/<span class="hljs-name">TabPanel</span>>
+            &lt;/<span class="hljs-name">TabPanels</span>>
+            &lt;<span class="hljs-name">TabList</span>>
+                &lt;<span class="hljs-name">Tab</span> id="books">Books&lt;/<span class="hljs-name">Tab</span>>
+                &lt;<span class="hljs-name">Tab</span> <span class="hljs-attr">id</span>="films">Films&lt;/<span class="hljs-name">Tab</span>>
+            &lt;/<span class="hljs-name">TabList</span>>
+        &lt;/<span class="hljs-name">Tabs</span>>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Составные компоненты</h2>
+    <pre><code class="javascript" data-trim data-noescape style="font-size: 22px;">
+        &lt;<span class="hljs-name">Tabs</span> <span class="hljs-attr">initialTabId</span>="books">
+            &lt;<span class="hljs-name">TabPanels</span>>
+                &lt;<span class="hljs-name">TabPanel</span> id="books">
+                    Dolore exercitation consequat sunt est anim occaecat.
+                &lt;/<span class="hljs-name">TabPanel</span>>
+                &lt;<span class="hljs-name">TabPanel</span> <span class="hljs-attr">id</span>="films">
+                    Cillum proident enim id pariatur minim reprehenderit.
+                &lt;/<span class="hljs-name">TabPanel</span>>
+            &lt;/<span class="hljs-name">TabPanels</span>>
+            &lt;<span class="hljs-name">TabList</span>>
+                &lt;<span class="hljs-name">Tab</span> id="books">Books&lt;/<span class="hljs-name">Tab</span>>
+                &lt;<span class="hljs-name">Tab</span> <span class="hljs-attr">id</span>="films" <span class="hljs-attr">disabled</span>>Films&lt;/<span class="hljs-name">Tab</span>>
+            &lt;/<span class="hljs-name">TabList</span>>
+        &lt;/<span class="hljs-name">Tabs</span>>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Составные компоненты</h2>
+    <pre><code class="javascript" data-trim data-noescape>
+        &lt;<span class="hljs-name">select</span>>
+            &lt;<span class="hljs-name">optgroup</span> <span class="hljs-attr">label</span>=<span class="hljs-string">"Группа"</span>>
+                &lt;<span class="hljs-name">option</span>>Пункт 1&lt;/<span class="hljs-name">option</span>>
+                &lt;<span class="hljs-name">option</span>>Пункт 2&lt;/<span class="hljs-name">option</span>>
+            &lt;/<span class="hljs-name">optgroup</span>> 
+            &lt;<span class="hljs-name">option</span>>Пункт 3&lt;/<span class="hljs-name">option</span>>
+            &lt;<span class="hljs-name">option</span>>Пункт 4&lt;/<span class="hljs-name">option</span>>
+        &lt;/<span class="hljs-name">select</span>>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Контекст</h2>
+    <h2 class="grey" style="font-weight: bold; font-size: 35px;">Context</h2>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Контекст</h2>
+    <pre><code class="javascript" data-trim data-noescape>
+        // theme-context.ts
+        import { createContext } from 'react';
+
+        const ThemeContext = createContext('light');
+
+        export default ThemeContext;
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Контекст</h2>
+    <pre><code class="javascript" data-trim data-noescape>
+        import React from 'react';
+
+        import ThemeContext from './theme-context';
+
+        function Note() {
+            return (
+                &lt;ThemeContext.Consumer>
+                    {theme => ...}
+                &lt;/ThemeContext.Consumer>
+            );
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Контекст</h2>
+    <pre><code class="javascript" data-trim data-noescape>
+        import React, { Component } from 'react';
+
+        import ThemeContext from './theme-context';
+
+        class NotesApp extends Component {
+            ...
+
+            render() {
+                return (
+                    &lt;ThemeContext.Provider value="dark">
+                        ...
+                    &lt;/ThemeContext.Provider>
+                );
+            }
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Контекст</h2>
+    <pre><code class="javascript" data-trim data-noescape>
+        import React, { Component } from 'react';
+
+        import ThemeContext from './theme-context';
+
+        class NotesApp extends Component {
+            ...
+
+            render() {
+                return (
+                    &lt;ThemeContext.Provider value={this.state.theme}>
+                        ...
+                    &lt;/ThemeContext.Provider>
+                );
+            }
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Составные компоненты</h2>
+    <pre><code class="javascript" data-trim data-noescape style="font-size: 22px;">
+        &lt;<span class="hljs-name">Tabs</span> <span class="hljs-attr">initialTabId</span>="books">
+            &lt;<span class="hljs-name">TabList</span>>
+                &lt;<span class="hljs-name">Tab</span> id="books">Books&lt;/<span class="hljs-name">Tab</span>>
+                &lt;<span class="hljs-name">Tab</span> id="films">Films&lt;/<span class="hljs-name">Tab</span>>
+            &lt;/<span class="hljs-name">TabList</span>>
+            &lt;<span class="hljs-name">TabPanels</span>>
+                &lt;<span class="hljs-name">TabPanel</span> id="books">
+                    Dolore exercitation consequat sunt est anim occaecat.
+                &lt;/<span class="hljs-name">TabPanel</span>>
+                &lt;<span class="hljs-name">TabPanel</span> <span class="hljs-attr">id</span>="films">
+                    Cillum proident enim id pariatur minim reprehenderit.
+                &lt;/<span class="hljs-name">TabPanel</span>>
+            &lt;/<span class="hljs-name">TabPanels</span>>
+        &lt;/<span class="hljs-name">Tabs</span>>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Составные компоненты</h2>
+    <pre><code class="typescript" data-trim data-noescape>
+        import { createContext } from 'react';
+
+        const TabsContext = createContext({
+            activeTabId: '',
+            changeTab: () => {}
+        });
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Составные компоненты</h2>
+    <pre><code class="typescript" data-trim data-noescape style="font-size: 21px;">
+        class Tabs extends Component&lt;TabsProps, TabsState> {
+            state: TabsState = {
+                activeTabId: this.props.initialTabId
+            }
+
+            changeTab = (id: string) => this.setState({ activeTabId: id })
+
+            render() {
+                const contextValue = { activeTabId, changeTab: this.changeTab };
+
+                return (
+                    &lt;<span class="hljs-name">TabsContext.Provider</span> <span class="hljs-attr">value</span>={contextValue}>
+                        {children}
+                    &lt;/<span class="hljs-name">TabsContext.Provider</span>>
+                );
+            }
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Составные компоненты</h2>
+    <pre><code class="typescript" data-trim data-noescape style="font-size: 21px;">
+        <span style="opacity: .3;">class Tabs extends Component&lt;TabsProps, TabsState> {</span>
+            state: TabsState = {
+                activeTabId: this.props.initialTabId
+            }<span style="opacity: .3;">
+
+            changeTab = (id: string) => this.setState({ activeTabId: id })
+
+            render() {
+                const contextValue = { activeTabId, changeTab: this.changeTab };
+
+                return (
+                    &lt;<span class="hljs-name">TabsContext.Provider</span> <span class="hljs-attr">value</span>={contextValue}>
+                        {children}
+                    &lt;/<span class="hljs-name">TabsContext.Provider</span>>
+                );
+            }
+        }</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Составные компоненты</h2>
+    <pre><code class="typescript" data-trim data-noescape style="font-size: 21px;">
+        <span style="opacity: .3;">class Tabs extends Component&lt;TabsProps, TabsState> {
+            state: TabsState = {
+                activeTabId: this.props.initialTabId
+            }</span>
+
+            changeTab = (id: string) => this.setState({ activeTabId: id })<span style="opacity: .3;">
+
+            render() {
+                const contextValue = { activeTabId, changeTab: this.changeTab };
+
+                return (
+                    &lt;<span class="hljs-name">TabsContext.Provider</span> <span class="hljs-attr">value</span>={contextValue}>
+                        {children}
+                    &lt;/<span class="hljs-name">TabsContext.Provider</span>>
+                );
+            }
+        }</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Составные компоненты</h2>
+    <pre><code class="typescript" data-trim data-noescape style="font-size: 21px;">
+        <span style="opacity: .3;">class Tabs extends Component&lt;TabsProps, TabsState> {
+            state: TabsState = {
+                activeTabId: this.props.initialTabId
+            }
+
+            changeTab = (id: string) => this.setState({ activeTabId: id })</span>
+
+            render() {
+                const contextValue = { activeTabId, changeTab: this.changeTab };
+
+                return (
+                    &lt;<span class="hljs-name">TabsContext.Provider</span> <span class="hljs-attr">value</span>={contextValue}>
+                        {children}
+                    &lt;/<span class="hljs-name">TabsContext.Provider</span>>
+                );
+            }<span style="opacity: .3;">
+        }</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Составные компоненты</h2>
+    <pre><code class="typescript" data-trim data-noescape>
+        function TabList({ children }: TabListProps) {
+            return &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="tab-list">{children}&lt;/<span class="hljs-name">div</span>>;
+        }
+    </code></pre>
+    <pre><code class="typescript" data-trim data-noescape>
+        function TabPanels({ children }: TabPanelsProps) {
+            return &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="tab-panels">{children}&lt;/<span class="hljs-name">div</span>>;
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Составные компоненты</h2>
+    <pre><code class="typescript" data-trim data-noescape style="font-size: 20px;">
+        function Tab({ children, id }: TabProps) {
+            return (
+                &lt;<span class="hljs-name">TabsContext.Consumer</span>>
+                    {context => {
+                        function changeTab() {
+                            context.changeTab(id);
+                        }
+
+                        return (
+                            &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="tab" <span class="hljs-attr">onClick</span>={changeTab}>
+                                {children}
+                            &lt;/<span class="hljs-name">div</span>>
+                        );
+                    }}
+                &lt;/<span class="hljs-name">TabsContext.Consumer</span>>
+            );
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Составные компоненты</h2>
+    <pre><code class="typescript" data-trim data-noescape>
+        function TabPanel({ children, id }: TabPanelProps) {
+            return (
+                &lt;<span class="hljs-name">TabsContext.Consumer</span>>
+                    {context => context.activeTabId === id
+                        ? &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>="tab-panel">{children}&lt;/<span class="hljs-name">div</span>>
+                        : null
+                    }
+                &lt;/<span class="hljs-name">TabsContext.Consumer</span>>
+            );
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Составные компоненты</h2>
+    <pre><code class="typescript" data-trim data-noescape style="font-size: 21px">
+        function SimpleTabs({ tabs }: SimpleTabsProps) {
+            return (
+                &lt;<span class="hljs-name">Tabs</span>>
+                    &lt;<span class="hljs-name">TabList</span>>
+                        {tabs.map(tab => (
+                            &lt;<span class="hljs-name">Tab</span> <span class="hljs-attr">id</span>={tab.label}>{tab.label}&lt;/<span class="hljs-name">Tab</span>>
+                        ))}
+                    &lt;/<span class="hljs-name">TabList</span>>
+                    &lt;<span class="hljs-name">TabPanels</span>>
+                        {tabs.map(tab => (
+                            &lt;<span class="hljs-name">TabPanel</span> <span class="hljs-attr">id</span>={tab.label}>{tab.description}&lt;/<span class="hljs-name">TabPanel</span>>
+                        ))}
+                    &lt;/<span class="hljs-name">TabPanels</span>>
+                &lt;/<span class="hljs-name">Tabs</span>>
+            );
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Обработка ошибок</h2>
+</section>
+
+<section class="object-fit-fill" data-background-video="./images/what-if-rendering-error.mp4" data-background-size="contain" data-background-video-loop data-background-position="top" data-background-color="#f6f5f3"></section>
+<section class="object-fit-fill" data-background-video="./images/rendering-error.mp4" data-background-size="contain" data-background-position="top" data-background-color="#f6f5f3"></section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Error Boundary</h2>  
+    <p>Компонент, который <strong>отлавливает</strong> ошибки в любом месте поддерева компонентов и <strong>реагирует</strong> на них</p>   
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Error Boundary</h2>
+    <pre><code class="typescript" data-trim data-noescape style="font-size: 20px">
+        import React, { Component } from 'react';
+
+        class ErrorBoundary extends Component {
+            state = {
+                hasError: false
+            }
+            
+            static getDerivedStateFromError(error) { // Здесь можно обновить state,
+                return { hasError: true };           // чтобы отобразить запасной UI
+            }                                        
+        
+            componentDidCatch(error, info) {
+                logError(error, info); // Здесь можно залогировать ошибку
+            }
+
+            ...
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Error Boundary</h2>
+    <pre><code class="typescript" data-trim data-noescape style="font-size: 20px">
+        <span style="opacity: .3">import React, { Component } from 'react';
+
+        class ErrorBoundary extends Component {</span>
+            state = {
+                hasError: false
+            }
+            
+            static getDerivedStateFromError(error) { // Здесь можно обновить state,
+                return { hasError: true };           // чтобы отобразить запасной UI
+            }<span style="opacity: .3">
+        
+            componentDidCatch(error, info) {
+                logError(error, info); // Здесь можно залогировать ошибку
+            }
+
+            ...
+        }</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Error Boundary</h2>
+    <pre><code class="typescript" data-trim data-noescape style="font-size: 20px">
+        <span style="opacity: .3">import React, { Component } from 'react';
+
+        class ErrorBoundary extends Component {
+            state = {
+                hasError: false
+            }
+            
+            static getDerivedStateFromError(error) { // Здесь можно обновить state,
+                return { hasError: true };           // чтобы отобразить запасной UI
+            }</span>
+        
+            componentDidCatch(error, info) {
+                logError(error, info); // Здесь можно залогировать ошибку
+            }<span style="opacity: .3">
+
+            ...
+        }</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Error Boundary</h2>
+    <pre><code class="typescript" data-trim data-noescape>
+        import React, { Component } from 'react';
+
+        class ErrorBoundary extends Component {
+            ...
+
+            render() {
+                // В случае ошибки можно отобразить запасной UI
+                if (this.state.hasError) {
+                    return &lt;<span class="hljs-name">h1</span>>Что-то пошло не так&lt;/<span class="hljs-name">h1</span>>;
+                }
+
+                <span class="hljs-keyword">return</span> this.props.children;
+            }
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold;">Error Boundary</h2>
+    <pre><code class="typescript" data-trim data-noescape>
+        import React, { Component } from 'react';
+
+        import ErrorBoundary from './error-boundary';
+
+        class App extends Component {
+            render() {
+                return (
+                    &lt;<span class="hljs-name">ErrorBoundary</span>>
+                        ...
+                    &lt;/<span class="hljs-name">ErrorBoundary</span>>
+                );
+            }
+        }
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 class="red" style="font-weight: bold">Не будут отловлены</h2>
+    <div style="display: flex; align-items: center; flex-direction: column; margin-top: 30px;">
+        <div style="text-align: center;">
+            <div  style="font-size: 35px; margin-bottom: 15px;">Ошибки в обработчиках событий</div>
+            <div class="fragment" style="font-size: 35px; margin-bottom: 15px;">Ошибки в коде самого Error Boundary компонента</div>
+            <div class="fragment" style="font-size: 35px; margin-bottom: 15px;">Ошибки в асинхронном коде</div>
+        </div>
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">React Developer Tools</h2>
+</section>
+
+<section class="object-fit-fill" data-background-video="./images/react-dev-tools.mp4" data-background-size="contain" data-background-video-loop data-background-position="top" data-background-color="#f6f5f3"></section>
+
+<section class="center">
+    <div style="font-size: 40px; text-align: center">
+        <a href="https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi">Yandex Browser, Chrome extension</a> <br />
+        <a href="https://addons.mozilla.org/ru/firefox/addon/react-devtools/" style="margin-top: 15px; display: block;">Firefox extension</a>
+    </div>
+</section>
+
+<section class="center" data-background-image="./images/nextjs.png" data-background-size="contain"></section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Next.js</h2>
+    <pre><code data-trim data-noescape style="font-size: 18px;">
+        <span class="red">$</span> mkdir notes-app && cd notes-app
+        <span class="red">$</span> npm install --save next react react-dom
+    </code></pre>
+    <pre class="fragment"><code data-trim data-noescape style="font-size: 18px;">
+        // package.json
+        {
+            "scripts": {
+                "dev": "next",
+                "build": "next build",
+                "start": "next start"
+            }
+        }
+    </code></pre>
+    <pre class="fragment"><code data-trim data-noescape style="font-size: 18px;">
+        // ./pages/index.js
+        export default function IndexPage() {
+            return &lt;h1>Welcome to next.js!&lt;/h1>;
+        }
+    </code></pre>
+    <pre class="fragment"><code class="bash hljs" data-trim data-noescape style="font-size: 18px;">
+        <span class="red">$</span> npm run dev
+        <span style="opacity: .5; font-size: 15px;"><span style="background-color: #63a35c;">DONE</span>  <span style="color: #63a35c;">Compiled successfully span 1773ms</span>
+         &gt; Ready on http://localhost:3000</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Next.js</h2>
+    <h2 class="grey" style="font-weight: bold; font-size: 35px; margin-top: -15px">Свой сервер</h2>
+    <pre><code class="javascript" data-trim data-noescape style="font-size: 19px; margin-top: -20px;">
+        import { parse } from 'url';
+        
+        import next from 'next';
+        import express from 'express';
+
+        const server = express();
+        const app = next({ dev: process.env.NODE_ENV !== 'production' });
+
+        const requestHandler = app.getRequestHandler();
+
+        app.prepare().then(() => {
+            server
+                .get('/notes', (req, res) => app.render(req, res, '/index'))
+                .get('/notes/:note', (req, res) => app.render(req, res, '/note'))
+                .get('*', (req, res) => requestHandler(req, res, parse(req.url, true)))
+                .listen(3000, () => console.log('Listening on http://localhost:3000'));
+        });
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Next.js</h2>
+    <h2 class="grey" style="font-weight: bold; font-size: 35px; margin-top: -15px">Свой сервер</h2>
+    <pre><code class="javascript" data-trim data-noescape style="font-size: 19px; margin-top: -20px;">
+        import { parse } from 'url';
+        
+        import next from 'next';
+        import express from 'express';
+
+        const server = express();<span style="opacity: .3">
+        const app = next({ dev: process.env.NODE_ENV !== 'production' });
+
+        const requestHandler = app.getRequestHandler();
+
+        app.prepare().then(() => {
+            server
+                .get('/notes', (req, res) => app.render(req, res, '/index'))
+                .get('/notes/:note', (req, res) => app.render(req, res, '/note'))
+                .get('*', (req, res) => requestHandler(req, res, parse(req.url, true)))
+                .listen(3000, () => console.log('Listening on http://localhost:3000'));
+        });</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Next.js</h2>
+    <h2 class="grey" style="font-weight: bold; font-size: 35px; margin-top: -15px">Свой сервер</h2>
+    <pre><code class="javascript" data-trim data-noescape style="font-size: 19px; margin-top: -20px;">
+        <span style="opacity: .3">import { parse } from 'url';
+        
+        import next from 'next';
+        import express from 'express';
+    
+        const server = express();</span>
+        const app = next({ dev: process.env.NODE_ENV !== 'production' });<span style="opacity: .3">
+
+        const requestHandler = app.getRequestHandler();</span>
+
+        app.prepare().then(() => {<span style="opacity: .3">
+            server
+                .get('/notes', (req, res) => app.render(req, res, '/index'))
+                .get('/notes/:note', (req, res) => app.render(req, res, '/note'))
+                .get('*', (req, res) => requestHandler(req, res, parse(req.url, true)))
+                .listen(3000, () => console.log('Listening on http://localhost:3000'));</span>
+        });
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Next.js</h2>
+    <h2 class="grey" style="font-weight: bold; font-size: 35px; margin-top: -15px">Свой сервер</h2>
+    <pre><code class="javascript" data-trim data-noescape style="font-size: 19px; margin-top: -20px;">
+        <span style="opacity: .3;">import { parse } from 'url';
+        
+        import next from 'next';
+        import express from 'express';
+    
+        const server = express();
+        const app = next({ dev: process.env.NODE_ENV !== 'production' });</span>
+
+        const requestHandler = app.getRequestHandler();<span style="opacity: .3;">
+
+        app.prepare().then(() => {</span>
+            server
+                .get('/notes', (req, res) => app.render(req, res, '/index'))
+                .get('/notes/:note', (req, res) => app.render(req, res, '/note'))
+                .get('*', (req, res) => requestHandler(req, res, parse(req.url, true)))
+                .listen(3000, () => console.log('Listening on http://localhost:3000'));<span style="opacity: .3;">
+        });</span>
+    </code></pre>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Next.js</h2>
+    <div style="display: flex; align-items: center; flex-direction: column; margin-top: 30px;">
+        <div style="text-align: center;">
+            <div class="green" style="font-size: 35px; margin-bottom: 15px;">Очень быстрый старт</div>
+            <div class="green" style="font-size: 35px; margin-bottom: 15px;">Множество точек для расширения и кастомизации</div>
+            <div class="green" style="font-size: 35px; margin-bottom: 15px;">Активное развитие и поддержка</div>
+        </div>
+    </div>
+</section>
+
+<section class="center">
+    <h2 style="font-weight: bold">Документация React</h2>
+    <div style="font-size: 40px; text-align: center">
+        <a href="https://ru.reactjs.org/docs/context.html">Context</a>
+        <a href="https://ru.reactjs.org/docs/error-boundaries.html" style="margin-top: 15px; display: block;">Error boundaries</a>
+        <a href="https://ru.reactjs.org/docs/higher-order-components.html" style="margin-top: 15px; display: block;">Компоненты высшего порядка</a>
+        <a href="https://ru.reactjs.org/docs/render-props.html" style="margin-top: 15px; display: block;">Render Props</a>
+    </div>
+</section>
+
+<section class="center">
+    <div style="font-size: 40px; text-align: center">
+        <a href="https://github.com/zeit/next.js/" style="margin-top: 15px; display: block;">Next.js</a>
+        <a href="https://reacttraining.com/react-router/web/guides/quick-start" style="margin-top: 15px; display: block;">React Router</a>
+        <a href="https://courses.reacttraining.com/p/advanced-react-free" style="margin-top: 15px; display: block;">React Component Patterns</a>
+    </div>
+</section>
+
+</div></div>
+
+<script src="../../@lib/core.js"></script>
+</body>
+</html>
