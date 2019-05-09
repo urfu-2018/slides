@@ -45,4 +45,9 @@
 8. [DOM API и события](https://urfu-2018.github.io/slides/webdev/08-dom-api/) ([pdf](https://urfu-2018.github.io/slides/webdev/08-dom-api/index.pdf))
 9. [Node.js II](https://urfu-2018.github.io/slides/webdev/09-nodejs-2/) ([pdf](https://urfu-2018.github.io/slides/webdev/09-nodejs-2/index.pdf))
 10. [React](https://urfu-2018.github.io/slides/webdev/10-react-1/) ([pdf](https://urfu-2018.github.io/slides/webdev/10-react-1/index.pdf))
-11. [SOLID и шаблоны проектирования](https://urfu-2018.github.io/slides/webdev/11-patterns/) ([pdf](https://urfu-2018.github.io/slides/webdev/11-patterns/index.pdf))
+11. [State managment](https://urfu-2018.github.io/slides/webdev/11-redux/) ([pdf](https://urfu-2018.github.io/slides/webdev/11-redux/index.pdf))
+12. [Storage APIs, History APIs, Payments APIs](https://urfu-2018.github.io/slides/webdev/12-web-api/) ([pdf](https://urfu-2018.github.io/slides/webdev/12-web-api/index.pdf))
+13. React II
+14. [Безопасность](https://urfu-2018.github.io/slides/webdev/14-security/) ([pdf](https://urfu-2018.github.io/slides/webdev/14-security/index.pdf))
+15. [SOLID и шаблоны проектирования](https://urfu-2018.github.io/slides/webdev/15-patterns/) ([pdf](https://urfu-2018.github.io/slides/webdev/15-patterns/index.pdf))
+16. Производительность

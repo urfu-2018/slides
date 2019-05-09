@@ -11,6 +11,7 @@
     "npm-run-all": "4.1.5"
   },
   "scripts": {
+    "deps": "npm ci",
     "optimize:images": "cd $npm_package_config_dir && imagemin --plugin=giflossy --plugin=mozjpeg --plugin=pngquant --plugin=svgo images/* --out-dir images",
     "optimize:icons": "cd $npm_package_config_dir && imagemin --plugin=giflossy --plugin=mozjpeg --plugin=pngquant --plugin=svgo icons/* --out-dir icons",
     "pdf": "cd $npm_package_config_dir && decktape -s 640x480 reveal index.html index.pdf",
