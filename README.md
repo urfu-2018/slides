@@ -47,7 +47,7 @@
 10. [React](https://urfu-2018.github.io/slides/webdev/10-react-1/) ([pdf](https://urfu-2018.github.io/slides/webdev/10-react-1/index.pdf))
 11. [State managment](https://urfu-2018.github.io/slides/webdev/11-redux/) ([pdf](https://urfu-2018.github.io/slides/webdev/11-redux/index.pdf))
 12. [Storage APIs, History APIs, Payments APIs](https://urfu-2018.github.io/slides/webdev/12-web-api/) ([pdf](https://urfu-2018.github.io/slides/webdev/12-web-api/index.pdf))
-13. React II
+13. [Advanced react](https://urfu-2018.github.io/slides/webdev/13-advanced-react/) ([pdf](https://urfu-2018.github.io/slides/webdev/13-advanced-react/index.pdf))
 14. [Безопасность](https://urfu-2018.github.io/slides/webdev/14-security/) ([pdf](https://urfu-2018.github.io/slides/webdev/14-security/index.pdf))
 15. [SOLID и шаблоны проектирования](https://urfu-2018.github.io/slides/webdev/15-patterns/) ([pdf](https://urfu-2018.github.io/slides/webdev/15-patterns/index.pdf))
 16. Производительность
