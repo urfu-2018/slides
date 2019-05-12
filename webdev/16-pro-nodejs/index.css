@@ -1,0 +1,25 @@
+ul
+{
+    list-style: none;
+}
+
+.author:first-letter
+{
+    color: red;
+}
+
+.reveal .size-S
+{
+    font-size: 0.8em;
+}
+
+.code-two-columns
+{
+    display: flex;
+}
+
+.code-two-columns pre,
+.code-two-columns div
+{
+    flex: 1 1 auto;
+}
