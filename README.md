@@ -50,4 +50,4 @@
 13. [Advanced react](https://urfu-2018.github.io/slides/webdev/13-advanced-react/) ([pdf](https://urfu-2018.github.io/slides/webdev/13-advanced-react/index.pdf))
 14. [Безопасность](https://urfu-2018.github.io/slides/webdev/14-security/) ([pdf](https://urfu-2018.github.io/slides/webdev/14-security/index.pdf))
 15. [SOLID и шаблоны проектирования](https://urfu-2018.github.io/slides/webdev/15-patterns/) ([pdf](https://urfu-2018.github.io/slides/webdev/15-patterns/index.pdf))
-16. Производительность
+16. [Производительный NodeJS](https://urfu-2018.github.io/slides/webdev/16-pro-nodejs/) ([pdf](https://urfu-2018.github.io/slides/webdev/16-pro-nodejs/index.pdf))
